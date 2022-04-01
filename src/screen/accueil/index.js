@@ -4,28 +4,102 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  StatusBar,
 } from "react-native";
 import React from "react";
+
+import { FontAwesome } from "@expo/vector-icons";
+import * as Animatable from "react-native-animatable";
+import { Button, Portal, Divider, Provider, Modal } from "react-native-paper";
 import Header from "../../components/header";
 const { height, width } = Dimensions.get("screen");
+
 const Index = ({ navigation }) => {
+  const [visible, setVisible] = React.useState(false);
   return (
-    <View style={styles.contain}>
-      <Header />
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.touch}
-          onPress={() => navigation.navigate("Scan")}
+    <Provider>
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          contentContainerStyle={styles.containerStyle}
         >
-          <Text style={styles.txt}>Veuillez Scanner la le Code Q&R</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.touch1}
+            onPress={() => navigation.replace("Connexion")}
+          >
+            <FontAwesome name="sign-out" size={24} color="white" />
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "700",
+                color: "white",
+                marginRight: 15,
+              }}
+            >
+              Déconnexion
+            </Text>
+          </TouchableOpacity>
+        </Modal>
+      </Portal>
+      <View style={styles.contain}>
+        <StatusBar hidden />
+        <Header setVisible={setVisible} />
+        <Animatable.View
+          animation="fadeIn"
+          duration={300}
+          delay={500}
+          style={styles.container}
+        >
+          <TouchableOpacity
+            style={styles.touch}
+            onPress={() => navigation.navigate("Scan")}
+          >
+            <Text style={styles.txt}>Veuillez Scanner la Code QR</Text>
+          </TouchableOpacity>
+          <Animatable.View
+            animation="fadeIn"
+            duration={300}
+            delay={500}
+            style={{
+              position: "absolute",
+              bottom: 2,
+              backgroundColor: "#1a1818",
+              height: 50,
+              width: width - 20,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 5,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "900",
+                color: "white",
+                textTransform: "uppercase",
+              }}
+            >
+              Créer par CIRTIC
+            </Text>
+          </Animatable.View>
+        </Animatable.View>
       </View>
-    </View>
+    </Provider>
   );
 };
 const styles = StyleSheet.create({
   contain: {
-    flex: 2,
+    flex: 1,
+  },
+  containerStyle: {
+    backgroundColor: "white",
+    padding: 20,
+    height: height / 5,
+    justifyContent: "center",
+    alignItems: "center",
+    width: width - 100,
+    alignSelf: "center",
   },
   container: {
     justifyContent: "center",
@@ -39,6 +113,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
+  },
+
+  touch1: {
+    height: 50,
+    width: width - 150,
+    backgroundColor: "red",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 10,
+    elevation: 5,
+    flexDirection: "row",
   },
   txt: {
     color: "white",

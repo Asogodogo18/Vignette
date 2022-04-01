@@ -14,9 +14,10 @@ const Stack = createNativeStackNavigator();
 const AppStack = () => {
   return (
     <Stack.Navigator
+      initialRouteName="Accueil"
       screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
     >
-      <Stack.Screen name="Accueil" component={Accueil} />
+      <Stack.Screen name="index" component={Accueil} />
       <Stack.Screen name="Scan" component={Scan} />
     </Stack.Navigator>
   );
@@ -39,6 +40,7 @@ export default function Index() {
   return (
     isAppFirstLaunched != null && (
       <Stack.Navigator
+        initialRouteName="AppStack"
         screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
       >
         {isAppFirstLaunched && (

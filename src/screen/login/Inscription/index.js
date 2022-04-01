@@ -22,6 +22,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
+const { height, width } = Dimensions.get("screen");
 const Index = ({ navigation }) => {
   const Navigation = useNavigation();
   const [data, setData] = React.useState({
@@ -95,9 +96,10 @@ const Index = ({ navigation }) => {
         <ScrollView>
           <Text style={styles.text_footer}>Username</Text>
           <View style={styles.action}>
-            <FontAwesome name="user-o" color="#05375a" size={20} />
+            <FontAwesome name="user-o" color="gray" size={20} />
             <TextInput
               placeholder="Votre Username"
+              placeholderTextColor="gray"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => textInputChange(val)}
@@ -112,11 +114,12 @@ const Index = ({ navigation }) => {
           <View style={styles.action}>
             <MaterialCommunityIcons
               name="email-outline"
-              color="#05375a"
+              color="gray"
               size={20}
             />
             <TextInput
               placeholder="votre e-mail"
+              placeholderTextColor="gray"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => textInputChange(val)}
@@ -129,10 +132,11 @@ const Index = ({ navigation }) => {
           </View>
           <Text style={styles.text_footer}>Telephone</Text>
           <View style={styles.action}>
-            <Feather name="smartphone" size={20} color="black" />
+            <Feather name="smartphone" size={20} color="gray" />
 
             <TextInput
               placeholder="votre numero telephone"
+              placeholderTextColor="gray"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => textInputChange(val)}
@@ -155,9 +159,10 @@ const Index = ({ navigation }) => {
             Mot de pass
           </Text>
           <View style={styles.action}>
-            <Feather name="lock" color="#05375a" size={20} />
+            <Feather name="lock" color="gray" size={20} />
             <TextInput
               placeholder="Votre mote de pass"
+              placeholderTextColor="gray"
               secureTextEntry={data.secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
@@ -183,9 +188,10 @@ const Index = ({ navigation }) => {
             Confirm mot de pass
           </Text>
           <View style={styles.action}>
-            <Feather name="lock" color="#05375a" size={20} />
+            <Feather name="lock" color="gray" size={20} />
             <TextInput
               placeholder="Confirm mot de pass"
+              placeholderTextColor="gray"
               secureTextEntry={data.confirm_secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
@@ -200,15 +206,25 @@ const Index = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.textPrivate}>
-            <Text style={styles.color_textPrivate}>
+            <Text style={{ color: "white" }}>
               En vous inscrivant, vous acceptez notre
             </Text>
-            <Text style={[styles.color_textPrivate, { fontWeight: "bold" }]}>
+            <Text
+              style={[
+                styles.color_textPrivate,
+                { fontWeight: "bold", color: "white" },
+              ]}
+            >
               {" "}
               Conditions d'utilisation
             </Text>
-            <Text style={styles.color_textPrivate}> et</Text>
-            <Text style={[styles.color_textPrivate, { fontWeight: "bold" }]}>
+            <Text style={{ color: "white" }}> et</Text>
+            <Text
+              style={[
+                styles.color_textPrivate,
+                { fontWeight: "bold", color: "white" },
+              ]}
+            >
               {" "}
               Politique de confidentialité
             </Text>
@@ -218,7 +234,7 @@ const Index = ({ navigation }) => {
               style={{ alignItems: "center", marginTop: 10, marginBottom: 10 }}
             >
               <LinearGradient
-                colors={["#34c747", "#00FFFF"]}
+                colors={["#1a1818", "#FFFF"]}
                 start={{ x: 0.0, y: 1.0 }}
                 end={{ x: 2.0, y: 2.0 }}
                 style={{
@@ -250,7 +266,7 @@ const Index = ({ navigation }) => {
             </View>
 
             <View>
-              <Text style={{ textAlign: "center" }}>
+              <Text style={{ textAlign: "center", color: "white" }}>
                 Avez vous déja un compte ?
               </Text>
               <TouchableOpacity
@@ -258,7 +274,13 @@ const Index = ({ navigation }) => {
                   Navigation.navigate("Connexion");
                 }}
               >
-                <Text style={{ fontWeight: "bold", textAlign: "center" }}>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    color: "white",
+                  }}
+                >
                   connecté vous avec votre compte
                 </Text>
               </TouchableOpacity>
@@ -278,7 +300,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   header: {
-    flex: 1,
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -289,22 +311,28 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   footer: {
-    flex: 1.5,
-    backgroundColor: "#f5f5f5",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    flex: 2,
+    backgroundColor: "#1a1818",
+    // borderTopLeftRadius: 50,
+    // borderTopRightRadius: 50,
     paddingHorizontal: 20,
     paddingVertical: 30,
-    elevation: 2,
-    padding: 10,
+    elevation: 5,
+    padding: 5,
+    width: width - 15,
+    alignSelf: "center",
+    marginTop: -150,
+    marginVertical: 20,
+    borderRadius: 50,
+    opacity: 0.2,
   },
   text_header: {
-    color: "black",
+    color: "white",
     fontWeight: "bold",
     fontSize: 30,
   },
   text_footer: {
-    color: "#05375a",
+    color: "white",
     fontSize: 18,
   },
   action: {
@@ -325,7 +353,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === "ios" ? 0 : -12,
     paddingLeft: 10,
-    color: "#05375a",
+    color: "white",
+    padding: 10,
   },
   errorMsg: {
     color: "#FF0000",
@@ -341,7 +370,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    color: "black",
+    color: "white",
     backgroundColor: "red",
   },
   textSign: {
@@ -353,6 +382,8 @@ const styles = StyleSheet.create({
 
     height: 50,
 
+    marginBottom: 10,
+
     marginTop: 10,
     marginLeft: 50,
   },
@@ -362,7 +393,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingTop: 10,
     //marginLeft: 30,
-    left: 10,
+    left: 30,
     textAlign: "center",
   },
 });

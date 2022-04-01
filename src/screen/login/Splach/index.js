@@ -36,6 +36,12 @@ const slides = [
     title: "Achieve Your Goals",
     subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
+  {
+    id: "4",
+    image: require("../../../../assets/icon/4.png"),
+    title: "Achieve Your Goals",
+    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
 ];
 
 const Slide = ({ item }) => {
@@ -117,7 +123,7 @@ const Index = ({ navigation }) => {
           {currentSlideIndex == slides.length - 1 ? (
             <View style={{ height: 50, alignItems: "center" }}>
               <LinearGradient
-                colors={["#2c9644", "white"]}
+                colors={["#1a1818", "#FFFF"]}
                 start={{ x: 0.0, y: 1.0 }}
                 end={{ x: 2.0, y: 2.0 }}
                 style={{
@@ -136,7 +142,7 @@ const Index = ({ navigation }) => {
                   <Text
                     style={{ fontWeight: "bold", fontSize: 15, color: "white" }}
                   >
-                    GET STARTED
+                    COMMENCER
                   </Text>
                 </TouchableOpacity>
               </LinearGradient>
@@ -148,9 +154,10 @@ const Index = ({ navigation }) => {
                 style={[
                   styles.btn,
                   {
-                    borderColor: "#2c9644",
+                    borderColor: "#1a1818",
                     borderWidth: 1,
-                    backgroundColor: "transparent",
+                    backgroundColor: "white",
+                    elevation: 10,
                   },
                 ]}
                 onPress={skip}
@@ -162,12 +169,12 @@ const Index = ({ navigation }) => {
                     color: "black",
                   }}
                 >
-                  SKIP
+                  SAUTER
                 </Text>
               </TouchableOpacity>
               <View style={{ width: 15 }} />
               <LinearGradient
-                colors={["#2c9644", "white"]}
+                colors={["#1a1818", "#FFFF"]}
                 start={{ x: 0.0, y: 1.0 }}
                 end={{ x: 2.0, y: 2.0 }}
                 style={{
@@ -176,7 +183,7 @@ const Index = ({ navigation }) => {
                   alignItems: "center",
                   justifyContent: "center",
                   width: 200,
-                  elevation: 5,
+                  elevation: 10,
                 }}
               >
                 <TouchableOpacity
@@ -191,7 +198,7 @@ const Index = ({ navigation }) => {
                       color: "white",
                     }}
                   >
-                    NEXT
+                    SUIVANTS
                   </Text>
                 </TouchableOpacity>
               </LinearGradient>
@@ -243,7 +250,7 @@ const styles = StyleSheet.create({
   indicator: {
     height: 2.5,
     width: 10,
-    backgroundColor: "#2c9644",
+    backgroundColor: "#1a1818",
     marginHorizontal: 3,
     borderRadius: 2,
   },

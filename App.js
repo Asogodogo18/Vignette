@@ -6,7 +6,7 @@ import Stack from "./src/router/stack";
 export default function App() {
   return (
     <NavigationContainer>
-      {/* <StatusBar style="auto" /> */}
+      <StatusBar style="auto" />
       <Stack />
     </NavigationContainer>
   );

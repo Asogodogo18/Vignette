@@ -18,6 +18,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+const { width, height } = Dimensions.get("screen");
+
 import { Feather, FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation }) => {
@@ -126,30 +128,14 @@ const Index = ({ navigation }) => {
       <Animatable.View
         animation="fadeInUpBig"
         duration={300}
-        delay={200}
-        style={[
-          styles.footer,
-          {
-            backgroundColor: "#f5f5f5",
-          },
-        ]}
+        delay={500}
+        style={styles.footer}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <Text
-            style={[
-              styles.text_footer,
-              {
-                color: "black",
-              },
-            ]}
-          >
-            Nom d'utilisateur ou E-mail
-          </Text>
+          <Text style={styles.text_footer}>Nom d'utilisateur ou E-mail</Text>
           <View style={styles.action}>
-            {/* <FontAwesome name="user-o" color="gray" size={20} /> */}
+            <FontAwesome name="user-o" color="gray" size={20} />
             <TextInput
-              // left={<TextInput.Icon name="login" />}
-              // mode="outlined"
               placeholder="Votre Nom d'utilisateur ou E-mail"
               placeholderTextColor="#666666"
               style={[
@@ -159,8 +145,6 @@ const Index = ({ navigation }) => {
                 },
               ]}
               autoCapitalize="none"
-              // onChangeText={(val) => textInputChange(val)}
-              // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
             />
             {data.check_textInputChange ? (
               <Animatable.View animation="bounceIn">
@@ -180,7 +164,7 @@ const Index = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                color: "black",
+                color: "white",
                 marginTop: 35,
               },
             ]}
@@ -193,12 +177,7 @@ const Index = ({ navigation }) => {
               placeholder="Votre Mot de Pass"
               placeholderTextColor="#666666"
               secureTextEntry={data.secureTextEntry ? true : false}
-              style={[
-                styles.textInput,
-                {
-                  color: "black",
-                },
-              ]}
+              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => handlePasswordChange(val)}
             />
@@ -218,17 +197,17 @@ const Index = ({ navigation }) => {
             </Animatable.View>
           )}
 
-          <TouchableOpacity>
-            <Text style={{ color: "#009387", marginTop: 15 }}>
+          <TouchableOpacity onPress={() => navigation.navigate("PassOublier")}>
+            <Text style={{ color: "#fff", marginTop: 15 }}>
               Mot de pass oublier ?
             </Text>
           </TouchableOpacity>
           <View>
             <View style={{ marginTop: 10, alignItems: "center" }}>
               <LinearGradient
-                colors={["#34c747", "#00FFFF"]}
-                start={{ x: 0.0, y: 1.0 }}
-                end={{ x: 2.0, y: 2.0 }}
+                colors={["#1a1818", "#FFFF"]}
+                start={{ x: 0.1, y: 2.0 }}
+                end={{ x: 2.0, y: 0.1 }}
                 style={{
                   height: 48,
                   borderRadius: 10,
@@ -258,7 +237,7 @@ const Index = ({ navigation }) => {
             </View>
 
             <View style={{ marginTop: 15 }}>
-              <Text style={{ textAlign: "center" }}>
+              <Text style={{ textAlign: "center", color: "white" }}>
                 Vous n'avez pas de compte ?
               </Text>
               <TouchableOpacity
@@ -266,7 +245,13 @@ const Index = ({ navigation }) => {
                   Navigation.navigate("Inscription");
                 }}
               >
-                <Text style={{ fontWeight: "bold", textAlign: "center" }}>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    color: "white",
+                  }}
+                >
                   Créer Un compte dès maintenant
                 </Text>
               </TouchableOpacity>
@@ -286,7 +271,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   header: {
-    flex: 1,
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -297,22 +282,26 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   footer: {
-    flex: 1.5,
-    backgroundColor: "black",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    flex: 2,
+    backgroundColor: "#1a1818",
     paddingHorizontal: 20,
     paddingVertical: 30,
-    elevation: 2,
-    padding: 10,
+    elevation: 10,
+    padding: 5,
+    width: width - 15,
+    alignSelf: "center",
+    marginTop: -150,
+    marginVertical: 20,
+    borderRadius: 50,
+    opacity: 0.2,
   },
   text_header: {
-    color: "black",
+    color: "white",
     fontWeight: "bold",
     fontSize: 30,
   },
   text_footer: {
-    color: "#05375a",
+    color: "white",
     fontSize: 18,
   },
   action: {
@@ -333,7 +322,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === "ios" ? 0 : -12,
     paddingLeft: 10,
-    color: "#05375a",
+    color: "white",
+    padding: 10,
   },
   errorMsg: {
     color: "#FF0000",
@@ -349,7 +339,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    color: "black",
+    color: "white",
     backgroundColor: "red",
   },
   textSign: {
