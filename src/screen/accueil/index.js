@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { Button, Portal, Divider, Provider, Modal } from "react-native-paper";
 import Header from "../../components/header";
@@ -55,6 +55,7 @@ const Index = ({ navigation }) => {
             style={styles.touch}
             onPress={() => navigation.navigate("Scan")}
           >
+            <AntDesign name="qrcode" size={30} color="white" />
             <Text style={styles.txt}>Veuillez Scanner la Code QR</Text>
           </TouchableOpacity>
           <Animatable.View
@@ -63,8 +64,8 @@ const Index = ({ navigation }) => {
             delay={500}
             style={{
               position: "absolute",
-              bottom: 2,
-              backgroundColor: "#1a1818",
+              bottom: 0,
+              // backgroundColor: "#1a1818",
               height: 50,
               width: width - 20,
               justifyContent: "center",
@@ -74,10 +75,11 @@ const Index = ({ navigation }) => {
           >
             <Text
               style={{
-                fontSize: 18,
-                fontWeight: "900",
-                color: "white",
+                fontSize: 15,
+                fontWeight: "bold",
+                color: "gray",
                 textTransform: "uppercase",
+                textShadowColor: "black",
               }}
             >
               Créer par CIRTIC
@@ -110,9 +112,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: width - 50,
     backgroundColor: "#1a1818",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     borderRadius: 5,
+    flexDirection: "row",
+    paddingHorizontal: 25,
   },
 
   touch1: {

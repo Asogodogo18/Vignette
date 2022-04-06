@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { Avatar } from "react-native-paper";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -76,17 +76,19 @@ const stytles = StyleSheet.create({
     height: 70,
     width: "100%",
     alignItems: "center",
-    paddingHorizontal: 5,
+    paddingHorizontal: 8,
   },
   img: {
     height: 150,
     width: 150,
     resizeMode: "contain",
+    marginTop: 5,
   },
   txt: {
-    fontSize: 18,
+    fontSize: 20,
     color: "white",
-    fontWeight: "800",
+    fontWeight: "bold",
+    marginRight: 20,
   },
 });
 export default Header;

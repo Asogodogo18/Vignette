@@ -8,7 +8,9 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  FlatList,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import {
   Avatar,
@@ -18,19 +20,24 @@ import {
   Title,
   Provider,
 } from "react-native-paper";
+import { BlurView } from "expo-blur";
 import RenderHtml from "react-native-render-html";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BarcodeMask from "react-native-barcode-mask";
+import * as Animatable from "react-native-animatable";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
 const baseUrl = "http://197.155.143.74:1214";
+const AnimatedTouch = Animatable.createAnimatableComponent(TouchableOpacity);
+const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 
 const Index = ({ navigation }) => {
   const finderWidth = 280;
   const finderHeight = 630;
-  const width = Dimensions.get("window").width;
-  const height = Dimensions.get("window").height;
+
   const viewMinX = (width - finderWidth) / 2;
   const viewMinY = (height - finderHeight) / 2;
 
@@ -38,18 +45,20 @@ const Index = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const [scannedData, setScannedData] = useState(null);
-  const [htmlSrc, setHtmlSrc] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [visible, setVisible] = React.useState(false);
-  const hideModal = () => setVisible(false);
 
   async function VerifyData(data) {
     console.log(data);
     try {
       setIsLoading(true);
-
-      setScannedData({ uri: `${data}` });
-      console.log(response.data);
+      axios
+        .get(data)
+        .then((res) => {
+          console.log(res.data);
+          setScannedData(res.data);
+          setScanned(true);
+        })
+        .catch((error) => setError(error.toString()));
       setIsLoading(false);
     } catch (error) {
       setError(error);
@@ -64,7 +73,6 @@ const Index = ({ navigation }) => {
 
   const handleBarCodeScanned = ({ type, data, bounds: { origin } = {} }) => {
     setScanned(true);
-    setVisible(true);
     VerifyData(data);
   };
 
@@ -74,6 +82,162 @@ const Index = ({ navigation }) => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+  const renderItem = ({ item }) => {
+    return (
+      <AnimatedImg
+        resizeMode="cover"
+        source={require("../../../assets/bg.png")}
+        animation="slideInRight"
+        style={styles.vignette}
+        // onPress={() => setVignette(item)}
+        duration={1000}
+        delay={parseInt(item.id) * 500}
+      >
+        <Text
+          style={{
+            marginLeft: 15,
+            fontSize: 25,
+            fontWeight: "200",
+            color: "white",
+            textTransform: "capitalize",
+          }}
+        >
+          {item.prenom}
+          {"    "}
+          <Text
+            style={{
+              fontSize: 25,
+              color: "white",
+              textTransform: "uppercase",
+              fontWeight: "600",
+            }}
+          >
+            {item.nom}
+          </Text>
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 10,
+            justifyContent: "center",
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              Marque
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 18,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.marque}
+            </Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              utilisation
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 18,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.utilisation}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 10,
+            justifyContent: "center",
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              Type
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 18,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.type}
+            </Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              Montant
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 18,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.montant}
+            </Text>
+          </View>
+        </View>
+        <Text
+          style={{
+            marginTop: 5,
+            textAlign: "center",
+            fontSize: 18,
+            color: "white",
+            textTransform: "uppercase",
+            fontWeight: "bold",
+          }}
+        >
+          {item.num_chassis}
+        </Text>
+      </AnimatedImg>
+    );
+  };
 
   return (
     <View style={styles.contain}>
@@ -89,52 +253,70 @@ const Index = ({ navigation }) => {
       >
         <BarcodeMask edgeColor="#62B1F6" showAnimatedLine />
       </BarCodeScanner>
-
-      <Provider>
-        <Portal>
-          <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={styles.barcodeBox}
+      {IsLoading && (
+        <BlurView intensity={50} style={styles.barcodeBox}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 20,
+            }}
           >
-            {IsLoading && (
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  En cours de vérification..
-                </Text>
-                <ActivityIndicator size="large" color="#00ff00" />
-              </View>
-            )}
-            {scannedData && (
-              <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <RenderHtml contentWidth={width} source={scannedData} />
-              </ScrollView>
-            )}
-          </Modal>
-        </Portal>
-      </Provider>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                textTransform: "uppercase",
+              }}
+            >
+              En cours de vérification..
+            </Text>
+            <ActivityIndicator size="large" color="#00ff00" />
+          </View>
+        </BlurView>
+      )}
+      {scannedData && (
+        <BlurView tint="dark" intensity={10} style={styles.barcodeBox}>
+          <FlatList
+            contentContainerStyle={{
+              backgroundColor: "transparent",
+              paddingTop: height / 3,
+            }}
+            data={scannedData.map((item, index) => {
+              item.id = index + 1;
+              return item;
+            })}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id_engin}
+          />
+        </BlurView>
+      )}
+
       {scanned && (
-        <Button
+        <TouchableOpacity
           title={"Appuyer pour Scanner"}
           onPress={() => {
             setScanned(false);
-            setVisible(false);
             setError(null);
             setScannedData(null);
           }}
-        />
+          style={{
+            position: "absolute",
+            alignSelf: "center",
+            bottom: 5,
+            width: "60%",
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10,
+            backgroundColor: "black",
+            borderRadius: 5,
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 16 }}>
+            Appuyer pour Scanner
+          </Text>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -147,11 +329,14 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
   barcodeBox: {
-    alignItems: "center",
+    backgroundColor: "transparent",
     justifyContent: "center",
-    height: 300,
-    backgroundColor: "white",
-    overflow: "hidden",
+    alignItems: "center",
+    position: "absolute",
+    top: 10,
+    alignSelf: "center",
+    width,
+    height: height - 100,
   },
   header: {
     backgroundColor: "#1a1818",
@@ -167,6 +352,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "800",
     marginLeft: 120,
+  },
+  vignette: {
+    maxHeight: 350,
+    minHeight: 200,
+    width: width - 50,
+    backgroundColor: "white",
+    marginVertical: 20,
+    padding: 15,
+    elevation: 10,
   },
 });
 export default Index;
