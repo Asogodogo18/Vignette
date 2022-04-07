@@ -219,7 +219,7 @@ const Index = ({ navigation }) => {
               >
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.replace("Accueil");
+                    navigation.replace("Appstack");
                   }}
                   style={styles.touch1}
                 >
