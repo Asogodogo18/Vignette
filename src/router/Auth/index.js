@@ -7,6 +7,7 @@ import Connexion from "../../screen/login/Connexion";
 import Inscription from "../../screen/login/Inscription";
 import PassOublier from "../../screen/login/PassOublier";
 import Splash from "../../screen/login/Splach";
+import Ecran from "../../screen/login/Splach/splach";
 const Stack = createNativeStackNavigator();
 
 export default function Index() {
@@ -32,7 +33,7 @@ export default function Index() {
         {isAppFirstLaunched && (
           <Stack.Screen name="Splash" component={Splash} />
         )}
-
+        <Stack.Screen name="Ecran" component={Ecran} />
         <Stack.Screen name="Connexion" component={Connexion} />
         <Stack.Screen name="Inscription" component={Inscription} />
         <Stack.Screen name="PassOublier" component={PassOublier} />

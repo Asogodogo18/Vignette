@@ -5,6 +5,7 @@ import Agent from "../../screen/admin/gestionAgent";
 import Guichet from "../../screen/admin/gestionGuichet";
 import PuisFiscale from "../../screen/admin/gestionPuisFiscal";
 import Vignette from "../../screen/admin/gestionVignette";
+import Accueil from "../../screen/admin/Accueil";
 const Stack = createNativeStackNavigator();
 
 const Index = () => {
@@ -12,6 +13,7 @@ const Index = () => {
     <Stack.Navigator
       screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
     >
+      <Stack.Screen name="Accueil" component={Accueil} />
       <Stack.Screen name="Agent" component={Agent} />
       <Stack.Screen name="Guichet" component={Guichet} />
       <Stack.Screen name="PuisFiscale" component={PuisFiscale} />

@@ -137,7 +137,7 @@ const Index = ({ navigation }) => {
               >
                 <TouchableOpacity
                   style={styles.btn}
-                  onPress={() => navigation.navigate("Connexion")}
+                  onPress={() => navigation.navigate("Ecran")}
                 >
                   <Text
                     style={{ fontWeight: "bold", fontSize: 15, color: "white" }}
