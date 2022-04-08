@@ -44,7 +44,9 @@ const Splach = ({ navigation }) => {
             }}
             source={require("../../../../assets/icon/1.png")}
           />
-          <Text style={styles.title}>Agent</Text>
+          <View style={styles.containerTxt}>
+            <Text style={styles.title}>Agent</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.touch}
@@ -62,7 +64,9 @@ const Splach = ({ navigation }) => {
             }}
             source={require("../../../../assets/icon/1.png")}
           />
-          <Text style={styles.title}>Client</Text>
+          <View style={styles.containerTxt}>
+            <Text style={styles.title}>Client</Text>
+          </View>
         </TouchableOpacity>
       </Animatable.View>
       <Animatable.View
@@ -87,7 +91,9 @@ const Splach = ({ navigation }) => {
             }}
             source={require("../../../../assets/icon/1.png")}
           />
-          <Text style={styles.title}>Police</Text>
+          <View style={styles.containerTxt}>
+            <Text style={styles.title}>Police</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.touch}
@@ -105,7 +111,9 @@ const Splach = ({ navigation }) => {
             }}
             source={require("../../../../assets/icon/1.png")}
           />
-          <Text style={styles.title}>Administrateur</Text>
+          <View style={styles.containerTxt}>
+            <Text style={styles.title}>Administrateur</Text>
+          </View>
         </TouchableOpacity>
       </Animatable.View>
       <Animatable.View
@@ -173,6 +181,17 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "gray",
     textAlign: "center",
+    // backgroundColor: "#1a1818",
+  },
+  containerTxt: {
+    position: "absolute",
+    bottom: 1,
+    backgroundColor: "#1a1818",
+    width: 150,
+    height: 40,
+    justifyContent: "center",
+    alignSelf: "center",
+    borderRadius: 10,
   },
 });
 export default Splach;
