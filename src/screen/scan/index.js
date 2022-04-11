@@ -12,16 +12,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import {
-  Avatar,
-  Modal,
-  FAB,
-  Portal,
-  Title,
-  Provider,
-} from "react-native-paper";
 import { BlurView } from "expo-blur";
-import RenderHtml from "react-native-render-html";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BarcodeMask from "react-native-barcode-mask";
 import * as Animatable from "react-native-animatable";

@@ -1,0 +1,38 @@
+{
+    "particulier":[{
+        "id": 1,
+        "icon": "require()",
+        "description": "0 à 50 cm3",
+        "montant": "3000 FCFA"
+      }, {
+        "id": 2,
+        "description": "51 à 125 cm3",
+        "montant": "6000 FCFA"
+      }, {
+        "id": 3,
+        "icon": "require()",
+        "description": "125 cm3 et plus",
+        "montant": "12 000 FCFA"
+      }],
+      "transport":[{
+        "id": 1,
+        "icon": "require()",
+        "description": "3 roues comportant 10 places ou moins et ayant 2 ans ou moins",
+        "montant": "33 000 FCFA"
+      }, {
+        "id": 2,
+        "icon": "require()",
+        "description": "3 roues comportant 10 places ou moins et ayant 2 ans ou moins",
+        "montant": "43 500 FCFA"
+      }, {
+        "id": 3,
+        "icon": "require()",
+        "description": "3 roues comportant 10 places ou moins et ayant 2 ans ou moins",
+        "montant": "48 000 FCFA"
+      }, {
+        "id": 4,
+        "icon": "require()",
+        "description": "3 roues comportant 10 places ou moins et ayant 2 ans ou moins",
+        "montant": "63 000 FCFA"
+      }]
+}
