@@ -1,12 +1,585 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  TextInput,
+  Keyboard,
+  FlatList,
+} from "react-native";
+import React, { useState } from "react";
+import Input from "../../../components/TextInput";
+import * as Animatable from "react-native-animatable";
+import {
+  Ionicons,
+  Entypo,
+  AntDesign,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
+import { Divider } from "react-native-paper";
+import Checkbox from "expo-checkbox";
+import { BlurView } from "expo-blur";
+const { width, height } = Dimensions.get("screen");
 
-const Index = () => {
-  return (
-    <View style={styles.contain}>
-      <Text>Gestion Guichet</Text>
-    </View>
-  );
+const Index = ({ navigation }) => {
+  Keyboard.dismiss();
+  const [isVisible, setIsVisible] = useState(false);
+  const [currentLoader, setCurrentLoader] = useState(null);
+  const [isChecked, setChecked] = useState(false);
+  const [isDelete, setIsDelete] = useState(null);
+
+  const handlePress = (loader) => {
+    setCurrentLoader(loader);
+  };
+  if (!currentLoader) {
+    return (
+      <SafeAreaView>
+        <ScrollView>
+          <Animatable.View
+            animation="fadeIn"
+            delay={500}
+            duration={300}
+            stickyHeaderHiddenOnScroll={true}
+            nestedScrollEnabled
+            stickyHeaderIndices={[0]}
+            contentContainerStyle={styles.contain}
+          >
+            <View
+              style={{
+                height: 80,
+                backgroundColor: "#1a1818",
+                flexDirection: "row",
+                elevation: 5,
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
+                <Ionicons name="ios-arrow-undo" size={30} color="white" />
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "700",
+                  color: "white",
+                  textAlign: "center",
+                  marginLeft: 10,
+                }}
+              >
+                GUICHET
+              </Text>
+              <Image
+                source={require("../../../../assets/icon/guichet.png")}
+                style={{ height: 40, width: 40 }}
+                resizeMode="cover"
+              />
+            </View>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "700",
+                marginHorizontal: 10,
+                padding: 10,
+              }}
+            >
+              Action Rapide
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                padding: 2,
+                margin: 2,
+                // position: "relative",
+                // marginHorizontal: 240,
+
+                borderRadius: 10,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => handlePress("Ajouter")}
+                style={styles.touch}
+              >
+                <AntDesign name="addfolder" size={24} color="white" />
+                <Text style={styles.touchTxt}>Ajouter</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.touch}>
+                <MaterialCommunityIcons
+                  name="file-document-edit-outline"
+                  size={24}
+                  color="white"
+                />
+                <Text style={styles.touchTxt}>Modifier</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setIsDelete(!isDelete)}
+                style={styles.touch}
+              >
+                <AntDesign name="delete" size={24} color="white" />
+                <Text style={styles.touchTxt}>Supprimer</Text>
+              </TouchableOpacity>
+            </View>
+
+            {isDelete ? (
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ marginTop: 25 }}>
+                  <Checkbox
+                    style={styles.checkbox}
+                    value={isChecked}
+                    onValueChange={setChecked}
+                  />
+                </View>
+
+                <Animatable.View
+                  delay={200}
+                  duration={250}
+                  animation="bounceInLeft"
+                  style={styles.CardDelete}
+                >
+                  <View
+                    style={{
+                      // flex: 2,
+                      height: 50,
+                      width: 50,
+                      backgroundColor: "#99D98c",
+                      borderRadius: 80,
+                      // marginTop: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      source={require("../../../../assets/icon/guichet.png")}
+                      style={{
+                        height: 35,
+                        width: 35,
+                      }}
+                      resizeMode="contain"
+                    />
+                  </View>
+
+                  <View style={styles.vignette}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginTop: 10,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <View style={{ flex: 1 }}>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            fontWeight: "200",
+                            color: "black",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          Numero du guichet
+                        </Text>
+                        <Text
+                          style={{
+                            marginLeft: 15,
+                            fontSize: 18,
+                            color: "black",
+                            textTransform: "uppercase",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          h44648-45454857-86
+                        </Text>
+                      </View>
+                      {isDelete ? (
+                        <TouchableOpacity style={styles.delete}>
+                          <AntDesign name="delete" size={24} color="white" />
+                        </TouchableOpacity>
+                      ) : null}
+                    </View>
+                  </View>
+                </Animatable.View>
+              </View>
+            ) : (
+              <TouchableOpacity
+                onPress={() => setIsVisible(!isVisible)}
+                style={styles.Card}
+              >
+                <View
+                  style={{
+                    flex: 2,
+                    height: 70,
+                    width: 70,
+                    backgroundColor: "#99D98c",
+                    borderRadius: 80,
+                    // marginTop: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    source={require("../../../../assets/icon/guichet.png")}
+                    style={{
+                      height: 40,
+                      width: 40,
+                    }}
+                    resizeMode="contain"
+                  />
+                </View>
+
+                <View style={styles.vignette}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 10,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          fontWeight: "200",
+                          color: "black",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        Numero du guichet
+                      </Text>
+                      <Text
+                        style={{
+                          marginLeft: 15,
+                          fontSize: 18,
+                          color: "black",
+                          textTransform: "uppercase",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        h44648-45454857-86
+                      </Text>
+                    </View>
+                    {isDelete ? (
+                      <TouchableOpacity style={styles.delete}>
+                        <AntDesign name="delete" size={24} color="white" />
+                      </TouchableOpacity>
+                    ) : null}
+                  </View>
+                </View>
+                {isVisible ? (
+                  <BlurView
+                    intensity={50}
+                    tint="dark"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 90,
+                      width: width - 15,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => handlePress("Affectation")}
+                        style={styles.btnBlur}
+                      >
+                        <MaterialCommunityIcons
+                          name="code-less-than-or-equal"
+                          size={30}
+                          color="white"
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => handlePress("Modify")}
+                        style={styles.btnBlur}
+                      >
+                        <FontAwesome name="edit" size={30} color="white" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => setIsDelete(!isDelete)}
+                        style={styles.btnBlur}
+                      >
+                        <MaterialCommunityIcons
+                          name="delete"
+                          size={30}
+                          color="white"
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </BlurView>
+                ) : null}
+              </TouchableOpacity>
+            )}
+          </Animatable.View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+  if (currentLoader == "Ajouter") {
+    return (
+      <SafeAreaView>
+        <Animatable.View animation="fadeIn">
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View
+              style={{
+                height: 80,
+                backgroundColor: "#1a1818",
+                flexDirection: "row",
+                elevation: 5,
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingHorizontal: 15,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.push("Guichet")}>
+                <Ionicons name="ios-arrow-undo" size={24} color="white" />
+              </TouchableOpacity>
+              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
+                {currentLoader == "Ajouter" ? "Ajout du Guichet" : null}
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
+                <Entypo name="cross" size={30} color="white" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ padding: 5, margin: 10 }}>
+              <Text style={{ textAlign: "center", fontSize: 18 }}>
+                Veuillez acheter une Guichet
+              </Text>
+            </View>
+            <View style={{ margin: 20, padding: 5, marginVertical: 120 }}>
+              <Input
+                iconName="ticket-percent"
+                placeholder="Numero du guichet"
+              />
+
+              <TouchableOpacity
+                onPress={() => handlePress("Ajouter")}
+                style={styles.touchAchat}
+              >
+                <AntDesign name="addfolder" size={24} color="white" />
+                <Text style={styles.touchTxt}>Ajouter</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </Animatable.View>
+      </SafeAreaView>
+    );
+  }
+  if (currentLoader == "Modify") {
+    return (
+      <SafeAreaView>
+        <Animatable.View animation="fadeIn">
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View
+              style={{
+                height: 80,
+                backgroundColor: "#1a1818",
+                flexDirection: "row",
+                elevation: 5,
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingHorizontal: 15,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.push("Guichet")}>
+                <Ionicons name="ios-arrow-undo" size={24} color="white" />
+              </TouchableOpacity>
+              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
+                {currentLoader == "Modify" ? "Modification" : null}
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
+                <Entypo name="cross" size={30} color="white" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ padding: 5, margin: 10, marginVertical: 20 }}>
+              <Text style={{ textAlign: "center", fontSize: 18 }}>
+                Veuillez Modifier le Guichet
+              </Text>
+            </View>
+            <View style={{ margin: 20, padding: 5, marginVertical: 120 }}>
+              <Input
+                iconName="ticket-percent"
+                placeholder="Numero du guichet"
+              />
+
+              <TouchableOpacity
+                onPress={() => handlePress("Ajouter")}
+                style={styles.touchAchat}
+              >
+                <AntDesign name="edit" size={24} color="white" />
+                <Text style={styles.touchTxt}>Modifiér</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </Animatable.View>
+      </SafeAreaView>
+    );
+  }
+  if (currentLoader == "Affectation") {
+    return (
+      <SafeAreaView>
+        <Animatable.View animation="fadeIn">
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View
+              style={{
+                height: 80,
+                backgroundColor: "#1a1818",
+                flexDirection: "row",
+                elevation: 5,
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingHorizontal: 15,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.push("Guichet")}>
+                <Ionicons name="ios-arrow-undo" size={24} color="white" />
+              </TouchableOpacity>
+              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
+                {currentLoader == "Affectation"
+                  ? "Affectation Du Guichet"
+                  : null}
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
+                <Entypo name="cross" size={30} color="white" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ padding: 5, margin: 10, marginVertical: 20 }}>
+              <Text style={{ textAlign: "center", fontSize: 18 }}>
+                Veuillez Affecteé le Guichet à un Agent
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                backgroundColor: "gray",
+                height: 50,
+                width: width - 10,
+                alignSelf: "center",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingHorizontal: 10,
+              }}
+            >
+              <Text style={{ fontSize: 20, fontWeight: "800", color: "white" }}>
+                Agent
+              </Text>
+              <Text style={{ fontSize: 20, fontWeight: "800", color: "white" }}>
+                Action
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                height: 50,
+                width: width,
+                alignSelf: "center",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  height: 50,
+                  width: 50,
+                  backgroundColor: "#99D98c",
+                  borderRadius: 40,
+                  marginTop: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={require("../../../../assets/icon/agent3.png")}
+                  style={{
+                    height: 40,
+                    width: 40,
+                  }}
+                  resizeMode="contain"
+                />
+              </View>
+
+              <View style={[styles.vignette, { width: 150 }]}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 10,
+                    justifyContent: "center",
+                    marginLeft: -20,
+                  }}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        fontWeight: "200",
+                        color: "black",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      Agent
+                    </Text>
+                    <Text
+                      style={{
+                        marginLeft: 15,
+                        fontSize: 18,
+                        color: "black",
+                        textTransform: "uppercase",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Cheick abba
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <Checkbox
+                style={styles.checkbox}
+                value={isChecked}
+                onValueChange={setChecked}
+              />
+            </View>
+
+            <Divider
+              style={{
+                backgroundColor: "black",
+                width: width - 110,
+                alignSelf: "center",
+                borderWidth: 0.2,
+                marginTop: 25,
+              }}
+            />
+
+            <View style={{ margin: 20, padding: 5, marginVertical: 50 }}>
+              <TouchableOpacity style={styles.touchAchat}>
+                <MaterialCommunityIcons
+                  name="code-less-than-or-equal"
+                  size={24}
+                  color="white"
+                />
+                <Text style={styles.touchTxt}>Affecter</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </Animatable.View>
+      </SafeAreaView>
+    );
+  }
 };
 
 export default Index;
@@ -15,6 +588,101 @@ const styles = StyleSheet.create({
   contain: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
+  },
+  checkbox: {
+    margin: 8,
+  },
+  touch: {
+    height: 50,
+    width: 110,
+    maxWidth: 120,
+    backgroundColor: "#99D98c",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+    flexDirection: "row",
+  },
+  touchAchat: {
+    height: 50,
+    width: width - 100,
+    backgroundColor: "#99D98c",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 10,
+    elevation: 5,
+    flexDirection: "row",
+    alignSelf: "center",
+    paddingHorizontal: 60,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  touchTxt: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  vignette: {
+    width: width - 90,
+    padding: 10,
+
+    marginBottom: 10,
+  },
+  section: {
+    flex: 1,
+  },
+  Card: {
+    margin: 5,
+    padding: 5,
+    height: 90,
+    width: width - 15,
+    elevation: 5,
+    flexDirection: "row",
+    backgroundColor: "white",
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  btnBlur: {
+    // flex: 2,
+    height: 55,
+    width: 55,
+    backgroundColor: "#99D98c",
+    borderRadius: 40,
+    // marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 15,
+  },
+  delete: {
+    // flex: 2,
+    height: 35,
+    width: 35,
+    backgroundColor: "red",
+    borderRadius: 20,
+    // marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 15,
+    bottom: 20,
+  },
+  CardDelete: {
+    margin: 5,
+    padding: 5,
+    height: 90,
+    width: width - 50,
+    elevation: 5,
+    flexDirection: "row",
+    backgroundColor: "white",
+    alignSelf: "center",
     alignItems: "center",
   },
 });

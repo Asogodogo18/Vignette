@@ -6,6 +6,9 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  ImageBackground,
+  Platform,
+  SafeAreaView,
 } from "react-native";
 import React from "react";
 const { width, height } = Dimensions.get("screen");
@@ -20,102 +23,88 @@ const Splach = ({ navigation }) => {
       style={styles.contain}
     >
       <View style={styles.header}>
-        <Text style={styles.txtHeader}>Connecte vous avec une compte</Text>
+        <ImageBackground
+          source={require("../../../../assets/bg-2.png")}
+          style={{
+            height: 370,
+            width: width,
+            alignItems: "center",
+            padding: 5,
+          }}
+          resizeMode="cover"
+        >
+          <Text style={styles.txtHeader}>Connecte vous avec une compte</Text>
+        </ImageBackground>
       </View>
-      <Animatable.View
-        animation="fadeIn"
-        duration={300}
-        delay={500}
-        style={{ flexDirection: "row", marginVertical: 50 }}
+      <View
+        style={{
+          marginVertical: -160,
+          alignItems: "center",
+          padding: 20,
+        }}
       >
-        <TouchableOpacity
-          style={styles.touch}
-          // onPress={() => {
-          //   Navigation.navigate("Course");
-          // }}
-        >
-          <Image
-            style={{
-              width: "80%",
-              height: "80%",
-              resizeMode: "cover",
-              overflow: "hidden",
-              alignSelf: "center",
-            }}
-            source={require("../../../../assets/icon/1.png")}
-          />
-          <View style={styles.containerTxt}>
-            <Text style={styles.title}>Agent</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.touch}
-          // onPress={() => {
-          //   Navigation.navigate("Course");
-          // }}
-        >
-          <Image
-            style={{
-              width: "75%",
-              height: "75%",
-              resizeMode: "cover",
-              overflow: "hidden",
-              alignSelf: "center",
-            }}
-            source={require("../../../../assets/icon/1.png")}
-          />
-          <View style={styles.containerTxt}>
-            <Text style={styles.title}>Client</Text>
-          </View>
-        </TouchableOpacity>
-      </Animatable.View>
-      <Animatable.View
-        animation="fadeIn"
-        duration={300}
-        delay={500}
-        style={{ flexDirection: "row" }}
-      >
-        <TouchableOpacity
-          style={styles.touch}
-          // onPress={() => {
-          //   Navigation.navigate("Course");
-          // }}
-        >
-          <Image
-            style={{
-              width: "80%",
-              height: "80%",
-              resizeMode: "cover",
-              overflow: "hidden",
-              alignSelf: "center",
-            }}
-            source={require("../../../../assets/icon/1.png")}
-          />
-          <View style={styles.containerTxt}>
-            <Text style={styles.title}>Police</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.touch}
-          onPress={() => {
-            navigation.navigate("Adminstack", { screen: "Accueil" });
+        <View
+          style={{
+            flexDirection: "row",
+            marginVertical: 20,
           }}
         >
-          <Image
-            style={{
-              width: "80%",
-              height: "80%",
-              resizeMode: "cover",
-              overflow: "hidden",
-              alignSelf: "center",
-            }}
-            source={require("../../../../assets/icon/1.png")}
-          />
-          <View style={styles.containerTxt}>
-            <Text style={styles.title}>Administrateur</Text>
+          <View style={styles.touch}>
+            <Image
+              style={styles.img}
+              source={require("../../../../assets/icon/agent3.png")}
+            />
+            <TouchableOpacity style={styles.containerTxt}>
+              <Text style={styles.title}>Agent</Text>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </Animatable.View>
+          <View style={styles.touch}>
+            <Image
+              style={styles.img}
+              source={require("../../../../assets/icon/client.png")}
+            />
+            <TouchableOpacity style={styles.containerTxt}>
+              <Text style={styles.title}>Client</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            marginVertical: 20,
+          }}
+        >
+          <View style={styles.touch}>
+            <Image
+              style={styles.img}
+              source={require("../../../../assets/icon/police.png")}
+            />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Appstack", { screen: "Accueil" })
+              }
+              style={styles.containerTxt}
+            >
+              <Text style={styles.title}>Police</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.touch}>
+            <Image
+              style={styles.img}
+              source={require("../../../../assets/icon/admin.png")}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Adminstack", { screen: "Accueil" });
+              }}
+              style={styles.containerTxt}
+            >
+              <Text style={styles.title}>Administrateur</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
       <Animatable.View
         animation="fadeIn"
         duration={300}
@@ -124,20 +113,28 @@ const Splach = ({ navigation }) => {
           position: "absolute",
           bottom: 0,
           // backgroundColor: "#1a1818",
+          backgroundColor: "white",
           height: 50,
-          width: width - 20,
+          width: width,
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 5,
+          alignSelf: "center",
+          borderTopLeftRadius: 70,
+          borderTopRightRadius: 70,
+          elevation: 5,
+          marginBottom: Platform.OS === "ios" ? 5 : 0,
         }}
       >
         <Text
           style={{
-            fontSize: 15,
+            fontSize: 18,
             fontWeight: "bold",
             color: "gray",
             textTransform: "uppercase",
             textShadowColor: "black",
+            textAlign: "center",
+            letterSpacing: 1,
           }}
         >
           Créer par CIRTIC
@@ -150,31 +147,29 @@ const Splach = ({ navigation }) => {
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
+    // backgroundColor: "#34A0A4",
   },
-  header: {
-    height: 70,
-    width: width,
-    backgroundColor: "#1a1818",
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   txtHeader: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 20,
+    marginTop: 65,
   },
 
   touch: {
     width: 160,
-    height: 180,
+    height: 145,
     backgroundColor: "white",
     borderRadius: 10,
-
     elevation: 5,
-
-    margin: 10,
-    marginTop: 10,
+    margin: 5,
+    marginTop: 0,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
   },
   title: {
     fontSize: 18,
@@ -185,13 +180,21 @@ const styles = StyleSheet.create({
   },
   containerTxt: {
     position: "absolute",
-    bottom: 1,
+    bottom: 8,
     backgroundColor: "#1a1818",
     width: 150,
     height: 40,
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 10,
+  },
+  img: {
+    width: "50%",
+    height: "50%",
+    resizeMode: "cover",
+    overflow: "hidden",
+    alignSelf: "center",
+    marginTop: 15,
   },
 });
 export default Splach;

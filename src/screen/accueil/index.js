@@ -66,20 +66,28 @@ const Index = ({ navigation }) => {
               position: "absolute",
               bottom: 0,
               // backgroundColor: "#1a1818",
+              backgroundColor: "white",
               height: 50,
-              width: width - 20,
+              width: width,
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 5,
+              alignSelf: "center",
+              borderTopLeftRadius: 70,
+              borderTopRightRadius: 70,
+              elevation: 5,
+              marginBottom: Platform.OS === "ios" ? 5 : 0,
             }}
           >
             <Text
               style={{
-                fontSize: 15,
+                fontSize: 18,
                 fontWeight: "bold",
                 color: "gray",
                 textTransform: "uppercase",
                 textShadowColor: "black",
+                textAlign: "center",
+                letterSpacing: 1,
               }}
             >
               Créer par CIRTIC
