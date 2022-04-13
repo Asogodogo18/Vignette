@@ -8,7 +8,7 @@ const RootStack = createNativeStackNavigator();
 
 const Index = () => {
   return (
-    <RootStack.Navigator initialRouteName="Authstack">
+    <RootStack.Navigator initialRouteName="Appstack">
       <RootStack.Screen
         name="Authstack"
         component={Authstack}

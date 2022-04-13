@@ -1,0 +1,41 @@
+[{
+  "id": 1,
+  "nom": "Jeffrey",
+  "prenom": "Michin",
+  "marque": "Toyota",
+  "type": "RAV4",
+  "utilisation": "Engineer",
+  "montant": "$612.6M",
+  "num_chassis": "518-87-8728",
+  "statut": false
+}, {
+  "id": 2,
+  "nom": "Cornelia",
+  "prenom": "Mellmer",
+  "marque": "Plymouth",
+  "type": "Colt Vista",
+  "utilisation": "Supervisor",
+  "montant": "n/a",
+  "num_chassis": "228-14-4557",
+  "statut": true
+}, {
+  "id": 3,
+  "nom": "Ange",
+  "prenom": "Potapczuk",
+  "marque": "Pontiac",
+  "type": "Firebird Trans Am",
+  "utilisation": "Estimator",
+  "montant": "$6.97B",
+  "num_chassis": "727-34-8465",
+  "statut": true
+}, {
+  "id": 4,
+  "nom": "Tabitha",
+  "prenom": "Ochiltree",
+  "marque": "Saturn",
+  "type": "S-Series",
+  "utilisation": "Estimator",
+  "montant": "$99.71M",
+  "num_chassis": "334-15-7209",
+  "statut": false
+}]

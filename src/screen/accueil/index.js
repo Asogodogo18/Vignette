@@ -1,4 +1,5 @@
 import {
+  ScrollView,
   View,
   Text,
   StyleSheet,
@@ -11,7 +12,14 @@ import React from "react";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { Button, Portal, Divider, Provider, Modal } from "react-native-paper";
+
 import Header from "../../components/header";
+import ClientHome from "../../components/client/ClientHome";
+import VerifHome from "../../components/client/VerifHome";
+import AgentHome from "../../components/client/AgentHome";
+import OfficerHome from "../../components/client/OfficerHome"
+
+
 const { height, width } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
@@ -42,9 +50,10 @@ const Index = ({ navigation }) => {
           </TouchableOpacity>
         </Modal>
       </Portal>
-      <View style={styles.contain}>
+      <ScrollView contentContainerStyle={styles.contain}>
         <StatusBar hidden />
         <Header setVisible={setVisible} />
+<<<<<<< HEAD
         <Animatable.View
           animation="fadeIn"
           duration={300}
@@ -95,12 +104,53 @@ const Index = ({ navigation }) => {
           </Animatable.View>
         </Animatable.View>
       </View>
+=======
+        <ClientHome navigation={navigation} />
+        {/* <OfficerHome navigation={navigation} /> */}
+        {/* <AgentHome navigation={navigation} /> */}
+       <Footer/>
+      </ScrollView>
+>>>>>>> client
     </Provider>
   );
 };
+
+
+const Footer = ()=>{
+  return (
+    <Animatable.View
+    animation="fadeIn"
+    duration={300}
+    delay={500}
+    style={{
+      position: "absolute",
+      bottom: 0,
+      // backgroundColor: "#1a1818",
+      height: 50,
+      width: width - 20,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 5,
+    }}
+  >
+    <Text
+      style={{
+        fontSize: 15,
+        fontWeight: "bold",
+        color: "gray",
+        textTransform: "uppercase",
+        textShadowColor: "black",
+      }}
+    >
+      Créer par CIRTIC
+    </Text>
+  </Animatable.View>
+  )
+}
+
 const styles = StyleSheet.create({
   contain: {
-    flex: 1,
+    flexGrow: 1,
   },
   containerStyle: {
     backgroundColor: "white",
