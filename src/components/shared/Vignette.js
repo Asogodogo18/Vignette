@@ -170,18 +170,31 @@ const Vignette = ({ item }) => {
       </Text>
       {!item.statut ? (
         <BlurView
-          intensity={20}
+          intensity={70}
+          tint="dark"
           style={{
             position: "absolute",
-            top:0,
-            left:0,
+            top: 0,
+            left: 0,
             justifyContent: "center",
             alignItems: "center",
-            width:"100%",
-            height:"100%"
+            minHeight: 200,
+            maxHeight: 380,
+            minWidth: 300,
+            maxWidth: 450,
+            flex: 1,
           }}
         >
-          <Text style={{fontSize:25, color:"white", textAlign:"center",textTransform:"uppercase"}} >En cours de Traitement</Text>
+          <Text
+            style={{
+              fontSize: 25,
+              color: "white",
+              textAlign: "center",
+              textTransform: "uppercase",
+            }}
+          >
+            En cours de Traitement
+          </Text>
         </BlurView>
       ) : null}
     </AnimatedImg>
@@ -192,14 +205,16 @@ export default Vignette;
 
 const styles = StyleSheet.create({
   vignette: {
-    height:180,
+    // height: 180,
     backgroundColor: "white",
     marginHorizontal: 8,
     marginVertical: 5,
     padding: 15,
     elevation: 10,
     width: 300,
-    borderRadius:5,
-    overflow:"hidden"
+    borderRadius: 5,
+    overflow: "hidden",
+    minHeight: 180,
+    maxHeight: 380,
   },
 });

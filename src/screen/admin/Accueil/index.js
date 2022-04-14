@@ -163,7 +163,9 @@ const Index = ({ navigation }) => {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate("Vignette")}
+              onPress={() =>
+                navigation.navigate("Adminstack", { screen: "Vignette" })
+              }
             >
               <View style={styles.touchAction}>
                 <View style={styles.coverIcon}>
@@ -186,7 +188,9 @@ const Index = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate("Guichet")}
+              onPress={() =>
+                navigation.navigate("Adminstack", { screen: "Guichet" })
+              }
             >
               <View style={styles.touchAction}>
                 <View style={styles.coverIcon}>
@@ -211,7 +215,9 @@ const Index = ({ navigation }) => {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate("PuisFiscale")}
+              onPress={() =>
+                navigation.navigate("Adminstack", { screen: "PuisFiscale" })
+              }
             >
               <View style={styles.touchAction}>
                 <View style={styles.coverIcon}>
@@ -228,7 +234,9 @@ const Index = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate("Agent")}
+              onPress={() =>
+                navigation.navigate("Adminstack", { screen: "Agent" })
+              }
             >
               <View style={styles.touchAction}>
                 <View style={styles.coverIcon}>
@@ -298,11 +306,9 @@ const styles = StyleSheet.create({
     // backgroundColor: "#1a1818",
   },
   section: {
-    // padding: 2,
     alignSelf: "center",
   },
   header: {
-    // flex: 1,
     backgroundColor: "#1a1818",
     justifyContent: "space-between",
     flexDirection: "row",

@@ -1,13 +1,11 @@
-import { StyleSheet, Text, View,FlatList } from 'react-native'
-import React from 'react'
-import Vignette from '../../components/shared/Vignette'
-import VignetteData from "../../data/Vignette.json"
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import React from "react";
+import Vignette from "../../components/shared/Vignette";
+import VignetteData from "../../data/Vignette.json";
 
 const Manage = ({}) => {
-  return (
-    <MyVignette/>
-  )
-}
+  return <MyVignette />;
+};
 
 const MyVignette = () => {
   return (
@@ -26,7 +24,10 @@ const MyVignette = () => {
       </Text>
       <FlatList
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ alignItems:"center"}}
+        contentContainerStyle={{
+          alignItems: "center",
+          paddingBottom: 50,
+        }}
         data={VignetteData}
         renderItem={Vignette}
         keyExtractor={(item) => item.id}
@@ -35,6 +36,6 @@ const MyVignette = () => {
   );
 };
 
-export default Manage
+export default Manage;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

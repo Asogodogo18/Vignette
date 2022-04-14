@@ -10,11 +10,14 @@ import {
   SafeAreaView,
   TextInput,
   Keyboard,
+  FlatList,
 } from "react-native";
 import React, { useState } from "react";
 import Input from "../../../components/TextInput";
 import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons";
+import Vignette from "../../../data/Vignette.json";
+const { item } = Vignette;
 
 const { width, height } = Dimensions.get("screen");
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
@@ -33,6 +36,7 @@ const Index = ({ navigation }) => {
   const handlePress = (loader) => {
     setCurrentLoader(loader);
   };
+  const renderItem = () => {};
   if (!currentLoader) {
     return (
       <SafeAreaView>
@@ -89,8 +93,6 @@ const Index = ({ navigation }) => {
             </Text>
             <View
               style={{
-                // flexDirection: "row",
-                // justifyContent: "space-around",
                 padding: 2,
                 margin: 2,
 
@@ -106,18 +108,6 @@ const Index = ({ navigation }) => {
                 <AntDesign name="addfolder" size={24} color="white" />
                 <Text style={styles.touchTxt}>Acheter</Text>
               </TouchableOpacity>
-              {/* <TouchableOpacity style={styles.touch}>
-                <MaterialCommunityIcons
-                  name="file-document-edit-outline"
-                  size={24}
-                  color="white"
-                />
-                <Text style={styles.touchTxt}>Modifier</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.touch}>
-                <AntDesign name="delete" size={24} color="white" />
-                <Text style={styles.touchTxt}>Supprimer</Text>
-              </TouchableOpacity> */}
             </View>
             <View style={{ margin: 5, padding: 5 }}>
               <AnimatedImg
@@ -272,6 +262,7 @@ const Index = ({ navigation }) => {
               </AnimatedImg>
             </View>
           </Animatable.View>
+          <FlatList />
         </ScrollView>
       </SafeAreaView>
     );

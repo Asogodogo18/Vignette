@@ -17,8 +17,8 @@ import Header from "../../components/header";
 import ClientHome from "../../components/client/ClientHome";
 import VerifHome from "../../components/client/VerifHome";
 import AgentHome from "../../components/client/AgentHome";
-import OfficerHome from "../../components/client/OfficerHome"
-
+import OfficerHome from "../../components/client/OfficerHome";
+import AdminHome from "../../screen/admin/Accueil";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -50,103 +50,59 @@ const Index = ({ navigation }) => {
           </TouchableOpacity>
         </Modal>
       </Portal>
-      <ScrollView contentContainerStyle={styles.contain}>
+      <ScrollView
+        stickyHeaderHiddenOnScroll
+        stickyHeaderIndices={[1]}
+        contentContainerStyle={styles.contain}
+      >
         <StatusBar hidden />
-        <Header setVisible={setVisible} />
-<<<<<<< HEAD
-        <Animatable.View
-          animation="fadeIn"
-          duration={300}
-          delay={500}
-          style={styles.container}
-        >
-          <TouchableOpacity
-            style={styles.touch}
-            onPress={() => navigation.navigate("Scan")}
-          >
-            <AntDesign name="qrcode" size={30} color="white" />
-            <Text style={styles.txt}>Veuillez Scanner la Code QR</Text>
-          </TouchableOpacity>
-          <Animatable.View
-            animation="fadeIn"
-            duration={300}
-            delay={500}
-            style={{
-              position: "absolute",
-              bottom: 0,
-              // backgroundColor: "#1a1818",
-              backgroundColor: "white",
-              height: 50,
-              width: width,
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 5,
-              alignSelf: "center",
-              borderTopLeftRadius: 70,
-              borderTopRightRadius: 70,
-              elevation: 5,
-              marginBottom: Platform.OS === "ios" ? 5 : 0,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: "gray",
-                textTransform: "uppercase",
-                textShadowColor: "black",
-                textAlign: "center",
-                letterSpacing: 1,
-              }}
-            >
-              Créer par CIRTIC
-            </Text>
-          </Animatable.View>
-        </Animatable.View>
-      </View>
-=======
-        <ClientHome navigation={navigation} />
+        {/* <Header setVisible={setVisible} /> */}
+        {/* <ClientHome navigation={navigation} /> */}
         {/* <OfficerHome navigation={navigation} /> */}
         {/* <AgentHome navigation={navigation} /> */}
-       <Footer/>
+        <AdminHome navigation={navigation} />
       </ScrollView>
->>>>>>> client
+      <Footer />
     </Provider>
   );
 };
 
-
-const Footer = ()=>{
+const Footer = () => {
   return (
     <Animatable.View
-    animation="fadeIn"
-    duration={300}
-    delay={500}
-    style={{
-      position: "absolute",
-      bottom: 0,
-      // backgroundColor: "#1a1818",
-      height: 50,
-      width: width - 20,
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 5,
-    }}
-  >
-    <Text
+      animation="fadeIn"
+      duration={300}
+      delay={500}
       style={{
-        fontSize: 15,
-        fontWeight: "bold",
-        color: "gray",
-        textTransform: "uppercase",
-        textShadowColor: "black",
+        position: "absolute",
+        bottom: 0,
+        backgroundColor: "white",
+        height: 40,
+        width: width,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 5,
+        alignSelf: "center",
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 70,
+        elevation: 5,
       }}
     >
-      Créer par CIRTIC
-    </Text>
-  </Animatable.View>
-  )
-}
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "bold",
+          color: "gray",
+          textTransform: "uppercase",
+          textShadowColor: "black",
+          textAlign: "center",
+        }}
+      >
+        Créer par CIRTIC
+      </Text>
+    </Animatable.View>
+  );
+};
 
 const styles = StyleSheet.create({
   contain: {
