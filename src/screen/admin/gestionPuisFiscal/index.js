@@ -22,18 +22,18 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
+import { Picker } from "@react-native-picker/picker";
+
 const { width, height } = Dimensions.get("screen");
 
 import Checkbox from "expo-checkbox";
 import { BlurView } from "expo-blur";
 
 const Index = ({ navigation }) => {
-  const [inputs, setInputs] = React.useState({
-    email: "",
-    fullname: "",
-    phone: "",
-    password: "",
-  });
+  const [puissance, setPuissance] = useState("");
+  const [montant, setMontant] = useState("");
+
+  const [selectedType, setSelectedType] = useState("Selectionne un Type");
   Keyboard.dismiss();
 
   const [currentLoader, setCurrentLoader] = useState(null);
@@ -331,19 +331,69 @@ const Index = ({ navigation }) => {
               </Text>
             </View>
 
-            <View
-              style={{
-                padding: 2,
-                margin: 2,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => handlePress("Ajouter")}
-                style={styles.touchAchat}
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../../../../assets/icon/bg-buy.png")}
+                resizeMode="cover"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: height - 200,
+                }}
               >
-                <AntDesign name="addfolder" size={24} color="white" />
-                <Text style={styles.touchTxt}>Ajouter</Text>
-              </TouchableOpacity>
+                <BlurView intensity={20} style={styles.inputBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setPuissance}
+                    value={puissance}
+                    placeholder="Puissance"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setMontant}
+                    value={montant}
+                    placeholder="Montant"
+                    keyboardType="numeric"
+                  />
+
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      height: 80,
+                      width: 250,
+                      borderRadius: 15,
+                    }}
+                  >
+                    <Picker
+                      selectedValue={setSelectedType}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setSelectedType(itemValue)
+                      }
+                      style={styles.select}
+                      mode="dropdown"
+                    >
+                      <Picker.Item label="Usage" value="" />
+                      <Picker.Item label="Transport" value="transport" />
+                      <Picker.Item label="Persionnelle" value="persionnelle" />
+                    </Picker>
+                  </View>
+
+                  <View style={styles.buttonGroup}>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={[styles.button, { backgroundColor: "black" }]}
+                    >
+                      <Text style={styles.btnLabel}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, { backgroundColor: "green" }]}
+                    >
+                      <Text style={styles.btnLabel}>Acheter</Text>
+                    </TouchableOpacity>
+                  </View>
+                </BlurView>
+              </ImageBackground>
             </View>
           </ScrollView>
         </Animatable.View>
@@ -383,16 +433,69 @@ const Index = ({ navigation }) => {
               </Text>
             </View>
 
-            <View
-              style={{
-                padding: 2,
-                margin: 2,
-              }}
-            >
-              <TouchableOpacity style={styles.touchAchat}>
-                <FontAwesome name="edit" size={30} color="white" />
-                <Text style={styles.touchTxt}>Modifier</Text>
-              </TouchableOpacity>
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../../../../assets/icon/bg-buy.png")}
+                resizeMode="cover"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: height - 200,
+                }}
+              >
+                <BlurView intensity={20} style={styles.inputBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setName}
+                    value={name}
+                    placeholder="Puissance"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setSurname}
+                    value={surname}
+                    placeholder="Montant"
+                    keyboardType="numeric"
+                  />
+
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      height: 80,
+                      width: 250,
+                      borderRadius: 15,
+                    }}
+                  >
+                    <Picker
+                      selectedValue={selectedLanguage}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setSelectedLanguage(itemValue)
+                      }
+                      style={styles.select}
+                      mode="dropdown"
+                    >
+                      <Picker.Item label="Usage" value="" />
+                      <Picker.Item label="Transport" value="transport" />
+                      <Picker.Item label="Persionnelle" value="persionnelle" />
+                    </Picker>
+                  </View>
+
+                  <View style={styles.buttonGroup}>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={[styles.button, { backgroundColor: "black" }]}
+                    >
+                      <Text style={styles.btnLabel}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, { backgroundColor: "green" }]}
+                    >
+                      <Text style={styles.btnLabel}>Modifier</Text>
+                    </TouchableOpacity>
+                  </View>
+                </BlurView>
+              </ImageBackground>
             </View>
           </ScrollView>
         </Animatable.View>
@@ -484,5 +587,50 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 15,
+  },
+  container: {
+    flex: 1,
+  },
+  inputBox: {
+    paddingVertical: 40,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
+
+    width: 250,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    height: 60,
+    marginTop: 40,
+  },
+  button: {
+    flex: 1,
+    margin: 10,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  btnLabel: {
+    color: "white",
+    textTransform: "uppercase",
+    fontSize: 14,
+  },
+  select: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
   },
 });

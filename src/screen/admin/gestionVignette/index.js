@@ -17,21 +17,24 @@ import Input from "../../../components/TextInput";
 import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons";
 import Vignette from "../../../data/Vignette.json";
-const { item } = Vignette;
-
+import { BlurView } from "expo-blur";
+import { Picker } from "@react-native-picker/picker";
 const { width, height } = Dimensions.get("screen");
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 
 const Index = ({ navigation }) => {
-  const [inputs, setInputs] = React.useState({
-    email: "",
-    fullname: "",
-    phone: "",
-    password: "",
-  });
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [marque, setMarque] = useState("");
+  const [noChassi, setNoChassi] = useState("");
+
   Keyboard.dismiss();
 
   const [currentLoader, setCurrentLoader] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    "Selectionne un Type"
+  );
 
   const handlePress = (loader) => {
     setCurrentLoader(loader);
@@ -300,53 +303,86 @@ const Index = ({ navigation }) => {
               </Text>
             </View>
 
-            <View style={styles.section}>
-              <Input iconName="account" label="Password" placeholder="Nom" />
-              <Input iconName="account" label="Password" placeholder="Prenom" />
-              <Input
-                iconName="account-switch-outline"
-                label="Password"
-                placeholder="Prenom"
-              />
-              <Input
-                iconName="account-switch-outline"
-                label="Password"
-                placeholder="Marque"
-              />
-              <Input
-                iconName="account-switch-outline"
-                label="Password"
-                placeholder="Utilisation"
-              />
-              <Input
-                iconName="account-switch-outline"
-                label="Type"
-                placeholder="Enter your password"
-              />
-              <Input
-                iconName="account-switch-outline"
-                label="Montant"
-                placeholder="Enter your password"
-              />
-              <Input
-                iconName="account-switch-outline"
-                label="Password"
-                placeholder="N°Chassis"
-              />
-            </View>
-            <View
-              style={{
-                padding: 2,
-                margin: 2,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => handlePress("Ajouter")}
-                style={styles.touchAchat}
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../../../../assets/icon/bg-buy.png")}
+                resizeMode="cover"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <AntDesign name="addfolder" size={24} color="white" />
-                <Text style={styles.touchTxt}>Acheter</Text>
-              </TouchableOpacity>
+                <BlurView intensity={20} style={styles.inputBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setName}
+                    value={name}
+                    placeholder="Nom"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setSurname}
+                    value={surname}
+                    placeholder="Prenom"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setPhone}
+                    value={phone}
+                    placeholder="Numero de Telephone"
+                    keyboardType="numeric"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setMarque}
+                    value={marque}
+                    placeholder="Marque"
+                  />
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      height: 80,
+                      width: 200,
+                      borderRadius: 15,
+                    }}
+                  >
+                    <Picker
+                      selectedValue={selectedLanguage}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setSelectedLanguage(itemValue)
+                      }
+                      style={styles.select}
+                      mode="dropdown"
+                    >
+                      <Picker.Item label="Type" value="" />
+                      <Picker.Item label="2 Roues" value="2roues" />
+                      <Picker.Item label="3 Roues" value="3roues" />
+                    </Picker>
+                  </View>
+
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setNoChassi}
+                    value={noChassi}
+                    placeholder="Numero de Chassis "
+                  />
+
+                  <View style={styles.buttonGroup}>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={[styles.button, { backgroundColor: "black" }]}
+                    >
+                      <Text style={styles.btnLabel}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, { backgroundColor: "green" }]}
+                    >
+                      <Text style={styles.btnLabel}>Acheter</Text>
+                    </TouchableOpacity>
+                  </View>
+                </BlurView>
+              </ImageBackground>
             </View>
           </ScrollView>
         </Animatable.View>
@@ -409,5 +445,50 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: "center",
     // alignItems: "center",
+  },
+  container: {
+    flexGrow: 1,
+  },
+  inputBox: {
+    paddingVertical: 40,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
+
+    width: 200,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    height: 60,
+    marginTop: 40,
+  },
+  button: {
+    flex: 1,
+    margin: 10,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  btnLabel: {
+    color: "white",
+    textTransform: "uppercase",
+    fontSize: 14,
+  },
+  select: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
   },
 });

@@ -15,6 +15,8 @@ import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
+import Tableau from "../../../components/admin/tableau";
+import Action from "../../../components/admin/Action";
 
 const { width, height } = Dimensions.get("screen");
 const Index = ({ navigation }) => {
@@ -94,57 +96,7 @@ const Index = ({ navigation }) => {
           Tableau de Board{" "}
         </Text>
         <View style={{ alignItems: "center", padding: 10 }}>
-          <Animatable.View
-            animation="fadeIn"
-            duration={300}
-            delay={500}
-            style={{
-              flexDirection: "row",
-              marginVertical: -10,
-              alignSelf: "center",
-              padding: 5,
-            }}
-          >
-            <View style={styles.touch}>
-              <View style={styles.containerTxt}>
-                <Text style={styles.title}>VIGNETTE EN CIRCULATION</Text>
-              </View>
-              <View style={styles.fond}>
-                <Text style={styles.containerTitle}>15</Text>
-              </View>
-            </View>
-            <View style={styles.touch}>
-              <View style={styles.containerTxt}>
-                <Text style={styles.title}>VIGNETTE AUJOURD'HUI</Text>
-              </View>
-              <View style={styles.fond}>
-                <Text style={styles.containerTitle}>15</Text>
-              </View>
-            </View>
-          </Animatable.View>
-          <Animatable.View
-            animation="fadeIn"
-            duration={300}
-            delay={500}
-            style={{ flexDirection: "row" }}
-          >
-            <View style={styles.touch}>
-              <View style={styles.containerTxt}>
-                <Text style={styles.title}>CHIFFRE D'AFFAIRE AUJOURD'HUI</Text>
-              </View>
-              <View style={styles.fond}>
-                <Text style={styles.containerTitle}>1500 cfa</Text>
-              </View>
-            </View>
-            <View style={styles.touch}>
-              <View style={styles.containerTxt}>
-                <Text style={styles.title}>VIGNETTE PAYÉE AUJOURD'HUI</Text>
-              </View>
-              <View style={styles.fond}>
-                <Text style={styles.containerTitle}>15</Text>
-              </View>
-            </View>
-          </Animatable.View>
+          <Tableau />
         </View>
 
         <Text
@@ -160,104 +112,7 @@ const Index = ({ navigation }) => {
           Action Rapide
         </Text>
         <View style={styles.section}>
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate("Adminstack", { screen: "Vignette" })
-              }
-            >
-              <View style={styles.touchAction}>
-                <View style={styles.coverIcon}>
-                  <Image
-                    source={require("../../../../assets/icon/vignette.png")}
-                    style={{ height: 50, width: 50 }}
-                    resizeMode="contain"
-                  />
-                </View>
-
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "700",
-                  }}
-                >
-                  VIGNETTE
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate("Adminstack", { screen: "Guichet" })
-              }
-            >
-              <View style={styles.touchAction}>
-                <View style={styles.coverIcon}>
-                  <Image
-                    source={require("../../../../assets/icon/guichet.png")}
-                    style={{ height: 45, width: 45 }}
-                    resizeMode="contain"
-                  />
-                </View>
-
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "700",
-                  }}
-                >
-                  GUICHET
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate("Adminstack", { screen: "PuisFiscale" })
-              }
-            >
-              <View style={styles.touchAction}>
-                <View style={styles.coverIcon}>
-                  <Image
-                    source={require("../../../../assets/icon/puissance.png")}
-                    style={{ height: 45, width: 45 }}
-                    resizeMode="contain"
-                  />
-                </View>
-                <Text style={{ width: 100, fontWeight: "bold", fontSize: 17 }}>
-                  PUISSANCE FISCALE
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate("Adminstack", { screen: "Agent" })
-              }
-            >
-              <View style={styles.touchAction}>
-                <View style={styles.coverIcon}>
-                  <Image
-                    source={require("../../../../assets/icon/agent3.png")}
-                    style={{ height: 45, width: 45 }}
-                    resizeMode="contain"
-                  />
-                </View>
-
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "700",
-                  }}
-                >
-                  AGENT
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          <Action navigation={navigation} />
         </View>
       </ScrollView>
       <Animatable.View
@@ -341,75 +196,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
-  },
-  title: {
-    fontSize: 15,
-    fontWeight: "200",
-    color: "black",
-    textAlign: "center",
-    letterSpacing: 0.5,
-  },
-  containerTxt: {
-    marginTop: 5,
-    // backgroundColor: "#1a1818",
-    minWidth: 150,
-    maxWidth: 250,
-    height: 45,
-    justifyContent: "center",
-    alignSelf: "center",
-    borderRadius: 10,
-  },
-  containerTitle: {
-    fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
-    alignSelf: "center",
-    color: "white",
-  },
-  fond: {
-    marginTop: 20,
-    alignSelf: "center",
-    backgroundColor: "#99D98c",
-    height: 50,
-    maxWidth: 210,
-    minWidth: 110,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 5,
-  },
-  touchAction: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    backgroundColor: "white",
-    height: 95,
-    maxWidth: 270,
-    minWidth: 170,
-    margin: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 5,
-    borderRadius: 15,
-  },
-  coverIcon: {
-    height: 60,
-    width: 60,
-    backgroundColor: "#99D98c",
-    borderRadius: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 5,
-    padding: 15,
   },
 });

@@ -22,7 +22,8 @@ const { width, height } = Dimensions.get("screen");
 
 import { Feather, FontAwesome } from "@expo/vector-icons";
 
-const Index = ({ navigation }) => {
+const Index = ({ navigation, route }) => {
+  // const { item } = route.params;
   const Navigation = useNavigation();
   const [data, setData] = React.useState({
     username: "",
@@ -122,6 +123,14 @@ const Index = ({ navigation }) => {
           source={require("../../../../assets/logo.png")}
           style={styles.headerImg}
         />
+        <View style={styles.imgBox}>
+          {/* <Image
+            // source={item}
+            // source={{ uri: `${item}` }}
+            style={{ height: 100, width: 100 }}
+            resizeMode="contain"
+          /> */}
+        </View>
         {/* <Text style={styles.text_header}>Connexion</Text> */}
       </View>
 
@@ -296,7 +305,7 @@ const styles = StyleSheet.create({
     opacity: 0.2,
   },
   text_header: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     fontSize: 30,
   },

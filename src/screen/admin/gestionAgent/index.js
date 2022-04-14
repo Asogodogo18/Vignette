@@ -23,15 +23,15 @@ import {
 } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import Checkbox from "expo-checkbox";
+
+import { Picker } from "@react-native-picker/picker";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
-  const [inputs, setInputs] = React.useState({
-    email: "",
-    fullname: "",
-    phone: "",
-    password: "",
-  });
+  const [name, setName] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState();
   Keyboard.dismiss();
 
   const [currentLoader, setCurrentLoader] = useState(null);
@@ -502,17 +502,81 @@ const Index = ({ navigation }) => {
                 Veuillez Ajouter un Agent
               </Text>
             </View>
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../../../../assets/icon/bg-buy.png")}
+                resizeMode="cover"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: height - 190,
+                }}
+              >
+                <BlurView intensity={50} style={styles.inputBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setName}
+                    value={name}
+                    placeholder="Nom"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setPrenom}
+                    value={prenom}
+                    placeholder="Prenom"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setPhone}
+                    value={phone}
+                    placeholder="Numero de Telephone"
+                    keyboardType="numeric"
+                  />
 
-            <View
-              style={{
-                padding: 2,
-                margin: 2,
-              }}
-            >
-              <TouchableOpacity style={styles.touchAchat}>
-                <AntDesign name="addfolder" size={24} color="white" />
-                <Text style={styles.touchTxt}>Acheter</Text>
-              </TouchableOpacity>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      height: 80,
+                      width: 200,
+                      borderRadius: 15,
+                    }}
+                  >
+                    <Picker
+                      selectedValue={role}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setRole(itemValue)
+                      }
+                      style={styles.select}
+                      mode="dropdown"
+                    >
+                      <Picker.Item label="Rôle" value="" />
+                      <Picker.Item
+                        label="Administrateur"
+                        value="administraateur"
+                      />
+                      <Picker.Item label="Police" value="police" />
+                      <Picker.Item label="Client" value="client" />
+                      <Picker.Item label="Agent" value="agent" />
+                      <Picker.Item label="Verificateur" value="verificateur" />
+                    </Picker>
+                  </View>
+
+                  <View style={styles.buttonGroup}>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={[styles.button, { backgroundColor: "black" }]}
+                    >
+                      <Text style={styles.btnLabel}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, { backgroundColor: "green" }]}
+                    >
+                      <Text style={styles.btnLabel}>Ajouter</Text>
+                    </TouchableOpacity>
+                  </View>
+                </BlurView>
+              </ImageBackground>
             </View>
           </ScrollView>
         </Animatable.View>
@@ -552,20 +616,81 @@ const Index = ({ navigation }) => {
               </Text>
             </View>
 
-            <View
-              style={{
-                padding: 2,
-                margin: 2,
-              }}
-            >
-              <TouchableOpacity style={styles.touchAchat}>
-                <MaterialCommunityIcons
-                  name="file-document-edit-outline"
-                  size={24}
-                  color="white"
-                />
-                <Text style={styles.touchTxt}>Modifier</Text>
-              </TouchableOpacity>
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../../../../assets/icon/bg-buy.png")}
+                resizeMode="cover"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: height - 190,
+                }}
+              >
+                <BlurView intensity={50} style={styles.inputBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setName}
+                    value={name}
+                    placeholder="Nom"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setPrenom}
+                    value={prenom}
+                    placeholder="Prenom"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setPhone}
+                    value={phone}
+                    placeholder="Numero de Telephone"
+                    keyboardType="numeric"
+                  />
+
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      height: 80,
+                      width: 200,
+                      borderRadius: 15,
+                    }}
+                  >
+                    <Picker
+                      selectedValue={role}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setRole(itemValue)
+                      }
+                      style={styles.select}
+                      mode="dropdown"
+                    >
+                      <Picker.Item label="Rôle" value="" />
+                      <Picker.Item
+                        label="Administrateur"
+                        value="administraateur"
+                      />
+                      <Picker.Item label="Police" value="police" />
+                      <Picker.Item label="Client" value="client" />
+                      <Picker.Item label="Agent" value="agent" />
+                      <Picker.Item label="Verificateur" value="verificateur" />
+                    </Picker>
+                  </View>
+
+                  <View style={styles.buttonGroup}>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={[styles.button, { backgroundColor: "black" }]}
+                    >
+                      <Text style={styles.btnLabel}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, { backgroundColor: "green" }]}
+                    >
+                      <Text style={styles.btnLabel}>Modifier</Text>
+                    </TouchableOpacity>
+                  </View>
+                </BlurView>
+              </ImageBackground>
             </View>
           </ScrollView>
         </Animatable.View>
@@ -677,5 +802,50 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     borderRadius: 10,
+  },
+  container: {
+    flexGrow: 1,
+  },
+  inputBox: {
+    paddingVertical: 40,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
+
+    width: 200,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    height: 60,
+    marginTop: 40,
+  },
+  button: {
+    flex: 1,
+    margin: 10,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  btnLabel: {
+    color: "white",
+    textTransform: "uppercase",
+    fontSize: 14,
+  },
+  select: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
   },
 });

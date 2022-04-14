@@ -54,7 +54,12 @@ const Splach = ({ navigation }) => {
               style={styles.img}
               source={require("../../../../assets/icon/agent3.png")}
             />
-            <TouchableOpacity style={styles.containerTxt}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Appstack", { screen: "Accueil" })
+              }
+              style={styles.containerTxt}
+            >
               <Text style={styles.title}>Agent</Text>
             </TouchableOpacity>
           </View>
@@ -63,7 +68,12 @@ const Splach = ({ navigation }) => {
               style={styles.img}
               source={require("../../../../assets/icon/client.png")}
             />
-            <TouchableOpacity style={styles.containerTxt}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Appstack", { screen: "Accueil" })
+              }
+              style={styles.containerTxt}
+            >
               <Text style={styles.title}>Client</Text>
             </TouchableOpacity>
           </View>

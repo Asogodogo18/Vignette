@@ -33,6 +33,7 @@ const Index = ({ navigation }) => {
   const [currentLoader, setCurrentLoader] = useState(null);
   const [isChecked, setChecked] = useState(false);
   const [isDelete, setIsDelete] = useState(null);
+  const [numero, setNumero] = useState(null);
 
   const handlePress = (loader) => {
     setCurrentLoader(loader);
@@ -110,7 +111,10 @@ const Index = ({ navigation }) => {
                 <AntDesign name="addfolder" size={24} color="white" />
                 <Text style={styles.touchTxt}>Ajouter</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.touch}>
+              <TouchableOpacity
+                onPress={() => handlePress("Modify")}
+                style={styles.touch}
+              >
                 <MaterialCommunityIcons
                   name="file-document-edit-outline"
                   size={24}
@@ -355,22 +359,43 @@ const Index = ({ navigation }) => {
 
             <View style={{ padding: 5, margin: 10 }}>
               <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Veuillez acheter une Guichet
+                Veuillez Ajouter un Guichet
               </Text>
             </View>
-            <View style={{ margin: 20, padding: 5, marginVertical: 120 }}>
-              <Input
-                iconName="ticket-percent"
-                placeholder="Numero du guichet"
-              />
-
-              <TouchableOpacity
-                onPress={() => handlePress("Ajouter")}
-                style={styles.touchAchat}
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../../../../assets/icon/bg-buy.png")}
+                resizeMode="cover"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: height - 200,
+                }}
               >
-                <AntDesign name="addfolder" size={24} color="white" />
-                <Text style={styles.touchTxt}>Ajouter</Text>
-              </TouchableOpacity>
+                <BlurView intensity={20} style={styles.inputBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setNumero}
+                    value={numero}
+                    placeholder="N° du Guichet"
+                  />
+
+                  <View style={styles.buttonGroup}>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={[styles.button, { backgroundColor: "black" }]}
+                    >
+                      <Text style={styles.btnLabel}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, { backgroundColor: "green" }]}
+                    >
+                      <Text style={styles.btnLabel}>Ajouter</Text>
+                    </TouchableOpacity>
+                  </View>
+                </BlurView>
+              </ImageBackground>
             </View>
           </ScrollView>
         </Animatable.View>
@@ -409,19 +434,40 @@ const Index = ({ navigation }) => {
                 Veuillez Modifier le Guichet
               </Text>
             </View>
-            <View style={{ margin: 20, padding: 5, marginVertical: 120 }}>
-              <Input
-                iconName="ticket-percent"
-                placeholder="Numero du guichet"
-              />
-
-              <TouchableOpacity
-                onPress={() => handlePress("Ajouter")}
-                style={styles.touchAchat}
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../../../../assets/icon/bg-buy.png")}
+                resizeMode="cover"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: height - 200,
+                }}
               >
-                <AntDesign name="edit" size={24} color="white" />
-                <Text style={styles.touchTxt}>Modifiér</Text>
-              </TouchableOpacity>
+                <BlurView intensity={20} style={styles.inputBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setNumero}
+                    value={numero}
+                    placeholder="N° du Guichet"
+                  />
+
+                  <View style={styles.buttonGroup}>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={[styles.button, { backgroundColor: "black" }]}
+                    >
+                      <Text style={styles.btnLabel}>Annuler</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.button, { backgroundColor: "green" }]}
+                    >
+                      <Text style={styles.btnLabel}>Modifier</Text>
+                    </TouchableOpacity>
+                  </View>
+                </BlurView>
+              </ImageBackground>
             </View>
           </ScrollView>
         </Animatable.View>
@@ -684,5 +730,42 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignSelf: "center",
     alignItems: "center",
+  },
+  container: {
+    flex: 1,
+  },
+  inputBox: {
+    paddingVertical: 40,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
+
+    width: 250,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    height: 60,
+    marginTop: 40,
+  },
+  button: {
+    flex: 1,
+    margin: 10,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  btnLabel: {
+    color: "white",
+    textTransform: "uppercase",
+    fontSize: 14,
   },
 });

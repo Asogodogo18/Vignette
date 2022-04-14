@@ -34,7 +34,9 @@ const Index = ({ navigation }) => {
         >
           <TouchableOpacity
             style={styles.touch1}
-            onPress={() => navigation.replace("Connexion")}
+            onPress={() =>
+              navigation.replace("Authstack", { screen: "Connexion" })
+            }
           >
             <FontAwesome name="sign-out" size={24} color="white" />
             <Text
@@ -56,11 +58,11 @@ const Index = ({ navigation }) => {
         contentContainerStyle={styles.contain}
       >
         <StatusBar hidden />
-        {/* <Header setVisible={setVisible} /> */}
-        {/* <ClientHome navigation={navigation} /> */}
+        <Header setVisible={setVisible} />
+        <ClientHome navigation={navigation} />
         {/* <OfficerHome navigation={navigation} /> */}
         {/* <AgentHome navigation={navigation} /> */}
-        <AdminHome navigation={navigation} />
+        {/* <AdminHome navigation={navigation} /> */}
       </ScrollView>
       <Footer />
     </Provider>
