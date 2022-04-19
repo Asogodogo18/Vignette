@@ -11,11 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
-<<<<<<< HEAD
-    "@react-native-picker/picker": "^2.4.1",
-=======
     "@react-native-picker/picker": "2.2.1",
->>>>>>> integration
     "@react-navigation/drawer": "^6.4.1",
     "@react-navigation/material-top-tabs": "^6.2.1",
     "@react-navigation/native": "^6.0.8",
