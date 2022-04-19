@@ -12,23 +12,6 @@ const Index = () => {
   const { user, isSignedIn } = useAuthState();
   return (
     <RootStack.Navigator initialRouteName="Authstack">
-<<<<<<< HEAD
-      <RootStack.Screen
-        name="Authstack"
-        component={Authstack}
-        options={{ headerShown: false }}
-      />
-      <RootStack.Screen
-        name="Appstack"
-        component={Appstack}
-        options={{ headerShown: false }}
-      />
-      <RootStack.Screen
-        name="Adminstack"
-        component={Adminstack}
-        options={{ headerShown: false }}
-      />
-=======
       {isSignedIn ? (
         user.role === "Administrateur" ? (
           <RootStack.Screen
@@ -50,7 +33,6 @@ const Index = () => {
           options={{ headerShown: false }}
         />
       )}
->>>>>>> integration
     </RootStack.Navigator>
   );
 };
