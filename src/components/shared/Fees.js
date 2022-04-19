@@ -1,68 +1,87 @@
 import {
-    StyleSheet,
-    Text,
-    View,
-    FlatList,
-  } from "react-native";
-  import Tarif from "./Tarif";
-  import FeesData from "../../data/tarifs.json";
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import Tarif from "./Tarif";
+import { usePuissances } from "../../services/query";
 
-const Fees = () => {
-    return (
-      <View>
-        <Text
-          style={{
-            marginLeft: 15,
-            fontSize: 20,
-            fontWeight: "bold",
-            color: "black",
-            textTransform: "capitalize",
-          }}
+const Fees = ({navigation}) => {
+  const { status, data, error, isFetching } = usePuissances();
+
+  return (
+    <View>
+      <Text
+        style={{
+          marginLeft: 15,
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "black",
+          textTransform: "capitalize",
+        }}
+      >
+        Nos Tarifs
+      </Text>
+      <Text
+        style={{
+          marginLeft: 20,
+          fontSize: 20,
+          fontWeight: "200",
+          color: "black",
+          textTransform: "capitalize",
+        }}
+      >
+        Particuliers
+      </Text>
+
+      {isFetching ? (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-          Nos Tarifs
-        </Text>
-        <Text
-          style={{
-            marginLeft: 20,
-            fontSize: 20,
-            fontWeight: "200",
-            color: "black",
-            textTransform: "capitalize",
-          }}
-        >
-          Particuliers
-        </Text>
+          <ActivityIndicator size="large" />
+        </View>
+      ) : (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={FeesData["particulier"]}
-          renderItem={Tarif}
-          keyExtractor={(item) => item.id}
+          data={data.filter(item => item.utilisation==="Personnel")}
+          renderItem={({item})=>(<Tarif navigation={navigation} item={item}/>)}
+          keyExtractor={(item) => item.id_puissance}
         />
-        <Text
-          style={{
-            marginLeft: 20,
-            fontSize: 20,
-            fontWeight: "200",
-            color: "black",
-            textTransform: "capitalize",
-          }}
+      )}
+
+      <Text
+        style={{
+          marginLeft: 20,
+          fontSize: 20,
+          fontWeight: "200",
+          color: "black",
+          textTransform: "capitalize",
+        }}
+      >
+        Transports
+      </Text>
+      {isFetching ? (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-          Transports
-        </Text>
-  
+          <ActivityIndicator size="large" />
+        </View>
+      ) : (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={FeesData["transport"]}
-          renderItem={Tarif}
-          keyExtractor={(item) => item.id}
+          data={data.filter(item => item.utilisation==="Transport")}
+          renderItem={({item})=>(<Tarif navigation={navigation} item={item}/>)}
+          keyExtractor={(item) => item.id_puissance}
         />
-      </View>
-    );
-  };
+      )}
+    </View>
+  );
+};
 
-  export default Fees
-  
+export default Fees;

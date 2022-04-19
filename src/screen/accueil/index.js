@@ -8,7 +8,8 @@ import {
   StatusBar,
 } from "react-native";
 import React from "react";
-
+import { useAuthState } from "../../global";
+import {useAuthDispatch,logout} from "../../global"
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { Button, Portal, Divider, Provider, Modal } from "react-native-paper";
@@ -18,12 +19,18 @@ import ClientHome from "../../components/client/ClientHome";
 import VerifHome from "../../components/client/VerifHome";
 import AgentHome from "../../components/client/AgentHome";
 import OfficerHome from "../../components/client/OfficerHome";
+<<<<<<< HEAD
 import AdminHome from "../../screen/admin/Accueil";
+=======
+>>>>>>> integration
 
 const { height, width } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
+  const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
   const [visible, setVisible] = React.useState(false);
+  
   return (
     <Provider>
       <Portal>
@@ -34,9 +41,13 @@ const Index = ({ navigation }) => {
         >
           <TouchableOpacity
             style={styles.touch1}
+<<<<<<< HEAD
             onPress={() =>
               navigation.replace("Authstack", { screen: "Connexion" })
             }
+=======
+            onPress={() => logout(dispatch)}
+>>>>>>> integration
           >
             <FontAwesome name="sign-out" size={24} color="white" />
             <Text
@@ -59,10 +70,23 @@ const Index = ({ navigation }) => {
       >
         <StatusBar hidden />
         <Header setVisible={setVisible} />
+<<<<<<< HEAD
         <ClientHome navigation={navigation} />
         {/* <OfficerHome navigation={navigation} /> */}
         {/* <AgentHome navigation={navigation} /> */}
         {/* <AdminHome navigation={navigation} /> */}
+=======
+        {user.role === "Agent" ? (
+          <AgentHome navigation={navigation} />
+        ) : user.role === "Client" ? (
+          <ClientHome navigation={navigation} />
+        ) : user.role === "Police" ? (
+          <OfficerHome navigation={navigation} />
+        ) : user.role === "Verificateur" ? (
+          <VerifHome />
+        ) : null}
+        <Footer />
+>>>>>>> integration
       </ScrollView>
       <Footer />
     </Provider>
@@ -78,6 +102,7 @@ const Footer = () => {
       style={{
         position: "absolute",
         bottom: 0,
+<<<<<<< HEAD
         backgroundColor: "white",
         height: 40,
         width: width,
@@ -88,16 +113,31 @@ const Footer = () => {
         borderTopLeftRadius: 70,
         borderTopRightRadius: 70,
         elevation: 5,
+=======
+        // backgroundColor: "#1a1818",
+        height: 50,
+        width: width - 20,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 5,
+>>>>>>> integration
       }}
     >
       <Text
         style={{
+<<<<<<< HEAD
           fontSize: 18,
+=======
+          fontSize: 15,
+>>>>>>> integration
           fontWeight: "bold",
           color: "gray",
           textTransform: "uppercase",
           textShadowColor: "black",
+<<<<<<< HEAD
           textAlign: "center",
+=======
+>>>>>>> integration
         }}
       >
         Créer par CIRTIC
