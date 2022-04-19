@@ -5,18 +5,18 @@ import {
   TouchableOpacity,
   Platform,
   StyleSheet,
-  StatusBar,
-  Alert,
   Dimensions,
   ScrollView,
-  ImageBackground,
   Image,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
+
+import { loginUser, useAuthState, useAuthDispatch } from "../../../global";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -24,6 +24,9 @@ import { Feather, FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation }) => {
   const Navigation = useNavigation();
+  const dispatch = useAuthDispatch(); //get the dispatch method from the useDispatch custom hook
+  const { loading, errorMessage } = useAuthState(); //read the values of loading and errorMessage from context
+
   const [data, setData] = React.useState({
     username: "",
     password: "",
@@ -32,10 +35,6 @@ const Index = ({ navigation }) => {
     isValidUser: true,
     isValidPassword: true,
   });
-
-  // const { colors } = useTheme();
-
-  // const { signIn } = React.useContext(AuthContext);
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -92,27 +91,21 @@ const Index = ({ navigation }) => {
     }
   };
 
-  const loginHandle = (userName, password) => {
-    const foundUser = Users.filter((item) => {
-      return userName == item.username && password == item.password;
-    });
-
+  const loginHandle = async () => {
     if (data.username.length == 0 || data.password.length == 0) {
-      Alert.alert(
-        "Wrong Input!",
-        "Username or password field cannot be empty.",
-        [{ text: "Okay" }]
-      );
-      return;
-    }
-
-    if (foundUser.length == 0) {
-      Alert.alert("Invalid User!", "Username or password is incorrect.", [
+      alert("Wrong Input!", "Username or password field cannot be empty.", [
         { text: "Okay" },
       ]);
       return;
     }
-    signIn(foundUser);
+
+    try {
+      let response = await loginUser(dispatch, data); //loginUser action makes the request and handles all the neccessary state changes
+      if (!response) return;
+      console.log("client log:", response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -131,19 +124,16 @@ const Index = ({ navigation }) => {
         delay={500}
         style={styles.footer}
       >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 15 }}>
           <Text style={styles.text_footer}>Nom d'utilisateur ou E-mail</Text>
           <View style={styles.action}>
             <FontAwesome name="user-o" color="gray" size={20} />
             <TextInput
               placeholder="Votre Nom d'utilisateur ou E-mail"
               placeholderTextColor="#666666"
-              style={[
-                styles.textInput,
-                {
-                  color: "black",
-                },
-              ]}
+              value={data.username}
+              onChangeText={textInputChange}
+              style={[styles.textInput]}
               autoCapitalize="none"
             />
             {data.check_textInputChange ? (
@@ -204,36 +194,39 @@ const Index = ({ navigation }) => {
           </TouchableOpacity>
           <View>
             <View style={{ marginTop: 10, alignItems: "center" }}>
-              <LinearGradient
-                colors={["#1a1818", "#FFFF"]}
-                start={{ x: 0.1, y: 2.0 }}
-                end={{ x: 2.0, y: 0.1 }}
-                style={{
-                  height: 48,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: 200,
-                  elevation: 5,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.replace("Appstack");
+              {loading ? (
+                <ActivityIndicator size="large" />
+              ) : (
+                <LinearGradient
+                  colors={["#1a1818", "#FFFF"]}
+                  start={{ x: 0.1, y: 2.0 }}
+                  end={{ x: 2.0, y: 0.1 }}
+                  style={{
+                    height: 48,
+                    borderRadius: 10,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 200,
+                    elevation: 5,
                   }}
-                  style={styles.touch1}
                 >
-                  <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity
+                    onPress={loginHandle}
+                    style={[
+                      styles.touch1,
+                      { flexDirection: "row", alignItems: "center" },
+                    ]}
+                  >
                     <FontAwesome5
                       name="sign-in-alt"
                       size={24}
                       color="white"
-                      style={{ marginLeft: 0, marginTop: 10 }}
+                      style={{ marginLeft: 0, marginRight: 5 }}
                     />
-                    <Text style={styles.text}>Connecté</Text>
-                  </View>
-                </TouchableOpacity>
-              </LinearGradient>
+                    <Text style={styles.text}> Se Connecter</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              )}
             </View>
 
             <View style={{ marginTop: 15 }}>
@@ -257,6 +250,8 @@ const Index = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
+
+          {errorMessage ? <Text style={[styles.errorMsg,{marginTop:20,padding:20}]}>{errorMessage}</Text> : null}
         </ScrollView>
       </Animatable.View>
     </View>
@@ -360,7 +355,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     color: "white",
-    paddingTop: 10,
+
     //marginLeft: 30,
     left: 30,
     textAlign: "center",

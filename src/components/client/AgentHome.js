@@ -1,43 +1,46 @@
-import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
-import React from "react";
+import { ScrollView, Text } from "react-native";
+import React, { useState } from "react";
 
-import Vignette from "../shared/Vignette";
 import QuickSelect from "../shared/QuickSelect";
 import Fees from "../shared/Fees";
 import SearchBar from "../shared/SearchBar";
+import { View } from "react-native-animatable";
+import { Ionicons } from "@expo/vector-icons";
 
-import VignetteData from "../../data/Vignette.json";
+import VignetteList from "../shared/VignetteList";
 
-const MyVignette = () => {
-  return (
-    <View>
-      <Text
-        style={{
-          marginLeft: 15,
-          fontSize: 20,
-          fontWeight: "bold",
-          color: "black",
-          textTransform: "capitalize",
-        }}
+const AgentHome = ({ navigation }) => {
+  const [openListing, setOpenListing] = useState(false);
+
+  if (openListing) {
+    return (
+      <View
+        animation="fadeInRight"
+        duration={300}
+        delay={100}
+        style={{ flex: 1, paddingVertical: 20, paddingHorizontal: 8 }}
       >
-        {" "}
-        Vignettes Recentes
-      </Text>
-      <FlatList
-        horizontal
-        pagingEnabled
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-        data={VignetteData}
-        renderItem={Vignette}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
-  );
-};
-
-const AgentHome = ({navigation}) => {
+        <Ionicons
+          onPress={() => setOpenListing(false)}
+          name="chevron-back-circle-outline"
+          size={34}
+          color="black"
+        />
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: "bold",
+            letterSpacing: 1.2,
+            margin: 5,
+            marginBottom: 30,
+          }}
+        >
+          Veuillez Choisir Une option:
+        </Text>
+        <Fees navigation={navigation} />
+      </View>
+    );
+  }
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -47,14 +50,12 @@ const AgentHome = ({navigation}) => {
         paddingBottom: 40,
       }}
     >
-      <SearchBar/>
-      <MyVignette />
-      <QuickSelect navigation={navigation} />
-      <Fees />
+      <SearchBar />
+      <VignetteList />
+      <QuickSelect navigation={navigation} setOpenListing={setOpenListing} />
+      <Fees navigation={navigation} />
     </ScrollView>
   );
 };
 
 export default AgentHome;
-
-const styles = StyleSheet.create({});

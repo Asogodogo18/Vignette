@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 const Index = () => {
   return (
     <Stack.Navigator
-      // initialRouteName="Achat de Vignette"
+      initialRouteName="Accueil"
       screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
     >
       <Stack.Screen name="Accueil" component={Accueil} />

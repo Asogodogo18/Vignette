@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
 
-const QuickSelect = ({ navigation }) => {
+const QuickSelect = ({ navigation, setOpenListing }) => {
   return (
     <View>
       <Text
@@ -19,7 +19,7 @@ const QuickSelect = ({ navigation }) => {
       </Text>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity
-          onPress={() => navigation.push("Achat de Vignette")}
+          onPress={() => setOpenListing(true)}
           style={styles.quickselect}
         >
           <FontAwesome5 name="address-card" size={24} color="black" />

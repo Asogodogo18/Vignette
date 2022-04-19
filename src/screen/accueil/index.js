@@ -8,7 +8,8 @@ import {
   StatusBar,
 } from "react-native";
 import React from "react";
-
+import { useAuthState } from "../../global";
+import {useAuthDispatch,logout} from "../../global"
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { Button, Portal, Divider, Provider, Modal } from "react-native-paper";
@@ -17,13 +18,15 @@ import Header from "../../components/header";
 import ClientHome from "../../components/client/ClientHome";
 import VerifHome from "../../components/client/VerifHome";
 import AgentHome from "../../components/client/AgentHome";
-import OfficerHome from "../../components/client/OfficerHome"
-
+import OfficerHome from "../../components/client/OfficerHome";
 
 const { height, width } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
+  const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
   const [visible, setVisible] = React.useState(false);
+  
   return (
     <Provider>
       <Portal>
@@ -34,7 +37,7 @@ const Index = ({ navigation }) => {
         >
           <TouchableOpacity
             style={styles.touch1}
-            onPress={() => navigation.replace("Connexion")}
+            onPress={() => logout(dispatch)}
           >
             <FontAwesome name="sign-out" size={24} color="white" />
             <Text
@@ -53,47 +56,52 @@ const Index = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.contain}>
         <StatusBar hidden />
         <Header setVisible={setVisible} />
-        <ClientHome navigation={navigation} />
-        {/* <OfficerHome navigation={navigation} /> */}
-        {/* <AgentHome navigation={navigation} /> */}
-       <Footer/>
+        {user.role === "Agent" ? (
+          <AgentHome navigation={navigation} />
+        ) : user.role === "Client" ? (
+          <ClientHome navigation={navigation} />
+        ) : user.role === "Police" ? (
+          <OfficerHome navigation={navigation} />
+        ) : user.role === "Verificateur" ? (
+          <VerifHome />
+        ) : null}
+        <Footer />
       </ScrollView>
     </Provider>
   );
 };
 
-
-const Footer = ()=>{
+const Footer = () => {
   return (
     <Animatable.View
-    animation="fadeIn"
-    duration={300}
-    delay={500}
-    style={{
-      position: "absolute",
-      bottom: 0,
-      // backgroundColor: "#1a1818",
-      height: 50,
-      width: width - 20,
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 5,
-    }}
-  >
-    <Text
+      animation="fadeIn"
+      duration={300}
+      delay={500}
       style={{
-        fontSize: 15,
-        fontWeight: "bold",
-        color: "gray",
-        textTransform: "uppercase",
-        textShadowColor: "black",
+        position: "absolute",
+        bottom: 0,
+        // backgroundColor: "#1a1818",
+        height: 50,
+        width: width - 20,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 5,
       }}
     >
-      Créer par CIRTIC
-    </Text>
-  </Animatable.View>
-  )
-}
+      <Text
+        style={{
+          fontSize: 15,
+          fontWeight: "bold",
+          color: "gray",
+          textTransform: "uppercase",
+          textShadowColor: "black",
+        }}
+      >
+        Créer par CIRTIC
+      </Text>
+    </Animatable.View>
+  );
+};
 
 const styles = StyleSheet.create({
   contain: {
