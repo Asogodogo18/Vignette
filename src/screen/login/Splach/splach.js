@@ -33,7 +33,7 @@ const Splach = ({ navigation }) => {
           }}
           resizeMode="cover"
         >
-          <Text style={styles.txtHeader}>Connecte vous avec une compte</Text>
+          <Text style={styles.txtHeader}>Connectez vous avec une compte</Text>
         </ImageBackground>
       </View>
       <View
@@ -56,7 +56,7 @@ const Splach = ({ navigation }) => {
             />
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Appstack", { screen: "Accueil" })
+                navigation.navigate("Connexion", { role: "Agent" })
               }
               style={styles.containerTxt}
             >
@@ -70,7 +70,7 @@ const Splach = ({ navigation }) => {
             />
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Appstack", { screen: "Accueil" })
+                navigation.navigate("Connexion", { role: "Client" })
               }
               style={styles.containerTxt}
             >
@@ -91,7 +91,7 @@ const Splach = ({ navigation }) => {
             />
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Appstack", { screen: "Accueil" })
+                navigation.navigate("Connexion", { role: "Police" })
               }
               style={styles.containerTxt}
             >
@@ -105,7 +105,7 @@ const Splach = ({ navigation }) => {
             />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("Adminstack", { screen: "Accueil" });
+                navigation.navigate("Connexion", { role: "Administrateur" });
               }}
               style={styles.containerTxt}
             >

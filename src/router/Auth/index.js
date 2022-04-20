@@ -27,7 +27,7 @@ export default function Index() {
   return (
     isAppFirstLaunched != null && (
       <Stack.Navigator
-        initialRouteName="AppStack"
+        initialRouteName="Ecran"
         screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
       >
         {isAppFirstLaunched && (

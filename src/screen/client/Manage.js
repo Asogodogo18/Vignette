@@ -1,13 +1,20 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
-import Vignette from "../../components/shared/Vignette";
-import VignetteData from "../../data/Vignette.json";
+import { useVignette } from "../../services/query";
+import { useAuthState } from "../../global";
 
-const Manage = ({}) => {
-  return <MyVignette />;
-};
-
-const MyVignette = () => {
+const Manage = ({navigation}) => {
+  // const { status, data, error, isFetching, isFetched} = useVignettes();
+  const { user } = useAuthState();
+  const { status, data, error, isFetching, isFetched } = useVignette(
+    user ? user.id_user : null
+  );
   return (
     <View>
       <Text
@@ -22,16 +29,24 @@ const MyVignette = () => {
         {" "}
         Mes Vignettes
       </Text>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          alignItems: "center",
-          paddingBottom: 50,
-        }}
-        data={VignetteData}
-        renderItem={Vignette}
-        keyExtractor={(item) => item.id}
-      />
+      {isFetching ? (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <ActivityIndicator size="large" />
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: "center",
+            paddingBottom: 50,
+          }}
+          data={data}
+          renderItem={Vignette}
+          keyExtractor={(item) => item.id_engin}
+        />
+      )}
     </View>
   );
 };

@@ -1,0 +1,1029 @@
+{
+	"info": {
+		"_postman_id": "8e6c8c61-2794-4c6d-a3ff-680abbbcb14f",
+		"name": "API - VIGNETTE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "vignette by user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "48",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}vignettes/detail",
+					"host": [
+						"{{SERVER_ADDRESS}}vignettes"
+					],
+					"path": [
+						"detail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verif connexion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}verif",
+					"host": [
+						"{{SERVER_ADDRESS}}verif"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "nom",
+							"value": "yaso",
+							"type": "text"
+						},
+						{
+							"key": "prenom",
+							"value": "diallo",
+							"type": "text"
+						},
+						{
+							"key": "adresse",
+							"value": "sotuba",
+							"type": "text"
+						},
+						{
+							"key": "tel",
+							"value": "75484570",
+							"type": "text"
+						},
+						{
+							"key": "login",
+							"value": "soyaDiallo",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}updateUserInfo",
+					"host": [
+						"{{SERVER_ADDRESS}}updateUserInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all guichet",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}guichets",
+					"host": [
+						"{{SERVER_ADDRESS}}guichets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update pass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "actuel",
+							"value": "1234",
+							"type": "text"
+						},
+						{
+							"key": "new",
+							"value": "1111",
+							"type": "text"
+						},
+						{
+							"key": "confirme",
+							"value": "1111",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}updateUserPass",
+					"host": [
+						"{{SERVER_ADDRESS}}updateUserPass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add guichet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "num",
+							"value": "SSS12",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}guichets/add",
+					"host": [
+						"{{SERVER_ADDRESS}}guichets"
+					],
+					"path": [
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete guichet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_guichet",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}guichets/delete",
+					"host": [
+						"{{SERVER_ADDRESS}}guichets"
+					],
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update guichet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_guichet",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "num",
+							"value": "AZER34",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.1.44/vignette/guichets/update",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"44"
+					],
+					"path": [
+						"vignette",
+						"guichets",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all vignettes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_engin",
+							"value": "30",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.1.44/vignette/vignettes/",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"44"
+					],
+					"path": [
+						"vignette",
+						"vignettes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add vignette connect",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_puissance",
+							"value": "7",
+							"type": "text"
+						},
+						{
+							"key": "nom",
+							"value": "hamadoun",
+							"type": "text"
+						},
+						{
+							"key": "prenom",
+							"value": "abba",
+							"type": "text"
+						},
+						{
+							"key": "tel",
+							"value": "2323232",
+							"type": "text"
+						},
+						{
+							"key": "marque",
+							"value": "KTM",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "2roues",
+							"type": "text"
+						},
+						{
+							"key": "numChassis",
+							"value": "AZERTYUI12345888",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}vignettes/add",
+					"host": [
+						"{{SERVER_ADDRESS}}vignettes"
+					],
+					"path": [
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "acheter vignette",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_puissance",
+							"value": "7",
+							"type": "text"
+						},
+						{
+							"key": "nom",
+							"value": "hamadoun",
+							"type": "text"
+						},
+						{
+							"key": "prenom",
+							"value": "abba",
+							"type": "text"
+						},
+						{
+							"key": "tel",
+							"value": "2323232",
+							"type": "text"
+						},
+						{
+							"key": "marque",
+							"value": "KTM",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "2roues",
+							"type": "text"
+						},
+						{
+							"key": "numChassis",
+							"value": "AZERTYUI12345888",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}vignettes/add",
+					"host": [
+						"{{SERVER_ADDRESS}}vignettes"
+					],
+					"path": [
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "supprimer vignette",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_engin",
+							"value": "45",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}vignettes/delete",
+					"host": [
+						"{{SERVER_ADDRESS}}vignettes"
+					],
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifier vignette",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_puissance",
+							"value": "7",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "nom",
+							"value": "hamadoun",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "prenom",
+							"value": "abba",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "tel",
+							"value": "2323232",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "marque",
+							"value": "BMWWWWW",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "2roues",
+							"type": "text"
+						},
+						{
+							"key": "num",
+							"value": "AZX123",
+							"type": "text"
+						},
+						{
+							"key": "id_engin",
+							"value": "26",
+							"type": "text"
+						},
+						{
+							"key": "puissance",
+							"value": "7",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}vignettes/update",
+					"host": [
+						"{{SERVER_ADDRESS}}vignettes"
+					],
+					"path": [
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all puissances ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}puissances",
+					"host": [
+						"{{SERVER_ADDRESS}}puissances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete puissance",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "puissance_id",
+							"value": "10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}puissances/delete",
+					"host": [
+						"{{SERVER_ADDRESS}}puissances"
+					],
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add puissance",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "puissance",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "montant",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "utilisation",
+							"value": "Personnel",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}puissances/add",
+					"host": [
+						"{{SERVER_ADDRESS}}puissances"
+					],
+					"path": [
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update puissance",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "puissance_id",
+							"value": "13",
+							"type": "text"
+						},
+						{
+							"key": "puissance",
+							"value": "test2",
+							"type": "text"
+						},
+						{
+							"key": "montant",
+							"value": "300",
+							"type": "text"
+						},
+						{
+							"key": "utilisation",
+							"value": "Perso",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}puissances/update",
+					"host": [
+						"{{SERVER_ADDRESS}}puissances"
+					],
+					"path": [
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}users",
+					"host": [
+						"{{SERVER_ADDRESS}}users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nom",
+							"value": "demba",
+							"type": "text"
+						},
+						{
+							"key": "prenom",
+							"value": "dem",
+							"type": "text"
+						},
+						{
+							"key": "adresse",
+							"value": "sotuba",
+							"type": "text"
+						},
+						{
+							"key": "tel",
+							"value": "23232323",
+							"type": "text"
+						},
+						{
+							"key": "login",
+							"value": "dem",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "1234",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}users/add",
+					"host": [
+						"{{SERVER_ADDRESS}}users"
+					],
+					"path": [
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "42",
+							"type": "text"
+						},
+						{
+							"key": "nom",
+							"value": "homo",
+							"type": "text"
+						},
+						{
+							"key": "prenom",
+							"value": "homo",
+							"type": "text"
+						},
+						{
+							"key": "adresse",
+							"value": "homo",
+							"type": "text"
+						},
+						{
+							"key": "tel",
+							"value": "232323244",
+							"type": "text"
+						},
+						{
+							"key": "login",
+							"value": "homo",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}users/update",
+					"host": [
+						"{{SERVER_ADDRESS}}users"
+					],
+					"path": [
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "41",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}users/delete",
+					"host": [
+						"{{SERVER_ADDRESS}}users"
+					],
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "affectation guichet agent",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_guichet",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "users",
+							"value": "8",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}affectations/add",
+					"host": [
+						"{{SERVER_ADDRESS}}affectations"
+					],
+					"path": [
+						"add"
+					],
+					"query": [
+						{
+							"key": "id_guichet",
+							"value": "15",
+							"disabled": true
+						},
+						{
+							"key": "users",
+							"value": "42",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete affectation",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "9",
+							"type": "text"
+						},
+						{
+							"key": "guichet_id",
+							"value": "15",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}affectations/delete",
+					"host": [
+						"{{SERVER_ADDRESS}}affectations"
+					],
+					"path": [
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id_guichet",
+							"value": "15",
+							"disabled": true
+						},
+						{
+							"key": "users",
+							"value": "42",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vignette by user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "8",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}vignettes",
+					"host": [
+						"{{SERVER_ADDRESS}}vignettes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get puissance by id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_puissance",
+							"value": "7",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}puissances",
+					"host": [
+						"{{SERVER_ADDRESS}}puissances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get guichet by id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "guichet_id",
+							"value": "15",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}guichets",
+					"host": [
+						"{{SERVER_ADDRESS}}guichets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "43",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SERVER_ADDRESS}}users",
+					"host": [
+						"{{SERVER_ADDRESS}}users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SERVER_ADDRESS",
+			"value": "http://192.168.1.44/vignette/"
+		}
+	]
+}

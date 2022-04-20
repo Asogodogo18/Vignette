@@ -19,7 +19,7 @@ import * as Animatable from "react-native-animatable";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-const baseUrl = "http://197.155.143.74:1214";
+const baseUrl = "http://192.168.1.44/vignettes/detail";
 const AnimatedTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const width = Dimensions.get("window").width;
@@ -43,7 +43,7 @@ const Index = ({ navigation }) => {
     try {
       setIsLoading(true);
       axios
-        .get(data)
+        .post(baseUrl,{id_user:data})
         .then((res) => {
           console.log(res.data);
           setScannedData(res.data);
