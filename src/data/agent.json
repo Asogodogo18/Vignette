@@ -1,0 +1,28 @@
+{
+  "agent": [
+    {
+      "Nom": "Sogodogo",
+      "prenom": "cheick abba",
+      " Telephone": "65558588",
+      "Role": "Police"
+    },
+    {
+        "Nom": "Diallo",
+        "prenom": "soya",
+        " Telephone": "65558588",
+        "Role": "Adminstrateur"
+      },
+      {
+        "Nom": "Sankare",
+        "prenom": "Hamadoun",
+        " Telephone": "65558588",
+        "Role": "Vericateur"
+      },
+      {
+        "Nom": "keita",
+        "prenom": "Moussa",
+        " Telephone": "65558588",
+        "Role": "Adminstrateur"
+      }
+  ]
+}
