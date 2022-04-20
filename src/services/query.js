@@ -105,3 +105,10 @@ export function useUsers() {
 //affectation guichet agent
 
 //delete affectation
+//statistiques
+export function useStatistiques() {
+  return useQuery("users", async () => {
+    const { data } = await apiClient.get("/statistiques/");
+    return data;
+  });
+}

@@ -93,7 +93,7 @@ const Index = ({ navigation }) => {
             letterSpacing: 1,
           }}
         >
-          Tableau de Board{" "}
+          Tableau de Bord
         </Text>
         <View style={{ alignItems: "center", padding: 10 }}>
           <Tableau />

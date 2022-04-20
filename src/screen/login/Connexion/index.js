@@ -23,7 +23,7 @@ const { width, height } = Dimensions.get("screen");
 import { Feather, FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation, route }) => {
-  // const { item } = route.params;
+  const { role } = route.params;
   const Navigation = useNavigation();
   const dispatch = useAuthDispatch(); //get the dispatch method from the useDispatch custom hook
   const { loading, errorMessage } = useAuthState(); //read the values of loading and errorMessage from context

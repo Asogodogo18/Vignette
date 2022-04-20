@@ -1,8 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View,ActivityIndicator } from "react-native";
 import React from "react";
 import * as Animatable from "react-native-animatable";
+import { useStatistiques } from "../../../services/query";
 
 const Index = () => {
+  const { data, error, isFetching } = useStatistiques();
+
+
+  console.log("satistiques",data)
   return (
     <View>
       <Animatable.View
@@ -17,11 +22,11 @@ const Index = () => {
         }}
       >
         <View style={styles.touch}>
-          <View style={styles.containerTxt}>
+          <View style={styles.containerTxt}>  
             <Text style={styles.title}>VIGNETTE EN CIRCULATION</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>15</Text>
+            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.Total_vignette_en_circulation}</Text>
           </View>
         </View>
         <View style={styles.touch}>
@@ -29,7 +34,7 @@ const Index = () => {
             <Text style={styles.title}>VIGNETTE AUJOURD'HUI</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>15</Text>
+            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.TOTAL_VIGNETTE_AUJOURDHUI}</Text>
           </View>
         </View>
       </Animatable.View>
@@ -44,7 +49,7 @@ const Index = () => {
             <Text style={styles.title}>CHIFFRE D'AFFAIRE AUJOURD'HUI</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>1500 cfa</Text>
+            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.CHIFFRE_AFFAIRE_AUJOURDHUI}</Text>
           </View>
         </View>
         <View style={styles.touch}>
@@ -52,7 +57,7 @@ const Index = () => {
             <Text style={styles.title}>VIGNETTE PAYÉE AUJOURD'HUI</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>15</Text>
+            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.TOTAL_VIGNETTE_PAYÉE_AUJOURDHUI}</Text>
           </View>
         </View>
       </Animatable.View>
@@ -90,7 +95,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   containerTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
     alignSelf: "center",

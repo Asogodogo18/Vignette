@@ -11,18 +11,21 @@ import {
   TextInput,
   Keyboard,
   FlatList,
+  ActivityIndicator
 } from "react-native";
 import React, { useState } from "react";
+
+import Vignette from "../../../components/shared/Vignette";
+import { useVignettes } from "../../../services/query";
 import Input from "../../../components/TextInput";
 import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons";
-import Vignette from "../../../data/Vignette.json";
 import { BlurView } from "expo-blur";
 import { Picker } from "@react-native-picker/picker";
 const { width, height } = Dimensions.get("screen");
-const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 
 const Index = ({ navigation }) => {
+  const { status, data, error, isFetching, isFetched } = useVignettes();
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [phone, setPhone] = useState("");
@@ -39,7 +42,7 @@ const Index = ({ navigation }) => {
   const handlePress = (loader) => {
     setCurrentLoader(loader);
   };
-  const renderItem = () => {};
+
   if (!currentLoader) {
     return (
       <SafeAreaView>
@@ -113,156 +116,28 @@ const Index = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={{ margin: 5, padding: 5 }}>
-              <AnimatedImg
-                resizeMode="cover"
-                source={require("../../../../assets/bg.png")}
-                animation="slideInRight"
-                style={styles.vignette}
-                duration={1000}
-              >
-                <Text
-                  style={{
-                    marginLeft: 15,
-                    fontSize: 25,
-                    fontWeight: "200",
-                    color: "white",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Sogodogo
-                  {"    "}
-                  <Text
-                    style={{
-                      fontSize: 25,
-                      color: "white",
-                      textTransform: "uppercase",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Cheick abba
-                  </Text>
-                </Text>
+              {isFetching ? (
                 <View
                   style={{
-                    flexDirection: "row",
-                    marginTop: 10,
+                    flex: 1,
+                    alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "200",
-                        color: "white",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      Marque
-                    </Text>
-                    <Text
-                      style={{
-                        marginLeft: 15,
-                        fontSize: 18,
-                        color: "white",
-                        textTransform: "uppercase",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      KTM
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "200",
-                        color: "white",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      utilisation
-                    </Text>
-                    <Text
-                      style={{
-                        marginLeft: 15,
-                        fontSize: 18,
-                        color: "white",
-                        textTransform: "uppercase",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Personnelle
-                    </Text>
-                  </View>
+                  <ActivityIndicator size="large" />
                 </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginTop: 10,
-                    justifyContent: "center",
+              ) : (
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{
+                    alignItems: "center",
+                    paddingBottom: 50,
                   }}
-                >
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "200",
-                        color: "white",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      Type
-                    </Text>
-                    <Text
-                      style={{
-                        marginLeft: 15,
-                        fontSize: 18,
-                        color: "white",
-                        textTransform: "uppercase",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Vignette
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "200",
-                        color: "white",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      Montant
-                    </Text>
-                    <Text
-                      style={{
-                        marginLeft: 15,
-                        fontSize: 18,
-                        color: "white",
-                        textTransform: "uppercase",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      6000
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    textAlign: "center",
-                    fontSize: 18,
-                    color: "white",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  NBHU844558HHH777
-                </Text>
-              </AnimatedImg>
+                  data={data}
+                  renderItem={Vignette}
+                  keyExtractor={(item) => item.id_engin}
+                />
+              )}
             </View>
           </Animatable.View>
           <FlatList />
