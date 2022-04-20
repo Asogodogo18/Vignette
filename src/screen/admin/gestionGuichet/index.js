@@ -11,11 +11,12 @@ import {
   TextInput,
   Keyboard,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import Input from "../../../components/TextInput";
 import * as Animatable from "react-native-animatable";
+import { addGuichet } from "../../../services/query";
 import {
   Ionicons,
   Entypo,
@@ -32,193 +33,202 @@ const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
   Keyboard.dismiss();
-  const { data:userData, error:userError, isFetching:isFetchingUsers } = useUsers();
+  const {
+    data: userData,
+    error: userError,
+    isFetching: isFetchingUsers,
+  } = useUsers();
   const { status, data, error, isFetching } = useGuichets();
   const [currentLoader, setCurrentLoader] = useState(null);
   const [isChecked, setChecked] = useState(false);
   const [isDelete, setIsDelete] = useState(null);
-  const [numero, setNumero] = useState(null);
-  const [operationItem, setOperationItem] = useState(null)
+  const [numero, setNumero] = useState("");
+  const [operationItem, setOperationItem] = useState(null);
 
-  console.log("guichet:",data)
+  console.log("guichet:", data);
 
-  const renderAgent =({item})=>{
-    return(
+  const renderAgent = ({ item }) => {
+    return (
       <View
-              style={{
-                flexDirection: "row",
-                height: 50,
-                width: width,
-                alignSelf: "center",
-                justifyContent: "space-around",
-                alignItems: "center",
-                marginVertical:8
-              }}
-            >
-              <View
+        style={{
+          flexDirection: "row",
+          height: 50,
+          width: width,
+          alignSelf: "center",
+          justifyContent: "space-around",
+          alignItems: "center",
+          marginVertical: 8,
+        }}
+      >
+        <View
+          style={{
+            height: 50,
+            width: 50,
+            backgroundColor: "#99D98c",
+            borderRadius: 40,
+            marginTop: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={require("../../../../assets/icon/agent3.png")}
+            style={{
+              height: 40,
+              width: 40,
+            }}
+            resizeMode="contain"
+          />
+        </View>
+
+        <View style={[styles.vignette, { width: 150 }]}>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 10,
+              justifyContent: "center",
+              marginLeft: -20,
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <Text
                 style={{
-                  height: 50,
-                  width: 50,
-                  backgroundColor: "#99D98c",
-                  borderRadius: 40,
-                  marginTop: 20,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  fontSize: 15,
+                  fontWeight: "200",
+                  color: "black",
+                  textTransform: "capitalize",
                 }}
               >
-                <Image
-                  source={require("../../../../assets/icon/agent3.png")}
-                  style={{
-                    height: 40,
-                    width: 40,
-                  }}
-                  resizeMode="contain"
-                />
-              </View>
-
-              <View style={[styles.vignette, { width: 150 }]}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginTop: 10,
-                    justifyContent: "center",
-                    marginLeft: -20,
-                  }}
-                >
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "200",
-                        color: "black",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      Agent
-                    </Text>
-                    <Text
-                      style={{
-                        marginLeft: 15,
-                        fontSize: 18,
-                        color: "black",
-                        textTransform: "uppercase",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {item.nom} {item.prenom}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-
-              <Checkbox
-                style={styles.checkbox}
-                value={isChecked}
-                onValueChange={setChecked}
-              />
+                Agent
+              </Text>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  fontSize: 18,
+                  color: "black",
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                }}
+              >
+                {item.nom} {item.prenom}
+              </Text>
             </View>
-    )
-  }
-  const handlePress = (loader,item) => {
+          </View>
+        </View>
+
+        <Checkbox
+          style={styles.checkbox}
+          value={isChecked}
+          onValueChange={setChecked}
+        />
+      </View>
+    );
+  };
+
+  const handleAdd = () => {
+    addGuichet(numero)
+      .then((res) => console.log(res))
+      .catch((e) => console.log("error:", e));
+  };
+
+  const handlePress = (loader, item) => {
     setCurrentLoader(loader);
-    setOperationItem(item)
+    setOperationItem(item);
   };
   if (!currentLoader) {
     return (
       <SafeAreaView>
-          <Animatable.View
-            animation="fadeIn"
-            delay={500}
-            duration={300}
-            stickyHeaderHiddenOnScroll={true}
-            nestedScrollEnabled
-            stickyHeaderIndices={[0]}
-            contentContainerStyle={styles.contain}
+        <Animatable.View
+          animation="fadeIn"
+          delay={500}
+          duration={300}
+          stickyHeaderHiddenOnScroll={true}
+          nestedScrollEnabled
+          stickyHeaderIndices={[0]}
+          contentContainerStyle={styles.contain}
+        >
+          <View
+            style={{
+              height: 80,
+              backgroundColor: "#1a1818",
+              flexDirection: "row",
+              elevation: 5,
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
           >
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                alignItems: "center",
-                justifyContent: "space-around",
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Ionicons name="ios-arrow-undo" size={30} color="white" />
-              </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
+              <Ionicons name="ios-arrow-undo" size={30} color="white" />
+            </TouchableOpacity>
 
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "700",
-                  color: "white",
-                  textAlign: "center",
-                  marginLeft: 10,
-                }}
-              >
-                GUICHET
-              </Text>
-              <Image
-                source={require("../../../../assets/icon/guichet.png")}
-                style={{ height: 40, width: 40 }}
-                resizeMode="cover"
-              />
-            </View>
             <Text
               style={{
                 fontSize: 20,
                 fontWeight: "700",
-                marginHorizontal: 10,
-                padding: 10,
+                color: "white",
+                textAlign: "center",
+                marginLeft: 10,
               }}
             >
-              Action Rapide
+              GUICHET
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                padding: 2,
-                margin: 2,
-                // position: "relative",
-                // marginHorizontal: 240,
+            <Image
+              source={require("../../../../assets/icon/guichet.png")}
+              style={{ height: 40, width: 40 }}
+              resizeMode="cover"
+            />
+          </View>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "700",
+              marginHorizontal: 10,
+              padding: 10,
+            }}
+          >
+            Action Rapide
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              padding: 2,
+              margin: 2,
+              // position: "relative",
+              // marginHorizontal: 240,
 
-                borderRadius: 10,
-              }}
+              borderRadius: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => handlePress("Ajouter")}
+              style={styles.touch}
             >
-              <TouchableOpacity
-                onPress={() => handlePress("Ajouter")}
-                style={styles.touch}
-              >
-                <AntDesign name="addfolder" size={24} color="white" />
-                <Text style={styles.touchTxt}>Ajouter</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => handlePress("Modify")}
-                style={styles.touch}
-              >
-                <MaterialCommunityIcons
-                  name="file-document-edit-outline"
-                  size={24}
-                  color="white"
-                />
-                <Text style={styles.touchTxt}>Modifier</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setIsDelete(!isDelete)}
-                style={styles.touch}
-              >
-                <AntDesign name="delete" size={24} color="white" />
-                <Text style={styles.touchTxt}>Supprimer</Text>
-              </TouchableOpacity>
-            </View>
+              <AntDesign name="addfolder" size={24} color="white" />
+              <Text style={styles.touchTxt}>Ajouter</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => handlePress("Modify")}
+              style={styles.touch}
+            >
+              <MaterialCommunityIcons
+                name="file-document-edit-outline"
+                size={24}
+                color="white"
+              />
+              <Text style={styles.touchTxt}>Modifier</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setIsDelete(!isDelete)}
+              style={styles.touch}
+            >
+              <AntDesign name="delete" size={24} color="white" />
+              <Text style={styles.touchTxt}>Supprimer</Text>
+            </TouchableOpacity>
+          </View>
+        </Animatable.View>
 
-           
-          </Animatable.View>
-
-          {isFetching ? (
+        {isFetching ? (
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
@@ -229,11 +239,16 @@ const Index = ({ navigation }) => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginVertical: 5, paddingHorizontal: 5 }}
             data={data}
-            renderItem={({item})=> <Guichet handlePress={handlePress} item={item} isDelete={isDelete} />}
+            renderItem={({ item }) => (
+              <Guichet
+                handlePress={handlePress}
+                item={item}
+                isDelete={isDelete}
+              />
+            )}
             keyExtractor={(item) => item.id_guichet}
           />
         )}
-
       </SafeAreaView>
     );
   }
@@ -259,7 +274,7 @@ const Index = ({ navigation }) => {
               <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
                 {currentLoader == "Ajouter" ? "Ajout du Guichet" : null}
               </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
+              <TouchableOpacity onPress={() => setCurrentLoader(null)}>
                 <Entypo name="cross" size={30} color="white" />
               </TouchableOpacity>
             </View>
@@ -283,7 +298,7 @@ const Index = ({ navigation }) => {
                 <BlurView intensity={20} style={styles.inputBox}>
                   <TextInput
                     style={styles.input}
-                    onChangeText={setNumero}
+                    onChangeText={(text) => setNumero(text)}
                     value={numero}
                     placeholder="N° du Guichet"
                   />
@@ -296,6 +311,7 @@ const Index = ({ navigation }) => {
                       <Text style={styles.btnLabel}>Annuler</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                      onPress={handleAdd}
                       style={[styles.button, { backgroundColor: "green" }]}
                     >
                       <Text style={styles.btnLabel}>Ajouter</Text>
@@ -382,7 +398,6 @@ const Index = ({ navigation }) => {
     );
   }
   if (currentLoader == "Affectation") {
-
     return (
       <SafeAreaView>
         <Animatable.View animation="fadeIn">
@@ -436,8 +451,8 @@ const Index = ({ navigation }) => {
                 Action
               </Text>
             </View>
-            {
-              isFetchingUsers?(<View
+            {isFetchingUsers ? (
+              <View
                 style={{
                   flex: 1,
                   alignItems: "center",
@@ -445,21 +460,20 @@ const Index = ({ navigation }) => {
                 }}
               >
                 <ActivityIndicator size="large" />
-              </View>):
-              (
-                <FlatList
+              </View>
+            ) : (
+              <FlatList
                 showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{
-                    alignItems: "center",
-                    paddingBottom: 50,
-                  }}
-                  data={userData.filter(user=> user.role==="Agent")}
-                  renderItem={renderAgent}
-                  keyExtractor={(item) => item.id_user}
-                />
-              )
-            }
-            
+                contentContainerStyle={{
+                  alignItems: "center",
+                  paddingBottom: 50,
+                }}
+                data={userData.filter((user) => user.role === "Agent")}
+                renderItem={renderAgent}
+                keyExtractor={(item) => item.id_user}
+              />
+            )}
+
             <Divider
               style={{
                 backgroundColor: "black",
