@@ -6,17 +6,16 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
-  ImageBackground,
-  ScrollView,
   SafeAreaView,
-  TextInput,
+  Platform,
+  UIManager,
   Keyboard,
   ActivityIndicator,
+  LayoutAnimation,
 } from "react-native";
-import React, { useState } from "react";
-import Input from "../../../components/TextInput";
+import React, { useState, useEffect } from "react";
+import { BlurView } from "expo-blur";
 import * as Animatable from "react-native-animatable";
-import AddPuissance from "../../../components/admin/puissance/Add";
 import {
   FontAwesome,
   Ionicons,
@@ -25,16 +24,20 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-import { Picker } from "@react-native-picker/picker";
+import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
+import Modify from "../../../components/admin/puissance/Modify";
 
 const { width, height } = Dimensions.get("screen");
 
-import Checkbox from "expo-checkbox";
-import { BlurView } from "expo-blur";
-import Modify from "../../../components/admin/puissance/Modify";
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
-const Puissance = ({ item, handlePress,handleDelete }) => {
+const Puissance = ({ item, handlePress, handleDelete }) => {
   const [isVisible, setIsVisible] = useState(false);
   return (
     <TouchableOpacity
@@ -173,7 +176,6 @@ const Puissance = ({ item, handlePress,handleDelete }) => {
               justifyContent: "space-around",
             }}
           >
-           
             <TouchableOpacity
               onPress={() => handlePress("Modify", item)}
               style={styles.btnBlur}
@@ -194,12 +196,44 @@ const Puissance = ({ item, handlePress,handleDelete }) => {
 };
 
 const Index = ({ navigation }) => {
-  const { data, error, isFetching } = usePuissances();
+  const { data, error, isLoading } = usePuissances();
+  const [puissanceList, setpuissanceList] = useState([]);
   const [operatingItem, setOperatingItem] = useState(null);
 
+  useEffect(() => {
+    setpuissanceList(data);
+
+    return () => {
+      setpuissanceList([]);
+    };
+  }, [isLoading]);
+
+  const layoutAnimConfig = {
+    duration: 300,
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    delete: {
+      duration: 100,
+      type: LayoutAnimation.Types.easeInEaseOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+  };
+
   const handleDelete = (id) => {
-    deletePuissance(id).then(res=>console.log(res))
-      .catch(e=>console.log(e))
+    deletePuissance(id)
+      .then((res) => {
+        console.log(res);
+        if (res.data === "true") {
+          let arr = data.filter(function (item) {
+            return item.id_puissance !== id;
+          });
+          setpuissanceList(arr);
+          // after removing the item, we start animation
+          LayoutAnimation.configureNext(layoutAnimConfig);
+        }
+      })
+      .catch((e) => console.log(e));
   };
   const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
@@ -297,7 +331,7 @@ const Index = ({ navigation }) => {
                 <Text style={styles.touchTxt}>Supprimer</Text>
               </TouchableOpacity> */}
           </View>
-          {isFetching ? (
+          {isLoading ? (
             <View
               style={{
                 flex: 1,
@@ -314,9 +348,13 @@ const Index = ({ navigation }) => {
                 alignItems: "center",
                 paddingBottom: 50,
               }}
-              data={data}
+              data={puissanceList}
               renderItem={({ item }) => (
-                <Puissance item={item} handleDelete={handleDelete} handlePress={handlePress} />
+                <Puissance
+                  item={item}
+                  handleDelete={handleDelete}
+                  handlePress={handlePress}
+                />
               )}
               keyExtractor={(item) => item.id_puissance}
             />

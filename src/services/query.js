@@ -8,6 +8,9 @@ export function useVignettes() {
   return useQuery("vignettes", async () => {
     const { data } = await apiClient.get("vignettes/");
     return data;
+  },{
+    // Refetch the data every second
+    staleTime: 10000,
   });
 }
 
@@ -81,6 +84,10 @@ export function useGuichets() {
   return useQuery("posts", async () => {
     const { data } = await apiClient.get("/guichets");
     return data;
+  },{
+    // Refetch the data every second
+    refetchInterval: 10000,
+    staleTime: 5000,
   });
 }
 
@@ -91,11 +98,33 @@ export const addGuichet = (num) => {
   return apiClient.post("/guichets/add", formData);
 };
 
+//update Guichet
+export const updateGuichet = (sentForm) => {
+  const { id_guichet, num } = sentForm;
+  const formData = new FormData();
+  formData.append("id_guichet", id_guichet);
+  formData.append("num", num);
+  return apiClient.post("/guichets/update", formData);
+};
+
+//delete Guichet
+export const deleteGuichet = (id) => {
+  console.log("id:",id)
+  const formData = new FormData();
+
+  formData.append("id_guichet", id);
+  return apiClient.post("/guichets/delete", formData);
+};
+
+
 // all puissances
 export function usePuissances() {
   return useQuery("puissances", async () => {
     const { data } = await apiClient.get("/puissances/");
     return data;
+  },{
+    // Refetch the data every second
+    staleTime: 10000,
   });
 }
 
@@ -123,8 +152,8 @@ export const updatePuissance = (sentForm) => {
 };
 
 //delete Puissance
-export const deletePuissance = (sentForm) => {
-  const { id} = sentForm;
+export const deletePuissance = (id) => {
+  console.log("id:",id)
   const formData = new FormData();
 
   formData.append("puissance_id", id);
@@ -136,6 +165,9 @@ export function useUsers() {
   return useQuery("users", async () => {
     const { data } = await apiClient.get("/users/");
     return data;
+  },{
+    // Refetch the data every second
+    staleTime: 10000,
   });
 }
 
@@ -173,7 +205,7 @@ export const deleteUser = (sentForm) => {
   const formData = new FormData();
 
   formData.append("id_user", id);
-  return apiClient.post("/puissances/delete", formData);
+  return apiClient.post("/users/delete", formData);
 };
 
 //affectation guichet agent

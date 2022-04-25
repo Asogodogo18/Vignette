@@ -6,8 +6,6 @@ import { useStatistiques } from "../../../services/query";
 const Index = () => {
   const { data, error, isFetching } = useStatistiques();
 
-
-  console.log("satistiques",data)
   return (
     <View>
       <Animatable.View

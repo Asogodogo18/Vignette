@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Tableau from "../../components/admin/tableau"
 
-const VerifHome = () => {
+const Add = () => {
   return (
-    <Tableau />
+    <View>
+      <Text>Add</Text>
+    </View>
   )
 }
 
-export default VerifHome
+export default Add
 
 const styles = StyleSheet.create({})
