@@ -21,8 +21,14 @@ import {
   MaterialCommunityIcons,
   FontAwesome,
 } from "@expo/vector-icons";
+import { useAuthState } from "../../../global";
+import { logout,useAuthDispatch } from "../../../global";
 const { width, height } = Dimensions.get("screen");
+
+
 const Index = ({ navigation }) => {
+  const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
   Keyboard.dismiss();
 
   const [currentLoader, setCurrentLoader] = useState(null);
@@ -114,7 +120,7 @@ const Index = ({ navigation }) => {
                 }}
               >
                 <Text style={styles.txt}>Nom :</Text>
-                <Text style={styles.txt}>Kante</Text>
+                <Text style={styles.txt}>{user.nom}</Text>
               </View>
               <View
                 style={{
@@ -124,7 +130,7 @@ const Index = ({ navigation }) => {
                 }}
               >
                 <Text style={styles.txt}>Prénom :</Text>
-                <Text style={styles.txt}>Moussa</Text>
+                <Text style={styles.txt}>{user.prenom}</Text>
               </View>
               <View
                 style={{
@@ -134,7 +140,7 @@ const Index = ({ navigation }) => {
                 }}
               >
                 <FontAwesome name="phone-square" size={30} color="gray" />
-                <Text style={styles.txt}>5548784545454</Text>
+                <Text style={styles.txt}>{user.telephone}</Text>
               </View>
               <View
                 style={{
@@ -145,7 +151,7 @@ const Index = ({ navigation }) => {
               >
                 <Ionicons name="mail" size={30} color="gray" />
 
-                <Text style={styles.txt}>mousaa@gmai.com</Text>
+                <Text style={styles.txt}>{user.login}</Text>
               </View>
               <View
                 style={{
@@ -156,7 +162,7 @@ const Index = ({ navigation }) => {
               >
                 <Ionicons name="md-location-sharp" size={30} color="gray" />
 
-                <Text style={styles.txt}>Sotuba</Text>
+                <Text style={styles.txt}>{user.adresse}</Text>
               </View>
             </View>
 
@@ -166,7 +172,7 @@ const Index = ({ navigation }) => {
                 marginVertical: 0,
               }}
             >
-              <TouchableOpacity style={styles.touch} onPress={() => {}}>
+              <TouchableOpacity style={styles.touch} onPress={() => logout(dispatch)}>
                 <FontAwesome name="sign-out" size={24} color="white" />
                 <Text style={styles.text}>Déconnexion</Text>
               </TouchableOpacity>

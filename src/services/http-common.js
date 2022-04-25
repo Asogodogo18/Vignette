@@ -1,5 +1,7 @@
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MMKV } from 'react-native-mmkv'
+
+export const storage = new MMKV()
 
 export default axios.create({
   baseURL: "http://192.168.1.44/vignette/",
@@ -8,26 +10,26 @@ export default axios.create({
   },
 });
 
-export const storeDataObject = async (storage_key, value) => {
+export const storeDataObject = (storage_key, value) => {
   try {
     const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem(storage_key, jsonValue);
+     storage.set(storage_key, jsonValue);
   } catch (e) {
     // saving error
   }
 };
 
-export const storeData = async (storage_key, value) => {
+export const storeData = (storage_key, value) => {
   try {
-    await AsyncStorage.setItem(storage_key, value);
+     storage.set(storage_key, value);
   } catch (e) {
     // saving error
   }
 };
 
-export const getDataObject = async (storage_key) => {
+export const getDataObject =  (storage_key) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(storage_key);
+    const jsonValue = storage.getString(storage_key);
     if (!jsonValue) return false;
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
@@ -35,9 +37,9 @@ export const getDataObject = async (storage_key) => {
   }
 };
 
-export const removeValue = async (storage_key) => {
+export const removeValue =  (storage_key) => {
   try {
-    await AsyncStorage.removeItem(storage_key);
+    storage.delete(storage_key);
   } catch (e) {
     // remove error
   }

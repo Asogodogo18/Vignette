@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Dimensions, Image, StyleSheet} from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  Image,
+  StyleSheet,
+} from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
 import {
@@ -10,9 +17,27 @@ import Checkbox from "expo-checkbox";
 import { BlurView } from "expo-blur";
 const { width, height } = Dimensions.get("screen");
 
-const Guichet = ({ item, isDelete, handlePress }) => {
+const Guichet = ({
+  item,
+  isDelete,
+  handlePress,
+  handleDelete,
+  elementsToDelete,
+  setElementsToDelete,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isChecked, setChecked] = useState(false);
+
+  const onChecked = (value) => {
+    setChecked(value)
+    if (value) {
+      setElementsToDelete([...elementsToDelete, item.id_guichet]);
+    } else if (!value) {
+      setElementsToDelete(
+        elementsToDelete.filter((id) => id != item.id_guichet)
+      );
+    }
+  };
 
   return isDelete ? (
     <View style={{ flexDirection: "row" }}>
@@ -20,7 +45,7 @@ const Guichet = ({ item, isDelete, handlePress }) => {
         <Checkbox
           style={styles.checkbox}
           value={isChecked}
-          onValueChange={setChecked}
+          onValueChange={(value)=>onChecked(value)}
         />
       </View>
 
@@ -75,7 +100,7 @@ const Guichet = ({ item, isDelete, handlePress }) => {
                   marginLeft: 15,
                   fontSize: 18,
                   color: "black",
-                  textTransform: "uppercase",   
+                  textTransform: "uppercase",
                   fontWeight: "bold",
                 }}
               >
@@ -177,7 +202,7 @@ const Guichet = ({ item, isDelete, handlePress }) => {
             }}
           >
             <TouchableOpacity
-              onPress={() => handlePress("Affectation",item)}
+              onPress={() => handlePress("Affectation", item)}
               style={styles.btnBlur}
             >
               <MaterialCommunityIcons
@@ -187,13 +212,13 @@ const Guichet = ({ item, isDelete, handlePress }) => {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => handlePress("Modify",item)}
+              onPress={() => handlePress("Modify", item)}
               style={styles.btnBlur}
             >
               <FontAwesome name="edit" size={30} color="white" />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setIsDelete(!isDelete)}
+              onPress={() => handleDelete(item.id_guichet)}
               style={styles.btnBlur}
             >
               <MaterialCommunityIcons name="delete" size={30} color="white" />

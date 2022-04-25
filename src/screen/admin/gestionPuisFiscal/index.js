@@ -6,14 +6,15 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
-  ImageBackground,
   SafeAreaView,
-  TextInput,
+  Platform,
+  UIManager,
   Keyboard,
   ActivityIndicator,
+  LayoutAnimation,
 } from "react-native";
-import React, { useState } from "react";
-import Input from "../../../components/TextInput";
+import React, { useState, useEffect } from "react";
+import { BlurView } from "expo-blur";
 import * as Animatable from "react-native-animatable";
 import {
   FontAwesome,
@@ -23,15 +24,20 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-import { Picker } from "@react-native-picker/picker";
-import { usePuissances } from "../../../services/query";
+import AddPuissance from "../../../components/admin/puissance/Add";
+import { deletePuissance, usePuissances } from "../../../services/query";
+import Modify from "../../../components/admin/puissance/Modify";
 
 const { width, height } = Dimensions.get("screen");
 
-import Checkbox from "expo-checkbox";
-import { BlurView } from "expo-blur";
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
-const Puissance = ({ item, handlePress }) => {
+const Puissance = ({ item, handlePress, handleDelete }) => {
   const [isVisible, setIsVisible] = useState(false);
   return (
     <TouchableOpacity
@@ -87,7 +93,7 @@ const Puissance = ({ item, handlePress }) => {
                 fontWeight: "bold",
               }}
             >
-             {item.puissance.substring(0,25).concat("...")}
+              {item.puissance.substring(0, 25).concat("...")}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
@@ -144,7 +150,7 @@ const Puissance = ({ item, handlePress }) => {
               fontWeight: "bold",
             }}
           >
-           {item.montant} FCFA
+            {item.montant} FCFA
           </Text>
         </View>
       </View>
@@ -171,27 +177,17 @@ const Puissance = ({ item, handlePress }) => {
             }}
           >
             <TouchableOpacity
-              onPress={() => handlePress("Ajouter")}
-              style={styles.btnBlur}
-            >
-              <AntDesign name="addfolder" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => handlePress("Modify")}
+              onPress={() => handlePress("Modify", item)}
               style={styles.btnBlur}
             >
               <FontAwesome name="edit" size={30} color="white" />
             </TouchableOpacity>
-            {/* <TouchableOpacity
-          onPress={() => setIsDelete(!isDelete)}
-          style={styles.btnBlur}
-        >
-          <MaterialCommunityIcons
-            name="delete"
-            size={30}
-            color="white"
-          />
-        </TouchableOpacity> */}
+            <TouchableOpacity
+              onPress={() => handleDelete(item.id_puissance)}
+              style={styles.btnBlur}
+            >
+              <MaterialCommunityIcons name="delete" size={30} color="white" />
+            </TouchableOpacity>
           </View>
         </BlurView>
       ) : null}
@@ -200,20 +196,53 @@ const Puissance = ({ item, handlePress }) => {
 };
 
 const Index = ({ navigation }) => {
-  const { data, error, isFetching } = usePuissances();
-  const [puissance, setPuissance] = useState("");
-  const [montant, setMontant] = useState("");
+  const { data, error, isLoading } = usePuissances();
+  const [puissanceList, setpuissanceList] = useState([]);
+  const [operatingItem, setOperatingItem] = useState(null);
 
-  console.log("Puissance:",data)
+  useEffect(() => {
+    setpuissanceList(data);
 
-  const [selectedType, setSelectedType] = useState("Selectionne un Type");
+    return () => {
+      setpuissanceList([]);
+    };
+  }, [isLoading]);
+
+  const layoutAnimConfig = {
+    duration: 300,
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    delete: {
+      duration: 100,
+      type: LayoutAnimation.Types.easeInEaseOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+  };
+
+  const handleDelete = (id) => {
+    deletePuissance(id)
+      .then((res) => {
+        console.log(res);
+        if (res.data === "true") {
+          let arr = data.filter(function (item) {
+            return item.id_puissance !== id;
+          });
+          setpuissanceList(arr);
+          // after removing the item, we start animation
+          LayoutAnimation.configureNext(layoutAnimConfig);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+  const handlePress = (loader, item = null) => {
+    setCurrentLoader(loader);
+    setOperatingItem(item);
+  };
   Keyboard.dismiss();
 
   const [currentLoader, setCurrentLoader] = useState(null);
 
-  const handlePress = (loader) => {
-    setCurrentLoader(loader);
-  };
   if (!currentLoader) {
     return (
       <SafeAreaView>
@@ -302,7 +331,7 @@ const Index = ({ navigation }) => {
                 <Text style={styles.touchTxt}>Supprimer</Text>
               </TouchableOpacity> */}
           </View>
-          {isFetching ? (
+          {isLoading ? (
             <View
               style={{
                 flex: 1,
@@ -319,9 +348,13 @@ const Index = ({ navigation }) => {
                 alignItems: "center",
                 paddingBottom: 50,
               }}
-              data={data}
+              data={puissanceList}
               renderItem={({ item }) => (
-                <Puissance item={item} handlePress={handlePress} />
+                <Puissance
+                  item={item}
+                  handleDelete={handleDelete}
+                  handlePress={handlePress}
+                />
               )}
               keyExtractor={(item) => item.id_puissance}
             />
@@ -331,208 +364,10 @@ const Index = ({ navigation }) => {
     );
   }
   if (currentLoader == "Ajouter") {
-    return (
-      <SafeAreaView>
-        <Animatable.View animation="fadeIn">
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 15,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.push("PuisFiscale")}>
-                <Ionicons name="ios-arrow-undo" size={24} color="white" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-                Puissance Fiscale
-              </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Entypo name="cross" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ padding: 5, margin: 10 }}>
-              <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Veuillez acheter une Vignette
-              </Text>
-            </View>
-
-            <View style={styles.container}>
-              <ImageBackground
-                source={require("../../../../assets/icon/bg-buy.png")}
-                resizeMode="cover"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: height - 200,
-                }}
-              >
-                <BlurView intensity={20} style={styles.inputBox}>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setPuissance}
-                    value={puissance}
-                    placeholder="Puissance"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setMontant}
-                    value={montant}
-                    placeholder="Montant"
-                    keyboardType="numeric"
-                  />
-
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      height: 80,
-                      width: 250,
-                      borderRadius: 15,
-                    }}
-                  >
-                    <Picker
-                      selectedValue={setSelectedType}
-                      onValueChange={(itemValue, itemIndex) =>
-                        setSelectedType(itemValue)
-                      }
-                      style={styles.select}
-                      mode="dropdown"
-                    >
-                      <Picker.Item label="Usage" value="" />
-                      <Picker.Item label="Transport" value="transport" />
-                      <Picker.Item label="Persionnelle" value="persionnelle" />
-                    </Picker>
-                  </View>
-
-                  <View style={styles.buttonGroup}>
-                    <TouchableOpacity
-                      onPress={() => navigation.goBack()}
-                      style={[styles.button, { backgroundColor: "black" }]}
-                    >
-                      <Text style={styles.btnLabel}>Annuler</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.button, { backgroundColor: "green" }]}
-                    >
-                      <Text style={styles.btnLabel}>Acheter</Text>
-                    </TouchableOpacity>
-                  </View>
-                </BlurView>
-              </ImageBackground>
-            </View>
-          </ScrollView>
-        </Animatable.View>
-      </SafeAreaView>
-    );
+    return <AddPuissance handlePress={handlePress} />;
   }
   if (currentLoader == "Modify") {
-    return (
-      <SafeAreaView>
-        <Animatable.View animation="fadeIn">
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 15,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.push("PuisFiscale")}>
-                <Ionicons name="ios-arrow-undo" size={24} color="white" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-                Puissance Fiscale
-              </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Entypo name="cross" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ padding: 5, margin: 10 }}>
-              <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Modification du Puissance Fiscale
-              </Text>
-            </View>
-
-            <View style={styles.container}>
-              <ImageBackground
-                source={require("../../../../assets/icon/bg-buy.png")}
-                resizeMode="cover"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: height - 200,
-                }}
-              >
-                <BlurView intensity={20} style={styles.inputBox}>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setName}
-                    value={name}
-                    placeholder="Puissance"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setSurname}
-                    value={surname}
-                    placeholder="Montant"
-                    keyboardType="numeric"
-                  />
-
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      height: 80,
-                      width: 250,
-                      borderRadius: 15,
-                    }}
-                  >
-                    <Picker
-                      selectedValue={selectedLanguage}
-                      onValueChange={(itemValue, itemIndex) =>
-                        setSelectedLanguage(itemValue)
-                      }
-                      style={styles.select}
-                      mode="dropdown"
-                    >
-                      <Picker.Item label="Usage" value="" />
-                      <Picker.Item label="Transport" value="transport" />
-                      <Picker.Item label="Persionnelle" value="persionnelle" />
-                    </Picker>
-                  </View>
-
-                  <View style={styles.buttonGroup}>
-                    <TouchableOpacity
-                      onPress={() => navigation.goBack()}
-                      style={[styles.button, { backgroundColor: "black" }]}
-                    >
-                      <Text style={styles.btnLabel}>Annuler</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.button, { backgroundColor: "green" }]}
-                    >
-                      <Text style={styles.btnLabel}>Modifier</Text>
-                    </TouchableOpacity>
-                  </View>
-                </BlurView>
-              </ImageBackground>
-            </View>
-          </ScrollView>
-        </Animatable.View>
-      </SafeAreaView>
-    );
+    return <Modify handlePress={handlePress} Item={operatingItem} />;
   }
 };
 
