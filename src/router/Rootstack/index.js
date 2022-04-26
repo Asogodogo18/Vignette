@@ -14,7 +14,7 @@ const Index = () => {
   return (
     <RootStack.Navigator initialRouteName="Authstack">
       {isSignedIn ? (
-        user?.role === "Administrateur" ? (
+        user?.role === "Superviseur" ? (
           <RootStack.Screen
             name="Adminstack"
             component={Adminstack}

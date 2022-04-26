@@ -18,10 +18,7 @@ import * as Animatable from "react-native-animatable";
 
 import Add from "../../../components/admin/guichet/Add";
 
-import {
-  Ionicons,
-  AntDesign,
-} from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import Guichet from "../../../components/shared/Guichet";
 import { useGuichets, deleteGuichet } from "../../../services/query";
 import Modify from "../../../components/admin/guichet/Modify";
@@ -32,6 +29,7 @@ const Index = ({ navigation }) => {
   Keyboard.dismiss();
 
   const { status, data, error, isFetching } = useGuichets();
+  console.log("guichet:", data);
   const [currentLoader, setCurrentLoader] = useState(null);
   const [elementsToDelete, setElementsToDelete] = useState([]);
   const [isDelete, setIsDelete] = useState(null);
@@ -149,13 +147,14 @@ const Index = ({ navigation }) => {
           </View>
         </Animatable.View>
 
-        {isFetching ? (
+        {isFetching && (
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             <ActivityIndicator size="large" />
           </View>
-        ) : (
+        )}
+        {data && data!="False" && (
           <FlatList
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginVertical: 5, paddingHorizontal: 5 }}

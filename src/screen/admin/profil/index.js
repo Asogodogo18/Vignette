@@ -202,7 +202,7 @@ const Index = ({ navigation }) => {
                 <Ionicons name="ios-arrow-undo" size={24} color="white" />
               </TouchableOpacity>
               <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-                Espace Administrateur
+                Espace Superviseur
               </Text>
               <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
                 <Entypo name="cross" size={30} color="white" />
@@ -211,7 +211,7 @@ const Index = ({ navigation }) => {
 
             <View style={{ padding: 5, margin: 10 }}>
               <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Modification du compte Administrateur
+                Modification du compte Superviseur
               </Text>
             </View>
 

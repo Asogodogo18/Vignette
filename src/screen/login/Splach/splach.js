@@ -105,11 +105,11 @@ const Splach = ({ navigation }) => {
             />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("Connexion", { role: "Administrateur" });
+                navigation.navigate("Connexion", { role: "Superviseur" });
               }}
               style={styles.containerTxt}
             >
-              <Text style={styles.title}>Administrateur</Text>
+              <Text style={styles.title}>Superviseur</Text>
             </TouchableOpacity>
           </View>
         </View>

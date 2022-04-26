@@ -46,169 +46,171 @@ const Index = ({ navigation }) => {
 
   const [currentLoader, setCurrentLoader] = useState(null);
 
-  const [isDelete, setIsDelete] = useState(null);
+  const [isDelete, setIsDelete] = useState(false);
 
   const renderAgent = ({ item }) => {
-    return isDelete ? (
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ marginTop: 50, padding: 10 }}>
-          <Checkbox
-            style={styles.checkbox}
-            value={isChecked}
-            onValueChange={setChecked}
-          />
-        </View>
+    return (
+      // <View style={{ flexDirection: "row" }}>
 
-        <Animatable.View
-          delay={200}
-          duration={250}
-          animation="bounceInLeft"
-          style={styles.CardDelete}
-        >
-          <View
-            style={{
-              // flex: 2,
-              height: 50,
-              width: 50,
-              backgroundColor: "#99D98c",
-              borderRadius: 80,
-              // marginTop: 20,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={require("../../../../assets/icon/agent3.png")}
-              style={{
-                height: 35,
-                width: 35,
-              }}
-              resizeMode="contain"
-            />
-          </View>
+      //   <Animatable.View
+      //     delay={200}
+      //     duration={250}
+      //     animation="bounceInLeft"
+      //     style={styles.CardDelete}
+      //   >
+      //     <View
+      //       style={{
+      //         // flex: 2,
+      //         height: 50,
+      //         width: 50,
+      //         backgroundColor: "#99D98c",
+      //         borderRadius: 80,
+      //         // marginTop: 20,
+      //         justifyContent: "center",
+      //         alignItems: "center",
+      //       }}
+      //     >
+      //       <Image
+      //         source={require("../../../../assets/icon/agent3.png")}
+      //         style={{
+      //           height: 35,
+      //           width: 35,
+      //         }}
+      //         resizeMode="contain"
+      //       />
+      //     </View>
 
-          <View style={styles.vignette}>
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 10,
-                justifyContent: "center",
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "200",
-                    color: "black",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Nom
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 5,
-                    fontSize: 18,
-                    color: "black",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Sogodogo
-                </Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "200",
-                    color: "black",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Prénom
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 5,
-                    fontSize: 18,
-                    color: "black",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Cheick abba
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 5,
-                justifyContent: "center",
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "200",
-                    color: "black",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Telephone
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 5,
-                    fontSize: 18,
-                    color: "black",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  72192458
-                </Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "200",
-                    color: "black",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Role
-                </Text>
-                <Text
-                  style={{
-                    marginLeft: 15,
-                    fontSize: 18,
-                    color: "black",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Police
-                </Text>
-              </View>
-            </View>
-          </View>
-          {isDelete ? (
-            <TouchableOpacity style={styles.delete}>
-              <AntDesign name="delete" size={20} color="white" />
-            </TouchableOpacity>
-          ) : null}
-        </Animatable.View>
-      </View>
-    ) : (
+      //     <View style={styles.vignette}>
+      //       <View
+      //         style={{
+      //           flexDirection: "row",
+      //           marginTop: 10,
+      //           justifyContent: "center",
+      //         }}
+      //       >
+      //         <View style={{ flex: 1 }}>
+      //           <Text
+      //             style={{
+      //               fontSize: 15,
+      //               fontWeight: "200",
+      //               color: "black",
+      //               textTransform: "capitalize",
+      //             }}
+      //           >
+      //             Nom
+      //           </Text>
+      //           <Text
+      //             style={{
+      //               marginLeft: 5,
+      //               fontSize: 18,
+      //               color: "black",
+      //               textTransform: "uppercase",
+      //               fontWeight: "bold",
+      //             }}
+      //           >
+      //             Sogodogo
+      //           </Text>
+      //         </View>
+      //         <View style={{ flex: 1 }}>
+      //           <Text
+      //             style={{
+      //               fontSize: 15,
+      //               fontWeight: "200",
+      //               color: "black",
+      //               textTransform: "capitalize",
+      //             }}
+      //           >
+      //             Prénom
+      //           </Text>
+      //           <Text
+      //             style={{
+      //               marginLeft: 5,
+      //               fontSize: 18,
+      //               color: "black",
+      //               textTransform: "uppercase",
+      //               fontWeight: "bold",
+      //             }}
+      //           >
+      //             Cheick abba
+      //           </Text>
+      //         </View>
+      //       </View>
+      //       <View
+      //         style={{
+      //           flexDirection: "row",
+      //           marginTop: 5,
+      //           justifyContent: "center",
+      //         }}
+      //       >
+      //         <View style={{ flex: 1 }}>
+      //           <Text
+      //             style={{
+      //               fontSize: 15,
+      //               fontWeight: "200",
+      //               color: "black",
+      //               textTransform: "capitalize",
+      //             }}
+      //           >
+      //             Telephone
+      //           </Text>
+      //           <Text
+      //             style={{
+      //               marginLeft: 5,
+      //               fontSize: 18,
+      //               color: "black",
+      //               textTransform: "uppercase",
+      //               fontWeight: "bold",
+      //             }}
+      //           >
+      //             72192458
+      //           </Text>
+      //         </View>
+      //         <View style={{ flex: 1 }}>
+      //           <Text
+      //             style={{
+      //               fontSize: 15,
+      //               fontWeight: "200",
+      //               color: "black",
+      //               textTransform: "capitalize",
+      //             }}
+      //           >
+      //             Role
+      //           </Text>
+      //           <Text
+      //             style={{
+      //               marginLeft: 15,
+      //               fontSize: 18,
+      //               color: "black",
+      //               textTransform: "uppercase",
+      //               fontWeight: "bold",
+      //             }}
+      //           >
+      //             Police
+      //           </Text>
+      //         </View>
+      //       </View>
+      //     </View>
+      //     {isDelete ? (
+      //       <TouchableOpacity style={styles.delete}>
+      //         <AntDesign name="delete" size={20} color="white" />
+      //       </TouchableOpacity>
+      //     ) : null}
+      //   </Animatable.View>
+      // </View>
+
       <TouchableOpacity
         onPress={() => setIsVisible(!isVisible)}
         style={styles.Card}
       >
+        {isDelete && (
+          <View style={{ marginTop: 50, padding: 10 }}>
+            <Checkbox
+              style={styles.checkbox}
+              value={isChecked}
+              onValueChange={setChecked}
+            />
+          </View>
+        )}
         <View
           style={{
             // flex: 1,
@@ -580,7 +582,7 @@ const Index = ({ navigation }) => {
                     >
                       <Picker.Item label="Rôle" value="" />
                       <Picker.Item
-                        label="Administrateur"
+                        label="Superviseur"
                         value="administraateur"
                       />
                       <Picker.Item label="Police" value="police" />
@@ -694,7 +696,7 @@ const Index = ({ navigation }) => {
                     >
                       <Picker.Item label="Rôle" value="" />
                       <Picker.Item
-                        label="Administrateur"
+                        label="Superviseur"
                         value="administraateur"
                       />
                       <Picker.Item label="Police" value="police" />
