@@ -30,6 +30,7 @@ import { Chip } from "react-native-paper";
 
 import { Picker } from "@react-native-picker/picker";
 import RenderAgent from "../gestionAgent/renderAgent";
+import Ajouter from "../../../components/admin/users/Ajouter";
 const { width, height } = Dimensions.get("screen");
 const Data = [
   {
@@ -65,10 +66,7 @@ const Index = ({ navigation }) => {
     error: userError,
     isFetching: isFetchingUsers,
   } = useUsers();
-  const [name, setName] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [phone, setPhone] = useState("");
-  const [role, setRole] = useState();
+
   Keyboard.dismiss();
 
   const [currentLoader, setCurrentLoader] = useState(null);
@@ -271,115 +269,10 @@ const Index = ({ navigation }) => {
   }
   if (currentLoader == "Ajouter") {
     return (
-      <SafeAreaView>
-        <Animatable.View animation="fadeIn">
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 15,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.push("Agent")}>
-                <Ionicons name="ios-arrow-undo" size={24} color="white" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-                Espace Agent
-              </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Entypo name="cross" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ padding: 5, margin: 10 }}>
-              <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Veuillez Ajouter un Agent
-              </Text>
-            </View>
-            <View style={styles.container}>
-              <ImageBackground
-                source={require("../../../../assets/icon/bg-buy.png")}
-                resizeMode="cover"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: height - 190,
-                }}
-              >
-                <BlurView intensity={50} style={styles.inputBox}>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setName}
-                    value={name}
-                    placeholder="Nom"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setPrenom}
-                    value={prenom}
-                    placeholder="Prenom"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setPhone}
-                    value={phone}
-                    placeholder="Numero de Telephone"
-                    keyboardType="numeric"
-                  />
-
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      height: 80,
-                      width: 200,
-                      borderRadius: 15,
-                    }}
-                  >
-                    <Picker
-                      selectedValue={role}
-                      onValueChange={(itemValue, itemIndex) =>
-                        setRole(itemValue)
-                      }
-                      style={styles.select}
-                      mode="dropdown"
-                    >
-                      <Picker.Item label="Rôle" value="" />
-                      <Picker.Item
-                        label="Superviseur"
-                        value="administraateur"
-                      />
-                      <Picker.Item label="Police" value="police" />
-                      <Picker.Item label="Client" value="client" />
-                      <Picker.Item label="Agent" value="agent" />
-                      <Picker.Item label="Verificateur" value="verificateur" />
-                    </Picker>
-                  </View>
-
-                  <View style={styles.buttonGroup}>
-                    <TouchableOpacity
-                      onPress={() => navigation.goBack()}
-                      style={[styles.button, { backgroundColor: "black" }]}
-                    >
-                      <Text style={styles.btnLabel}>Annuler</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.button, { backgroundColor: "green" }]}
-                    >
-                      <Text style={styles.btnLabel}>Ajouter</Text>
-                    </TouchableOpacity>
-                  </View>
-                </BlurView>
-              </ImageBackground>
-            </View>
-          </ScrollView>
-        </Animatable.View>
-      </SafeAreaView>
+      <Ajouter
+        currentLoader={currentLoader}
+        setCurrentLoader={setCurrentLoader}
+      />
     );
   }
   if (currentLoader == "Modify") {
