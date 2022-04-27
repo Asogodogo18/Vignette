@@ -20,10 +20,11 @@ import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 
 import { Picker } from "@react-native-picker/picker";
-import { addUser } from "../../../services/query";
+import { addUser,useRoles } from "../../../services/query";
 const { width, height } = Dimensions.get("screen");
 
 const Ajouter = ({ setCurrentLoader, currentLoader }) => {
+  const {data, isLoading, error}= useRoles()
   const [name, setName] = useState("");
   const [prenom, setPrenom] = useState("");
   const [phone, setPhone] = useState("");
@@ -32,7 +33,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader }) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const handleAdd = () => {
-    addUser({ name, prenom, phone, role: 2, adresse, login, password })
+    addUser({ name, prenom, phone, role, adresse, login, password })
       .then((res) => console.log(res))
       .catch((e) => console.log("error:", e));
   };
@@ -132,12 +133,14 @@ const Ajouter = ({ setCurrentLoader, currentLoader }) => {
                     style={styles.select}
                     mode="dropdown"
                   >
-                    <Picker.Item label="Rôle" value="" />
-                    <Picker.Item label="Superviseur" value="administraateur" />
-                    <Picker.Item label="Police" value="police" />
-                    <Picker.Item label="Client" value="client" />
-                    <Picker.Item label="Agent" value="agent" />
-                    <Picker.Item label="Verificateur" value="verificateur" />
+                    <Picker.Item label="choisir un rôle" value="" />
+                    {data && data.map((item,index)=>{
+                      return (
+                        <Picker.Item key={index} label={item.role} value={item.id_role} />
+                      )
+                    })}
+                    
+                    
                   </Picker>
                 </View>
 
