@@ -29,7 +29,7 @@ const Guichet = ({
   const [isChecked, setChecked] = useState(false);
 
   const onChecked = (value) => {
-    setChecked(value)
+    setChecked(value);
     if (value) {
       setElementsToDelete([...elementsToDelete, item.id_guichet]);
     } else if (!value) {
@@ -45,7 +45,7 @@ const Guichet = ({
         <Checkbox
           style={styles.checkbox}
           value={isChecked}
-          onValueChange={(value)=>onChecked(value)}
+          onValueChange={(value) => onChecked(value)}
         />
       </View>
 

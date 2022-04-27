@@ -12,9 +12,9 @@ import {
   TextInput,
   Keyboard,
   ActivityIndicator,
+  Platform,
 } from "react-native";
-import React, { useState } from "react";
-import Input from "../../../components/TextInput";
+import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
 import {
   Ionicons,
@@ -25,10 +25,40 @@ import {
 } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import Checkbox from "expo-checkbox";
-import { useUsers } from "../../../services/query";
+import { useUsers, deleteUser } from "../../../services/query";
+import { Chip } from "react-native-paper";
 
 import { Picker } from "@react-native-picker/picker";
+import RenderAgent from "../gestionAgent/renderAgent";
+import Ajouter from "../../../components/admin/users/Ajouter";
 const { width, height } = Dimensions.get("screen");
+const Data = [
+  {
+    id: "1",
+    name: "Agent",
+    icon: "https://don.clusterdigitalafrica.com/upload/images/categorie/default.png",
+  },
+  {
+    id: "2",
+    name: "Superviseur",
+    icon: "https://don.clusterdigitalafrica.com/upload/images/categorie/default.png",
+  },
+  {
+    id: "3",
+    name: "Policier",
+    icon: "https://don.clusterdigitalafrica.com/upload/images/categorie/default.png",
+  },
+  {
+    id: "4",
+    name: "Verificateur",
+    icon: "https://don.clusterdigitalafrica.com/upload/images/categorie/default.png",
+  },
+  {
+    id: "5",
+    name: "Client",
+    icon: "https://don.clusterdigitalafrica.com/upload/images/categorie/default.png",
+  },
+];
 
 const Index = ({ navigation }) => {
   const {
@@ -36,355 +66,42 @@ const Index = ({ navigation }) => {
     error: userError,
     isFetching: isFetchingUsers,
   } = useUsers();
-  const [name, setName] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [phone, setPhone] = useState("");
-  const [role, setRole] = useState();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isChecked, setChecked] = useState(false);
+
   Keyboard.dismiss();
 
   const [currentLoader, setCurrentLoader] = useState(null);
 
+  const [IsActive, setIsActive] = useState(0);
   const [isDelete, setIsDelete] = useState(false);
-
-  const renderAgent = ({ item }) => {
-    return (
-      // <View style={{ flexDirection: "row" }}>
-
-      //   <Animatable.View
-      //     delay={200}
-      //     duration={250}
-      //     animation="bounceInLeft"
-      //     style={styles.CardDelete}
-      //   >
-      //     <View
-      //       style={{
-      //         // flex: 2,
-      //         height: 50,
-      //         width: 50,
-      //         backgroundColor: "#99D98c",
-      //         borderRadius: 80,
-      //         // marginTop: 20,
-      //         justifyContent: "center",
-      //         alignItems: "center",
-      //       }}
-      //     >
-      //       <Image
-      //         source={require("../../../../assets/icon/agent3.png")}
-      //         style={{
-      //           height: 35,
-      //           width: 35,
-      //         }}
-      //         resizeMode="contain"
-      //       />
-      //     </View>
-
-      //     <View style={styles.vignette}>
-      //       <View
-      //         style={{
-      //           flexDirection: "row",
-      //           marginTop: 10,
-      //           justifyContent: "center",
-      //         }}
-      //       >
-      //         <View style={{ flex: 1 }}>
-      //           <Text
-      //             style={{
-      //               fontSize: 15,
-      //               fontWeight: "200",
-      //               color: "black",
-      //               textTransform: "capitalize",
-      //             }}
-      //           >
-      //             Nom
-      //           </Text>
-      //           <Text
-      //             style={{
-      //               marginLeft: 5,
-      //               fontSize: 18,
-      //               color: "black",
-      //               textTransform: "uppercase",
-      //               fontWeight: "bold",
-      //             }}
-      //           >
-      //             Sogodogo
-      //           </Text>
-      //         </View>
-      //         <View style={{ flex: 1 }}>
-      //           <Text
-      //             style={{
-      //               fontSize: 15,
-      //               fontWeight: "200",
-      //               color: "black",
-      //               textTransform: "capitalize",
-      //             }}
-      //           >
-      //             Prénom
-      //           </Text>
-      //           <Text
-      //             style={{
-      //               marginLeft: 5,
-      //               fontSize: 18,
-      //               color: "black",
-      //               textTransform: "uppercase",
-      //               fontWeight: "bold",
-      //             }}
-      //           >
-      //             Cheick abba
-      //           </Text>
-      //         </View>
-      //       </View>
-      //       <View
-      //         style={{
-      //           flexDirection: "row",
-      //           marginTop: 5,
-      //           justifyContent: "center",
-      //         }}
-      //       >
-      //         <View style={{ flex: 1 }}>
-      //           <Text
-      //             style={{
-      //               fontSize: 15,
-      //               fontWeight: "200",
-      //               color: "black",
-      //               textTransform: "capitalize",
-      //             }}
-      //           >
-      //             Telephone
-      //           </Text>
-      //           <Text
-      //             style={{
-      //               marginLeft: 5,
-      //               fontSize: 18,
-      //               color: "black",
-      //               textTransform: "uppercase",
-      //               fontWeight: "bold",
-      //             }}
-      //           >
-      //             72192458
-      //           </Text>
-      //         </View>
-      //         <View style={{ flex: 1 }}>
-      //           <Text
-      //             style={{
-      //               fontSize: 15,
-      //               fontWeight: "200",
-      //               color: "black",
-      //               textTransform: "capitalize",
-      //             }}
-      //           >
-      //             Role
-      //           </Text>
-      //           <Text
-      //             style={{
-      //               marginLeft: 15,
-      //               fontSize: 18,
-      //               color: "black",
-      //               textTransform: "uppercase",
-      //               fontWeight: "bold",
-      //             }}
-      //           >
-      //             Police
-      //           </Text>
-      //         </View>
-      //       </View>
-      //     </View>
-      //     {isDelete ? (
-      //       <TouchableOpacity style={styles.delete}>
-      //         <AntDesign name="delete" size={20} color="white" />
-      //       </TouchableOpacity>
-      //     ) : null}
-      //   </Animatable.View>
-      // </View>
-
-      <TouchableOpacity
-        onPress={() => setIsVisible(!isVisible)}
-        style={styles.Card}
-      >
-        {isDelete && (
-          <View style={{ marginTop: 50, padding: 10 }}>
-            <Checkbox
-              style={styles.checkbox}
-              value={isChecked}
-              onValueChange={setChecked}
-            />
-          </View>
-        )}
-        <View
-          style={{
-            // flex: 1,
-            height: 50,
-            width: 50,
-            backgroundColor: "#99D98c",
-            borderRadius: 80,
-            marginTop: 40,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            source={require("../../../../assets/icon/agent3.png")}
-            style={{
-              height: 35,
-              width: 35,
-            }}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.vignette}>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 5,
-              justifyContent: "center",
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "black",
-                  textTransform: "capitalize",
-                }}
-              >
-                Nom
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 5,
-                  fontSize: 18,
-                  color: "black",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.nom}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "black",
-                  textTransform: "capitalize",
-                }}
-              >
-                Prénom
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 5,
-                  fontSize: 18,
-                  color: "black",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.prenom}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 5,
-              justifyContent: "center",
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "black",
-                  textTransform: "capitalize",
-                }}
-              >
-                Telephone
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 5,
-                  fontSize: 18,
-                  color: "black",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.telephone}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "black",
-                  textTransform: "capitalize",
-                }}
-              >
-                Role
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 15,
-                  fontSize: 18,
-                  color: "black",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.role}
-              </Text>
-            </View>
-          </View>
-        </View>
-        {isVisible ? (
-          <BlurView
-            intensity={50}
-            tint="dark"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              height: 130,
-              width: width - 15,
-              borderRadius: 10,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => handlePress("Modify")}
-                style={styles.btnBlur}
-              >
-                <FontAwesome name="edit" size={30} color="white" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setIsDelete(!isDelete)}
-                style={styles.btnBlur}
-              >
-                <MaterialCommunityIcons name="delete" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
-          </BlurView>
-        ) : null}
-      </TouchableOpacity>
-    );
-  };
 
   const handlePress = (loader) => {
     setCurrentLoader(loader);
   };
+  const [elementsToDelete, setElementsToDelete] = useState([]);
+
+  const [operationItem, setOperationItem] = useState(null);
+
+  useEffect(() => {
+    console.log("user del:", elementsToDelete);
+  }, [elementsToDelete]);
+
+  const handleMultipleDelete = () => {
+    setIsDelete(!isDelete);
+    if (elementsToDelete.length != 0) {
+      elementsToDelete.forEach((element) => {
+        handleDelete(element);
+      });
+    }
+  };
+  const handleDelete = (id) => {
+    console.log("id", id);
+    deleteUser(id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
+  };
+
   if (!currentLoader) {
     return (
       <SafeAreaView>
@@ -467,13 +184,54 @@ const Index = ({ navigation }) => {
               <Text style={styles.touchTxt}>Modifier</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setIsDelete(!isDelete)}
+              onPress={handleMultipleDelete}
               style={styles.touch}
             >
               <AntDesign name="delete" size={24} color="white" />
               <Text style={styles.touchTxt}>Supprimer</Text>
             </TouchableOpacity>
           </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.chip}
+          >
+            {Data.map((item, index) => {
+              return (
+                <Chip
+                  key={item.id}
+                  selectedColor="black"
+                  selected={IsActive == index ? true : false}
+                  style={styles.chipItem}
+                  avatar={
+                    <Ionicons
+                      name="person"
+                      size={20}
+                      color="white"
+                      style={{
+                        backgroundColor: "#99D98c",
+                        padding: 2,
+                      }}
+                    />
+                  }
+                  onPress={() => {
+                    setIsActive(!IsActive);
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "black",
+                      fontWeight: Platform.OS === "ios" ? "500" : "800",
+                      fontSize: 15,
+                      letterSpacing: 1,
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                </Chip>
+              );
+            })}
+          </ScrollView>
           {isFetchingUsers ? (
             <View
               style={{
@@ -492,7 +250,16 @@ const Index = ({ navigation }) => {
                 paddingBottom: 50,
               }}
               data={userData.filter((user) => user.role === "Agent")}
-              renderItem={renderAgent}
+              renderItem={({ item }) => (
+                <RenderAgent
+                  item={item}
+                  handlePress={handlePress}
+                  isDelete={isDelete}
+                  handleDelete={handleDelete}
+                  elementsToDelete={elementsToDelete}
+                  setElementsToDelete={setElementsToDelete}
+                />
+              )}
               keyExtractor={(item) => item.id_user}
             />
           )}
@@ -502,115 +269,10 @@ const Index = ({ navigation }) => {
   }
   if (currentLoader == "Ajouter") {
     return (
-      <SafeAreaView>
-        <Animatable.View animation="fadeIn">
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 15,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.push("Agent")}>
-                <Ionicons name="ios-arrow-undo" size={24} color="white" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-                Espace Agent
-              </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Entypo name="cross" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ padding: 5, margin: 10 }}>
-              <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Veuillez Ajouter un Agent
-              </Text>
-            </View>
-            <View style={styles.container}>
-              <ImageBackground
-                source={require("../../../../assets/icon/bg-buy.png")}
-                resizeMode="cover"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: height - 190,
-                }}
-              >
-                <BlurView intensity={50} style={styles.inputBox}>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setName}
-                    value={name}
-                    placeholder="Nom"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setPrenom}
-                    value={prenom}
-                    placeholder="Prenom"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setPhone}
-                    value={phone}
-                    placeholder="Numero de Telephone"
-                    keyboardType="numeric"
-                  />
-
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      height: 80,
-                      width: 200,
-                      borderRadius: 15,
-                    }}
-                  >
-                    <Picker
-                      selectedValue={role}
-                      onValueChange={(itemValue, itemIndex) =>
-                        setRole(itemValue)
-                      }
-                      style={styles.select}
-                      mode="dropdown"
-                    >
-                      <Picker.Item label="Rôle" value="" />
-                      <Picker.Item
-                        label="Superviseur"
-                        value="administraateur"
-                      />
-                      <Picker.Item label="Police" value="police" />
-                      <Picker.Item label="Client" value="client" />
-                      <Picker.Item label="Agent" value="agent" />
-                      <Picker.Item label="Verificateur" value="verificateur" />
-                    </Picker>
-                  </View>
-
-                  <View style={styles.buttonGroup}>
-                    <TouchableOpacity
-                      onPress={() => navigation.goBack()}
-                      style={[styles.button, { backgroundColor: "black" }]}
-                    >
-                      <Text style={styles.btnLabel}>Annuler</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.button, { backgroundColor: "green" }]}
-                    >
-                      <Text style={styles.btnLabel}>Ajouter</Text>
-                    </TouchableOpacity>
-                  </View>
-                </BlurView>
-              </ImageBackground>
-            </View>
-          </ScrollView>
-        </Animatable.View>
-      </SafeAreaView>
+      <Ajouter
+        currentLoader={currentLoader}
+        setCurrentLoader={setCurrentLoader}
+      />
     );
   }
   if (currentLoader == "Modify") {
@@ -877,5 +539,25 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     fontWeight: "bold",
+  },
+  chip: {
+    flexDirection: "row",
+    padding: 2,
+    flexGrow: 1,
+    height: 40,
+    justifyContent: "center",
+    margin: 10,
+  },
+  chipItem: {
+    justifyContent: "center",
+    borderWidth: 0.5,
+    borderColor: "black",
+    marginHorizontal: 10,
+    padding: 0,
+    overflow: "hidden",
+    minWidth: 100,
+    maxWidth: 150,
+    borderRadius: Platform.OS == "ios" ? 20 : 50,
+    backgroundColor: "white",
   },
 });

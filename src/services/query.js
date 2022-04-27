@@ -5,13 +5,17 @@ import apiClient from "../services/http-common";
 
 //all vignettes
 export function useVignettes() {
-  return useQuery("vignettes", async () => {
-    const { data } = await apiClient.get("vignettes/");
-    return data;
-  },{
-    // Refetch the data every second
-    staleTime: 10000,
-  });
+  return useQuery(
+    "vignettes",
+    async () => {
+      const { data } = await apiClient.get("vignettes/");
+      return data;
+    },
+    {
+      // Refetch the data every second
+      staleTime: 10000,
+    }
+  );
 }
 
 //buy vignette
@@ -93,14 +97,18 @@ export function useRoles() {
 
 //all guichet
 export function useGuichets() {
-  return useQuery("posts", async () => {
-    const { data } = await apiClient.get("/guichets");
-    return data;
-  },{
-    // Refetch the data every second
-    refetchInterval: 10000,
-    staleTime: 5000,
-  });
+  return useQuery(
+    "posts",
+    async () => {
+      const { data } = await apiClient.get("/guichets");
+      return data;
+    },
+    {
+      // Refetch the data every second
+      refetchInterval: 10000,
+      staleTime: 5000,
+    }
+  );
 }
 
 //add guichet
@@ -121,23 +129,26 @@ export const updateGuichet = (sentForm) => {
 
 //delete Guichet
 export const deleteGuichet = (id) => {
-  console.log("id:",id)
+  console.log("id:", id);
   const formData = new FormData();
 
   formData.append("id_guichet", id);
   return apiClient.post("/guichets/delete", formData);
 };
 
-
 // all puissances
 export function usePuissances() {
-  return useQuery("puissances", async () => {
-    const { data } = await apiClient.get("/puissances/");
-    return data;
-  },{
-    // Refetch the data every second
-    staleTime: 10000,
-  });
+  return useQuery(
+    "puissances",
+    async () => {
+      const { data } = await apiClient.get("/puissances/");
+      return data;
+    },
+    {
+      // Refetch the data every second
+      staleTime: 10000,
+    }
+  );
 }
 
 //add Puissance
@@ -165,7 +176,7 @@ export const updatePuissance = (sentForm) => {
 
 //delete Puissance
 export const deletePuissance = (id) => {
-  console.log("id:",id)
+  console.log("id:", id);
   const formData = new FormData();
 
   formData.append("puissance_id", id);
@@ -174,13 +185,17 @@ export const deletePuissance = (id) => {
 
 //all users
 export function useUsers() {
-  return useQuery("users", async () => {
-    const { data } = await apiClient.get("/users/");
-    return data;
-  },{
-    // Refetch the data every second
-    staleTime: 10000,
-  });
+  return useQuery(
+    "users",
+    async () => {
+      const { data } = await apiClient.get("/users/");
+      return data;
+    },
+    {
+      // Refetch the data every second
+      staleTime: 10000,
+    }
+  );
 }
 
 export const addUser = (sentForm) => {
@@ -212,8 +227,7 @@ export const updateUser = (sentForm) => {
 };
 
 //delete user
-export const deleteUser = (sentForm) => {
-  const { id } = sentForm;
+export const deleteUser = (id) => {
   const formData = new FormData();
 
   formData.append("id_user", id);
@@ -222,7 +236,7 @@ export const deleteUser = (sentForm) => {
 
 //affectation guichet agent
 export const affectAgent = (sentForm) => {
-  const { id,user_id } = sentForm;
+  const { id, user_id } = sentForm;
   const formData = new FormData();
 
   formData.append("id_guichet", id);
@@ -232,7 +246,7 @@ export const affectAgent = (sentForm) => {
 
 //delete affectation
 export const unaffectAgent = (sentForm) => {
-  const { id,user_id } = sentForm;
+  const { id, user_id } = sentForm;
   const formData = new FormData();
 
   formData.append("guichet_id", id);

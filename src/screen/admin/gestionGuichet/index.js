@@ -154,7 +154,7 @@ const Index = ({ navigation }) => {
             <ActivityIndicator size="large" />
           </View>
         )}
-        {data && data!="False" && (
+        {data && data != "False" && (
           <FlatList
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginVertical: 5, paddingHorizontal: 5 }}
