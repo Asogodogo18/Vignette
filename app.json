@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Vignette",
+    "name": "Vignette-Mali",
     "slug": "Vignette",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon/logobko.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon/logobko.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon/logobko.png",
         "backgroundColor": "#FFFFFF"
       }
     },

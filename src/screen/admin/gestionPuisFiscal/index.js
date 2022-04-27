@@ -326,10 +326,6 @@ const Index = ({ navigation }) => {
               />
               <Text style={styles.touchTxt}>Modifier</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.touch}>
-                <AntDesign name="delete" size={24} color="white" />
-                <Text style={styles.touchTxt}>Supprimer</Text>
-              </TouchableOpacity> */}
           </View>
           {isLoading ? (
             <View

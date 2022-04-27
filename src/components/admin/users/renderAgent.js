@@ -46,8 +46,10 @@ const RenderAgent = ({
   };
   Keyboard.dismiss();
   return isDelete ? (
-    <View style={{ flexDirection: "row" }}>
-      <View style={{ marginTop: 40, margin: 5 }}>
+    <View
+      style={{ flexDirection: "row", alignItems: "center", marginVertical: 8 }}
+    >
+      <View style={{ margin: 5 }}>
         <Checkbox
           style={styles.checkbox}
           value={isChecked}
@@ -212,8 +214,8 @@ const RenderAgent = ({
           height: 50,
           width: 50,
           backgroundColor: "#99D98c",
-          borderRadius: 80,
-          marginTop: 40,
+          borderRadius: 70,
+          marginTop: 0,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -364,7 +366,7 @@ const RenderAgent = ({
             }}
           >
             <TouchableOpacity
-              onPress={() => handlePress("Modify")}
+              onPress={() => handlePress("Modify", item)}
               style={styles.btnBlur}
             >
               <FontAwesome name="edit" size={30} color="white" />
@@ -434,15 +436,13 @@ const styles = StyleSheet.create({
   },
   section: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   Card: {
     flex: 1,
-    margin: 5,
+    margin: 10,
     padding: 5,
     flexDirection: "row",
-    backgroundColor: "white",
+    backgroundColor: "lightgray",
     maxHeight: 250,
     minHeight: 100,
     width: width - 15,
@@ -450,6 +450,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     justifyContent: "space-around",
+    alignItems: "center",
+    marginVertical: 8,
   },
   btnBlur: {
     // flex: 2,

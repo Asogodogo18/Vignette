@@ -1,150 +1,155 @@
 import {
-    View,
-    Text,
-    StyleSheet,
-    FlatList,
-    TouchableOpacity,
-    Dimensions,
-    Image,
-    ImageBackground,
-    ScrollView,
-    SafeAreaView,
-    TextInput,
-    Keyboard,
-    ActivityIndicator,
-  } from "react-native";
-  import React, { useState } from "react";
-  import { addPuissance, updatePuissance } from "../../../services/query";
-  import * as Animatable from "react-native-animatable";
-  import {
-    FontAwesome,
-    Ionicons,
-    Entypo,
-    AntDesign,
-    MaterialCommunityIcons,
-  } from "@expo/vector-icons";
-  import { BlurView } from "expo-blur";
-  import { Picker } from "@react-native-picker/picker";
-  
-  const { width, height } = Dimensions.get("screen");
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Dimensions,
+  Image,
+  ImageBackground,
+  ScrollView,
+  SafeAreaView,
+  TextInput,
+  Keyboard,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState } from "react";
+import { addPuissance, updatePuissance } from "../../../services/query";
+import * as Animatable from "react-native-animatable";
+import {
+  FontAwesome,
+  Ionicons,
+  Entypo,
+  AntDesign,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
+import { Picker } from "@react-native-picker/picker";
 
-  
+const { width, height } = Dimensions.get("screen");
 
 const Modify = ({ handlePress, Item }) => {
-  console.log(Item)
-    const [puissance, setPuissance] = useState(""||Item.puissance);
-    const [montant, setMontant] = useState(""||Item.montant);
-    const [selectedType, setSelectedType] = useState("personnel"||Item.utilisation);
+  console.log(Item);
+  const [puissance, setPuissance] = useState("" || Item.puissance);
+  const [montant, setMontant] = useState("" || Item.montant);
+  const [selectedType, setSelectedType] = useState(
+    "personnel" || Item.utilisation
+  );
 
-    const handleModify =()=>{
-      updatePuissance({puissance,montant,utilisation:selectedType,puissance_id:Item.id_puissance})
-        .then(res=>console.log(res))
-        .catch(e=>console.log(e))
-    }
+  const handleModify = () => {
+    updatePuissance({
+      puissance,
+      montant,
+      utilisation: selectedType,
+      puissance_id: Item.id_puissance,
+    })
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  };
 
   return (
     <SafeAreaView>
-    <Animatable.View animation="fadeIn">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View
-          style={{
-            height: 80,
-            backgroundColor: "#1a1818",
-            flexDirection: "row",
-            elevation: 5,
-            justifyContent: "space-between",
-            alignItems: "center",
-            paddingHorizontal: 15,
-          }}
-        >
-          <TouchableOpacity onPress={() =>handlePress(null)}>
-            <Ionicons name="ios-arrow-undo" size={24} color="white" />
-          </TouchableOpacity>
-          <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-            Puissance Fiscale
-          </Text>
-          <TouchableOpacity onPress={() => handlePress(null)}>
-            <Entypo name="cross" size={30} color="white" />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ padding: 5, margin: 10 }}>
-          <Text style={{ textAlign: "center", fontSize: 18 }}>
-            Modification du Puissance Fiscale
-          </Text>
-        </View>
-
-        <View style={styles.container}>
-          <ImageBackground
-            source={require("../../../../assets/icon/bg-buy.png")}
-            resizeMode="cover"
+      <Animatable.View animation="fadeIn">
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View
             style={{
-              flex: 1,
-              justifyContent: "center",
+              height: 80,
+              backgroundColor: "#1a1818",
+              flexDirection: "row",
+              elevation: 5,
+              justifyContent: "space-between",
               alignItems: "center",
-              height: height - 200,
+              paddingHorizontal: 15,
             }}
           >
-            <BlurView intensity={20} style={styles.inputBox}>
-              <TextInput
-                style={styles.input}
-                onChangeText={setPuissance}
-                value={puissance}
-                placeholder="Puissance"
-              />
-              <TextInput
-                style={styles.input}
-                onChangeText={setMontant}
-                value={montant}
-                placeholder="Montant"
-                keyboardType="numeric"
-              />
+            <TouchableOpacity onPress={() => handlePress(null)}>
+              <Ionicons name="ios-arrow-undo" size={24} color="white" />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
+              Puissance Fiscale
+            </Text>
+            <TouchableOpacity onPress={() => handlePress(null)}>
+              <Entypo name="cross" size={30} color="white" />
+            </TouchableOpacity>
+          </View>
 
-              <View
-                style={{
-                  borderWidth: 1,
-                  height: 80,
-                  width: 250,
-                  borderRadius: 15,
-                }}
-              >
-                <Picker
-                  selectedValue={selectedType}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setSelectedType(itemValue)
-                  }
-                  style={styles.select}
-                  mode="dropdown"
-                >
-                  <Picker.Item label="Transport" value="transport" />
-                  <Picker.Item label="Personnel" value="personnel" />
-                </Picker>
-              </View>
+          <View style={{ padding: 5, margin: 10 }}>
+            <Text style={{ textAlign: "center", fontSize: 18 }}>
+              Modification du Puissance Fiscale
+            </Text>
+          </View>
 
-              <View style={styles.buttonGroup}>
-                <TouchableOpacity
-                  onPress={() => handlePress(null)}
-                  style={[styles.button, { backgroundColor: "black" }]}
-                >
-                  <Text style={styles.btnLabel}>Annuler</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                onPress={handleModify}
-                  style={[styles.button, { backgroundColor: "green" }]}
-                >
-                  <Text style={styles.btnLabel}>Modifier</Text>
-                </TouchableOpacity>
-              </View>
-            </BlurView>
-          </ImageBackground>
-        </View>
-      </ScrollView>
-    </Animatable.View>
-  </SafeAreaView>
-  )
-}
+          <View style={styles.container}>
+            <ImageBackground
+              source={require("../../../../assets/icon/bg-buy.png")}
+              resizeMode="cover"
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                height: height - 200,
+              }}
+            >
+              <BlurView intensity={20} style={styles.inputBox}>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setPuissance}
+                  value={puissance}
+                  placeholder="Puissance"
+                />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setMontant}
+                  value={montant}
+                  placeholder="Montant"
+                  keyboardType="numeric"
+                />
 
-export default Modify
+                <View
+                  style={{
+                    borderWidth: 1,
+                    height: 80,
+                    width: 250,
+                    borderRadius: 15,
+                  }}
+                >
+                  <Picker
+                    selectedValue={selectedType}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setSelectedType(itemValue)
+                    }
+                    style={styles.select}
+                    mode="dropdown"
+                  >
+                    <Picker.Item label="Transport" value="transport" />
+                    <Picker.Item label="Personnel" value="personnel" />
+                  </Picker>
+                </View>
+
+                <View style={styles.buttonGroup}>
+                  <TouchableOpacity
+                    onPress={() => handlePress(null)}
+                    style={[styles.button, { backgroundColor: "black" }]}
+                  >
+                    <Text style={styles.btnLabel}>Annuler</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={handleModify}
+                    style={[styles.button, { backgroundColor: "green" }]}
+                  >
+                    <Text style={styles.btnLabel}>Modifier</Text>
+                  </TouchableOpacity>
+                </View>
+              </BlurView>
+            </ImageBackground>
+          </View>
+        </ScrollView>
+      </Animatable.View>
+    </SafeAreaView>
+  );
+};
+
+export default Modify;
 
 const styles = StyleSheet.create({
   contain: {
