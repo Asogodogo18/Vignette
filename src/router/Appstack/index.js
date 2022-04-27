@@ -6,6 +6,7 @@ import Accueil from "../../screen/accueil";
 import Scan from "../../screen/scan";
 import Buy from "../../screen/client/Buy";
 import Manage from "../../screen/client/Manage";
+import Profil from "../../screen/admin/profil";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const Index = () => {
         name="Gestion des Vignettes"
         component={Manage}
       />
+      <Stack.Screen name="Profil" component={Profil} />
     </Stack.Navigator>
   );
 };

@@ -16,13 +16,13 @@ import Input from "../../../components/TextInput";
 import * as Animatable from "react-native-animatable";
 import {
   Ionicons,
-  Entypo,
-  AntDesign,
   MaterialCommunityIcons,
   FontAwesome,
 } from "@expo/vector-icons";
 import { useAuthState } from "../../../global";
 import { logout,useAuthDispatch } from "../../../global";
+import Modify from "../../../components/profile/Modify";
+import ChangePassword from "../../../components/profile/ChangePassword";
 const { width, height } = Dimensions.get("screen");
 
 
@@ -94,13 +94,15 @@ const Index = ({ navigation }) => {
 
             <View
               style={{
+                flexDirection:"row",
                 alignSelf: "center",
                 marginVertical: 0,
                 width: width,
+                justifyContent:"space-around"
               }}
             >
               <TouchableOpacity
-                style={styles.touch}
+                style={[styles.touch,{flex:1}]}
                 onPress={() => handlePress("Modify")}
               >
                 <MaterialCommunityIcons
@@ -109,6 +111,17 @@ const Index = ({ navigation }) => {
                   color="white"
                 />
                 <Text style={styles.text}>Modifier</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.touch,{flex:2}]}
+                onPress={() => handlePress("Change")}
+              >
+                <MaterialCommunityIcons
+                  name="file-document-edit-outline"
+                  size={24}
+                  color="white"
+                />
+                <Text style={styles.text}>Changer de Mot de Passe</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.Card}>
@@ -184,55 +197,12 @@ const Index = ({ navigation }) => {
   }
   if (currentLoader == "Modify") {
     return (
-      <SafeAreaView>
-        <Animatable.View animation="fadeIn">
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 15,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.push("Profil")}>
-                <Ionicons name="ios-arrow-undo" size={24} color="white" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-                Espace Superviseur
-              </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Entypo name="cross" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ padding: 5, margin: 10 }}>
-              <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Modification du compte Superviseur
-              </Text>
-            </View>
-
-            <View
-              style={{
-                padding: 2,
-                margin: 2,
-              }}
-            >
-              <TouchableOpacity style={styles.touch}>
-                <MaterialCommunityIcons
-                  name="file-document-edit-outline"
-                  size={24}
-                  color="white"
-                />
-                <Text style={styles.touchTxt}>Modifier</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </Animatable.View>
-      </SafeAreaView>
+      <Modify setCurrentLoader={setCurrentLoader}/>
+    );
+  }
+  if (currentLoader == "Change") {
+    return (
+      <ChangePassword setCurrentLoader={setCurrentLoader}/>
     );
   }
 };
@@ -251,13 +221,14 @@ const styles = StyleSheet.create({
     maxWidth: 230,
     // backgroundColor: "#99D98c",
     backgroundColor: "#1a1818",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     alignItems: "center",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
+    paddingHorizontal:5,
     elevation: 5,
     flexDirection: "row",
     margin: 5,

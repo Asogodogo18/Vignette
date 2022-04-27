@@ -11,7 +11,7 @@ import {
   Platform,
 } from "react-native";
 import React from "react";
-import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
@@ -19,6 +19,7 @@ import Tableau from "../../../components/admin/tableau";
 import Action from "../../../components/admin/Action";
 
 const { width, height } = Dimensions.get("screen");
+
 const Index = ({ navigation }) => {
   return (
     <SafeAreaView>

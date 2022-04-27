@@ -71,16 +71,29 @@ export function useVignette(Id) {
 
 //update password
 export const updatePassword = (sentForm) => {
-  const { id_user, actuel, newpass, confirmpass, pass } = sentForm;
+  const { id_user, actuel, newpass, confirmpass } = sentForm;
+  console.log(sentForm)
   const formData = new FormData();
 
   formData.append("id_user", id_user);
   formData.append("actuel", actuel);
-  formData.append("newpass", newpass);
-  formData.append("confirmpass", confirmpass);
-  formData.append("pass", pass);
+  formData.append("new", newpass);
+  formData.append("confirme", confirmpass);
+  formData.append("pass", actuel);
   return apiClient.post("/updateUserPass", formData);
 };
+
+//all Roles
+export function useRoles() {
+  return useQuery("roles", async () => {
+    const { data } = await apiClient.get("/roles");
+    return data;
+  },{
+    // Refetch the data every second
+    refetchInterval: 10000,
+    staleTime: 5000,
+  });
+}
 
 //all guichet
 export function useGuichets() {
@@ -200,15 +213,15 @@ export const addUser = (sentForm) => {
 
 //update user
 export const updateUser = (sentForm) => {
-  const { nom, prenom, adresse, tel, login, pass, role, id_user } = sentForm;
+  const { name, surname, adresse, tel, login, role, id} = sentForm;
   const formData = new FormData();
 
-  formData.append("id_user", id_user);
-  formData.append("nom", prenom);
+  formData.append("id_user", id);
+  formData.append("nom", name);
+  formData.append("prenom", surname);
   formData.append("adresse", adresse);
   formData.append("tel", tel);
   formData.append("login", login);
-  formData.append("pass", pass);
   formData.append("role", role);
   return apiClient.post("/users/update", formData);
 };

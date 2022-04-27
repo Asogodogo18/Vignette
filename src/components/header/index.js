@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from "react-native";
 import React from "react";
 import { Avatar } from "react-native-paper";
@@ -16,60 +17,75 @@ import * as Animatable from "react-native-animatable";
 
 const { height, width } = Dimensions.get("screen");
 
-const Header = ({ setVisible }) => {
+const Header = ({ navigation }) => {
   return (
-    <View style={stytles.contain}>
-      <Animatable.Image
-        animation="fadeIn"
-        duration={300}
-        delay={500}
-        source={require("../../../assets/logo.png")}
-        style={stytles.img}
-      />
-      <Animatable.Text
-        animation="fadeIn"
-        duration={300}
-        delay={500}
-        style={stytles.txt}
-      >
-        Accueil
-      </Animatable.Text>
-      <TouchableOpacity
-        onPress={() => setVisible(true)}
-        style={{
-          height: 40,
-          width: 40,
-          borderRadius: 20,
-          backgroundColor: "black",
-          justifyContent: "center",
-          alignItems: "center",
-          elevation: 10,
-          shadowColor: "white",
-        }}
-      >
-        <LinearGradient
-          colors={["#1a1818", "#FFFF"]}
-          start={{ x: 0.1, y: 0.0 }}
-          end={{ x: 2.0, y: 0.0 }}
+    <View
+      style={{
+        position: "absolute",
+        zIndex: 5,
+        top: Platform.OS == "ios" ? 30 : -5,
+        left: 0,
+        right: 0,
+        width: width,
+      }}
+    >
+      <View style={styles.header}>
+        <Animatable.Image
+          animation="fadeIn"
+          duration={300}
+          delay={500}
+          source={require("../../../assets/logo.png")}
+          style={styles.img}
+        />
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Profil")}
           style={{
-            height: 40,
-            width: 40,
-            borderRadius: 20,
-            backgroundColor: "white",
+            height: 50,
+            width: 50,
+            borderRadius: 40,
+            backgroundColor: "black",
             justifyContent: "center",
             alignItems: "center",
+            elevation: 10,
+            shadowColor: "white",
           }}
         >
-          <MaterialCommunityIcons name="account" size={30} color="white" />
-        </LinearGradient>
-      </TouchableOpacity>
+          <LinearGradient
+            colors={["#1a1818", "#FFFF"]}
+            start={{ x: 0.1, y: 0.0 }}
+            end={{ x: 2.0, y: 0.0 }}
+            style={{
+              height: 50,
+              width: 50,
+              borderRadius: Platform.OS == "ios" ? 20 : 40,
+              backgroundColor: "white",
+              justifyContent: "center",
+              alignItems: "center",
+              elevation: 5,
+              shadowColor: "white",
+            }}
+          >
+            <MaterialCommunityIcons name="account" size={40} color="white" />
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-const stytles = StyleSheet.create({
+const styles = StyleSheet.create({
   contain: {
     // flex: 1,
+    backgroundColor: "#1a1818",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    height: 70,
+    width: "100%",
+    alignItems: "center",
+    paddingHorizontal: 8,
+  },
+  header: {
     backgroundColor: "#1a1818",
     justifyContent: "space-between",
     flexDirection: "row",
