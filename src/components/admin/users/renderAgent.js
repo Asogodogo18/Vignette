@@ -391,6 +391,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: "center",
     // alignItems: "center",
+    backgroundColor: "#fff",
   },
   touch: {
     height: 50,
@@ -442,7 +443,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 5,
     flexDirection: "row",
-    backgroundColor: "lightgray",
+    backgroundColor: "#edeef0",
     maxHeight: 250,
     minHeight: 100,
     width: width - 15,

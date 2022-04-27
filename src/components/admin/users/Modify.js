@@ -18,31 +18,53 @@ import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
-import { updateUser } from "../../../services/query";
+import { updateUser, useRoles } from "../../../services/query";
+import Toast from "react-native-toast-message";
 
 import { Picker } from "@react-native-picker/picker";
 const { width, height } = Dimensions.get("screen");
 
 const Modify = ({ item, setCurrentLoader, currentLoader }) => {
-  const [name, setName] = useState("" || item.name);
+  const { data, isLoading, error } = useRoles();
+  const [name, setName] = useState("" || item.nom);
   const [prenom, setPrenom] = useState("" || item.prenom);
-  const [phone, setPhone] = useState("" || item.phone);
+  const [phone, setPhone] = useState("" || item.telephone);
   const [role, setRole] = useState("Superviseur" || item.role);
   const [adresse, setAdresse] = useState("" || item.adresse);
   const [login, setLogin] = useState("" || item.login);
   const [password, setPassword] = useState("" || item.password);
   const handleModify = () => {
     updateUser({
+      id: item.id_user,
       name: name,
-      prenom: prenom,
-      phone: phone,
-      role: role,
-      adresse: adresse,
-      login: login,
-      password: password,
+      surname: prenom,
+      tel: phone,
+      role,
+      adresse,
+      login,
     })
-      .then((res) => console.log(res))
-      .catch((e) => console.log("error:", e));
+      .then((res) => {
+        console.log("change password:", res);
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Vos Modifications ont ete enregistre!",
+          });
+          setCurrentLoader(null);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) =>
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
+        })
+      );
   };
   return (
     <SafeAreaView>
@@ -141,12 +163,17 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
                     style={styles.select}
                     mode="dropdown"
                   >
-                    <Picker.Item label="Rôle" value="" />
-                    <Picker.Item label="Superviseur" value="administraateur" />
-                    <Picker.Item label="Police" value="police" />
-                    <Picker.Item label="Client" value="client" />
-                    <Picker.Item label="Agent" value="agent" />
-                    <Picker.Item label="Verificateur" value="verificateur" />
+                    <Picker.Item label="choisir un rôle" value="" />
+                    {data &&
+                      data.map((item, index) => {
+                        return (
+                          <Picker.Item
+                            key={index}
+                            label={item.role}
+                            value={item.id_role}
+                          />
+                        );
+                      })}
                   </Picker>
                 </View>
 

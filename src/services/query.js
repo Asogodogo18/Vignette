@@ -72,7 +72,7 @@ export function useVignette(Id) {
 //update password
 export const updatePassword = (sentForm) => {
   const { id_user, actuel, newpass, confirmpass } = sentForm;
-  console.log(sentForm)
+  console.log(sentForm);
   const formData = new FormData();
 
   formData.append("id_user", id_user);
@@ -85,14 +85,18 @@ export const updatePassword = (sentForm) => {
 
 //all Roles
 export function useRoles() {
-  return useQuery("roles", async () => {
-    const { data } = await apiClient.get("/roles");
-    return data;
-  },{
-    // Refetch the data every second
-    refetchInterval: 10000,
-    staleTime: 5000,
-  });
+  return useQuery(
+    "roles",
+    async () => {
+      const { data } = await apiClient.get("/roles");
+      return data;
+    },
+    {
+      // Refetch the data every second
+      refetchInterval: 10000,
+      staleTime: 5000,
+    }
+  );
 }
 
 //all guichet
@@ -193,6 +197,7 @@ export function useUsers() {
     },
     {
       // Refetch the data every second
+      refetchInterval: 50000,
       staleTime: 10000,
     }
   );
@@ -213,7 +218,7 @@ export const addUser = (sentForm) => {
 
 //update user
 export const updateUser = (sentForm) => {
-  const { name, surname, adresse, tel, login, role, id} = sentForm;
+  const { name, surname, adresse, tel, login, role, id } = sentForm;
   const formData = new FormData();
 
   formData.append("id_user", id);
