@@ -1,5 +1,5 @@
 import { getDataObject } from "../services/http-common";
-
+import Toast from "react-native-toast-message";
 let user = getDataObject("currentUser")
 let isSignedIn = new Boolean(getDataObject("currentUser")) ? true : false;
 
@@ -26,6 +26,10 @@ export const AuthReducer = (initialState, action) => {
         loading: false,
       };
     case "LOGOUT":
+      Toast.show({
+        type: "success",
+        text1: "Au Revoir",
+      });
       return {
         ...initialState,
         user: "",
@@ -33,6 +37,7 @@ export const AuthReducer = (initialState, action) => {
       };
 
     case "LOGIN_ERROR":
+     
       return {
         ...initialState,
         loading: false,

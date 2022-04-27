@@ -4,6 +4,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
+  Platform,
   Dimensions,
   StatusBar,
 } from "react-native";
@@ -28,38 +30,15 @@ const Index = ({ navigation }) => {
   const [visible, setVisible] = React.useState(false);
   
   return (
-    <Provider>
-      <Portal>
-        <Modal
-          visible={visible}
-          onDismiss={() => setVisible(false)}
-          contentContainerStyle={styles.containerStyle}
-        >
-          <TouchableOpacity
-            style={styles.touch1}
-            onPress={() => logout(dispatch)}
-          >
-            <FontAwesome name="sign-out" size={24} color="white" />
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "700",
-                color: "white",
-                marginRight: 15,
-              }}
-            >
-              Déconnexion
-            </Text>
-          </TouchableOpacity>
-        </Modal>
-      </Portal>
+    <SafeAreaView>
+     <Header navigation={navigation} />
       <ScrollView
         stickyHeaderHiddenOnScroll
         stickyHeaderIndices={[1]}
         contentContainerStyle={styles.contain}
       >
         <StatusBar hidden />
-        <Header setVisible={setVisible} />
+        
         {user.role === "Agent" ? (
           <AgentHome navigation={navigation} />
         ) : user.role === "Client" ? (
@@ -72,7 +51,7 @@ const Index = ({ navigation }) => {
         <Footer />
       </ScrollView>
       <Footer />
-    </Provider>
+    </SafeAreaView>
   );
 };
 

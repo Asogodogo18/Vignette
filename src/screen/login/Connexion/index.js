@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
+import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -94,16 +95,17 @@ const Index = ({ navigation, route }) => {
 
   const loginHandle = async () => {
     if (data.username.length == 0 || data.password.length == 0) {
-      alert("Wrong Input!", "Username or password field cannot be empty.", [
-        { text: "Okay" },
-      ]);
+      Toast.show({
+        type: "error",
+        text1: "Veuillez renseigner les champs obligatoires",
+      });
       return;
     }
 
     try {
       let response = await loginUser(dispatch, data); //loginUser action makes the request and handles all the neccessary state changes
       if (!response) return;
-      console.log("client log:", response);
+    
     } catch (error) {
       console.log(error);
     }
@@ -154,7 +156,7 @@ const Index = ({ navigation, route }) => {
           {data.isValidUser ? null : (
             <Animatable.View animation="fadeInLeft" duration={500}>
               <Text style={styles.errorMsg}>
-                Username must be 4 characters long.
+                Le nom d'utilisateur doit contenir au minimum 4 caracteres.
               </Text>
             </Animatable.View>
           )}
@@ -168,7 +170,7 @@ const Index = ({ navigation, route }) => {
               },
             ]}
           >
-            Password
+           Mot de Passe
           </Text>
           <View style={styles.action}>
             <Feather name="lock" color="gray" size={20} />
@@ -191,7 +193,7 @@ const Index = ({ navigation, route }) => {
           {data.isValidPassword ? null : (
             <Animatable.View animation="fadeInLeft" duration={500}>
               <Text style={styles.errorMsg}>
-                Password must be 8 characters long.
+                Le Mot de Passe doit avoir au minimum 8 caracteres.
               </Text>
             </Animatable.View>
           )}
@@ -260,7 +262,6 @@ const Index = ({ navigation, route }) => {
             </View>
           </View>
 
-          {errorMessage ? <Text style={[styles.errorMsg,{marginTop:20,padding:20}]}>{errorMessage}</Text> : null}
         </ScrollView>
       </Animatable.View>
     </View>
