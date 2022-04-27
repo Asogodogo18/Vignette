@@ -14,7 +14,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import { addPuissance, updatePuissance } from "../../../services/query";
+import { updatePuissance } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
 import {
   FontAwesome,
@@ -25,11 +25,11 @@ import {
 } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Picker } from "@react-native-picker/picker";
+import Toast from "react-native-toast-message";
 
 const { width, height } = Dimensions.get("screen");
 
 const Modify = ({ handlePress, Item }) => {
-  console.log(Item);
   const [puissance, setPuissance] = useState("" || Item.puissance);
   const [montant, setMontant] = useState("" || Item.montant);
   const [selectedType, setSelectedType] = useState(
@@ -43,8 +43,27 @@ const Modify = ({ handlePress, Item }) => {
       utilisation: selectedType,
       puissance_id: Item.id_puissance,
     })
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+    .then((res) => {
+      if (res.data == "true") {
+        Toast.show({
+          type: "success",
+          text1: "Vos modifications ont ete enregistre!",
+        });
+        setCurrentLoader(null);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+        });
+      }
+    })
+    .catch((e) => {
+      Toast.show({
+        type: "error",
+        text1: "Une erreur est survenue, Veuillez ressayer!",
+        text2: e.toString(),
+      })
+    });
   };
 
   return (

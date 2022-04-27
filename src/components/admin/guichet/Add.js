@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
+import Toast from "react-native-toast-message";
 import * as Animatable from "react-native-animatable";
 import { addGuichet } from "../../../services/query";
 import { Ionicons, Entypo } from "@expo/vector-icons";
@@ -21,8 +22,27 @@ const Add = ({ setCurrentLoader, currentLoader }) => {
   const [numero, setNumero] = useState("");
   const handleAdd = () => {
     addGuichet(numero)
-      .then((res) => console.log(res))
-      .catch((e) => console.log("error:", e));
+    .then((res) => {
+      if (res.data == "true") {
+        Toast.show({
+          type: "success",
+          text1: "Guichet cree avec success!",
+        });
+        setCurrentLoader(null);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+        });
+      }
+    })
+    .catch((e) => {
+      Toast.show({
+        type: "error",
+        text1: "Une erreur est survenue, Veuillez ressayer!",
+        text2: e.toString(),
+      })
+    });
   };
 
   return (

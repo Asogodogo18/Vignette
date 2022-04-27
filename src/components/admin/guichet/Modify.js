@@ -14,6 +14,7 @@ import {
 import React, { useState } from "react";
 import Input from "../../../components/TextInput";
 import * as Animatable from "react-native-animatable";
+import Toast from "react-native-toast-message";
 import { updateGuichet } from "../../../services/query";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
@@ -24,8 +25,27 @@ const Modify = ({item, setCurrentLoader, currentLoader }) => {
 
   const handleModify=()=> {
     updateGuichet({num:numero,id_guichet:item.id_guichet})
-      .then((res) => console.log(res))
-      .catch((e) => console.log("error:", e));
+    .then((res) => {
+      if (res.data == "true") {
+        Toast.show({
+          type: "success",
+          text1: "Vos modifications ont ete enregistre!",
+        });
+        setCurrentLoader(null);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+        });
+      }
+    })
+    .catch((e) => {
+      Toast.show({
+        type: "error",
+        text1: "Une erreur est survenue, Veuillez ressayer!",
+        text2: e.toString(),
+      })
+    });
   }
   return (
     <SafeAreaView>
