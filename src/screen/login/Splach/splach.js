@@ -18,20 +18,14 @@ import * as Animatable from "react-native-animatable";
 const Splach = ({ navigation }) => {
   return (
     <SafeAreaView forceInset={{ top: "always" }}>
-      <View Style={styles.contain}>
+      <View style={styles.contain}>
         <View style={styles.header}>
-          <ImageBackground
-            source={require("../../../../assets/bg-2.png")}
-            style={{
-              height: 370,
-              width: width,
-              alignItems: "center",
-              padding: 5,
-            }}
-            resizeMode="cover"
-          >
-            <Text style={styles.txtHeader}>Connectez vous avec une compte</Text>
-          </ImageBackground>
+          <Image
+            source={require("../../../../assets/icon/logobko.png")}
+            style={{ height: 150, width: 150, marginTop: 5 }}
+            resizeMode="center"
+          />
+          <Text style={styles.txtHeader}>Connectez vous avec une compte</Text>
         </View>
         <ScrollView
           contentContainerStyle={{
@@ -190,8 +184,7 @@ const Splach = ({ navigation }) => {
           style={{
             position: "absolute",
             bottom: 0,
-            // backgroundColor: "#1a1818",
-            backgroundColor: "white",
+            backgroundColor: "#1a1818",
             height: 50,
             width: width,
             justifyContent: "center",
@@ -225,15 +218,14 @@ const Splach = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   contain: {
-    flexGrow: 1,
-    // backgroundColor: "#34A0A4",
+    flex: 1,
+    backgroundColor: "white",
   },
 
   txtHeader: {
     color: "white",
     fontWeight: "bold",
     fontSize: 20,
-    marginTop: 65,
   },
 
   touch: {
@@ -255,7 +247,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "gray",
     textAlign: "center",
-    // backgroundColor: "#1a1818",
   },
   containerTxt: {
     position: "absolute",
@@ -274,6 +265,15 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     alignSelf: "center",
     marginTop: 15,
+  },
+  header: {
+    height: 200,
+    width: width,
+    backgroundColor: "#1a1818",
+    borderBottomLeftRadius: 70,
+    borderBottomRightRadius: 70,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 export default Splach;

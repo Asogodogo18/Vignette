@@ -167,9 +167,9 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
             left: 0,
             justifyContent: "center",
             alignItems: "center",
-            height: 100,
+            height: 120,
             maxWidth: 450,
-            minWidth: 350,
+            minWidth: 360,
             borderRadius: 15,
           }}
         >
@@ -318,7 +318,7 @@ const Index = ({ navigation }) => {
               <AntDesign name="addfolder" size={24} color="white" />
               <Text style={styles.touchTxt}>Ajouter</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => handlePress("Modify")}
               style={styles.touch}
             >
@@ -328,7 +328,7 @@ const Index = ({ navigation }) => {
                 color="white"
               />
               <Text style={styles.touchTxt}>Modifier</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           {isLoading ? (
             <View

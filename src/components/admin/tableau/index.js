@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import React from "react";
 import * as Animatable from "react-native-animatable";
 import { useStatistiques } from "../../../services/query";
@@ -20,11 +20,17 @@ const Index = () => {
         }}
       >
         <View style={styles.touch}>
-          <View style={styles.containerTxt}>  
+          <View style={styles.containerTxt}>
             <Text style={styles.title}>VIGNETTE EN CIRCULATION</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.Total_vignette_en_circulation}</Text>
+            <Text style={styles.containerTitle}>
+              {isFetching ? (
+                <ActivityIndicator size="small" color="white" animating />
+              ) : (
+                data.Total_vignette_en_circulation
+              )}
+            </Text>
           </View>
         </View>
         <View style={styles.touch}>
@@ -32,7 +38,13 @@ const Index = () => {
             <Text style={styles.title}>VIGNETTE AUJOURD'HUI</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.TOTAL_VIGNETTE_AUJOURDHUI}</Text>
+            <Text style={styles.containerTitle}>
+              {isFetching ? (
+                <ActivityIndicator size="small" color="white" animating />
+              ) : (
+                data.TOTAL_VIGNETTE_AUJOURDHUI
+              )}
+            </Text>
           </View>
         </View>
       </Animatable.View>
@@ -47,7 +59,13 @@ const Index = () => {
             <Text style={styles.title}>CHIFFRE D'AFFAIRE AUJOURD'HUI</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.CHIFFRE_AFFAIRE_AUJOURDHUI}</Text>
+            <Text style={styles.containerTitle}>
+              {isFetching ? (
+                <ActivityIndicator size="small" color="white" animating />
+              ) : (
+                data.CHIFFRE_AFFAIRE_AUJOURDHUI
+              )}
+            </Text>
           </View>
         </View>
         <View style={styles.touch}>
@@ -55,7 +73,13 @@ const Index = () => {
             <Text style={styles.title}>VIGNETTE PAYÉE AUJOURD'HUI</Text>
           </View>
           <View style={styles.fond}>
-            <Text style={styles.containerTitle}>{isFetching?<ActivityIndicator size='small' />:data.TOTAL_VIGNETTE_PAYÉE_AUJOURDHUI}</Text>
+            <Text style={styles.containerTitle}>
+              {isFetching ? (
+                <ActivityIndicator size="small" color="white" animating />
+              ) : (
+                data.TOTAL_VIGNETTE_PAYÉE_AUJOURDHUI
+              )}
+            </Text>
           </View>
         </View>
       </Animatable.View>
