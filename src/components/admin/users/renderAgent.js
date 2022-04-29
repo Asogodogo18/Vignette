@@ -68,7 +68,7 @@ const RenderAgent = ({
             // flex: 1,
             height: 50,
             width: 50,
-            backgroundColor: "#99D98c",
+            backgroundColor: "#fff",
             borderRadius: 70,
             marginTop: 0,
             justifyContent: "center",

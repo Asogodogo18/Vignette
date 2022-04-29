@@ -20,7 +20,6 @@ const Vignette = ({ item, handlePress }) => {
   const handleDelete = (id) => {
     deleteVignette(id)
       .then((res) => {
-        
         if (res.data == "true") {
           Toast.show({
             type: "success",
@@ -207,21 +206,23 @@ const Vignette = ({ item, handlePress }) => {
           </Text>{" "}
           {item.num_chassis}
         </Text>
+
         {!item.statut ? (
           <BlurView
             intensity={70}
             tint="dark"
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
+              top: -15,
+              left: -15,
+              right: 0,
+              bottom: 0,
               justifyContent: "center",
               alignItems: "center",
-              minHeight: 200,
+              minHeight: 250,
               maxHeight: 380,
-              minWidth: 300,
-              maxWidth: 450,
-              flex: 1,
+
+              width: 350,
             }}
           >
             <Text
@@ -230,6 +231,7 @@ const Vignette = ({ item, handlePress }) => {
                 color: "white",
                 textAlign: "center",
                 textTransform: "uppercase",
+                marginBottom: 20,
               }}
             >
               En cours de Traitement
@@ -242,13 +244,16 @@ const Vignette = ({ item, handlePress }) => {
             tint="dark"
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
+              top: -15,
+              left: -15,
+              right: 0,
+              bottom: 0,
               justifyContent: "center",
               alignItems: "center",
-              width: 300,
               borderRadius: 15,
-              minHeight: 180,
+              width: 350,
+
+              minHeight: 250,
               maxHeight: 380,
             }}
           >
@@ -288,11 +293,12 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     padding: 15,
     elevation: 10,
-    width: 300,
+    width: 350,
     borderRadius: 5,
     overflow: "hidden",
-    minHeight: 180,
+    minHeight: 200,
     maxHeight: 380,
+    flex: 1,
   },
   btnBlur: {
     // flex: 2,

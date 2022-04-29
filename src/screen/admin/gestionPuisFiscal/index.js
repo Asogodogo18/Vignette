@@ -52,11 +52,12 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
         style={{
           height: 60,
           width: 60,
-          backgroundColor: "#99D98c",
+          backgroundColor: "white",
           borderRadius: 40,
           marginTop: 10,
           justifyContent: "center",
           alignItems: "center",
+          elevation: 5,
         }}
       >
         <Image
@@ -317,7 +318,7 @@ const Index = ({ navigation }) => {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-around",
+              justifyContent: "flex-end",
               padding: 2,
               margin: 2,
               // position: "relative",

@@ -108,7 +108,7 @@ const Modify = ({ handlePress, item }) => {
             value={surname}
             placeholder="Prenom"
           />
-          
+
           <Picker
             style={styles.input}
             selectedValue={marque}
@@ -139,7 +139,7 @@ const Modify = ({ handlePress, item }) => {
           />
           <View style={styles.buttonGroup}>
             <TouchableOpacity
-              onPress={() => handlesPress(null)}
+              onPress={() => handlePress(null)}
               style={[styles.button, { backgroundColor: "black" }]}
             >
               <Text style={styles.btnLabel}>Annuler</Text>
