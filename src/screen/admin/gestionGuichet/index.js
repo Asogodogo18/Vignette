@@ -35,7 +35,6 @@ const Index = ({ navigation }) => {
   const [isDelete, setIsDelete] = useState(null);
   const [operationItem, setOperationItem] = useState(null);
 
-
   const handleMultipleDelete = () => {
     setIsDelete(!isDelete);
     if (elementsToDelete.length != 0) {
@@ -246,7 +245,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   touchTxt: {
-    color: "black",
+    color: "white",
     fontSize: 15,
     fontWeight: "bold",
   },

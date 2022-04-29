@@ -94,26 +94,26 @@ const Index = ({ navigation }) => {
   const handleDelete = (id) => {
     console.log("id", id);
     deleteUser(id)
-    .then((res) => {
-      if (res.data == "true") {
-        Toast.show({
-          type: "success",
-          text1: "Supprime avec succes!",
-        });
-      } else {
+      .then((res) => {
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Supprime avec succes!",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
         Toast.show({
           type: "error",
-          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
         });
-      }
-    })
-    .catch((e) => {
-      Toast.show({
-        type: "error",
-        text1: "Une erreur est survenue, Veuillez ressayer!",
-        text2: e.toString(),
-      })
-    });
+      });
   };
   const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
@@ -281,29 +281,29 @@ const Index = ({ navigation }) => {
                 )}
                 keyExtractor={(item) => item.id_user}
               />
-              {filter && filter.length == 0 && (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 36,
-                      fontWeight: "700",
-                      textAlign: "center",
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    {" "}
-                    Aucun résultat pour cette utilisateur
-                  </Text>
-                </View>
-              )}
             </View>
           )}
         </Animatable.View>
+        {filter && filter.length == 0 && (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 36,
+                fontWeight: "700",
+                textAlign: "center",
+                textTransform: "capitalize",
+              }}
+            >
+              {" "}
+              Aucun résultat pour cette utilisateur
+            </Text>
+          </View>
+        )}
       </SafeAreaView>
     );
   }
