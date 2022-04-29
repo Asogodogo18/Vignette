@@ -22,7 +22,12 @@ import {
   AntDesign,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+<<<<<<< HEAD
 import Toast from "react-native-toast-message";
+=======
+import GetRandomColor from "../../../Utils/getColor";
+
+>>>>>>> 1a6cb4bec531edfd22ad82e957d5787dc36af2a1
 import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
 import Modify from "../../../components/admin/puissance/Modify";
@@ -41,16 +46,18 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
   return (
     <TouchableOpacity
       onPress={() => setIsVisible(!isVisible)}
-      style={styles.card}
+      style={[
+        styles.card,
+        { backgroundColor: GetRandomColor(`${item.puissance}`) },
+      ]}
     >
       <View
         style={{
-          // flex: 2,
           height: 60,
           width: 60,
           backgroundColor: "#99D98c",
           borderRadius: 40,
-          marginTop: 30,
+          marginTop: 10,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -64,7 +71,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
           resizeMode="contain"
         />
       </View>
-      <View style={{ flex: 7 }}>
+      <View style={{ flex: 10 }}>
         <View
           style={{
             flexDirection: "row",
@@ -92,7 +99,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
                 fontWeight: "bold",
               }}
             >
-              {item.puissance.substring(0, 25).concat("...")}
+              {item.puissance.substring(0, 15).concat("...")}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
@@ -163,9 +170,9 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
             left: 0,
             justifyContent: "center",
             alignItems: "center",
-            height: 100,
+            height: 120,
             maxWidth: 450,
-            minWidth: 350,
+            minWidth: 360,
             borderRadius: 15,
           }}
         >
@@ -329,7 +336,7 @@ const Index = ({ navigation }) => {
               <AntDesign name="addfolder" size={24} color="white" />
               <Text style={styles.touchTxt}>Ajouter</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => handlePress("Modify")}
               style={styles.touch}
             >
@@ -339,7 +346,7 @@ const Index = ({ navigation }) => {
                 color="white"
               />
               <Text style={styles.touchTxt}>Modifier</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           {isLoading ? (
             <View
@@ -386,8 +393,9 @@ export default Index;
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
+    backgroundColor: "red",
   },
   touch: {
     height: 50,
@@ -437,30 +445,26 @@ const styles = StyleSheet.create({
   },
   section: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   card: {
     flex: 1,
     margin: 5,
-    // padding: 5,
-    height: 100,
+    height: 150,
     maxWidth: 450,
-    minWidth: 345,
-    backgroundColor: "white",
+    minWidth: 360,
     elevation: 5,
     borderRadius: 15,
     alignSelf: "center",
     marginVertical: 10,
     flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
   },
   btnBlur: {
-    // flex: 2,
     height: 55,
     width: 55,
     backgroundColor: "#99D98c",
     borderRadius: 40,
-    // marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
     margin: 15,

@@ -81,7 +81,6 @@ const Index = ({ navigation }) => {
   const [elementsToDelete, setElementsToDelete] = useState([]);
 
   const [operationItem, setOperationItem] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("Tout");
 
   const handleMultipleDelete = () => {
@@ -245,6 +244,7 @@ const Index = ({ navigation }) => {
                 );
               })}
           </ScrollView>
+
           {isFetchingUsers ? (
             <View
               style={{
@@ -253,42 +253,56 @@ const Index = ({ navigation }) => {
                 justifyContent: "center",
               }}
             >
-              <ActivityIndicator size="large" />
+              <ActivityIndicator size="small" animating />
             </View>
           ) : (
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: "center",
-                paddingBottom: 50,
-                padding: 5,
-              }}
-              data={
-                filter === "Tout"
-                  ? userData
-                  : userData.filter((user) => user.role === filter)
-              }
-              renderItem={({ item }) => (
-                <RenderAgent
-                  item={item}
-                  handlePress={handlePress}
-                  isDelete={isDelete}
-                  handleDelete={handleDelete}
-                  elementsToDelete={elementsToDelete}
-                  setElementsToDelete={setElementsToDelete}
-                />
-              )}
-              keyExtractor={(item) => item.id_user}
-            />
-          )}
-
-          {/* <View style={{ flex: 1, justifyContent: "center" }}>
-            filter ? (
             <View>
-              <FiltreView data={filteredData} />
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: "center",
+                  paddingBottom: 50,
+                  padding: 5,
+                }}
+                data={
+                  filter === "Tout"
+                    ? userData
+                    : userData.filter((user) => user.role === filter)
+                }
+                renderItem={({ item }) => (
+                  <RenderAgent
+                    item={item}
+                    handlePress={handlePress}
+                    isDelete={isDelete}
+                    handleDelete={handleDelete}
+                    elementsToDelete={elementsToDelete}
+                    setElementsToDelete={setElementsToDelete}
+                  />
+                )}
+                keyExtractor={(item) => item.id_user}
+              />
+              {filter && filter.length == 0 && (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 36,
+                      fontWeight: "700",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {" "}
+                    Aucun résultat pour cette utilisateur
+                  </Text>
+                </View>
+              )}
             </View>
-            ) : null
-          </View> */}
+          )}
         </Animatable.View>
       </SafeAreaView>
     );
