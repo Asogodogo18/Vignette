@@ -16,12 +16,16 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
-import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
+import {
+  Ionicons,
+  Entypo,
+  AntDesign,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import Checkbox from "expo-checkbox";
-import GetRandomColor from "../../../Utils/getColor";
 const { width, height } = Dimensions.get("screen");
-
 const RenderAgent = ({
   item,
   handlePress,
@@ -41,25 +45,11 @@ const RenderAgent = ({
     }
   };
   Keyboard.dismiss();
-  return (
-    <View style={styles.contain}>
-      {isDelete ? (
-        <View style={{ margin: 5 }}>
-          <Checkbox
-            style={styles.checkbox}
-            value={isChecked}
-            onValueChange={(value) => onChecked(value)}
-          />
-        </View>
-      ) : null}
-      <TouchableOpacity
-        key={item.id}
-        onPress={() => setIsVisible(!isVisible)}
-        style={[
-          styles.Card,
-          { backgroundColor: GetRandomColor(`${item.nom}`) },
-        ]}
-      >
+  return isDelete ? (
+    <View
+      style={{ flexDirection: "row", alignItems: "center", marginVertical: 8 }}
+    >
+      <View key={item.id} style={styles.Card}>
         <Animatable.View
           duration={300}
           delay={300}
@@ -69,8 +59,8 @@ const RenderAgent = ({
             height: 50,
             width: 50,
             backgroundColor: "#99D98c",
-            borderRadius: 70,
-            marginTop: 0,
+            borderRadius: 80,
+            marginTop: 40,
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -199,43 +189,205 @@ const RenderAgent = ({
             </View>
           </View>
         </Animatable.View>
-        {isVisible ? (
-          <BlurView
-            intensity={50}
-            tint="dark"
+      </View>
+    </View>
+  ) : (
+    <View>
+      {isDelete ? (
+        <View style={{ margin: 5 }}>
+          <Checkbox
+            style={styles.checkbox}
+            value={isChecked}
+            onValueChange={(value) => onChecked(value)}
+          />
+        </View>
+      ) : (
+        <TouchableOpacity
+          key={item.id}
+          onPress={() => setIsVisible(!isVisible)}
+          style={styles.Card}
+        >
+          <Animatable.View
+            duration={300}
+            delay={300}
+            animation="bounceInLeft"
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
+              // flex: 1,
+              height: 50,
+              width: 50,
+              backgroundColor: "#99D98c",
+              borderRadius: 70,
+              marginTop: 0,
               justifyContent: "center",
               alignItems: "center",
-              height: 130,
-              width: width - 15,
-              borderRadius: 10,
             }}
+          >
+            <Image
+              source={require("../../../../assets/icon/agent3.png")}
+              style={{
+                height: 35,
+                width: 35,
+              }}
+              resizeMode="contain"
+            />
+          </Animatable.View>
+          <Animatable.View
+            duration={300}
+            delay={300}
+            animation="bounceInLeft"
+            style={styles.vignette}
           >
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around",
+                marginTop: 5,
+                justifyContent: "center",
               }}
             >
-              <TouchableOpacity
-                onPress={() => handlePress("Modify", item)}
-                style={styles.btnBlur}
-              >
-                <FontAwesome name="edit" size={30} color="white" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => handleDelete(item.id_user)}
-                style={styles.btnBlur}
-              >
-                <MaterialCommunityIcons name="delete" size={30} color="white" />
-              </TouchableOpacity>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "200",
+                    color: "black",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Nom
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    fontSize: 18,
+                    color: "black",
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.nom}
+                </Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "200",
+                    color: "black",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Prénom
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    fontSize: 18,
+                    color: "black",
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.prenom}
+                </Text>
+              </View>
             </View>
-          </BlurView>
-        ) : null}
-      </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 5,
+                justifyContent: "center",
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "200",
+                    color: "black",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Telephone
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    fontSize: 18,
+                    color: "black",
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.telephone}
+                </Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "200",
+                    color: "black",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Role
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 15,
+                    fontSize: 18,
+                    color: "black",
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.role}
+                </Text>
+              </View>
+            </View>
+          </Animatable.View>
+          {isVisible ? (
+            <BlurView
+              intensity={50}
+              tint="dark"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                justifyContent: "center",
+                alignItems: "center",
+                height: 130,
+                width: width - 15,
+                borderRadius: 10,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => handlePress("Modify", item)}
+                  style={styles.btnBlur}
+                >
+                  <FontAwesome name="edit" size={30} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleDelete(item.id_user)}
+                  style={styles.btnBlur}
+                >
+                  <MaterialCommunityIcons
+                    name="delete"
+                    size={30}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              </View>
+            </BlurView>
+          ) : null}
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -245,10 +397,9 @@ export default RenderAgent;
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "white",
+    // justifyContent: "center",
+    // alignItems: "center",
+    backgroundColor: "#fff",
   },
   touch: {
     height: 50,
@@ -300,6 +451,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 5,
     flexDirection: "row",
+    backgroundColor: "#edeef0",
     maxHeight: 250,
     minHeight: 100,
     width: width - 15,

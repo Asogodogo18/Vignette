@@ -23,6 +23,7 @@ import {
   AntDesign,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import GetRandomColor from "../../../Utils/getColor";
 
 import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
@@ -42,16 +43,18 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
   return (
     <TouchableOpacity
       onPress={() => setIsVisible(!isVisible)}
-      style={styles.card}
+      style={[
+        styles.card,
+        { backgroundColor: GetRandomColor(`${item.puissance}`) },
+      ]}
     >
       <View
         style={{
-          // flex: 2,
           height: 60,
           width: 60,
           backgroundColor: "#99D98c",
           borderRadius: 40,
-          marginTop: 30,
+          marginTop: 10,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -65,7 +68,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
           resizeMode="contain"
         />
       </View>
-      <View style={{ flex: 7 }}>
+      <View style={{ flex: 10 }}>
         <View
           style={{
             flexDirection: "row",
@@ -93,7 +96,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
                 fontWeight: "bold",
               }}
             >
-              {item.puissance.substring(0, 25).concat("...")}
+              {item.puissance.substring(0, 15).concat("...")}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
@@ -372,8 +375,9 @@ export default Index;
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
+    backgroundColor: "red",
   },
   touch: {
     height: 50,
@@ -423,30 +427,26 @@ const styles = StyleSheet.create({
   },
   section: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   card: {
     flex: 1,
     margin: 5,
-    // padding: 5,
-    height: 100,
+    height: 150,
     maxWidth: 450,
-    minWidth: 345,
-    backgroundColor: "white",
+    minWidth: 360,
     elevation: 5,
     borderRadius: 15,
     alignSelf: "center",
     marginVertical: 10,
     flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
   },
   btnBlur: {
-    // flex: 2,
     height: 55,
     width: 55,
     backgroundColor: "#99D98c",
     borderRadius: 40,
-    // marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
     margin: 15,
