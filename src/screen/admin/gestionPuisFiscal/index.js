@@ -22,12 +22,9 @@ import {
   AntDesign,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-<<<<<<< HEAD
 import Toast from "react-native-toast-message";
-=======
 import GetRandomColor from "../../../Utils/getColor";
 
->>>>>>> 1a6cb4bec531edfd22ad82e957d5787dc36af2a1
 import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
 import Modify from "../../../components/admin/puissance/Modify";
@@ -241,7 +238,7 @@ const Index = ({ navigation }) => {
           setpuissanceList(arr);
           // after removing the item, we start animation
           LayoutAnimation.configureNext(layoutAnimConfig);
-        }else {
+        } else {
           Toast.show({
             type: "error",
             text1: "Une erreur est survenue, \nVeuillez ressayer!",
@@ -253,7 +250,7 @@ const Index = ({ navigation }) => {
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",
           text2: e.toString(),
-        })
+        });
       });
   };
   const handlePress = (loader, item = null) => {
@@ -381,7 +378,12 @@ const Index = ({ navigation }) => {
     );
   }
   if (currentLoader == "Ajouter") {
-    return <AddPuissance setCurrentLoader={setCurrentLoader} handlePress={handlePress} />;
+    return (
+      <AddPuissance
+        setCurrentLoader={setCurrentLoader}
+        handlePress={handlePress}
+      />
+    );
   }
   if (currentLoader == "Modify") {
     return <Modify handlePress={handlePress} Item={operatingItem} />;
