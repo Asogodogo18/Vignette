@@ -32,6 +32,7 @@ const Index = ({ navigation, route }) => {
   const [data, setData] = React.useState({
     username: "",
     password: "",
+    role,
     check_textInputChange: false,
     secureTextEntry: true,
     isValidUser: true,

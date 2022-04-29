@@ -197,7 +197,7 @@ const Index = ({ navigation }) => {
   if (currentLoader == "Affectation") {
     return (
       <Affectation
-        operationItem={operationItem}
+        item={operationItem}
         currentLoader={currentLoader}
         setCurrentLoader={setCurrentLoader}
       />

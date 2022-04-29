@@ -6,23 +6,58 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Checkbox from "expo-checkbox";
 const { width, height } = Dimensions.get("screen");
 
-const Agent = ({ item, agentToAffect, setagentToAffect }) => {
-  const [isChecked, setChecked] = useState(false);
+const Agent = ({
+  item,
+  agentToAffect,
+  setagentToAffect,
+  agentToUnaffect,
+  setagentToUnaffect,
+  affectedAgent,
+}) => {
+  const [isChecked, setChecked] = useState({ check: false, init: false });
+  const [loading, setLoading] = useState(false)
+
+  console.log("agent:",item.id_user)
+  useEffect(() => {
+    setLoading(true)
+    if (affectedAgent.includes(item.id_user)) {
+      setChecked({ check: true, init: true });
+    }
+    setLoading(false)
+
+    return () => {};
+  }, [affectedAgent]);
 
   const onChecked = () => {
-    setChecked(!isChecked);
+    setChecked({ ...isChecked, check: !isChecked.check });
 
-    if (isChecked) {
+    if (isChecked.check && !isChecked.init) {
       setagentToAffect([...agentToAffect, item.id_user]);
-    } else {
+    } else if (!isChecked.check && !isChecked.init) {
       setagentToAffect(agentToAffect.filter((item) => item !== item.id_user));
+    } else if (!isChecked.check && isChecked.init) {
+      setagentToUnaffect([...agentToUnaffect, item.id_user]);
+    } else if (!isChecked.check && isChecked.init) {
+      if (agentToUnaffect.includes(item.id_user)) {
+        setagentToUnaffect(
+          agentToUnaffect.filter((item) => item !== item.id_user)
+        );
+      }
     }
   };
 
+  if (loading){
+    return(
+      <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+        <ActivityIndicator size="large" />
+
+      </View>
+    )
+  }
   return (
     <View
       style={{
@@ -93,11 +128,148 @@ const Agent = ({ item, agentToAffect, setagentToAffect }) => {
 
       <Checkbox
         style={styles.checkbox}
-        value={isChecked}
+        value={isChecked.check}
         onValueChange={onChecked}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  contain: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkbox: {
+    margin: 8,
+  },
+  touch: {
+    height: 50,
+    width: 110,
+    maxWidth: 120,
+    backgroundColor: "#99D98c",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 5,
+    elevation: 0,
+    flexDirection: "row",
+    marginRight: 5,
+  },
+  touchAchat: {
+    height: 50,
+    width: width - 100,
+    backgroundColor: "#99D98c",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 10,
+    elevation: 5,
+    flexDirection: "row",
+    alignSelf: "center",
+    paddingHorizontal: 60,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  touchTxt: {
+    color: "black",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  vignette: {
+    width: width - 90,
+    padding: 10,
+
+    marginBottom: 10,
+  },
+  section: {
+    flex: 1,
+  },
+  Card: {
+    margin: 5,
+    padding: 5,
+    height: 90,
+    width: width - 15,
+    elevation: 5,
+    flexDirection: "row",
+    backgroundColor: "white",
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  btnBlur: {
+    // flex: 2,
+    height: 55,
+    width: 55,
+    backgroundColor: "#99D98c",
+    borderRadius: 40,
+    // marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 15,
+  },
+  delete: {
+    // flex: 2,
+    height: 35,
+    width: 35,
+    backgroundColor: "red",
+    borderRadius: 20,
+    // marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 15,
+    bottom: 20,
+  },
+  CardDelete: {
+    margin: 5,
+    padding: 5,
+    height: 90,
+    width: width - 50,
+    elevation: 5,
+    flexDirection: "row",
+    backgroundColor: "white",
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  container: {
+    flex: 1,
+  },
+  inputBox: {
+    paddingVertical: 40,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
+
+    width: 250,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    height: 60,
+    marginTop: 40,
+  },
+  button: {
+    flex: 1,
+    margin: 10,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  btnLabel: {
+    color: "white",
+    textTransform: "uppercase",
+    fontSize: 14,
+  },
+});
 
 export default Agent;

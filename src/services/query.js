@@ -256,6 +256,14 @@ export const deleteUser = (id) => {
   return apiClient.post("/users/delete", formData);
 };
 
+//agent by guichet
+export const getAgentbyGuichet = (id) => {
+  const formData = new FormData();
+
+  formData.append("id_guichet", id);
+  return apiClient.post("/users/guichet", formData);
+};
+
 //affectation guichet agent
 export const affectAgent = (sentForm) => {
   const { id, user_id } = sentForm;

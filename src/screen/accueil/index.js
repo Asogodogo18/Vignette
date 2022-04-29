@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import React from "react";
 import { useAuthState } from "../../global";
-import {useAuthDispatch,logout} from "../../global"
+import { useAuthDispatch, logout } from "../../global";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { Button, Portal, Divider, Provider, Modal } from "react-native-paper";
@@ -28,26 +28,26 @@ const Index = ({ navigation }) => {
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
   const [visible, setVisible] = React.useState(false);
-  
+
   return (
     <SafeAreaView>
-     <Header navigation={navigation} />
+      <Header navigation={navigation} />
       <ScrollView
         stickyHeaderHiddenOnScroll
         stickyHeaderIndices={[1]}
         contentContainerStyle={styles.contain}
       >
         <StatusBar hidden />
-        
+
         {user.role === "Agent" ? (
           <AgentHome navigation={navigation} />
-        ) : user.role === "Client" ? (
-          <ClientHome navigation={navigation} />
         ) : user.role === "Police" ? (
           <OfficerHome navigation={navigation} />
-        ) : user.role === "Verificateur" ? (
+        ) : user.role === "Verificateur" || user.role === "Maire" || user.role === "Maire adjoint"   ? (
           <VerifHome />
-        ) : null}
+        ) : (
+          <ClientHome navigation={navigation} />
+        )}
         <Footer />
       </ScrollView>
       <Footer />

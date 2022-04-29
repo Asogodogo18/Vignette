@@ -9,15 +9,20 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
-import { affectAgent, unaffectAgent } from "../../../services/query";
-import { useUsers } from "../../../services/query";
+import {
+  affectAgent,
+  getAgentbyGuichet,
+  useUsers,
+  unaffectAgent,
+} from "../../../services/query";
+import Toast from "react-native-toast-message";
+
 import Agent from "../../shared/Agent";
 import { Ionicons, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Divider } from "react-native-paper";
 const { width, height } = Dimensions.get("screen");
-
 
 const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
   const {
@@ -26,10 +31,92 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
     isFetching: isFetchingUsers,
   } = useUsers();
 
-  const [agentToAffect, setagentToAffect] = useState([])
+  const [agentToAffect, setagentToAffect] = useState([]);
+  const [agentToUnaffect, setagentToUnaffect] = useState([]);
+  const [affectedAgent, setaffectedAgent] = useState([]);
+  console.log("affected:", affectedAgent);
 
-  const handleAffect = () => {};
+  useEffect(() => {
+    getAgentbyGuichet(item.id_guichet)
+      .then((res) => {
+        if (res.data != "False") {
+          res.data.map((item) => {
+            setaffectedAgent([...affectedAgent, item.id_user]);
+          });
+        }
+      })
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
+        });
+      });
 
+    return () => {
+    };
+  }, []);
+
+  const handleUnaffect = () => {
+    if (agentToUnaffect.length > 0) {
+      agentToUnaffect.forEach((el) => {
+        unaffectAgent({ id: item.id_guichet, user_id: el })
+          .then((res) => {
+            if (res.data == "true") {
+              Toast.show({
+                type: "success",
+                text1: "Affectation d'agent resilie avec success!",
+              });
+              setCurrentLoader(null);
+            } else {
+              Toast.show({
+                type: "error",
+                text1: "Une erreur est survenue, \nVeuillez ressayer!",
+              });
+            }
+          })
+          .catch((e) => {
+            Toast.show({
+              type: "error",
+              text1: "Une erreur est survenue, Veuillez ressayer!",
+              text2: e.toString(),
+            });
+          });
+      });
+    }
+  };
+  const handleAffect = () => {
+    if (agentToAffect.length > 0) {
+      agentToAffect.forEach((el) => {
+        affectAgent({ id: item.id_guichet, user_id: el })
+          .then((res) => {
+            if (res.data == "true") {
+              Toast.show({
+                type: "success",
+                text1: "Agent affecte avec success!",
+              });
+              setCurrentLoader(null);
+            } else {
+              Toast.show({
+                type: "error",
+                text1: "Une erreur est survenue, \nVeuillez ressayer!",
+              });
+            }
+          })
+          .catch((e) => {
+            Toast.show({
+              type: "error",
+              text1: "Une erreur est survenue, Veuillez ressayer!",
+              text2: e.toString(),
+            });
+          });
+      });
+    }
+  };
+  const handlePress = () => {
+    handleAffect();
+    handleUnaffect();
+  };
   return (
     <SafeAreaView>
       <Animatable.View animation="fadeIn">
@@ -99,7 +186,16 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
                 paddingBottom: 50,
               }}
               data={userData.filter((user) => user.role === "Agent")}
-              renderItem={ ({ item }) => <Agent agentToAffect={agentToAffect} setagentToAffect={setagentToAffect} item={item}  /> }
+              renderItem={({ item }) => (
+                <Agent
+                  affectedAgent={affectedAgent}
+                  agentToAffect={agentToAffect}
+                  setagentToAffect={setagentToAffect}
+                  agentToUnaffect={agentToUnaffect}
+                  setagentToUnaffect={setagentToUnaffect}
+                  item={item}
+                />
+              )}
               keyExtractor={(item) => item.id_user}
             />
           )}
@@ -115,13 +211,13 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
           />
 
           <View style={{ margin: 20, padding: 5, marginVertical: 50 }}>
-            <TouchableOpacity onPress={handleAffect} style={styles.touchAchat}>
+            <TouchableOpacity onPress={handlePress} style={styles.touchAchat}>
               <MaterialCommunityIcons
                 name="code-less-than-or-equal"
                 size={24}
                 color="white"
               />
-              <Text style={styles.touchTxt}>Affecter</Text>
+              <Text style={styles.touchTxt}>Enregistrer</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
