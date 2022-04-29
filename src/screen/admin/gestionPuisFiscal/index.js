@@ -19,11 +19,10 @@ import * as Animatable from "react-native-animatable";
 import {
   FontAwesome,
   Ionicons,
-  Entypo,
   AntDesign,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-
+import Toast from "react-native-toast-message";
 import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
 import Modify from "../../../components/admin/puissance/Modify";
@@ -228,12 +227,27 @@ const Index = ({ navigation }) => {
           let arr = data.filter(function (item) {
             return item.id_puissance !== id;
           });
+          Toast.show({
+            type: "success",
+            text1: "Supprime avec success!",
+          });
           setpuissanceList(arr);
           // after removing the item, we start animation
           LayoutAnimation.configureNext(layoutAnimConfig);
+        }else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
+        })
+      });
   };
   const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
@@ -360,7 +374,7 @@ const Index = ({ navigation }) => {
     );
   }
   if (currentLoader == "Ajouter") {
-    return <AddPuissance handlePress={handlePress} />;
+    return <AddPuissance setCurrentLoader={setCurrentLoader} handlePress={handlePress} />;
   }
   if (currentLoader == "Modify") {
     return <Modify handlePress={handlePress} Item={operatingItem} />;

@@ -12,7 +12,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import Input from "../../../components/TextInput";
 import * as Animatable from "react-native-animatable";
 import Toast from "react-native-toast-message";
 import { updateGuichet } from "../../../services/query";

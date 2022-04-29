@@ -26,10 +26,10 @@ const ClientHome = ({ navigation }) => {
         />
         <Text
           style={{
-            fontSize: 25,
+            fontSize: 22,
             fontWeight: "bold",
             letterSpacing: 1.2,
-            margin: 5,
+            margin: 10,
             marginBottom: 30,
           }}
         >

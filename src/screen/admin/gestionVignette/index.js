@@ -11,36 +11,54 @@ import {
   TextInput,
   Keyboard,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 
-import Vignette from "../../../components/shared/Vignette";
-import { useVignettes } from "../../../services/query";
-import Input from "../../../components/TextInput";
+import Buy from "../..//client/Buy";
+import Modify from "../../../components/admin/vignette/Modify";
+import Vignette from "../../../components/admin/vignette/Vignette";
+import { useVignettes, deleteVignette } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
+import Toast from "react-native-toast-message";
 import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons";
-import { BlurView } from "expo-blur";
-import { Picker } from "@react-native-picker/picker";
+import Fees from "../../../components/shared/Fees";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
   const { status, data, error, isFetching, isFetched } = useVignettes();
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [marque, setMarque] = useState("");
-  const [noChassi, setNoChassi] = useState("");
+  const [operatingItem, setOperatingItem] = useState(null);
+  const [currentLoader, setCurrentLoader] = useState(null);
 
   Keyboard.dismiss();
 
-  const [currentLoader, setCurrentLoader] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    "Selectionne un Type"
-  );
-
-  const handlePress = (loader) => {
+  const handleDelete = (id) => {
+    deleteVignette(id)
+      .then((res) => {
+        console.log(res);
+        if (res.data === "true") {
+          Toast.show({
+            type: "success",
+            text1: "Supprime avec success!",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
+        });
+      });
+  };
+  const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
+    setOperatingItem(item);
   };
 
   if (!currentLoader) {
@@ -134,135 +152,54 @@ const Index = ({ navigation }) => {
                     paddingBottom: 50,
                   }}
                   data={data}
-                  renderItem={Vignette}
+                  renderItem={({ item }) => (
+                    <Vignette
+                      item={item}
+                      handleDelete={handleDelete}
+                      handlePress={handlePress}
+                    />
+                  )}
                   keyExtractor={(item) => item.id_engin}
                 />
               )}
             </View>
           </Animatable.View>
-          <FlatList />
         </ScrollView>
       </SafeAreaView>
     );
   }
+
   if (currentLoader == "Ajouter") {
     return (
-      <SafeAreaView>
-        <Animatable.View animation="fadeIn">
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 15,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.push("Vignette")}>
-                <Ionicons name="ios-arrow-undo" size={24} color="white" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-                Achat Vignette
-              </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Entypo name="cross" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ padding: 5, margin: 10 }}>
-              <Text style={{ textAlign: "center", fontSize: 18 }}>
-                Veuillez acheter une Vignette
-              </Text>
-            </View>
-
-            <View style={styles.container}>
-              <ImageBackground
-                source={require("../../../../assets/icon/bg-buy.png")}
-                resizeMode="cover"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <BlurView intensity={20} style={styles.inputBox}>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setName}
-                    value={name}
-                    placeholder="Nom"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setSurname}
-                    value={surname}
-                    placeholder="Prenom"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setPhone}
-                    value={phone}
-                    placeholder="Numero de Telephone"
-                    keyboardType="numeric"
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setMarque}
-                    value={marque}
-                    placeholder="Marque"
-                  />
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      height: 80,
-                      width: 200,
-                      borderRadius: 15,
-                    }}
-                  >
-                    <Picker
-                      selectedValue={selectedLanguage}
-                      onValueChange={(itemValue, itemIndex) =>
-                        setSelectedLanguage(itemValue)
-                      }
-                      style={styles.select}
-                      mode="dropdown"
-                    >
-                      <Picker.Item label="Type" value="" />
-                      <Picker.Item label="2 Roues" value="2roues" />
-                      <Picker.Item label="3 Roues" value="3roues" />
-                    </Picker>
-                  </View>
-
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setNoChassi}
-                    value={noChassi}
-                    placeholder="Numero de Chassis "
-                  />
-
-                  <View style={styles.buttonGroup}>
-                    <TouchableOpacity
-                      onPress={() => navigation.goBack()}
-                      style={[styles.button, { backgroundColor: "black" }]}
-                    >
-                      <Text style={styles.btnLabel}>Annuler</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.button, { backgroundColor: "green" }]}
-                    >
-                      <Text style={styles.btnLabel}>Acheter</Text>
-                    </TouchableOpacity>
-                  </View>
-                </BlurView>
-              </ImageBackground>
-            </View>
-          </ScrollView>
-        </Animatable.View>
-      </SafeAreaView>
+      <View
+        animation="fadeInRight"
+        duration={300}
+        delay={100}
+        style={{ flex: 1, paddingVertical: 20, paddingHorizontal: 8 }}
+      >
+        <Ionicons
+          onPress={() => handlePress(null)}
+          name="chevron-back-circle-outline"
+          size={34}
+          color="black"
+        />
+        <Text
+          style={{
+            fontSize: 22,
+            fontWeight: "bold",
+            letterSpacing: 1.2,
+            margin: 10,
+            marginBottom: 30,
+          }}
+        >
+          Veuillez Choisir Une option:
+        </Text>
+        <Fees navigation={navigation} />
+      </View>
     );
+  }
+  if (currentLoader == "Modify") {
+    return <Modify handlePress={handlePress} item={operatingItem} />;
   }
 };
 

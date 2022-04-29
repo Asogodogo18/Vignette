@@ -7,6 +7,7 @@ import PuisFiscale from "../../screen/admin/gestionPuisFiscal";
 import Vignette from "../../screen/admin/gestionVignette";
 import Accueil from "../../screen/admin/Accueil";
 import Profil from "../../screen/admin/profil";
+import Buy from "../../screen/client/Buy";
 const Stack = createNativeStackNavigator();
 
 const Index = () => {
@@ -16,6 +17,11 @@ const Index = () => {
     >
       <Stack.Screen name="Accueil" component={Accueil} />
       <Stack.Screen name="Agent" component={Agent} />
+      <Stack.Screen
+        options={{ headerShown: true, headerTitleAlign: "center" }}
+        name="Achat de Vignette"
+        component={Buy}
+      />
       <Stack.Screen name="Guichet" component={Guichet} />
       <Stack.Screen name="PuisFiscale" component={PuisFiscale} />
       <Stack.Screen name="Vignette" component={Vignette} />

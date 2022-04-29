@@ -50,12 +50,12 @@ const Toast = ({ setIsVisible, children }) => {
 
 const Buy = ({ navigation, route }) => {
   const { user, isSignedIn } = useAuthState();
-  console.log(route.params)
+  const condition =isSignedIn && user.role==="Client" 
   const { puissance } = route.params;
 
-  const [name, setName] = useState(isSignedIn ? user.nom : "");
-  const [surname, setSurname] = useState(isSignedIn ? user.prenom : "");
-  const [phone, setPhone] = useState(isSignedIn ? user.telephone : "");
+  const [name, setName] = useState(condition? user.nom : "");
+  const [surname, setSurname] = useState(condition ? user.prenom : "");
+  const [phone, setPhone] = useState(condition ? user.telephone : "");
   const [marque, setMarque] = useState("ktm");
   const [type, setType] = useState("2roues");
   const [noChassi, setNoChassi] = useState("");

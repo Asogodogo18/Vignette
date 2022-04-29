@@ -66,9 +66,26 @@ export function useVignette(Id) {
   });
 }
 
-//update user info
-// TODO
+//update vignette
+export function updateVignette(data) {
+  let { marque, type, noChassi, id, puissance } = data;
+  const formData = new FormData();
 
+  formData.append("marque", marque);
+  formData.append("type", type);
+  formData.append("num", noChassi);
+  formData.append("puissance", puissance);
+  formData.append("id_engin", id);
+
+  return apiClient.post("vignettes/update", formData);
+}
+
+//delete vignette
+export const deleteVignette = (id) => {
+  const formData = new FormData();
+  formData.append("id_engin", id);
+  return apiClient.post("/vignettes/delete", formData);
+};
 //update password
 export const updatePassword = (sentForm) => {
   const { id_user, actuel, newpass, confirmpass } = sentForm;

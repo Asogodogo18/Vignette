@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
-
+import Toast from "react-native-toast-message";
 import Add from "../../../components/admin/guichet/Add";
 
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -29,15 +29,12 @@ const Index = ({ navigation }) => {
   Keyboard.dismiss();
 
   const { status, data, error, isFetching } = useGuichets();
-  console.log("guichet:", data);
+
   const [currentLoader, setCurrentLoader] = useState(null);
   const [elementsToDelete, setElementsToDelete] = useState([]);
   const [isDelete, setIsDelete] = useState(null);
   const [operationItem, setOperationItem] = useState(null);
 
-  useEffect(() => {
-    console.log("to del:", elementsToDelete);
-  }, [elementsToDelete]);
 
   const handleMultipleDelete = () => {
     setIsDelete(!isDelete);
@@ -50,17 +47,25 @@ const Index = ({ navigation }) => {
   const handleDelete = (id) => {
     deleteGuichet(id)
       .then((res) => {
-        console.log(res);
-        // if (res.data === "true") {
-        //   let arr = data.filter(function (item) {
-        //     return item.id_puissance !== id;
-        //   });
-        //   setpuissanceList(arr);
-        //   // after removing the item, we start animation
-        //   LayoutAnimation.configureNext(layoutAnimConfig);
-        // }
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Supprime avec succes!",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
+        });
+      });
   };
 
   const handlePress = (loader, item = null) => {

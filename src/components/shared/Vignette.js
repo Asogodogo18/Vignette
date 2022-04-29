@@ -5,7 +5,7 @@ import * as Animatable from "react-native-animatable";
 import { BlurView } from "expo-blur";
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 
-const Vignette = ({ item }) => {
+const Vignette = ({ item, modify=false }) => {
   return (
     <AnimatedImg
       resizeMode="cover"
@@ -26,9 +26,8 @@ const Vignette = ({ item }) => {
         }}
       >
         {item.prenom}
-        {"    "}
         <Text
-          style={{
+          style={{ marginLeft:10,
             fontSize: 20,
             color: "white",
             textTransform: "uppercase",
@@ -142,7 +141,7 @@ const Vignette = ({ item }) => {
               fontWeight: "bold",
             }}
           >
-            {item.montant}
+            {item.montant} FCFA
           </Text>
         </View>
       </View>
@@ -168,7 +167,7 @@ const Vignette = ({ item }) => {
         </Text>{" "}
         {item.num_chassis}
       </Text>
-      {!item.statut ? (
+      {!modify && !item.statut ? (
         <BlurView
           intensity={70}
           tint="dark"

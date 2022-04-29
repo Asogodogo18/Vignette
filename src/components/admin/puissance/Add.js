@@ -2,16 +2,12 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
   Dimensions,
-  Image,
   ImageBackground,
   ScrollView,
   SafeAreaView,
   TextInput,
-  Keyboard,
-  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { addPuissance } from "../../../services/query";
@@ -22,13 +18,12 @@ import {
 } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { Picker } from "@react-native-picker/picker";
-import { usePuissances } from "../../../services/query";
 
 const { width, height } = Dimensions.get("screen");
 
 import { BlurView } from "expo-blur";
 
-const Add = ({ handlePress }) => {
+const Add = ({ handlePress, setCurrentLoader }) => {
   const [puissance, setPuissance] = useState("");
   const [montant, setMontant] = useState("");
   const [selectedType, setSelectedType] = useState("personnel");

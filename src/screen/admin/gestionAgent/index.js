@@ -14,6 +14,8 @@ import {
   Animated,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import Toast from "react-native-toast-message";
+
 import * as Animatable from "react-native-animatable";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useUsers, deleteUser } from "../../../services/query";
@@ -22,8 +24,6 @@ import { Chip } from "react-native-paper";
 import RenderAgent from "../../../components/admin/users/renderAgent";
 import Ajouter from "../../../components/admin/users/Ajouter";
 import Modify from "../../../components/admin/users/Modify";
-import FiltreView from "../../../components/admin/users/filtreView";
-import { FiltreUser } from "../../../Utils/FilterUser";
 const { width, height } = Dimensions.get("screen");
 const Data = [
   {
@@ -83,23 +83,6 @@ const Index = ({ navigation }) => {
   const [operationItem, setOperationItem] = useState(null);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("Tout");
-  console.log("filtre :", filter);
-
-  // useEffect(() => {
-  //   console.log("filtre :", filter);
-
-  //   setLoading(true);
-  //   setfilteredData(true);
-  //   setfilteredData(FiltreUser(useUsers, filter));
-  //   setLoading(false);
-  //   return () => {
-  //     setfilteredData(true);
-  //   };
-  // }, [filter]);
-
-  useEffect(() => {
-    console.log("user del:", elementsToDelete);
-  }, [elementsToDelete]);
 
   const handleMultipleDelete = () => {
     setIsDelete(!isDelete);
@@ -112,10 +95,26 @@ const Index = ({ navigation }) => {
   const handleDelete = (id) => {
     console.log("id", id);
     deleteUser(id)
-      .then((res) => {
-        console.log(res);
+    .then((res) => {
+      if (res.data == "true") {
+        Toast.show({
+          type: "success",
+          text1: "Supprime avec succes!",
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+        });
+      }
+    })
+    .catch((e) => {
+      Toast.show({
+        type: "error",
+        text1: "Une erreur est survenue, Veuillez ressayer!",
+        text2: e.toString(),
       })
-      .catch((e) => console.log(e));
+    });
   };
   const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
