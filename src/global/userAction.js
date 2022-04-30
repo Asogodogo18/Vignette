@@ -12,13 +12,22 @@ export async function loginUser(dispatch, loginPayload) {
   loginFormData.append("pass", password);
   try {
     dispatch({ type: "REQUEST_LOGIN" });
-    let { data } = await axios({
+    let response = await axios({
       method: "post",
       url: "http://192.168.1.44/vignette/verif",
       data: loginFormData,
       headers: { "Content-Type": "multipart/form-data" },
     });
+    let data = await response.data
 
+    if (data[0]) {
+      Toast.show({
+        type: "success",
+        text1: `Bienvenue Mr/Mme ${data[0].nom} ${data[0].prenom}`,
+      });
+      dispatch({ type: "LOGIN_SUCCESS", payload: data[0] });
+      return data;
+    }
     if (data === "False") {
       Toast.show({
         type: "error",
@@ -26,6 +35,7 @@ export async function loginUser(dispatch, loginPayload) {
       });
       dispatch({ type: "LOGIN_ERROR", error: data });
       return;
+<<<<<<< HEAD
     }
     //  else if (data !== "False" && data[0].role !== role) {
     //   Toast.show({
@@ -42,6 +52,15 @@ export async function loginUser(dispatch, loginPayload) {
       });
       dispatch({ type: "LOGIN_SUCCESS", payload: data[0] });
       return data;
+=======
+    } else if (data !== "False" && data[0].role !== role) {
+      Toast.show({
+        type: "error",
+        text1: "Une erreur est survenue,",
+        text2: `Vous n'etes pas un ${role}`,
+      });
+      dispatch({ type: "LOGIN_ERROR", error: `Vous n'etes pas un ${role}` });
+>>>>>>> b8e435eaaafc5b10f725115ceb4b3c4ba049e7ad
     }
   } catch (error) {
     Toast.show({
