@@ -1,12 +1,11 @@
 // Context/actions.js
 import axios from "axios";
-import Toast  from "react-native-toast-message";
-import { storeDataObject, removeValue } from "../services/http-common";
+import Toast from "react-native-toast-message";
 
 const ROOT_URL = "http://192.168.1.44/";
 
 export async function loginUser(dispatch, loginPayload) {
-  let { username, password,role } = loginPayload;
+  let { username, password, role } = loginPayload;
   const loginFormData = new FormData();
 
   loginFormData.append("login", username);
@@ -27,22 +26,21 @@ export async function loginUser(dispatch, loginPayload) {
       });
       dispatch({ type: "LOGIN_ERROR", error: data });
       return;
-    } 
-      else if(data !== "False" && data[0].role !==role){
-        Toast.show({
-          type: "error",
-          text1: "Une erreur est survenue,",
-          text2: `Vous n'etes pas un ${role}`,
-        });
-        dispatch({ type: "LOGIN_ERROR", error: `Vous n'etes pas un ${role}` });
-      }
+    }
+    //  else if (data !== "False" && data[0].role !== role) {
+    //   Toast.show({
+    //     type: "error",
+    //     text1: "Une erreur est survenue,",
+    //     text2: `Vous n'etes pas un ${role}`,
+    //   });
+    //   dispatch({ type: "LOGIN_ERROR", error: `Vous n'etes pas un ${role}` });
+    // }
     else {
       Toast.show({
         type: "success",
-        text1: `Bienvenue Mr/Mme ${data[0].nom} ${data[0].prenom}`,
+        text1: `Bienvenue Mr/Mme `,
       });
       dispatch({ type: "LOGIN_SUCCESS", payload: data[0] });
-      storeDataObject("currentUser", data[0]);
       return data;
     }
   } catch (error) {
@@ -57,5 +55,4 @@ export async function loginUser(dispatch, loginPayload) {
 
 export async function logout(dispatch) {
   dispatch({ type: "LOGOUT" });
-  removeValue("currentUser");
 }

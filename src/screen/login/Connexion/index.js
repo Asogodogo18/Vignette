@@ -10,6 +10,8 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
@@ -24,6 +26,7 @@ const { width, height } = Dimensions.get("screen");
 import { Feather, FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation, route }) => {
+  Keyboard.dismiss();
   const { role } = route.params;
   const Navigation = useNavigation();
   const dispatch = useAuthDispatch(); //get the dispatch method from the useDispatch custom hook
@@ -106,7 +109,6 @@ const Index = ({ navigation, route }) => {
     try {
       let response = await loginUser(dispatch, data); //loginUser action makes the request and handles all the neccessary state changes
       if (!response) return;
-    
     } catch (error) {
       console.log(error);
     }
@@ -119,15 +121,6 @@ const Index = ({ navigation, route }) => {
           source={require("../../../../assets/logo.png")}
           style={styles.headerImg}
         />
-        <View style={styles.imgBox}>
-          {/* <Image
-            // source={item}
-            // source={{ uri: `${item}` }}
-            style={{ height: 100, width: 100 }}
-            resizeMode="contain"
-          /> */}
-        </View>
-        {/* <Text style={styles.text_header}>Connexion</Text> */}
       </View>
 
       <Animatable.View
@@ -171,7 +164,7 @@ const Index = ({ navigation, route }) => {
               },
             ]}
           >
-           Mot de Passe
+            Mot de Passe
           </Text>
           <View style={styles.action}>
             <Feather name="lock" color="gray" size={20} />
@@ -211,15 +204,17 @@ const Index = ({ navigation, route }) => {
               ) : (
                 <LinearGradient
                   colors={["#1a1818", "#FFFF"]}
-                  start={{ x: 0.1, y: 2.0 }}
-                  end={{ x: 2.0, y: 0.1 }}
+                  start={{ x: 0.1, y: 0.0 }}
+                  end={{ x: 2.0, y: 0.2 }}
                   style={{
                     height: 48,
                     borderRadius: 10,
                     alignItems: "center",
                     justifyContent: "center",
-                    width: 200,
+                    maxWidth: 300,
+                    minWidth: 250,
                     elevation: 5,
+                    shadowColor: "gray",
                   }}
                 >
                   <TouchableOpacity
@@ -262,7 +257,6 @@ const Index = ({ navigation, route }) => {
               </TouchableOpacity>
             </View>
           </View>
-
         </ScrollView>
       </Animatable.View>
     </View>
@@ -316,6 +310,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
+    alignItems: Platform.OS === "ios" ? "center" : null,
   },
   actionError: {
     flexDirection: "row",

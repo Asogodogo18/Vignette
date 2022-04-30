@@ -53,8 +53,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
         });
       });
 
-    return () => {
-    };
+    return () => {};
   }, []);
 
   const handleUnaffect = () => {

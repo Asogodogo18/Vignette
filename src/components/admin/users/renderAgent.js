@@ -32,6 +32,7 @@ const RenderAgent = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isChecked, setChecked] = useState(false);
+  Keyboard.dismiss();
   const onChecked = (value) => {
     setChecked(value);
     if (value) {
@@ -40,7 +41,7 @@ const RenderAgent = ({
       setElementsToDelete(elementsToDelete.filter((id) => id != item.id_user));
     }
   };
-  Keyboard.dismiss();
+
   return (
     <View style={styles.contain}>
       {isDelete ? (
@@ -53,7 +54,7 @@ const RenderAgent = ({
         </View>
       ) : null}
       <TouchableOpacity
-        key={item.id}
+        key={item.id_user}
         onPress={() => setIsVisible(!isVisible)}
         style={[
           styles.Card,
