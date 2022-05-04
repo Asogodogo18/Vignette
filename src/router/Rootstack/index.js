@@ -9,31 +9,27 @@ const RootStack = createNativeStackNavigator();
 import { useAuthState } from "../../global";
 
 const Index = () => {
-  const { user, isSignedIn } = useAuthState();
+  // const { user, isSignedIn } = useAuthState();
 
   return (
     <RootStack.Navigator initialRouteName="Authstack">
-      {isSignedIn ? (
-        user?.role === "Superviseur" || user?.role === "Compta public" ? (
-          <RootStack.Screen
-            name="Adminstack"
-            component={Adminstack}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <RootStack.Screen
-            name="Appstack"
-            component={Appstack}
-            options={{ headerShown: false }}
-          />
-        )
-      ) : (
-        <RootStack.Screen
-          name="Authstack"
-          component={Authstack}
-          options={{ headerShown: false }}
-        />
-      )}
+      <RootStack.Screen
+        name="Adminstack"
+        component={Adminstack}
+        options={{ headerShown: false }}
+      />
+
+      <RootStack.Screen
+        name="Appstack"
+        component={Appstack}
+        options={{ headerShown: false }}
+      />
+
+      <RootStack.Screen
+        name="Authstack"
+        component={Authstack}
+        options={{ headerShown: false }}
+      />
     </RootStack.Navigator>
   );
 

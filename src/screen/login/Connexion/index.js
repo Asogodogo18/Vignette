@@ -26,7 +26,6 @@ const { width, height } = Dimensions.get("screen");
 import { Feather, FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation, route }) => {
-  Keyboard.dismiss();
   const { role } = route.params;
   const Navigation = useNavigation();
   const dispatch = useAuthDispatch(); //get the dispatch method from the useDispatch custom hook
@@ -108,6 +107,7 @@ const Index = ({ navigation, route }) => {
 
     try {
       let response = await loginUser(dispatch, data); //loginUser action makes the request and handles all the neccessary state changes
+      console.log("response:", response);
       if (!response) return;
     } catch (error) {
       console.log(error);

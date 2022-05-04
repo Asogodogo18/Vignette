@@ -3,6 +3,16 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import apiClient from "../services/http-common";
 //const formData = new FormData();
 
+//auth
+export const authUser = (sentForm) => {
+  let { username, password, role } = sentForm;
+  const loginFormData = new FormData();
+
+  loginFormData.append("login", username);
+  loginFormData.append("pass", password);
+  return apiClient.get("/verif", loginFormData);
+};
+
 //all vignettes
 export function useVignettes() {
   return useQuery(
