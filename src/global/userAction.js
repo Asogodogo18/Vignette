@@ -1,6 +1,7 @@
 // Context/actions.js
 import axios from "axios";
 import Toast from "react-native-toast-message";
+// var FormData = require('form-data');
 
 const ROOT_URL = "http://192.168.1.44/";
 

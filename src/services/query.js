@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import apiClient from "../services/http-common";
-//const formData = new FormData();
+var FormData = require('form-data');
+
 
 //all vignettes
 export function useVignettes() {
