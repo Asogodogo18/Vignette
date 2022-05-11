@@ -8,7 +8,7 @@ import {
 import Tarif from "./Tarif";
 import { usePuissances } from "../../services/query";
 
-const Fees = ({navigation}) => {
+const Fees = ({ navigation }) => {
   const { status, data, error, isFetching } = usePuissances();
 
   return (
@@ -35,24 +35,25 @@ const Fees = ({navigation}) => {
       >
         Particuliers
       </Text>
-
-      {isFetching ? (
+      {isFetching && (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
           <ActivityIndicator size="large" />
         </View>
-      ) : (
+      )}
+      {data && (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={data.filter(item => item.utilisation==="Personnel")}
-          renderItem={({item})=>(<Tarif navigation={navigation} item={item}/>)}
+          data={data.filter((item) => item.utilisation === "Personnel")}
+          renderItem={({ item }) => (
+            <Tarif navigation={navigation} item={item} />
+          )}
           keyExtractor={(item) => item.id_puissance}
         />
       )}
-
       <Text
         style={{
           marginLeft: 20,
@@ -64,19 +65,22 @@ const Fees = ({navigation}) => {
       >
         Transports
       </Text>
-      {isFetching ? (
+      {isFetching && (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
           <ActivityIndicator size="large" />
         </View>
-      ) : (
+      )}
+      {data && (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={data.filter(item => item.utilisation==="Transport")}
-          renderItem={({item})=>(<Tarif navigation={navigation} item={item}/>)}
+          data={data.filter((item) => item.utilisation === "Transport")}
+          renderItem={({ item }) => (
+            <Tarif navigation={navigation} item={item} />
+          )}
           keyExtractor={(item) => item.id_puissance}
         />
       )}

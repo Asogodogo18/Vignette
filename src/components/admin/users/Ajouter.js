@@ -21,11 +21,11 @@ import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 
 import { Picker } from "@react-native-picker/picker";
-import { addUser,useRoles } from "../../../services/query";
+import { addUser, useRoles } from "../../../services/query";
 const { width, height } = Dimensions.get("screen");
 
-const Ajouter = ({ setCurrentLoader, currentLoader }) => {
-  const {data, isLoading, error}= useRoles()
+const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
+  const { data, isLoading, error } = useRoles();
   const [name, setName] = useState("");
   const [prenom, setPrenom] = useState("");
   const [phone, setPhone] = useState("");
@@ -36,6 +36,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader }) => {
   const handleAdd = () => {
     addUser({ name, prenom, phone, role, adresse, login, password })
       .then((res) => {
+        console.log(res);
         if (res.data == "true") {
           Toast.show({
             type: "success",
@@ -50,11 +51,12 @@ const Ajouter = ({ setCurrentLoader, currentLoader }) => {
         }
       })
       .catch((e) => {
+        console.log(e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",
           text2: e.toString(),
-        })
+        });
       });
   };
   return (
@@ -142,7 +144,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader }) => {
                 <View
                   style={{
                     borderWidth: 1,
-                    height: 80,
+                    height: Platform.OS == "ios" ? 100 : 80,
                     width: 200,
                     borderRadius: 15,
                   }}
@@ -151,16 +153,25 @@ const Ajouter = ({ setCurrentLoader, currentLoader }) => {
                     selectedValue={role}
                     onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
                     style={styles.select}
-                    mode="dropdown"
+                    itemStyle={{
+                      height: 40,
+                      marginTop: -10,
+                      width: 190,
+                      alignSelf: "center",
+                    }}
+                    mode="dialog"
                   >
                     <Picker.Item label="choisir un rôle" value="" />
-                    {data && data.map((item,index)=>{
-                      return (
-                        <Picker.Item key={index} label={item.role} value={item.id_role} />
-                      )
-                    })}
-                    
-                    
+                    {data &&
+                      data.map((item, index) => {
+                        return (
+                          <Picker.Item
+                            key={index}
+                            label={item.role}
+                            value={item.id_role}
+                          />
+                        );
+                      })}
                   </Picker>
                 </View>
 
@@ -336,6 +347,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontWeight: "bold",
   },
+
   chip: {
     flexDirection: "row",
     padding: 2,

@@ -32,7 +32,6 @@ const RenderAgent = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isChecked, setChecked] = useState(false);
-  Keyboard.dismiss();
   const onChecked = (value) => {
     setChecked(value);
     if (value) {
@@ -41,9 +40,8 @@ const RenderAgent = ({
       setElementsToDelete(elementsToDelete.filter((id) => id != item.id_user));
     }
   };
-
   return (
-    <View style={styles.contain}>
+    <View style={styles.container}>
       {isDelete ? (
         <View style={{ margin: 5 }}>
           <Checkbox
@@ -54,7 +52,6 @@ const RenderAgent = ({
         </View>
       ) : null}
       <TouchableOpacity
-        key={item.id_user}
         onPress={() => setIsVisible(!isVisible)}
         style={[
           styles.Card,
@@ -202,7 +199,7 @@ const RenderAgent = ({
         </Animatable.View>
         {isVisible ? (
           <BlurView
-            intensity={50}
+            intensity={150}
             tint="dark"
             style={{
               position: "absolute",
@@ -210,9 +207,11 @@ const RenderAgent = ({
               left: 0,
               justifyContent: "center",
               alignItems: "center",
-              height: 130,
-              width: width - 15,
-              borderRadius: 10,
+
+              maxHeight: 250,
+              minHeight: Platform.OS === "ios" ? 152 : 150,
+              width: Platform.OS === "ios" ? 353 : 340,
+              borderRadius: Platform.OS === "ios" ? 50 : 10,
             }}
           >
             <View
@@ -244,12 +243,12 @@ const RenderAgent = ({
 export default RenderAgent;
 
 const styles = StyleSheet.create({
-  contain: {
+  container: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "white",
+    // backgroundColor: "white",
   },
   touch: {
     height: 50,
@@ -305,7 +304,7 @@ const styles = StyleSheet.create({
     minHeight: 100,
     width: width - 15,
     alignSelf: "center",
-    elevation: 5,
+
     borderRadius: 10,
     justifyContent: "space-around",
     alignItems: "center",
@@ -347,51 +346,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
   },
-  container: {
-    flexGrow: 1,
-  },
-  inputBox: {
-    paddingVertical: 40,
-    paddingHorizontal: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-    fontWeight: "bold",
 
-    width: 200,
-  },
-  buttonGroup: {
-    flexDirection: "row",
-    height: 60,
-    marginTop: 40,
-  },
-  button: {
-    flex: 1,
-    margin: 10,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 8,
-  },
-  btnLabel: {
-    color: "white",
-    textTransform: "uppercase",
-    fontSize: 14,
-  },
-  select: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-    fontWeight: "bold",
-  },
   chip: {
     flexDirection: "row",
     padding: 2,
@@ -415,6 +370,6 @@ const styles = StyleSheet.create({
   checkbox: {
     // margin: 8,
     marginTop: 10,
-    backgroundColor: "red",
+    zIndex: 555,
   },
 });

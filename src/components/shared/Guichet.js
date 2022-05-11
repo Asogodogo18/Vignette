@@ -39,29 +39,36 @@ const Guichet = ({
     }
   };
 
-  return isDelete ? (
-    <View style={{ flexDirection: "row" }}>
-      <View style={{ marginTop: 25 }}>
-        <Checkbox
-          style={styles.checkbox}
-          value={isChecked}
-          onValueChange={(value) => onChecked(value)}
-        />
-      </View>
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      {isDelete ? (
+        <View style={{ marginTop: 25 }}>
+          <Checkbox
+            style={styles.checkbox}
+            value={isChecked}
+            onValueChange={(value) => onChecked(value)}
+          />
+        </View>
+      ) : null}
 
-      <Animatable.View
-        delay={200}
-        duration={250}
-        animation="bounceInLeft"
-        style={styles.CardDelete}
+      <TouchableOpacity
+        onPress={() => setIsVisible(!isVisible)}
+        style={styles.Card}
       >
         <View
           style={{
-            // flex: 2,
-            height: 50,
-            width: 50,
+            height: 70,
+            width: 70,
             backgroundColor: "#99D98c",
             borderRadius: 80,
+            // marginTop: 20,
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -69,8 +76,8 @@ const Guichet = ({
           <Image
             source={require("../../../assets/icon/guichet.png")}
             style={{
-              height: 35,
-              width: 35,
+              height: 40,
+              width: 40,
             }}
             resizeMode="contain"
           />
@@ -84,7 +91,7 @@ const Guichet = ({
               justifyContent: "center",
             }}
           >
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 5 }}>
               <Text
                 style={{
                   fontSize: 15,
@@ -107,126 +114,55 @@ const Guichet = ({
                 {item.num_guichet}
               </Text>
             </View>
-            {isDelete ? (
-              <TouchableOpacity style={styles.delete}>
-                <AntDesign name="delete" size={24} color="white" />
-              </TouchableOpacity>
-            ) : null}
           </View>
         </View>
-      </Animatable.View>
-    </View>
-  ) : (
-    <TouchableOpacity
-      onPress={() => setIsVisible(!isVisible)}
-      style={styles.Card}
-    >
-      <View
-        style={{
-          flex: 2,
-          height: 70,
-          width: 70,
-          backgroundColor: "#99D98c",
-          borderRadius: 80,
-          // marginTop: 20,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={require("../../../assets/icon/guichet.png")}
-          style={{
-            height: 40,
-            width: 40,
-          }}
-          resizeMode="contain"
-        />
-      </View>
-
-      <View style={styles.vignette}>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 10,
-            justifyContent: "center",
-          }}
-        >
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "200",
-                color: "black",
-                textTransform: "capitalize",
-              }}
-            >
-              Numero du guichet
-            </Text>
-            <Text
-              style={{
-                marginLeft: 15,
-                fontSize: 18,
-                color: "black",
-                textTransform: "uppercase",
-                fontWeight: "bold",
-              }}
-            >
-              {item.num_guichet}
-            </Text>
-          </View>
-          {isDelete ? (
-            <TouchableOpacity style={styles.delete}>
-              <AntDesign name="delete" size={24} color="white" />
-            </TouchableOpacity>
-          ) : null}
-        </View>
-      </View>
-      {isVisible ? (
-        <BlurView
-          intensity={50}
-          tint="dark"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            justifyContent: "center",
-            alignItems: "center",
-            height: 90,
-            width: width - 15,
-          }}
-        >
-          <View
+        {isVisible ? (
+          <BlurView
+            intensity={150}
+            tint="dark"
             style={{
-              flexDirection: "row",
-              justifyContent: "space-around",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              justifyContent: "center",
+              alignItems: "center",
+              height: 90,
+              width: width - 19,
             }}
           >
-            <TouchableOpacity
-              onPress={() => handlePress("Affectation", item)}
-              style={styles.btnBlur}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
             >
-              <MaterialCommunityIcons
-                name="code-less-than-or-equal"
-                size={30}
-                color="white"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => handlePress("Modify", item)}
-              style={styles.btnBlur}
-            >
-              <FontAwesome name="edit" size={30} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => handleDelete(item.id_guichet)}
-              style={styles.btnBlur}
-            >
-              <MaterialCommunityIcons name="delete" size={30} color="white" />
-            </TouchableOpacity>
-          </View>
-        </BlurView>
-      ) : null}
-    </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handlePress("Affectation", item)}
+                style={styles.btnBlur}
+              >
+                <MaterialCommunityIcons
+                  name="code-less-than-or-equal"
+                  size={30}
+                  color="white"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handlePress("Modify", item)}
+                style={styles.btnBlur}
+              >
+                <FontAwesome name="edit" size={30} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleDelete(item.id_guichet)}
+                style={styles.btnBlur}
+              >
+                <MaterialCommunityIcons name="delete" size={30} color="white" />
+              </TouchableOpacity>
+            </View>
+          </BlurView>
+        ) : null}
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -291,7 +227,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     height: 90,
-    width: width - 15,
+    width: width - 19,
     elevation: 5,
     flexDirection: "row",
     backgroundColor: "white",
@@ -322,17 +258,7 @@ const styles = StyleSheet.create({
     right: 15,
     bottom: 20,
   },
-  CardDelete: {
-    margin: 5,
-    padding: 5,
-    height: 90,
-    width: width - 50,
-    elevation: 5,
-    flexDirection: "row",
-    backgroundColor: "white",
-    alignSelf: "center",
-    alignItems: "center",
-  },
+
   container: {
     flex: 1,
   },

@@ -30,25 +30,21 @@ const Index = ({ navigation }) => {
   const [visible, setVisible] = React.useState(false);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView forceIncet={{ top: "always" }} style={styles.contain}>
       <Header navigation={navigation} />
       <ScrollView
         stickyHeaderHiddenOnScroll
         stickyHeaderIndices={[1]}
-        contentContainerStyle={styles.contain}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         <StatusBar hidden />
-
-        {user.role === "Agent" ? (
-          <AgentHome navigation={navigation} />
-        ) : user.role === "Police" ? (
-          <OfficerHome navigation={navigation} />
-        ) : user.role === "Verificateur" || user.role === "Maire" || user.role === "Maire adjoint"   ? (
-          <VerifHome />
-        ) : (
-          <ClientHome navigation={navigation} />
-        )}
-        <Footer />
+        {user.role === "Agent" && <AgentHome navigation={navigation} />}
+        {user.role === "Police" && <OfficerHome navigation={navigation} />}
+        {user.role === "Verificateur" ||
+          user.role === "Maire" ||
+          (user.role === "Maire adjoint" && <VerifHome />)}
+        {user.role === "Client" ||
+          (user === undefined && <ClientHome navigation={navigation} />)}
       </ScrollView>
       <Footer />
     </SafeAreaView>
@@ -64,12 +60,17 @@ const Footer = () => {
       style={{
         position: "absolute",
         bottom: 0,
-        // backgroundColor: "#1a1818",
-        height: 50,
-        width: width - 20,
+        backgroundColor: "white",
+        height: 40,
+        width: width,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 5,
+        alignSelf: "center",
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 70,
+        elevation: 5,
+        // marginBottom: Platform.OS === "ios" ? 5 : 0,
       }}
     >
       <Text

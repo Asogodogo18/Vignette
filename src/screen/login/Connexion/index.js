@@ -10,8 +10,8 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
-  Keyboard,
-  KeyboardAvoidingView,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
@@ -97,6 +97,16 @@ const Index = ({ navigation, route }) => {
   };
 
   const loginHandle = async () => {
+    // fetch("http://mairie.demofamib.com/api", {
+    //   method: "POST",
+    //   body: JSON.stringify({ login: data.username, pass: data.password }),
+    //   // headers: {
+    //   //   "Content-type": "application/json; charset=UTF-8",
+    //   // },
+    // })
+    //   .then((response) => response.json())
+    //   .then((json) => console.log(json))
+    //   .catch((e) => console.log(e));
     if (data.username.length == 0 || data.password.length == 0) {
       Toast.show({
         type: "error",
@@ -107,7 +117,6 @@ const Index = ({ navigation, route }) => {
 
     try {
       let response = await loginUser(dispatch, data); //loginUser action makes the request and handles all the neccessary state changes
-      console.log("response:", response);
       if (!response) return;
     } catch (error) {
       console.log(error);
@@ -115,151 +124,154 @@ const Index = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={require("../../../../assets/logo.png")}
-          style={styles.headerImg}
-        />
-      </View>
+    <SafeAreaView forceInset={{ top: "always" }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <StatusBar barStyle="llight-content" backgroundColor="black" />
+        <View style={styles.header}>
+          <Image
+            source={require("../../../../assets/logo.png")}
+            style={styles.headerImg}
+          />
+        </View>
 
-      <Animatable.View
-        animation="fadeInUpBig"
-        duration={300}
-        delay={500}
-        style={styles.footer}
-      >
-        <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 15 }}>
-          <Text style={styles.text_footer}>Nom d'utilisateur ou E-mail</Text>
-          <View style={styles.action}>
-            <FontAwesome name="user-o" color="gray" size={20} />
-            <TextInput
-              placeholder="Votre Nom d'utilisateur ou E-mail"
-              placeholderTextColor="#666666"
-              value={data.username}
-              onChangeText={textInputChange}
-              style={[styles.textInput]}
-              autoCapitalize="none"
-            />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
-              </Animatable.View>
-            ) : null}
-          </View>
-          {data.isValidUser ? null : (
-            <Animatable.View animation="fadeInLeft" duration={500}>
-              <Text style={styles.errorMsg}>
-                Le nom d'utilisateur doit contenir au minimum 4 caracteres.
-              </Text>
-            </Animatable.View>
-          )}
-
-          <Text
-            style={[
-              styles.text_footer,
-              {
-                color: "white",
-                marginTop: 35,
-              },
-            ]}
-          >
-            Mot de Passe
-          </Text>
-          <View style={styles.action}>
-            <Feather name="lock" color="gray" size={20} />
-            <TextInput
-              placeholder="Votre Mot de Pass"
-              placeholderTextColor="#666666"
-              secureTextEntry={data.secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) => handlePasswordChange(val)}
-            />
-            <TouchableOpacity onPress={updateSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-          {data.isValidPassword ? null : (
-            <Animatable.View animation="fadeInLeft" duration={500}>
-              <Text style={styles.errorMsg}>
-                Le Mot de Passe doit avoir au minimum 8 caracteres.
-              </Text>
-            </Animatable.View>
-          )}
-
-          <TouchableOpacity onPress={() => navigation.navigate("PassOublier")}>
-            <Text style={{ color: "#fff", marginTop: 15 }}>
-              Mot de pass oublier ?
-            </Text>
-          </TouchableOpacity>
-          <View>
-            <View style={{ marginTop: 10, alignItems: "center" }}>
-              {loading ? (
-                <ActivityIndicator size="large" />
-              ) : (
-                <LinearGradient
-                  colors={["#1a1818", "#FFFF"]}
-                  start={{ x: 0.1, y: 0.0 }}
-                  end={{ x: 2.0, y: 0.2 }}
-                  style={{
-                    height: 48,
-                    borderRadius: 10,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    maxWidth: 300,
-                    minWidth: 250,
-                    elevation: 5,
-                    shadowColor: "gray",
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={loginHandle}
-                    style={[
-                      styles.touch1,
-                      { flexDirection: "row", alignItems: "center" },
-                    ]}
-                  >
-                    <FontAwesome5
-                      name="sign-in-alt"
-                      size={24}
-                      color="white"
-                      style={{ marginLeft: 0, marginRight: 5 }}
-                    />
-                    <Text style={styles.text}> Se Connecter</Text>
-                  </TouchableOpacity>
-                </LinearGradient>
-              )}
+        <Animatable.View
+          animation="fadeInUpBig"
+          duration={300}
+          delay={500}
+          style={styles.footer}
+        >
+          <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 15 }}>
+            <Text style={styles.text_footer}>Nom d'utilisateur ou E-mail</Text>
+            <View style={styles.action}>
+              <FontAwesome name="user-o" color="gray" size={20} />
+              <TextInput
+                placeholder="Votre Nom d'utilisateur ou E-mail"
+                placeholderTextColor="#666666"
+                value={data.username}
+                onChangeText={textInputChange}
+                style={[styles.textInput]}
+                autoCapitalize="none"
+              />
+              {data.check_textInputChange ? (
+                <Animatable.View animation="bounceIn">
+                  <Feather name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              ) : null}
             </View>
-
-            <View style={{ marginTop: 15 }}>
-              <Text style={{ textAlign: "center", color: "white" }}>
-                Vous n'avez pas de compte ?
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  Navigation.navigate("Inscription");
-                }}
-              >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    color: "white",
-                  }}
-                >
-                  Créer Un compte dès maintenant
+            {data.isValidUser ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>
+                  Le nom d'utilisateur doit contenir au minimum 4 caracteres.
                 </Text>
+              </Animatable.View>
+            )}
+
+            <Text
+              style={[
+                styles.text_footer,
+                {
+                  color: "white",
+                  marginTop: 35,
+                },
+              ]}
+            >
+              Mot de Passe
+            </Text>
+            <View style={styles.action}>
+              <Feather name="lock" color="gray" size={20} />
+              <TextInput
+                placeholder="Votre Mot de Pass"
+                placeholderTextColor="#666666"
+                secureTextEntry={data.secureTextEntry ? true : false}
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(val) => handlePasswordChange(val)}
+              />
+              <TouchableOpacity onPress={updateSecureTextEntry}>
+                {data.secureTextEntry ? (
+                  <Feather name="eye-off" color="grey" size={20} />
+                ) : (
+                  <Feather name="eye" color="grey" size={20} />
+                )}
               </TouchableOpacity>
             </View>
-          </View>
-        </ScrollView>
-      </Animatable.View>
-    </View>
+            {data.isValidPassword ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>
+                  Le Mot de Passe doit avoir au minimum 8 caracteres.
+                </Text>
+              </Animatable.View>
+            )}
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PassOublier")}
+            >
+              <Text style={{ color: "#fff", marginTop: 15 }}>
+                Mot de pass oublier ?
+              </Text>
+            </TouchableOpacity>
+            <View>
+              <View style={{ marginTop: 10, alignItems: "center" }}>
+                {loading ? (
+                  <ActivityIndicator size="large" />
+                ) : (
+                  <LinearGradient
+                    colors={["#1a1818", "#FFFF"]}
+                    start={{ x: 0.1, y: 2.0 }}
+                    end={{ x: 2.0, y: 0.1 }}
+                    style={{
+                      height: 48,
+                      borderRadius: 10,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 200,
+                      elevation: 5,
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={loginHandle}
+                      style={[
+                        styles.touch1,
+                        { flexDirection: "row", alignItems: "center" },
+                      ]}
+                    >
+                      <FontAwesome5
+                        name="sign-in-alt"
+                        size={24}
+                        color="white"
+                        style={{ marginLeft: 5 }}
+                      />
+                      <Text style={styles.text}> Se Connecter</Text>
+                    </TouchableOpacity>
+                  </LinearGradient>
+                )}
+              </View>
+
+              <View style={{ marginTop: 15 }}>
+                <Text style={{ textAlign: "center", color: "white" }}>
+                  Vous n'avez pas de compte ?
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    Navigation.navigate("Inscription");
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "white",
+                    }}
+                  >
+                    Créer Un compte dès maintenant
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScrollView>
+        </Animatable.View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -267,7 +279,7 @@ export default Index;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "white",
   },
   header: {
@@ -278,11 +290,13 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   headerImg: {
-    height: 100,
+    height: 120,
     width: "100%",
+    // position: "absolute",
+    // bottom: 20,
+    marginTop: 50,
   },
   footer: {
-    flex: 2,
     backgroundColor: "#1a1818",
     paddingHorizontal: 20,
     paddingVertical: 30,
@@ -290,10 +304,10 @@ const styles = StyleSheet.create({
     padding: 5,
     width: width - 15,
     alignSelf: "center",
-    marginTop: -150,
-    marginVertical: 20,
+    // marginTop: -150,
+    marginVertical: 10,
     borderRadius: 50,
-    opacity: 0.2,
+    opacity: 0.5,
   },
   text_header: {
     color: "black",
@@ -310,7 +324,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
-    alignItems: Platform.OS === "ios" ? "center" : null,
   },
   actionError: {
     flexDirection: "row",
@@ -348,8 +361,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   touch1: {
-    width: Dimensions.get("screen").width - 150,
-
+    minWidth: 250,
+    maxWidth: 350,
+    paddingVertical: 10,
     height: 50,
 
     marginBottom: 10,

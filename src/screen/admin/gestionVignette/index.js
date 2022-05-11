@@ -30,8 +30,6 @@ const Index = ({ navigation }) => {
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
 
-  Keyboard.dismiss();
-
   const handleDelete = (id) => {
     deleteVignette(id)
       .then((res) => {

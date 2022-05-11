@@ -43,27 +43,27 @@ const Modify = ({ handlePress, Item }) => {
       utilisation: selectedType,
       puissance_id: Item.id_puissance,
     })
-    .then((res) => {
-      if (res.data == "true") {
-        Toast.show({
-          type: "success",
-          text1: "Vos modifications ont ete enregistre!",
-        });
-        setCurrentLoader(null);
-      } else {
+      .then((res) => {
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Vos modifications ont ete enregistre!",
+          });
+          handlePress(null);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
         Toast.show({
           type: "error",
-          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
         });
-      }
-    })
-    .catch((e) => {
-      Toast.show({
-        type: "error",
-        text1: "Une erreur est survenue, Veuillez ressayer!",
-        text2: e.toString(),
-      })
-    });
+      });
   };
 
   return (

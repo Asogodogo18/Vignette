@@ -1,17 +1,14 @@
-import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import apiClient from "../services/http-common";
-//const formData = new FormData();
-
-//auth
-export const authUser = (sentForm) => {
-  let { username, password, role } = sentForm;
-  const loginFormData = new FormData();
-
-  loginFormData.append("login", username);
-  loginFormData.append("pass", password);
-  return apiClient.get("/verif", loginFormData);
-};
+import axios from "axios";
+//auth User
+export async function authUser(data) {
+  let { username, password, role } = data;
+  return axios.post(
+    "http://192.168.1.44/vignette/api",
+    JSON.stringify({ login: username, pass: password })
+  );
+}
 
 //all vignettes
 export function useVignettes() {
@@ -224,19 +221,20 @@ export function useUsers() {
     },
     {
       // Refetch the data every second
-      refetchInterval: 50000,
-      staleTime: 10000,
+      refetchInterval: 15000,
+      staleTime: 5000,
     }
   );
 }
 
 export const addUser = (sentForm) => {
-  const { nom, prenom, adresse, tel, login, pass, role } = sentForm;
+  const { name, prenom, adresse, phone, login, pass, role } = sentForm;
   const formData = new FormData();
 
-  formData.append("nom", prenom);
+  formData.append("nom", name);
+  formData.append("prenom", prenom);
   formData.append("adresse", adresse);
-  formData.append("tel", tel);
+  formData.append("tel", phone);
   formData.append("login", login);
   formData.append("pass", pass);
   formData.append("role", role);

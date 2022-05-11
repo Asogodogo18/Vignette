@@ -39,13 +39,15 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
   useEffect(() => {
     getAgentbyGuichet(item.id_guichet)
       .then((res) => {
+        console.log(res);
         if (res.data != "False") {
-          res.data.map((item) => {
-            setaffectedAgent([...affectedAgent, item.id_user]);
-          });
+          // res.data.map((item) => {
+          //   setaffectedAgent([...affectedAgent, item.id_user]);
+          // });
         }
       })
       .catch((e) => {
+        console.log("error affectation:", e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",

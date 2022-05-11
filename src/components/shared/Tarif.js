@@ -5,7 +5,9 @@ import { LinearGradient } from "expo-linear-gradient";
 const Tarif = ({ item, navigation }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Achat de Vignette", { puissance: item })}
+      onPress={() =>
+        navigation.navigate("Achat de Vignette", { puissance: item })
+      }
       style={styles.container}
     >
       <View style={styles.iconBox}>
@@ -59,5 +61,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 5,
     alignSelf: "center",
+    color: "white",
   },
 });

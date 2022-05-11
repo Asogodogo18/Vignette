@@ -22,7 +22,8 @@ const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView forceInset={{ top: "always" }}>
+      <StatusBar barStyle="light-content" backgroundColor="red" currentHeight />
       <View
         style={{
           position: "absolute",
@@ -38,10 +39,10 @@ const Index = ({ navigation }) => {
             animation="fadeIn"
             duration={300}
             delay={500}
-            source={require("../../../../assets/logo.png")}
+            source={require("../../../../assets/icon/logobko.png")}
             style={styles.img}
           />
-
+          <Text style={styles.txtHeader}>Vignette Mali</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("Profil")}
             style={{
@@ -168,14 +169,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a1818",
     justifyContent: "space-between",
     flexDirection: "row",
-    height: 70,
+    height: 80,
     width: "100%",
     alignItems: "center",
     paddingHorizontal: 8,
   },
   img: {
-    height: 150,
-    width: 150,
+    height: 70,
+    width: 70,
     resizeMode: "contain",
     marginTop: 5,
   },
@@ -197,5 +198,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
+  },
+  txtHeader: {
+    color: "gray",
+    fontSize: 20,
+    fontWeight: "bold",
+    letterSpacing: 2,
+    marginRight: 10,
   },
 });

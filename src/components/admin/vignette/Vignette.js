@@ -209,7 +209,7 @@ const Vignette = ({ item, handlePress }) => {
 
         {!item.statut ? (
           <BlurView
-            intensity={70}
+            intensity={150}
             tint="dark"
             style={{
               position: "absolute",
@@ -240,7 +240,7 @@ const Vignette = ({ item, handlePress }) => {
         ) : null}
         {isVisible ? (
           <BlurView
-            intensity={50}
+            intensity={150}
             tint="dark"
             style={{
               position: "absolute",
@@ -250,7 +250,7 @@ const Vignette = ({ item, handlePress }) => {
               bottom: 0,
               justifyContent: "center",
               alignItems: "center",
-              borderRadius: 15,
+              borderRadius: 5,
               width: 350,
 
               minHeight: 250,
@@ -263,12 +263,15 @@ const Vignette = ({ item, handlePress }) => {
                 justifyContent: "space-around",
               }}
             >
-              <TouchableOpacity
-                onPress={() => handlePress("Modify", item)}
-                style={styles.btnBlur}
-              >
-                <FontAwesome name="edit" size={30} color="white" />
-              </TouchableOpacity>
+              {item.statut ? (
+                <TouchableOpacity
+                  onPress={() => handlePress("Modify", item)}
+                  style={styles.btnBlur}
+                >
+                  <FontAwesome name="edit" size={30} color="white" />
+                </TouchableOpacity>
+              ) : null}
+
               <TouchableOpacity
                 onPress={() => handleDelete(item.id_engin)}
                 style={styles.btnBlur}
@@ -296,8 +299,8 @@ const styles = StyleSheet.create({
     width: 350,
     borderRadius: 5,
     overflow: "hidden",
-    minHeight: 200,
-    maxHeight: 380,
+    minHeight: 130,
+    maxHeight: 230,
     flex: 1,
   },
   btnBlur: {

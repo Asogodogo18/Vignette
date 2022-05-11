@@ -79,13 +79,12 @@ const Index = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <Image
           source={require("../../../../assets/logo.png")}
           style={styles.headerImg}
         />
-        <Text style={styles.text_header}>Inscription</Text>
       </View>
       <Animatable.View
         animation="fadeInUpBig"
@@ -93,7 +92,7 @@ const Index = ({ navigation }) => {
         delay={500}
         style={styles.footer}
       >
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <Text style={styles.text_footer}>Username</Text>
           <View style={styles.action}>
             <FontAwesome name="user-o" color="gray" size={20} />
@@ -229,66 +228,65 @@ const Index = ({ navigation }) => {
               Politique de confidentialité
             </Text>
           </View>
-          <View>
-            <View
-              style={{ alignItems: "center", marginTop: 10, marginBottom: 10 }}
-            >
-              <LinearGradient
-                colors={["#1a1818", "#FFFF"]}
-                start={{ x: 0.0, y: 1.0 }}
-                end={{ x: 2.0, y: 2.0 }}
-                style={{
-                  height: 48,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: 250,
-                  elevation: 5,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    Navigation.navigate("Connexion");
-                  }}
-                  style={styles.touch1}
-                >
-                  <View style={{ flexDirection: "row" }}>
-                    <FontAwesome5
-                      name="sign-in-alt"
-                      size={24}
-                      color="white"
-                      style={{ marginLeft: 15, marginTop: 10 }}
-                    />
-                    <Text style={styles.text}>S'inscrier</Text>
-                  </View>
-                </TouchableOpacity>
-              </LinearGradient>
-            </View>
 
-            <View>
-              <Text style={{ textAlign: "center", color: "white" }}>
-                Avez vous déja un compte ?
-              </Text>
+          <View
+            style={{ alignItems: "center", marginTop: 10, marginBottom: 10 }}
+          >
+            <LinearGradient
+              colors={["#1a1818", "#FFFF"]}
+              start={{ x: 0.0, y: 1.0 }}
+              end={{ x: 2.0, y: 2.0 }}
+              style={{
+                height: 48,
+                borderRadius: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                width: 250,
+                elevation: 5,
+              }}
+            >
               <TouchableOpacity
                 onPress={() => {
                   Navigation.navigate("Connexion");
                 }}
+                style={styles.touch1}
               >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    color: "white",
-                  }}
-                >
-                  connecté vous avec votre compte
-                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <FontAwesome5
+                    name="sign-in-alt"
+                    size={24}
+                    color="white"
+                    style={{ marginLeft: 15, marginTop: 10 }}
+                  />
+                  <Text style={styles.text}>S'inscrier</Text>
+                </View>
               </TouchableOpacity>
-            </View>
+            </LinearGradient>
+          </View>
+
+          <View>
+            <Text style={{ textAlign: "center", color: "white" }}>
+              Avez vous déja un compte ?
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                Navigation.navigate("Connexion");
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  color: "white",
+                }}
+              >
+                connecté vous avec votre compte
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </Animatable.View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -296,7 +294,7 @@ export default Index;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "white",
   },
   header: {
@@ -307,27 +305,27 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   headerImg: {
-    height: 100,
+    height: 120,
     width: "100%",
+    // position: "absolute",
+    // bottom: 20,
+    marginTop: 50,
   },
   footer: {
-    flex: 2,
     backgroundColor: "#1a1818",
-    // borderTopLeftRadius: 50,
-    // borderTopRightRadius: 50,
     paddingHorizontal: 20,
     paddingVertical: 30,
-    elevation: 5,
+    elevation: 10,
     padding: 5,
     width: width - 15,
     alignSelf: "center",
-    marginTop: -150,
-    marginVertical: 20,
+    // marginTop: -150,
+    marginVertical: 10,
     borderRadius: 50,
-    opacity: 0.2,
+    opacity: 0.5,
   },
   text_header: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     fontSize: 30,
   },
@@ -378,8 +376,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   touch1: {
-    width: Dimensions.get("screen").width - 150,
-
+    minWidth: 250,
+    maxWidth: 350,
+    paddingVertical: 10,
     height: 50,
 
     marginBottom: 10,
@@ -391,7 +390,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     color: "white",
-    paddingTop: 10,
+
     //marginLeft: 30,
     left: 30,
     textAlign: "center",

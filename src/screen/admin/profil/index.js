@@ -20,17 +20,14 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { useAuthState } from "../../../global";
-import { logout,useAuthDispatch } from "../../../global";
+import { logout, useAuthDispatch } from "../../../global";
 import Modify from "../../../components/profile/Modify";
 import ChangePassword from "../../../components/profile/ChangePassword";
 const { width, height } = Dimensions.get("screen");
 
-
 const Index = ({ navigation }) => {
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
-  Keyboard.dismiss();
-
   const [currentLoader, setCurrentLoader] = useState(null);
 
   const handlePress = (loader) => {
@@ -94,15 +91,15 @@ const Index = ({ navigation }) => {
 
             <View
               style={{
-                flexDirection:"row",
+                flexDirection: "row",
                 alignSelf: "center",
                 marginVertical: 0,
                 width: width,
-                justifyContent:"space-around"
+                justifyContent: "space-around",
               }}
             >
               <TouchableOpacity
-                style={[styles.touch,{flex:1}]}
+                style={[styles.touch, { flex: 1 }]}
                 onPress={() => handlePress("Modify")}
               >
                 <MaterialCommunityIcons
@@ -113,7 +110,7 @@ const Index = ({ navigation }) => {
                 <Text style={styles.text}>Modifier</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.touch,{flex:2}]}
+                style={[styles.touch, { flex: 2 }]}
                 onPress={() => handlePress("Change")}
               >
                 <MaterialCommunityIcons
@@ -185,7 +182,10 @@ const Index = ({ navigation }) => {
                 marginVertical: 0,
               }}
             >
-              <TouchableOpacity style={styles.touch} onPress={() => logout(dispatch)}>
+              <TouchableOpacity
+                style={styles.touch}
+                onPress={() => logout(dispatch)}
+              >
                 <FontAwesome name="sign-out" size={24} color="white" />
                 <Text style={styles.text}>Déconnexion</Text>
               </TouchableOpacity>
@@ -196,14 +196,10 @@ const Index = ({ navigation }) => {
     );
   }
   if (currentLoader == "Modify") {
-    return (
-      <Modify setCurrentLoader={setCurrentLoader}/>
-    );
+    return <Modify setCurrentLoader={setCurrentLoader} />;
   }
   if (currentLoader == "Change") {
-    return (
-      <ChangePassword setCurrentLoader={setCurrentLoader}/>
-    );
+    return <ChangePassword setCurrentLoader={setCurrentLoader} />;
   }
 };
 
@@ -228,7 +224,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
-    paddingHorizontal:5,
+    paddingHorizontal: 5,
     elevation: 5,
     flexDirection: "row",
     margin: 5,

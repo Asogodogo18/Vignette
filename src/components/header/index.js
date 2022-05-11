@@ -34,10 +34,10 @@ const Header = ({ navigation }) => {
           animation="fadeIn"
           duration={300}
           delay={500}
-          source={require("../../../assets/logo.png")}
+          source={require("../../../assets/icon/logobko.png")}
           style={styles.img}
         />
-
+        <Text style={styles.txtHeader}>Vignette Mali</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("Profil")}
           style={{
@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a1818",
     justifyContent: "space-between",
     flexDirection: "row",
-    height: 70,
+    height: 80,
     width: "100%",
     alignItems: "center",
     paddingHorizontal: 8,
   },
   img: {
-    height: 150,
-    width: 150,
+    height: 70,
+    width: 70,
     resizeMode: "contain",
     marginTop: 5,
   },
@@ -105,6 +105,12 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     marginRight: 20,
+  },
+  txtHeader: {
+    color: "gray",
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 10,
   },
 });
 export default Header;

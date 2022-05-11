@@ -23,11 +23,10 @@ import Guichet from "../../../components/shared/Guichet";
 import { useGuichets, deleteGuichet } from "../../../services/query";
 import Modify from "../../../components/admin/guichet/Modify";
 import Affectation from "../../../components/admin/guichet/Affectation";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
-  Keyboard.dismiss();
-
   const { status, data, error, isFetching } = useGuichets();
 
   const [currentLoader, setCurrentLoader] = useState(null);
@@ -135,7 +134,7 @@ const Index = ({ navigation }) => {
           >
             <TouchableOpacity
               onPress={() => handlePress("Ajouter")}
-              style={styles.touch}
+              style={[styles.touch]}
             >
               <AntDesign name="addfolder" size={24} color="white" />
               <Text style={styles.touchTxt}>Ajouter</Text>
@@ -143,7 +142,10 @@ const Index = ({ navigation }) => {
 
             <TouchableOpacity
               onPress={handleMultipleDelete}
-              style={styles.touch}
+              style={[
+                styles.touch,
+                { backgroundColor: isDelete ? "red" : "#99D98c" },
+              ]}
             >
               <AntDesign name="delete" size={24} color="white" />
               <Text style={styles.touchTxt}>Supprimer</Text>
@@ -165,6 +167,7 @@ const Index = ({ navigation }) => {
             data={data}
             renderItem={({ item }) => (
               <Guichet
+                key={item.id_guichet}
                 handleDelete={handleDelete}
                 handlePress={handlePress}
                 elementsToDelete={elementsToDelete}

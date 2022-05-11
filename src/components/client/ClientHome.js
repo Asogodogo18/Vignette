@@ -6,9 +6,10 @@ import Fees from "../shared/Fees";
 import VignetteList from "../shared/VignetteList";
 import { View } from "react-native-animatable";
 import { Ionicons } from "@expo/vector-icons";
-
+import { useAuthState } from "../../global";
 const ClientHome = ({ navigation }) => {
   const [openListing, setOpenListing] = useState(false);
+  const { user } = useAuthState();
 
   if (openListing) {
     return (
@@ -49,7 +50,7 @@ const ClientHome = ({ navigation }) => {
         paddingBottom: 40,
       }}
     >
-      <VignetteList />
+      {user.role === "Client" && <VignetteList />}
       <QuickSelect navigation={navigation} setOpenListing={setOpenListing} />
       <Fees navigation={navigation} />
     </ScrollView>

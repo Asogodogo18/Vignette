@@ -59,7 +59,7 @@ const Data = [
     name: "Maire",
   },
   {
-    id: "5",
+    id: "8",
     name: "Maire adjoint",
   },
 ];
@@ -70,9 +70,6 @@ const Index = ({ navigation }) => {
     error: userError,
     isFetching: isFetchingUsers,
   } = useUsers();
-
-  Keyboard.dismiss();
-
   const [currentLoader, setCurrentLoader] = useState(null);
 
   const [IsActive, setIsActive] = useState(0);
@@ -95,6 +92,7 @@ const Index = ({ navigation }) => {
     console.log("id", id);
     deleteUser(id)
       .then((res) => {
+        console.log(res);
         if (res.data == "true") {
           Toast.show({
             type: "success",
@@ -108,6 +106,7 @@ const Index = ({ navigation }) => {
         }
       })
       .catch((e) => {
+        console.log(e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",
@@ -173,6 +172,7 @@ const Index = ({ navigation }) => {
           >
             Action Rapide
           </Text>
+
           <View
             style={{
               flexDirection: "row",
@@ -193,57 +193,58 @@ const Index = ({ navigation }) => {
 
             <TouchableOpacity
               onPress={handleMultipleDelete}
-              style={styles.touch}
+              style={[
+                styles.touch,
+                { backgroundColor: isDelete ? "red" : "#99D98c" },
+              ]}
             >
               <AntDesign name="delete" size={24} color="white" />
               <Text style={styles.touchTxt}>Supprimer</Text>
             </TouchableOpacity>
           </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.chip}
-          >
-            {Data &&
-              Data.map((item, index) => {
-                return (
-                  <Chip
-                    key={item.id}
-                    selectedColor="black"
-                    selected={IsActive == index ? true : false}
-                    style={styles.chipItem}
-                    avatar={
-                      <Ionicons
-                        name="person"
-                        size={24}
-                        color="white"
-                        style={{
-                          backgroundColor: "#99D98c",
-                        }}
-                      />
-                    }
-                    onPress={() => {
-                      setIsActive(index);
+          <View style={styles.chip}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {Data &&
+                Data.map((item, index) => {
+                  return (
+                    <Chip
+                      key={index}
+                      selectedColor="black"
+                      selected={IsActive == index ? true : false}
+                      style={styles.chipItem}
+                      avatar={
+                        <Ionicons
+                          name="person"
+                          size={24}
+                          color="white"
+                          style={{
+                            backgroundColor: "#99D98c",
+                          }}
+                        />
+                      }
+                      onPress={() => {
+                        setIsActive(index);
 
-                      item.name.toLowerCase() === filter.toLowerCase()
-                        ? null
-                        : setFilter(item.name);
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "black",
-                        fontWeight: Platform.OS === "ios" ? "500" : "800",
-                        fontSize: 15,
-                        letterSpacing: 1,
+                        item.name.toLowerCase() === filter.toLowerCase()
+                          ? null
+                          : setFilter(item.name);
                       }}
                     >
-                      {item.name}
-                    </Text>
-                  </Chip>
-                );
-              })}
-          </ScrollView>
+                      <Text
+                        style={{
+                          color: "black",
+                          fontWeight: Platform.OS === "ios" ? "500" : "800",
+                          fontSize: 15,
+                          letterSpacing: 1,
+                        }}
+                      >
+                        {item.name}
+                      </Text>
+                    </Chip>
+                  );
+                })}
+            </ScrollView>
+          </View>
 
           {isFetchingUsers ? (
             <View
@@ -259,11 +260,7 @@ const Index = ({ navigation }) => {
             <View>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                  alignItems: "center",
-                  paddingBottom: 50,
-                  padding: 5,
-                }}
+                contentContainerStyle={{}}
                 data={
                   filter === "Tout"
                     ? userData
@@ -279,16 +276,19 @@ const Index = ({ navigation }) => {
                     setElementsToDelete={setElementsToDelete}
                   />
                 )}
-                keyExtractor={(item) => item.id_user}
+                keyExtractor={(item, index) =>
+                  `${item.id_user}-${item.nom}-${index}`
+                }
               />
             </View>
           )}
         </Animatable.View>
-        {filter && filter.length == 0 && (
+        {filter && filter === "Tout" && (
           <View
             style={{
               flex: 1,
               justifyContent: "center",
+              backgroundColor: "red",
             }}
           >
             <Text
@@ -312,6 +312,7 @@ const Index = ({ navigation }) => {
       <Ajouter
         currentLoader={currentLoader}
         setCurrentLoader={setCurrentLoader}
+        navigation={navigation}
       />
     );
   }
@@ -383,21 +384,25 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: "row",
     padding: 2,
-    flexGrow: 1,
+    // flexGrow: 1,
     height: 40,
     justifyContent: "center",
     margin: 2,
+    zIndex: 999,
+    borderRadius: Platform.OS == "ios" ? 20 : 50,
   },
   chipItem: {
     justifyContent: "center",
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: "black",
     marginHorizontal: 10,
     padding: 0,
     overflow: "hidden",
-    minWidth: 130,
-    maxWidth: 250,
+    minWidth: 90,
+    maxWidth: 150,
     borderRadius: Platform.OS == "ios" ? 20 : 50,
     backgroundColor: "white",
+    zIndex: 900,
+    flex: 1,
   },
 });

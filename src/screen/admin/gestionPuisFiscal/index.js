@@ -28,6 +28,7 @@ import GetRandomColor from "../../../Utils/getColor";
 import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
 import Modify from "../../../components/admin/puissance/Modify";
+import Puissance from "./Puissance";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -37,167 +38,6 @@ if (
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
-
-const Puissance = ({ item, handlePress, handleDelete }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  return (
-    <TouchableOpacity
-      onPress={() => setIsVisible(!isVisible)}
-      style={[
-        styles.card,
-        { backgroundColor: GetRandomColor(`${item.puissance}`) },
-      ]}
-    >
-      <View
-        style={{
-          height: 60,
-          width: 60,
-          backgroundColor: "white",
-          borderRadius: 40,
-          marginTop: 10,
-          justifyContent: "center",
-          alignItems: "center",
-          elevation: 5,
-        }}
-      >
-        <Image
-          source={require("../../../../assets/icon/puissance.png")}
-          style={{
-            height: 40,
-            width: 40,
-          }}
-          resizeMode="contain"
-        />
-      </View>
-      <View style={{ flex: 10 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 10,
-            justifyContent: "center",
-          }}
-        >
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "200",
-                color: "black",
-                textTransform: "capitalize",
-              }}
-            >
-              Puissance
-            </Text>
-            <Text
-              style={{
-                marginLeft: 10,
-                fontSize: 14,
-                color: "black",
-                textTransform: "uppercase",
-                fontWeight: "bold",
-              }}
-            >
-              {item.puissance.substring(0, 15).concat("...")}
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "200",
-                color: "black",
-                textTransform: "capitalize",
-              }}
-            >
-              Usage
-            </Text>
-            <Text
-              style={{
-                marginLeft: 10,
-                fontSize: 18,
-                color: "black",
-                textTransform: "uppercase",
-                fontWeight: "bold",
-              }}
-            >
-              {item.utilisation}
-            </Text>
-          </View>
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            marginTop: 15,
-            alignContent: "center",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            marginHorizontal: 0,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: "200",
-              color: "black",
-              textTransform: "capitalize",
-            }}
-          >
-            Montant
-          </Text>
-          <Text
-            style={{
-              marginLeft: 15,
-              fontSize: 18,
-              color: "black",
-              textTransform: "uppercase",
-              fontWeight: "bold",
-            }}
-          >
-            {item.montant} FCFA
-          </Text>
-        </View>
-      </View>
-      {isVisible ? (
-        <BlurView
-          intensity={50}
-          tint="dark"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            justifyContent: "center",
-            alignItems: "center",
-            height: 120,
-            maxWidth: 450,
-            minWidth: 360,
-            borderRadius: 15,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => handlePress("Modify", item)}
-              style={styles.btnBlur}
-            >
-              <FontAwesome name="edit" size={30} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => handleDelete(item.id_puissance)}
-              style={styles.btnBlur}
-            >
-              <MaterialCommunityIcons name="delete" size={30} color="white" />
-            </TouchableOpacity>
-          </View>
-        </BlurView>
-      ) : null}
-    </TouchableOpacity>
-  );
-};
 
 const Index = ({ navigation }) => {
   const { data, error, isLoading } = usePuissances();
@@ -258,8 +98,6 @@ const Index = ({ navigation }) => {
     setCurrentLoader(loader);
     setOperatingItem(item);
   };
-  Keyboard.dismiss();
-
   const [currentLoader, setCurrentLoader] = useState(null);
 
   if (!currentLoader) {
@@ -269,10 +107,7 @@ const Index = ({ navigation }) => {
           animation="fadeIn"
           delay={500}
           duration={300}
-          stickyHeaderHiddenOnScroll={true}
-          nestedScrollEnabled
-          stickyHeaderIndices={[0]}
-          contentContainerStyle={styles.contain}
+          style={styles.contain}
         >
           <View
             style={{
@@ -321,8 +156,6 @@ const Index = ({ navigation }) => {
               justifyContent: "flex-end",
               padding: 2,
               margin: 2,
-              // position: "relative",
-              // marginHorizontal: 240,
 
               borderRadius: 10,
             }}
@@ -334,17 +167,6 @@ const Index = ({ navigation }) => {
               <AntDesign name="addfolder" size={24} color="white" />
               <Text style={styles.touchTxt}>Ajouter</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              onPress={() => handlePress("Modify")}
-              style={styles.touch}
-            >
-              <MaterialCommunityIcons
-                name="file-document-edit-outline"
-                size={24}
-                color="white"
-              />
-              <Text style={styles.touchTxt}>Modifier</Text>
-            </TouchableOpacity> */}
           </View>
           {isLoading ? (
             <View
@@ -359,10 +181,7 @@ const Index = ({ navigation }) => {
           ) : (
             <FlatList
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: "center",
-                paddingBottom: 50,
-              }}
+              contentContainerStyle={{}}
               data={puissanceList}
               renderItem={({ item }) => (
                 <Puissance
@@ -395,10 +214,10 @@ export default Index;
 
 const styles = StyleSheet.create({
   contain: {
-    flex: 1,
+    // flexGrow: 1,
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "red",
+    height: height - 50,
   },
   touch: {
     height: 50,
@@ -437,31 +256,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  vignette: {
-    maxHeight: 350,
-    minHeight: 200,
-    width: width - 20,
-    backgroundColor: "white",
-    marginVertical: 5,
-    padding: 5,
-    elevation: 10,
-  },
+
   section: {
     flex: 1,
   },
   card: {
-    flex: 1,
     margin: 5,
-    height: 150,
-    maxWidth: 450,
-    minWidth: 360,
-    elevation: 5,
+    height: 130,
+    maxWidth: 350,
+    minWidth: 450,
+    // elevation: 5,
     borderRadius: 15,
     alignSelf: "center",
     marginVertical: 10,
     flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
+    // alignItems: "center",
+    paddingHorizontal: 10,
+    // marginBottom: 10,
   },
   btnBlur: {
     height: 55,

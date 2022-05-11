@@ -8,8 +8,9 @@ import {
 import React from "react";
 import { useVignette } from "../../services/query";
 import { useAuthState } from "../../global";
+import Vignette from "../../components/shared/Vignette";
 
-const Manage = ({navigation}) => {
+const Manage = ({ navigation }) => {
   // const { status, data, error, isFetching, isFetched} = useVignettes();
   const { user } = useAuthState();
   const { status, data, error, isFetching, isFetched } = useVignette(
