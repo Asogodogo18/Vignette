@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import apiClient from "../services/http-common";
-<<<<<<< HEAD
 import axios from "axios";
 //auth User
 export async function authUser(data) {
@@ -10,10 +9,6 @@ export async function authUser(data) {
     JSON.stringify({ login: username, pass: password })
   );
 }
-=======
-var FormData = require('form-data');
-
->>>>>>> 98846c109d0dfa3427413bdced8c2376a05671fb
 
 //all vignettes
 export function useVignettes() {

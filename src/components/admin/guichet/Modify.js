@@ -10,6 +10,8 @@ import {
   SafeAreaView,
   TextInput,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
@@ -19,35 +21,37 @@ import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 const { width, height } = Dimensions.get("screen");
 
-const Modify = ({item, setCurrentLoader, currentLoader }) => {
+const Modify = ({ item, setCurrentLoader, currentLoader }) => {
   const [numero, setNumero] = useState("" || item.num_guichet);
 
-  const handleModify=()=> {
-    updateGuichet({num:numero,id_guichet:item.id_guichet})
-    .then((res) => {
-      if (res.data == "true") {
-        Toast.show({
-          type: "success",
-          text1: "Vos modifications ont ete enregistre!",
-        });
-        setCurrentLoader(null);
-      } else {
+  const handleModify = () => {
+    updateGuichet({ num: numero, id_guichet: item.id_guichet })
+      .then((res) => {
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Vos modifications ont ete enregistre!",
+          });
+          setCurrentLoader(null);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
         Toast.show({
           type: "error",
-          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
         });
-      }
-    })
-    .catch((e) => {
-      Toast.show({
-        type: "error",
-        text1: "Une erreur est survenue, Veuillez ressayer!",
-        text2: e.toString(),
-      })
-    });
-  }
+      });
+  };
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "position"}
+    >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -61,7 +65,7 @@ const Modify = ({item, setCurrentLoader, currentLoader }) => {
               paddingHorizontal: 15,
             }}
           >
-            <TouchableOpacity onPress={() =>setCurrentLoader(null)}>
+            <TouchableOpacity onPress={() => setCurrentLoader(null)}>
               <Ionicons name="ios-arrow-undo" size={24} color="white" />
             </TouchableOpacity>
             <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
@@ -104,7 +108,7 @@ const Modify = ({item, setCurrentLoader, currentLoader }) => {
                     <Text style={styles.btnLabel}>Annuler</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                  onPress={handleModify}
+                    onPress={handleModify}
                     style={[styles.button, { backgroundColor: "green" }]}
                   >
                     <Text style={styles.btnLabel}>Modifier</Text>
@@ -115,7 +119,7 @@ const Modify = ({item, setCurrentLoader, currentLoader }) => {
           </View>
         </ScrollView>
       </Animatable.View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

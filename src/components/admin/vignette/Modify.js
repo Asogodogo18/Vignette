@@ -8,6 +8,8 @@ import {
   ImageBackground,
   ActivityIndicator,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -75,90 +77,94 @@ const Modify = ({ handlePress, item }) => {
       });
   };
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <ImageBackground
-        source={require("../../../../assets/icon/bg-buy.png")}
-        resizeMode="cover"
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
-        <Vignette
-          modify={true}
-          item={{
-            nom: name,
-            prenom: surname,
-            marque,
-            type,
-            num_chassis: noChassi,
-            montant: item.montant,
-            utilisation: item.utilisation,
-          }}
-        />
-        <BlurView intensity={20} style={styles.inputBox}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setName}
-            editable={false}
-            value={name}
-            placeholder="Nom"
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView contentContainerStyle={styles.container}>
+        <ImageBackground
+          source={require("../../../../assets/icon/bg-buy.png")}
+          resizeMode="cover"
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Vignette
+            modify={true}
+            item={{
+              nom: name,
+              prenom: surname,
+              marque,
+              type,
+              num_chassis: noChassi,
+              montant: item.montant,
+              utilisation: item.utilisation,
+            }}
           />
-          <TextInput
-            style={styles.input}
-            onChangeText={setSurname}
-            editable={false}
-            value={surname}
-            placeholder="Prenom"
-          />
+          <BlurView intensity={20} style={styles.inputBox}>
+            <TextInput
+              style={styles.input}
+              onChangeText={setName}
+              editable={false}
+              value={name}
+              placeholder="Nom"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={setSurname}
+              editable={false}
+              value={surname}
+              placeholder="Prenom"
+            />
 
-          <Picker
-            style={styles.input}
-            selectedValue={marque}
-            mode="dropdown"
-            onValueChange={(itemValue, itemIndex) => setMarque(itemValue)}
-            placeholder="Marque"
-          >
-            <Picker.Item label="KTM" value="ktm" />
-            <Picker.Item label="Honda" value="honda" />
-            <Picker.Item label="Yamaha" value="yamaha" />
-          </Picker>
-          <Picker
-            style={styles.input}
-            selectedValue={type}
-            mode="dropdown"
-            onValueChange={(itemValue, itemIndex) => setType(itemValue)}
-            placeholder="type"
-          >
-            <Picker.Item label="2 Roues" value="2roues" />
-            <Picker.Item label="3 Roues" value="3roues" />
-          </Picker>
-          <TextInput
-            style={styles.input}
-            onChangeText={setNoChassi}
-            editable={editable}
-            value={noChassi}
-            placeholder="Numero de Chassis "
-          />
-          <View style={styles.buttonGroup}>
-            <TouchableOpacity
-              onPress={() => handlePress(null)}
-              style={[styles.button, { backgroundColor: "black" }]}
+            <Picker
+              style={styles.input}
+              selectedValue={marque}
+              mode="dropdown"
+              onValueChange={(itemValue, itemIndex) => setMarque(itemValue)}
+              placeholder="Marque"
             >
-              <Text style={styles.btnLabel}>Annuler</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              disabled={isVisible}
-              onPress={handleBuy}
-              style={[styles.button, { backgroundColor: "green" }]}
+              <Picker.Item label="KTM" value="ktm" />
+              <Picker.Item label="Honda" value="honda" />
+              <Picker.Item label="Yamaha" value="yamaha" />
+            </Picker>
+            <Picker
+              style={styles.input}
+              selectedValue={type}
+              mode="dropdown"
+              onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+              placeholder="type"
             >
-              {!editable ? (
-                <ActivityIndicator size="large" />
-              ) : (
-                <Text style={styles.btnLabel}>Modifier</Text>
-              )}
-            </TouchableOpacity>
-          </View>
-        </BlurView>
-      </ImageBackground>
-    </ScrollView>
+              <Picker.Item label="2 Roues" value="2roues" />
+              <Picker.Item label="3 Roues" value="3roues" />
+            </Picker>
+            <TextInput
+              style={styles.input}
+              onChangeText={setNoChassi}
+              editable={editable}
+              value={noChassi}
+              placeholder="Numero de Chassis "
+            />
+            <View style={styles.buttonGroup}>
+              <TouchableOpacity
+                onPress={() => handlePress(null)}
+                style={[styles.button, { backgroundColor: "black" }]}
+              >
+                <Text style={styles.btnLabel}>Annuler</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                disabled={isVisible}
+                onPress={handleBuy}
+                style={[styles.button, { backgroundColor: "green" }]}
+              >
+                {!editable ? (
+                  <ActivityIndicator size="large" />
+                ) : (
+                  <Text style={styles.btnLabel}>Modifier</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </BlurView>
+        </ImageBackground>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

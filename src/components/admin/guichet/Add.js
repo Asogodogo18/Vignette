@@ -9,6 +9,8 @@ import {
   SafeAreaView,
   TextInput,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -22,31 +24,33 @@ const Add = ({ setCurrentLoader, currentLoader }) => {
   const [numero, setNumero] = useState("");
   const handleAdd = () => {
     addGuichet(numero)
-    .then((res) => {
-      if (res.data == "true") {
-        Toast.show({
-          type: "success",
-          text1: "Guichet cree avec success!",
-        });
-        setCurrentLoader(null);
-      } else {
+      .then((res) => {
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Guichet cree avec success!",
+          });
+          setCurrentLoader(null);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
         Toast.show({
           type: "error",
-          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
         });
-      }
-    })
-    .catch((e) => {
-      Toast.show({
-        type: "error",
-        text1: "Une erreur est survenue, Veuillez ressayer!",
-        text2: e.toString(),
-      })
-    });
+      });
   };
 
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "position"}
+    >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -114,7 +118,7 @@ const Add = ({ setCurrentLoader, currentLoader }) => {
           </View>
         </ScrollView>
       </Animatable.View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -10,7 +10,7 @@ import {
   ImageBackground,
   SafeAreaView,
   TextInput,
-  Keyboard,
+  KeyboardAvoidingView,
   ActivityIndicator,
   Platform,
 } from "react-native";
@@ -60,7 +60,9 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
       });
   };
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -194,7 +196,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
           </View>
         </ScrollView>
       </Animatable.View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

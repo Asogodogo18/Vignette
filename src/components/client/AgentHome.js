@@ -60,8 +60,8 @@ const AgentHome = ({ navigation }) => {
       contentContainerStyle={{
         flexGrow: 1,
         paddingVertical: 0,
-        // marginBottom: 140,
-        // height: height - 50,
+        marginBottom: 140,
+        height: height - 50,
       }}
     >
       <View style={{}}>

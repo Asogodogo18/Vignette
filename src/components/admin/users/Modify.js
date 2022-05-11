@@ -10,7 +10,7 @@ import {
   ImageBackground,
   SafeAreaView,
   TextInput,
-  Keyboard,
+  KeyboardAvoidingView,
   ActivityIndicator,
   Platform,
 } from "react-native";
@@ -29,10 +29,9 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
   const [name, setName] = useState("" || item.nom);
   const [prenom, setPrenom] = useState("" || item.prenom);
   const [phone, setPhone] = useState("" || item.telephone);
-  const [role, setRole] = useState("Superviseur" || item.role);
+  const [role, setRole] = useState("" || item.role);
   const [adresse, setAdresse] = useState("" || item.adresse);
   const [login, setLogin] = useState("" || item.login);
-  const [password, setPassword] = useState("" || item.password);
   const handleModify = () => {
     updateUser({
       id: item.id_user,
@@ -67,7 +66,9 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
       );
   };
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -141,13 +142,6 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
                   value={login}
                   placeholder="User name"
                 />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setPassword}
-                  value={password}
-                  placeholder="Mot de Pass"
-                  secureTextEntry
-                />
 
                 <View
                   style={{
@@ -196,7 +190,7 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
           </View>
         </ScrollView>
       </Animatable.View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

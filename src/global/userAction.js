@@ -1,13 +1,12 @@
 // Context/actions.js
 import axios from "axios";
 import Toast from "react-native-toast-message";
-<<<<<<< HEAD
+
 import { authUser } from "../services/query";
-=======
+
 // var FormData = require('form-data');
 
 const ROOT_URL = "http://192.168.1.44/";
->>>>>>> 98846c109d0dfa3427413bdced8c2376a05671fb
 
 export async function loginUser(dispatch, loginPayload) {
   const { role } = loginPayload;

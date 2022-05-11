@@ -8,14 +8,13 @@ import {
   ScrollView,
   SafeAreaView,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { addPuissance } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
-import {
-  Ionicons,
-  Entypo,
-} from "@expo/vector-icons";
+import { Ionicons, Entypo } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { Picker } from "@react-native-picker/picker";
 
@@ -30,31 +29,33 @@ const Add = ({ handlePress, setCurrentLoader }) => {
 
   const handleAdd = () => {
     addPuissance({ puissance, montant, utilisation: selectedType })
-    .then((res) => {
-      if (res.data == "true") {
-        Toast.show({
-          type: "success",
-          text1: "Ajoute avec success!",
-        });
-        setCurrentLoader(null);
-      } else {
+      .then((res) => {
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Ajoute avec success!",
+          });
+          setCurrentLoader(null);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
         Toast.show({
           type: "error",
-          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
         });
-      }
-    })
-    .catch((e) => {
-      Toast.show({
-        type: "error",
-        text1: "Une erreur est survenue, Veuillez ressayer!",
-        text2: e.toString(),
-      })
-    });
+      });
   };
 
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "position"}
+    >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -142,7 +143,7 @@ const Add = ({ handlePress, setCurrentLoader }) => {
           </View>
         </ScrollView>
       </Animatable.View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

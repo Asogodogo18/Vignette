@@ -10,7 +10,8 @@ import {
   ScrollView,
   SafeAreaView,
   TextInput,
-  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
@@ -67,7 +68,9 @@ const Modify = ({ handlePress, Item }) => {
   };
 
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "position"}
+    >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -164,7 +167,7 @@ const Modify = ({ handlePress, Item }) => {
           </View>
         </ScrollView>
       </Animatable.View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
