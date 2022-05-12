@@ -55,11 +55,13 @@ const Modify = ({ handlePress, item }) => {
       id: item.id_engin,
     })
       .then((res) => {
-        if (res.data == "true") {
+        console.log("debut du requete", res);
+        if (res.data === "true") {
           Toast.show({
             type: "success",
             text1: "Vos modifications ont ete enregistrer!",
           });
+
           handlePress(null);
         } else {
           Toast.show({
@@ -69,6 +71,7 @@ const Modify = ({ handlePress, item }) => {
         }
       })
       .catch((e) => {
+        console.log("error", e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",

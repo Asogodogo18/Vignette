@@ -25,11 +25,8 @@ import { Divider } from "react-native-paper";
 const { width, height } = Dimensions.get("screen");
 
 const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
-  const {
-    data: userData,
-    error: userError,
-    isFetching: isFetchingUsers,
-  } = useUsers();
+  const [userData, setUserData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [agentToAffect, setagentToAffect] = useState([]);
   const [agentToUnaffect, setagentToUnaffect] = useState([]);
@@ -37,25 +34,33 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
   console.log("affected:", affectedAgent);
 
   useEffect(() => {
-    getAgentbyGuichet(item.id_guichet)
+    setLoading(true);
+    console.log("test");
+    useUsers()
       .then((res) => {
-        console.log(res);
-        if (res.data != "False") {
-          // res.data.map((item) => {
-          //   setaffectedAgent([...affectedAgent, item.id_user]);
-          // });
-        }
+        console.log(res.data);
+        setUserData(res.data);
       })
-      .catch((e) => {
-        console.log("error affectation:", e);
-        Toast.show({
-          type: "error",
-          text1: "Une erreur est survenue, Veuillez ressayer!",
-          text2: e.toString(),
-        });
-      });
+      .catch((e) => console.log(e))
+      .finally(() => setLoading(false));
 
-    return () => {};
+    // getAgentbyGuichet(item.id_guichet)
+    //   .then((res) => {
+    //     console.log(res);
+    //     if (res.data != "False") {
+    //       // res.data.map((item) => {
+    //       //   setaffectedAgent([...affectedAgent, item.id_user]);
+    //       // });
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.log("error affectation:", e);
+    //     Toast.show({
+    //       type: "error",
+    //       text1: "Une erreur est survenue, Veuillez ressayer!",
+    //       text2: e.toString(),
+    //     });
+    //   });
   }, []);
 
   const handleUnaffect = () => {
@@ -169,7 +174,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
               Action
             </Text>
           </View>
-          {isFetchingUsers ? (
+          {loading ? (
             <View
               style={{
                 flex: 1,

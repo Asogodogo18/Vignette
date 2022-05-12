@@ -65,11 +65,8 @@ const Data = [
 ];
 
 const Index = ({ navigation }) => {
-  const {
-    data: userData,
-    error: userError,
-    isFetching: isFetchingUsers,
-  } = useUsers();
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [currentLoader, setCurrentLoader] = useState(null);
 
   const [IsActive, setIsActive] = useState(0);
@@ -79,6 +76,18 @@ const Index = ({ navigation }) => {
 
   const [operationItem, setOperationItem] = useState(null);
   const [filter, setFilter] = useState("Tout");
+
+  useEffect(() => {
+    setLoading(true);
+    console.log("test agent");
+    useUsers()
+      .then((res) => {
+        console.log(res);
+        setUserData(res.data);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleMultipleDelete = () => {
     setIsDelete(!isDelete);
@@ -246,7 +255,7 @@ const Index = ({ navigation }) => {
             </ScrollView>
           </View>
 
-          {isFetchingUsers ? (
+          {loading ? (
             <View
               style={{
                 flex: 1,

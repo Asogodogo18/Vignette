@@ -27,12 +27,24 @@ import { backgroundColor } from "react-native/Libraries/Components/View/ReactNat
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
-  const { status, data, error, isFetching } = useGuichets();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [currentLoader, setCurrentLoader] = useState(null);
   const [elementsToDelete, setElementsToDelete] = useState([]);
   const [isDelete, setIsDelete] = useState(null);
   const [operationItem, setOperationItem] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    console.log("test");
+    useGuichets()
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => setLoading(false));
+  });
 
   const handleMultipleDelete = () => {
     setIsDelete(!isDelete);
@@ -153,7 +165,7 @@ const Index = ({ navigation }) => {
           </View>
         </Animatable.View>
 
-        {isFetching && (
+        {loading && (
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >

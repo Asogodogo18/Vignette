@@ -70,7 +70,7 @@ const Footer = () => {
         borderTopLeftRadius: 70,
         borderTopRightRadius: 70,
         elevation: 5,
-        // marginBottom: Platform.OS === "ios" ? 5 : 0,
+        // marginBottom: (Platform.OS === 'ios') ? 5 : 0,
       }}
     >
       <Text

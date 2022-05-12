@@ -13,7 +13,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Buy from "../..//client/Buy";
 import Modify from "../../../components/admin/vignette/Modify";
@@ -26,9 +26,24 @@ import Fees from "../../../components/shared/Fees";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
-  const { status, data, error, isFetching, isFetched } = useVignettes();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    useVignettes()
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => setLoading(false));
+
+    return () => {
+      setData(null);
+    };
+  }, []);
 
   const handleDelete = (id) => {
     deleteVignette(id)
@@ -132,7 +147,7 @@ const Index = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={{ margin: 5, padding: 5 }}>
-              {isFetching ? (
+              {loading ? (
                 <View
                   style={{
                     flex: 1,

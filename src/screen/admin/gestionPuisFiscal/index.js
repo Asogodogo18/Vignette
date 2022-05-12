@@ -40,17 +40,25 @@ if (
 }
 
 const Index = ({ navigation }) => {
-  const { data, error, isLoading } = usePuissances();
+  const [isLoading, setIsLoading] = useState(false);
   const [puissanceList, setpuissanceList] = useState([]);
   const [operatingItem, setOperatingItem] = useState(null);
 
   useEffect(() => {
-    setpuissanceList(data);
+    setIsLoading(true);
+    console.log("test");
+    usePuissances()
+      .then((res) => {
+        console.log(res);
+        setpuissanceList(res.data);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => setIsLoading(false));
 
-    return () => {
-      setpuissanceList([]);
-    };
-  }, [isLoading]);
+    // return () => {
+    //   setpuissanceList([]);
+    // };
+  }, []);
 
   const layoutAnimConfig = {
     duration: 300,
