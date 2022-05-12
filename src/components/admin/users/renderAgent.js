@@ -19,7 +19,7 @@ import * as Animatable from "react-native-animatable";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import Checkbox from "expo-checkbox";
-import GetRandomColor from "../../../Utils/getColor";
+import GetRandomColor from "../../../utils/getColor";
 const { width, height } = Dimensions.get("screen");
 
 const RenderAgent = ({

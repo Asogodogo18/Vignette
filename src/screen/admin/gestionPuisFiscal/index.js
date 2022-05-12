@@ -23,7 +23,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
-import GetRandomColor from "../../../Utils/getColor";
+import GetRandomColor from "../../../utils/getColor";
 
 import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
