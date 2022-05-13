@@ -11,7 +11,6 @@ import {
   TextInput,
   ActivityIndicator,
   KeyboardAvoidingView,
-  
 } from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
@@ -19,15 +18,17 @@ import Toast from "react-native-toast-message";
 import { updateGuichet } from "../../../services/query";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
+import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
 const Modify = ({ item, setCurrentLoader, currentLoader }) => {
   const [numero, setNumero] = useState("" || item.num_guichet);
-
+  const queryClient = useQueryClient();
   const handleModify = () => {
     updateGuichet({ num: numero, id_guichet: item.id_guichet })
       .then((res) => {
         if (res.data == "true") {
+          queryClient.invalidateQueries("guichets");
           Toast.show({
             type: "success",
             text1: "Vos modifications ont ete enregistre!",
@@ -49,9 +50,7 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
       });
   };
   return (
-    <KeyboardAvoidingView
-     
-    >
+    <KeyboardAvoidingView>
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View

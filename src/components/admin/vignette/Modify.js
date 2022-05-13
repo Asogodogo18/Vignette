@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   Dimensions,
   KeyboardAvoidingView,
-  
 } from "react-native";
 import React, { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -21,10 +20,8 @@ import { useAuthState } from "../../../global";
 import Vignette from "../../shared/Vignette";
 import { updateVignette } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
+import { useQueryClient } from "react-query";
 
-const fortmatResponse = (res) => {
-  return JSON.stringify(res, null, 2);
-};
 
 const { width, height } = Dimensions.get("screen");
 
@@ -32,6 +29,7 @@ const Modify = ({ handlePress, item }) => {
   const { user, isSignedIn } = useAuthState();
   const condition = isSignedIn && user.role === "Client";
   console.log("vignette:", item);
+  const queryClient = useQueryClient();
 
   const [name, setName] = useState(condition ? user.nom : item.nom);
   const [surname, setSurname] = useState(condition ? user.prenom : item.prenom);
@@ -53,20 +51,19 @@ const Modify = ({ handlePress, item }) => {
       noChassi,
       puissance: item.id_puissance,
       id: item.id_engin,
-<<<<<<< HEAD
-    }
-
-   
-=======
-    })
+    };
+    updateVignette(data)
       .then((res) => {
-        if (res.data == "true") {
+        console.log("debut du requete", res);
+        if (res.data === "true") {
           Toast.show({
             type: "success",
             text1: "Vos modifications ont ete enregistrer!",
           });
+          queryClient.invalidateQueries('vignettes'),
           handlePress(null);
         } else {
+          setEditable(true)
           Toast.show({
             type: "error",
             text1: "Une erreur est survenue, \nVeuillez ressayer!",
@@ -74,18 +71,19 @@ const Modify = ({ handlePress, item }) => {
         }
       })
       .catch((e) => {
+        console.log("error", e);
+        
+        setEditable(true)
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",
           text2: e.toString(),
         });
-      });
->>>>>>> parent of 6e9c0d3 (request to JSON)
+      })
   };
+
   return (
-    <KeyboardAvoidingView
-      
-    >
+    <KeyboardAvoidingView>
       <ScrollView contentContainerStyle={styles.container}>
         <ImageBackground
           source={require("../../../../assets/icon/bg-buy.png")}

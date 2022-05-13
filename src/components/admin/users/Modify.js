@@ -12,7 +12,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ActivityIndicator,
-  
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
@@ -22,9 +21,11 @@ import { updateUser, useRoles } from "../../../services/query";
 import Toast from "react-native-toast-message";
 
 import { Picker } from "@react-native-picker/picker";
+import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
 const Modify = ({ item, setCurrentLoader, currentLoader }) => {
+  const queryClient = useQueryClient();
   const { data, isLoading, error } = useRoles();
   const [name, setName] = useState("" || item.nom);
   const [prenom, setPrenom] = useState("" || item.prenom);
@@ -45,6 +46,7 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
       .then((res) => {
         console.log("change password:", res);
         if (res.data == "true") {
+          queryClient.invalidateQueries("users");
           Toast.show({
             type: "success",
             text1: "Vos Modifications ont ete enregistre!",
@@ -66,9 +68,7 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
       );
   };
   return (
-    <KeyboardAvoidingView
-      
-    >
+    <KeyboardAvoidingView>
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View

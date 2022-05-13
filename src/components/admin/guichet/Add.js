@@ -17,9 +17,11 @@ import * as Animatable from "react-native-animatable";
 import { addGuichet } from "../../../services/query";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
+import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
 const Add = ({ setCurrentLoader, currentLoader }) => {
+  const queryClient = useQueryClient()
   const [numero, setNumero] = useState("");
   const handleAdd = () => {
     addGuichet(numero)
@@ -29,6 +31,7 @@ const Add = ({ setCurrentLoader, currentLoader }) => {
             type: "success",
             text1: "Guichet cree avec success!",
           });
+          queryClient.invalidateQueries('guichets')
           setCurrentLoader(null);
         } else {
           Toast.show({

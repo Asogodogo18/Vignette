@@ -24,6 +24,7 @@ import { Chip } from "react-native-paper";
 import RenderAgent from "../../../components/admin/users/renderAgent";
 import Ajouter from "../../../components/admin/users/Ajouter";
 import Modify from "../../../components/admin/users/Modify";
+import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 const Data = [
   {
@@ -71,7 +72,7 @@ const Index = ({ navigation }) => {
     isFetching: isFetchingUsers,
   } = useUsers();
   const [currentLoader, setCurrentLoader] = useState(null);
-
+  const queryClient = useQueryClient()
   const [IsActive, setIsActive] = useState(0);
   const [isDelete, setIsDelete] = useState(false);
 
@@ -94,6 +95,7 @@ const Index = ({ navigation }) => {
       .then((res) => {
         console.log(res);
         if (res.data == "true") {
+          queryClient.invalidateQueries('users'),
           Toast.show({
             type: "success",
             text1: "Supprime avec succes!",

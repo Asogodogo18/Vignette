@@ -18,15 +18,13 @@ import React, { useState } from "react";
 import { updatePuissance } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
 import {
-  FontAwesome,
   Ionicons,
   Entypo,
-  AntDesign,
-  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
+import { useQueryClient } from "react-query";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -36,6 +34,7 @@ const Modify = ({ handlePress, Item }) => {
   const [selectedType, setSelectedType] = useState(
     "personnel" || Item.utilisation
   );
+  const queryClient = useQueryClient()
 
   const handleModify = () => {
     updatePuissance({
@@ -46,6 +45,7 @@ const Modify = ({ handlePress, Item }) => {
     })
       .then((res) => {
         if (res.data == "true") {
+          queryClient.invalidateQueries('puissances')
           Toast.show({
             type: "success",
             text1: "Vos modifications ont ete enregistre!",
@@ -69,7 +69,6 @@ const Modify = ({ handlePress, Item }) => {
 
   return (
     <KeyboardAvoidingView
-     
     >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

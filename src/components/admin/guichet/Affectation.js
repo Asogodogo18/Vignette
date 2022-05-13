@@ -59,7 +59,6 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
   }, []);
 
   const handleUnaffect = () => {
-    if (agentToUnaffect.length > 0) {
       agentToUnaffect.forEach((el) => {
         unaffectAgent({ id: item.id_guichet, user_id: el })
           .then((res) => {
@@ -84,10 +83,8 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
             });
           });
       });
-    }
   };
   const handleAffect = () => {
-    if (agentToAffect.length > 0) {
       agentToAffect.forEach((el) => {
         affectAgent({ id: item.id_guichet, user_id: el })
           .then((res) => {
@@ -112,11 +109,14 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
             });
           });
       });
-    }
-  };
+    };
   const handlePress = () => {
-    handleAffect();
+    if (agentToAffect.length > 0) {
+      handleAffect();
+    }
+    if (agentToUnaffect.length > 0) {
     handleUnaffect();
+    }
   };
   return (
     <SafeAreaView>

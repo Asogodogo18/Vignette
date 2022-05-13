@@ -15,45 +15,20 @@ import Tarif from "../../components/shared/Tarif";
 import { Picker } from "@react-native-picker/picker";
 import { BlurView } from "expo-blur";
 import { AntDesign } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
+import { useQueryClient } from "react-query";
 import { buyVignetteMutation } from "../../services/query";
 import * as Animatable from "react-native-animatable";
 
-const fortmatResponse = (res) => {
-  return JSON.stringify(res, null, 2);
-};
-
 const { width, height } = Dimensions.get("screen");
 
-const Toast = ({ setIsVisible, children }) => {
-  setTimeout(() => setIsVisible(false), 5000);
-  return (
-    <Animatable.View
-      duration={500}
-      animation="fadeInUp"
-      style={{
-        width: "80%",
-        height: 250,
-        backgroundColor: "white",
-        borderRadius: 10,
-        elevation: 10,
-        zIndex: 20,
-        position: "absolute",
-        top: height / 3,
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
-    >
-      {children}
-    </Animatable.View>
-  );
-};
-
 const Buy = ({ navigation, route }) => {
+  const queryClient = useQueryClient();
   const { user, isSignedIn } = useAuthState();
-  const condition =isSignedIn && user.role==="Client" 
+  const condition = isSignedIn && user.role === "Client";
   const { puissance } = route.params;
 
-  const [name, setName] = useState(condition? user.nom : "");
+  const [name, setName] = useState(condition ? user.nom : "");
   const [surname, setSurname] = useState(condition ? user.prenom : "");
   const [phone, setPhone] = useState(condition ? user.telephone : "");
   const [marque, setMarque] = useState("ktm");
@@ -66,7 +41,7 @@ const Buy = ({ navigation, route }) => {
 
   const handleBuy = () => {
     setEditable(false);
-    const data={
+    const data = {
       name,
       surname,
       phone,
@@ -75,8 +50,33 @@ const Buy = ({ navigation, route }) => {
       noChassi,
       puissance: puissance.id_puissance,
       id: user.id_user,
-    }
-    
+    };
+    buyVignetteMutation(data).then((res) => {
+      console.log("debut du requete", res);
+      if (res.data === "true") {
+        Toast.show({
+          type: "success",
+          text1: "Vos modifications ont ete enregistrer!",
+        });
+        queryClient.invalidateQueries('vignettes'),
+        navigation.goBack()
+      } else {
+        setEditable(true)
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+        });
+      }
+    })
+    .catch((e) => {
+      console.log("error", e);
+      setEditable(true)
+      Toast.show({
+        type: "error",
+        text1: "Une erreur est survenue, Veuillez ressayer!",
+        text2: e.toString(),
+      });
+    })
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -85,7 +85,7 @@ const Buy = ({ navigation, route }) => {
         resizeMode="cover"
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
-        <Tarif item={puissance} navigation={navigation}  />
+        <Tarif item={puissance} navigation={navigation} />
         <BlurView intensity={20} style={styles.inputBox}>
           <TextInput
             style={styles.input}
@@ -158,26 +158,6 @@ const Buy = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         </BlurView>
-
-        {postResult && isVisible && (
-          <Toast setIsVisible={setIsVisible}>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-              {isError ? (
-                <>
-                <AntDesign name="exclamationcircleo" size={800} color="red" />
-                <Text> Une Erreur est Survenue. Veuillez Reessayer ulterieurement</Text>
-                </>
-              ) : (
-                <>
-                  <AntDesign name="checkcircle" size={60} color="green" />
-                  <Text>SUCCES</Text>
-                </>
-              )}
-
-              <Text>{postResult}</Text>
-            </ScrollView>
-          </Toast>
-        )}
       </ImageBackground>
     </ScrollView>
   );

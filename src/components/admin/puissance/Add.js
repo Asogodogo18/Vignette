@@ -6,7 +6,6 @@ import {
   Dimensions,
   ImageBackground,
   ScrollView,
-  SafeAreaView,
   TextInput,
   KeyboardAvoidingView,
   
@@ -21,16 +20,19 @@ import { Picker } from "@react-native-picker/picker";
 const { width, height } = Dimensions.get("screen");
 
 import { BlurView } from "expo-blur";
+import { useQueryClient } from "react-query";
 
 const Add = ({ handlePress, setCurrentLoader }) => {
   const [puissance, setPuissance] = useState("");
   const [montant, setMontant] = useState("");
   const [selectedType, setSelectedType] = useState("personnel");
+  const queryClient = useQueryClient()
 
   const handleAdd = () => {
     addPuissance({ puissance, montant, utilisation: selectedType })
       .then((res) => {
         if (res.data == "true") {
+          queryClient.invalidateQueries('puissances')
           Toast.show({
             type: "success",
             text1: "Ajoute avec success!",

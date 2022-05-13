@@ -23,11 +23,12 @@ import Guichet from "../../../components/shared/Guichet";
 import { useGuichets, deleteGuichet } from "../../../services/query";
 import Modify from "../../../components/admin/guichet/Modify";
 import Affectation from "../../../components/admin/guichet/Affectation";
+import { QueryClient, useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
   const { status, data, error, isFetching } = useGuichets();
-
+  const queryClient = useQueryClient();
   const [currentLoader, setCurrentLoader] = useState(null);
   const [elementsToDelete, setElementsToDelete] = useState([]);
   const [isDelete, setIsDelete] = useState(null);
@@ -45,6 +46,7 @@ const Index = ({ navigation }) => {
     deleteGuichet(id)
       .then((res) => {
         if (res.data == "true") {
+          queryClient.invalidateQueries('guichets'),
           Toast.show({
             type: "success",
             text1: "Supprime avec succes!",

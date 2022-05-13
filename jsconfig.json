@@ -7,7 +7,7 @@
       "@assets/*": ["assets/"],
       "@data/*": ["src/data/"],
       "@global/*": ["src/global/"],
-      "@services": ["src/services/"],
+      "@services/*": ["src/services/"],
       "@utils/*": ["src/utils/"],
       "@screen/*": ["src/screen/"]
     }

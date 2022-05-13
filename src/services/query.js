@@ -12,325 +12,219 @@ export async function authUser(data) {
 
 //all vignettes
 export function useVignettes() {
-<<<<<<< HEAD
   return useQuery("vignettes", async () => {
     const { data } = await apiClient.get("vignettes/");
     return data;
   });
-=======
-  return useQuery(
-    "vignettes",
-    async () => {
-      const { data } = await apiClient.get("vignettes/");
-      return data;
-    },
-    {
-      // Refetch the data every second
-      staleTime: 10000,
-    }
-  );
->>>>>>> parent of 6e9c0d3 (request to JSON)
 }
 
 //buy vignette
 export function buyVignetteMutation(data) {
-  let { name, surname, phone, marque, type, noChassi, id, puissance } = data;
-  const formData = new FormData();
-
-  formData.append("nom", name);
-  formData.append("prenom", surname);
-  formData.append("tel", phone);
-  formData.append("marque", marque);
-  formData.append("type", type);
-  formData.append("numChassis", noChassi);
-  // formData.append("id_user", id);
-  formData.append("id_puissance", puissance);
-  formData.append("id_agent", id);
-
-  return apiClient.post("vignettes/add", formData);
+  const { name, surname, phone, marque, type, noChassi, id, puissance } = data;
+  console.log ('info:',data)
+  const sent = {
+    id_agent: id,
+    nom: name,
+    prenom: surname,
+    tel: phone,
+    marque,
+    type,
+    numChassis: noChassi,
+    id_puissance:puissance,
+  };
+  console.log ('sent:',sent)
+  return apiClient.post("vignettes/add", JSON.stringify(sent));
 }
 
 //buy vignette
 export const buyVignetteAgentMutation = (info) => {
-  let { name, surname, phone, marque, type, noChassi, id } = info;
-  const formData = new FormData();
-
-  formData.append("nom", name);
-  formData.append("prenom", surname);
-  formData.append("tel", phone);
-  formData.append("marque", marque);
-  formData.append("type", type);
-  formData.append("numChassis", noChassi);
-  formData.append("id_agent", id);
-
-  return apiClient.post("vignettes/add", formData);
+  const { name, surname, phone, marque, type, noChassi, id } = info;
+  console.log ('info:',info)
+  const sent = {
+    id_agent: id,
+    nom: name,
+    prenom: surname,
+    tel: phone,
+    marque,
+    type,
+    numChassis: noChassi,
+    puissance,
+  };
+  console.log ('sent:',sent)
+  return apiClient.post("vignettes/add", JSON.stringify(sent));
 };
 
 //vignette by user"
-<<<<<<< HEAD
-
-export function useVignette(Id) {
-  return useQuery(["vignette", Id], () => getVignetteById(Id), {
-    enabled: !!Id,
-  });
-}
-
-=======
->>>>>>> parent of 6e9c0d3 (request to JSON)
 const getVignetteById = async (id) => {
-  const formData = new FormData();
-  formData.append("id_user", id);
-  const { data } = await apiClient.post("/vignettes/detail", formData);
+  const { data } = await apiClient.post("/vignettes/detail", { id_user: id });
   return data;
 };
 
-<<<<<<< HEAD
-=======
 export function useVignette(Id) {
   return useQuery(["vignette", Id], () => getVignetteById(Id), {
     enabled: !!Id,
   });
 }
->>>>>>> parent of 6e9c0d3 (request to JSON)
 
 //update vignette
 export function updateVignette(data) {
   let { marque, type, noChassi, id, puissance } = data;
-  const formData = new FormData();
-
-  formData.append("marque", marque);
-  formData.append("type", type);
-  formData.append("num", noChassi);
-  formData.append("puissance", puissance);
-  formData.append("id_engin", id);
-
-  return apiClient.post("vignettes/update", formData);
+  console.log("donne envoyer :", data);
+  const sent = {
+    marque,
+    type,
+    num: noChassi,
+    puissance,
+    id_engin: id,
+  };
+  return apiClient.post("vignettes/update", JSON.stringify(sent));
 }
 
 //delete vignette
 export const deleteVignette = (id) => {
-  const formData = new FormData();
-  formData.append("id_engin", id);
-  return apiClient.post("/vignettes/delete", formData);
+  return apiClient.post("/vignettes/delete", { id_engin: id });
 };
 //update password
-export const updatePassword = (sentForm) => {
-  const { id_user, actuel, newpass, confirmpass } = sentForm;
-  console.log(sentForm);
-  const formData = new FormData();
-
-  formData.append("id_user", id_user);
-  formData.append("actuel", actuel);
-  formData.append("new", newpass);
-  formData.append("confirme", confirmpass);
-  formData.append("pass", actuel);
-  return apiClient.post("/updateUserPass", formData);
+export const updatePassword = (data) => {
+  const { id_user, actuel, newpass, confirmpass } = data;
+  console.log(data);
+  const sent = {
+    id_user,
+    actuel,
+    new: newpass,
+    confirme: confirmpass,
+    pass: actuel,
+  };
+  return apiClient.post("/updateUserPass", JSON.stringify(sent));
 };
 
 //all Roles
 export function useRoles() {
-  return useQuery(
-    "roles",
-    async () => {
-      const { data } = await apiClient.get("/roles");
-      return data;
-    },
-    {
-      // Refetch the data every second
-      refetchInterval: 10000,
-      staleTime: 5000,
-    }
-  );
+  return useQuery("roles", async () => {
+    const { data } = await apiClient.get("/roles");
+    return data;
+  });
 }
 
 //all guichet
 export function useGuichets() {
-<<<<<<< HEAD
   return useQuery("guichets", async () => {
     const { data } = await apiClient.get("/guichets");
     return data;
   });
-=======
-  return useQuery(
-    "posts",
-    async () => {
-      const { data } = await apiClient.get("/guichets");
-      return data;
-    },
-    {
-      // Refetch the data every second
-      refetchInterval: 10000,
-      staleTime: 5000,
-    }
-  );
->>>>>>> parent of 6e9c0d3 (request to JSON)
 }
 
 //add guichet
 export const addGuichet = (num) => {
-  const formData = new FormData();
-  formData.append("num", num);
-  return apiClient.post("/guichets/add", formData);
+  return apiClient.post("/guichets/add", JSON.stringify({ num }));
 };
 
 //update Guichet
 export const updateGuichet = (sentForm) => {
   const { id_guichet, num } = sentForm;
-  const formData = new FormData();
-  formData.append("id_guichet", id_guichet);
-  formData.append("num", num);
-  return apiClient.post("/guichets/update", formData);
+  return apiClient.post("/guichets/update", JSON.stringify(sentForm));
 };
 
 //delete Guichet
 export const deleteGuichet = (id) => {
-  console.log("id:", id);
-  const formData = new FormData();
-
-  formData.append("id_guichet", id);
-  return apiClient.post("/guichets/delete", formData);
+  return apiClient.post("/guichets/delete", JSON.stringify({ id_guichet: id }));
 };
 
 // all puissances
 export function usePuissances() {
-<<<<<<< HEAD
   return useQuery("puissances", async () => {
     const { data } = await apiClient.get("/puissances/");
     return data;
   });
-=======
-  return useQuery(
-    "puissances",
-    async () => {
-      const { data } = await apiClient.get("/puissances/");
-      return data;
-    },
-    {
-      // Refetch the data every second
-      staleTime: 10000,
-    }
-  );
->>>>>>> parent of 6e9c0d3 (request to JSON)
 }
 
 //add Puissance
 export const addPuissance = (sentForm) => {
   const { puissance, montant, utilisation } = sentForm;
-  const formData = new FormData();
-
-  formData.append("puissance", puissance);
-  formData.append("montant", montant);
-  formData.append("utilisation", utilisation);
-  return apiClient.post("/puissances/add", formData);
+  return apiClient.post(
+    "/puissances/add",
+    JSON.stringify({ puissance, montant, utilisation })
+  );
 };
 
 //update puissance
 export const updatePuissance = (sentForm) => {
-  const { puissance, montant, utilisation, puissance_id } = sentForm;
-  const formData = new FormData();
-
-  formData.append("puissance_id", puissance_id);
-  formData.append("puissance", puissance);
-  formData.append("montant", montant);
-  formData.append("utilisation", utilisation);
-  return apiClient.post("/puissances/update", formData);
+  return apiClient.post("/puissances/update", JSON.stringify(sentForm));
 };
 
 //delete Puissance
 export const deletePuissance = (id) => {
-  console.log("id:", id);
-  const formData = new FormData();
-
-  formData.append("puissance_id", id);
-  return apiClient.post("/puissances/delete", formData);
+  return apiClient.post(
+    "/puissances/delete",
+    JSON.stringify({ puissance_id: id })
+  );
 };
 
 //all users
 export function useUsers() {
-<<<<<<< HEAD
   return useQuery("users", async () => {
     const { data } = await apiClient.get("/users/");
     return data;
   });
-=======
-  return useQuery(
-    "users",
-    async () => {
-      const { data } = await apiClient.get("/users/");
-      return data;
-    },
-    {
-      // Refetch the data every second
-      refetchInterval: 15000,
-      staleTime: 5000,
-    }
-  );
->>>>>>> parent of 6e9c0d3 (request to JSON)
 }
 
 export const addUser = (sentForm) => {
   const { name, prenom, adresse, phone, login, pass, role } = sentForm;
-  const formData = new FormData();
-
-  formData.append("nom", name);
-  formData.append("prenom", prenom);
-  formData.append("adresse", adresse);
-  formData.append("tel", phone);
-  formData.append("login", login);
-  formData.append("pass", pass);
-  formData.append("role", role);
-  return apiClient.post("/users/add", formData);
+  const sent = {
+    nom: name,
+    prenom,
+    adresse,
+    tel: phone,
+    login,
+    pass,
+    role,
+  };
+  return apiClient.post("/users/add", JSON.stringify(sent));
 };
 
 //update user
 export const updateUser = (sentForm) => {
   const { name, surname, adresse, tel, login, role, id } = sentForm;
-  const formData = new FormData();
-
-  formData.append("id_user", id);
-  formData.append("nom", name);
-  formData.append("prenom", surname);
-  formData.append("adresse", adresse);
-  formData.append("tel", tel);
-  formData.append("login", login);
-  formData.append("role", role);
-  return apiClient.post("/users/update", formData);
+  const sent = {
+    id_user: id,
+    nom: name,
+    prenom: surname,
+    adresse,
+    tel,
+    login,
+    role,
+  };
+  return apiClient.post("/users/update", JSON.stringify(sent));
 };
 
 //delete user
 export const deleteUser = (id) => {
-  const formData = new FormData();
-
-  formData.append("id_user", id);
-  return apiClient.post("/users/delete", formData);
+  return apiClient.post("/users/delete", JSON.stringify({ id_user: id }));
 };
 
 //agent by guichet
 export const getAgentbyGuichet = (id) => {
-  const formData = new FormData();
-
-  formData.append("id_guichet", id);
-  return apiClient.post("/users/guichet", formData);
+  return apiClient.post("/users/guichet", JSON.stringify({ id_guichet: id }));
 };
 
 //affectation guichet agent
 export const affectAgent = (sentForm) => {
   const { id, user_id } = sentForm;
-  const formData = new FormData();
-
-  formData.append("id_guichet", id);
-  formData.append("users", user_id);
-  return apiClient.post("/affectations/add", formData);
+  const sent = {
+    id_guichet: id,
+    users: user_id,
+  };
+  return apiClient.post("/affectations/add", JSON.stringify(sent));
 };
 
 //delete affectation
 export const unaffectAgent = (sentForm) => {
   const { id, user_id } = sentForm;
-  const formData = new FormData();
-
-  formData.append("guichet_id", id);
-  formData.append("user_id", user_id);
-  return apiClient.post("/affectations/delete", formData);
+  const sent = {
+    id_guichet: id,
+    users: user_id,
+  };
+  return apiClient.post("/affectations/delete", JSON.stringify(sent));
 };
 
 //statistiques

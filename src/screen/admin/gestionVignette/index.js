@@ -13,34 +13,53 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-<<<<<<< HEAD
 import React, { useState, useContext } from "react";
 import { VignetteContext } from "../../../global/vignetteContext";
-=======
-import React, { useState } from "react";
 
-import Buy from "../..//client/Buy";
->>>>>>> parent of 6e9c0d3 (request to JSON)
+import Buy from "../../client/Buy";
 import Modify from "../../../components/admin/vignette/Modify";
 import Vignette from "../../../components/admin/vignette/Vignette";
 import * as Animatable from "react-native-animatable";
 import Toast from "react-native-toast-message";
 import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons";
 import Fees from "../../../components/shared/Fees";
+import { useVignettes } from "../../../services/query";
+import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
-<<<<<<< HEAD
-  const {vignetteList} = useContext(VignetteContext);
-=======
   const { status, data, error, isFetching, isFetched } = useVignettes();
->>>>>>> parent of 6e9c0d3 (request to JSON)
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
+  const queryClient = useQueryClient()
 
   const handleDelete = (id) => {
+    deleteVignette(id)
+    .then((res) => {
+      console.log(res);
+      if (res.data === "true") {
+        queryClient.invalidateQueries('vignettes'),
+        Toast.show({
+          type: "success",
+          text1: "Supprime avec success!",
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+        });
+      }
+    })
+    .catch((e) => {
+      Toast.show({
+        type: "error",
+        text1: "Une erreur est survenue, Veuillez ressayer!",
+        text2: e.toString(),
+      });
+    });
     
   };
+  
   const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
     setOperatingItem(item);
@@ -119,11 +138,7 @@ const Index = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={{ margin: 5, padding: 5 }}>
-<<<<<<< HEAD
-              {!vignetteList ? (
-=======
               {isFetching ? (
->>>>>>> parent of 6e9c0d3 (request to JSON)
                 <View
                   style={{
                     flex: 1,
@@ -140,7 +155,7 @@ const Index = ({ navigation }) => {
                     alignItems: "center",
                     paddingBottom: 50,
                   }}
-                  data={vignetteList}
+                  data={data}
                   renderItem={({ item }) => (
                     <Vignette
                       item={item}

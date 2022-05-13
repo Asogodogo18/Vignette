@@ -22,9 +22,11 @@ import { BlurView } from "expo-blur";
 
 import { Picker } from "@react-native-picker/picker";
 import { addUser, useRoles } from "../../../services/query";
+import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
 const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
+  const queryClient = useQueryClient()
   const { data, isLoading, error } = useRoles();
   const [name, setName] = useState("");
   const [prenom, setPrenom] = useState("");
@@ -38,6 +40,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
       .then((res) => {
         console.log(res);
         if (res.data == "true") {
+          queryClient.invalidateQueries('users')
           Toast.show({
             type: "success",
             text1: "Ajoute avec success!",
