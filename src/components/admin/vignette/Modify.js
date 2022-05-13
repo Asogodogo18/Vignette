@@ -53,9 +53,34 @@ const Modify = ({ handlePress, item }) => {
       noChassi,
       puissance: item.id_puissance,
       id: item.id_engin,
+<<<<<<< HEAD
     }
 
    
+=======
+    })
+      .then((res) => {
+        if (res.data == "true") {
+          Toast.show({
+            type: "success",
+            text1: "Vos modifications ont ete enregistrer!",
+          });
+          handlePress(null);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
+        });
+      });
+>>>>>>> parent of 6e9c0d3 (request to JSON)
   };
   return (
     <KeyboardAvoidingView

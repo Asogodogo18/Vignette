@@ -17,7 +17,13 @@ import {
 import React, { useState } from "react";
 import { updatePuissance } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
-import { Ionicons, Entypo } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Ionicons,
+  Entypo,
+  AntDesign,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";

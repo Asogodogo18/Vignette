@@ -33,25 +33,17 @@ import Puissance from "./Puissance";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, error, isLoading } = usePuissances();
   const [puissanceList, setpuissanceList] = useState([]);
   const [operatingItem, setOperatingItem] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    console.log("test");
-    usePuissances()
-      .then((res) => {
-        console.log(res);
-        setpuissanceList(res.data);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => setIsLoading(false));
+    setpuissanceList(data);
 
-    // return () => {
-    //   setpuissanceList([]);
-    // };
-  }, []);
+    return () => {
+      setpuissanceList([]);
+    };
+  }, [isLoading]);
 
  
 

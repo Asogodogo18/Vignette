@@ -13,8 +13,14 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
+<<<<<<< HEAD
 import React, { useState, useContext } from "react";
 import { VignetteContext } from "../../../global/vignetteContext";
+=======
+import React, { useState } from "react";
+
+import Buy from "../..//client/Buy";
+>>>>>>> parent of 6e9c0d3 (request to JSON)
 import Modify from "../../../components/admin/vignette/Modify";
 import Vignette from "../../../components/admin/vignette/Vignette";
 import * as Animatable from "react-native-animatable";
@@ -24,7 +30,11 @@ import Fees from "../../../components/shared/Fees";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
+<<<<<<< HEAD
   const {vignetteList} = useContext(VignetteContext);
+=======
+  const { status, data, error, isFetching, isFetched } = useVignettes();
+>>>>>>> parent of 6e9c0d3 (request to JSON)
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
 
@@ -109,7 +119,11 @@ const Index = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={{ margin: 5, padding: 5 }}>
+<<<<<<< HEAD
               {!vignetteList ? (
+=======
+              {isFetching ? (
+>>>>>>> parent of 6e9c0d3 (request to JSON)
                 <View
                   style={{
                     flex: 1,
