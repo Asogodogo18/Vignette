@@ -8,7 +8,7 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  Platform,
+  
 } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -28,7 +28,7 @@ const Index = ({ navigation }) => {
         style={{
           position: "absolute",
           zIndex: 5,
-          top: Platform.OS == "ios" ? 30 : -5,
+          top: 10,
           left: 0,
           right: 0,
           width: width,
@@ -63,7 +63,7 @@ const Index = ({ navigation }) => {
               style={{
                 height: 50,
                 width: 50,
-                borderRadius: Platform.OS == "ios" ? 20 : 40,
+                borderRadius:20,
                 backgroundColor: "white",
                 justifyContent: "center",
                 alignItems: "center",

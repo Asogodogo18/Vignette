@@ -7,7 +7,7 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
-  Platform,
+  
   UIManager,
   Keyboard,
   ActivityIndicator,
@@ -22,7 +22,7 @@ import {
   AntDesign,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import GetRandomColor from "../../../Utils/getColor";
+import GetRandomColor from "../../../utils/getColor";
 const { width, height } = Dimensions.get("screen");
 const Puissance = ({ item, handlePress, handleDelete }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -88,7 +88,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
           <View style={{ flex: 1 }}>
             <Text
               style={{
-                marginLeft: Platform.OS == "ios" ? -35 : -30,
+                marginLeft: -30,
                 fontSize: 15,
                 fontWeight: "200",
                 color: "black",
@@ -99,7 +99,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
             </Text>
             <Text
               style={{
-                marginLeft: Platform.OS == "ios" ? -30 : -20,
+                marginLeft: -25,
                 fontSize: 18,
                 color: "black",
                 textTransform: "uppercase",
@@ -118,12 +118,12 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
             flexDirection: "row",
             justifyContent: "space-evenly",
             marginHorizontal: 0,
-            marginRight: Platform.OS == "ios" ? 25 : 20,
+            marginRight:  25,
           }}
         >
           <Text
             style={{
-              marginRight: Platform.OS == "ios" ? -25 : 20,
+              marginRight: 25,
               fontSize: 15,
               fontWeight: "200",
               color: "black",

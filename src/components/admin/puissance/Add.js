@@ -9,7 +9,7 @@ import {
   SafeAreaView,
   TextInput,
   KeyboardAvoidingView,
-  Platform,
+  
 } from "react-native";
 import React, { useState } from "react";
 import { addPuissance } from "../../../services/query";
@@ -54,7 +54,7 @@ const Add = ({ handlePress, setCurrentLoader }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "position"}
+     
     >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

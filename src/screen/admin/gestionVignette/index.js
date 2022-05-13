@@ -13,12 +13,10 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-
-import Buy from "../..//client/Buy";
+import React, { useState, useContext } from "react";
+import { VignetteContext } from "../../../global/vignetteContext";
 import Modify from "../../../components/admin/vignette/Modify";
 import Vignette from "../../../components/admin/vignette/Vignette";
-import { useVignettes, deleteVignette } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
 import Toast from "react-native-toast-message";
 import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons";
@@ -26,48 +24,12 @@ import Fees from "../../../components/shared/Fees";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {vignetteList} = useContext(VignetteContext);
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
 
-  useEffect(() => {
-    setLoading(true);
-    useVignettes()
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => setLoading(false));
-
-    return () => {
-      setData(null);
-    };
-  }, []);
-
   const handleDelete = (id) => {
-    deleteVignette(id)
-      .then((res) => {
-        console.log(res);
-        if (res.data === "true") {
-          Toast.show({
-            type: "success",
-            text1: "Supprime avec success!",
-          });
-        } else {
-          Toast.show({
-            type: "error",
-            text1: "Une erreur est survenue, \nVeuillez ressayer!",
-          });
-        }
-      })
-      .catch((e) => {
-        Toast.show({
-          type: "error",
-          text1: "Une erreur est survenue, Veuillez ressayer!",
-          text2: e.toString(),
-        });
-      });
+    
   };
   const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
@@ -147,7 +109,7 @@ const Index = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={{ margin: 5, padding: 5 }}>
-              {loading ? (
+              {!vignetteList ? (
                 <View
                   style={{
                     flex: 1,
@@ -164,7 +126,7 @@ const Index = ({ navigation }) => {
                     alignItems: "center",
                     paddingBottom: 50,
                   }}
-                  data={data}
+                  data={vignetteList}
                   renderItem={({ item }) => (
                     <Vignette
                       item={item}

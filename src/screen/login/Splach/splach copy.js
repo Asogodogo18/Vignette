@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  Platform,
+  
   SafeAreaView,
   ScrollView,
 } from "react-native";

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  Platform,
+  
   SafeAreaView,
   ScrollView,
 } from "react-native";
@@ -33,7 +33,7 @@ const Splach = ({ navigation }) => {
             alignItems: "center",
             padding: 0,
             flexGrow: 1,
-            paddingBottom: Platform.OS === "android" ? 30 : 190,
+            paddingBottom: 50,
           }}
         >
           <View

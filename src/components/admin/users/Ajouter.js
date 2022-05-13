@@ -12,7 +12,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ActivityIndicator,
-  Platform,
+  
 } from "react-native";
 import Toast from "react-native-toast-message";
 import React, { useState, useEffect } from "react";
@@ -61,7 +61,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
   };
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      
     >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -146,7 +146,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
                 <View
                   style={{
                     borderWidth: 1,
-                    height: Platform.OS == "ios" ? 100 : 80,
+                    height:100 ,
                     width: 200,
                     borderRadius: 15,
                   }}
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     minWidth: 100,
     maxWidth: 150,
-    borderRadius: Platform.OS == "ios" ? 20 : 50,
+    borderRadius: 20, 
     backgroundColor: "white",
   },
 });

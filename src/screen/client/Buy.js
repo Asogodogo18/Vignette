@@ -66,27 +66,17 @@ const Buy = ({ navigation, route }) => {
 
   const handleBuy = () => {
     setEditable(false);
-    try {
-      setIsVisible(true);
-      buyVignetteMutation({
-        name,
-        surname,
-        phone,
-        type,
-        marque,
-        noChassi,
-        puissance: puissance.id_puissance,
-        id: user.id_user,
-      }).then((res) => {
-        console.log("reponse:", res.data);
-        setPostResult(fortmatResponse(res.data));
-      });
-    } catch (err) {
-      setIsVisible(true);
-      setPostResult(fortmatResponse(err));
-    } finally {
-      setEditable(true);
+    const data={
+      name,
+      surname,
+      phone,
+      type,
+      marque,
+      noChassi,
+      puissance: puissance.id_puissance,
+      id: user.id_user,
     }
+    
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>

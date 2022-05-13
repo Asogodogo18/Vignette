@@ -12,7 +12,7 @@ import {
   TextInput,
   Keyboard,
   ActivityIndicator,
-  Platform,
+  
 } from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
@@ -209,9 +209,9 @@ const RenderAgent = ({
               alignItems: "center",
 
               maxHeight: 250,
-              minHeight: Platform.OS === "ios" ? 152 : 150,
-              width: Platform.OS === "ios" ? 353 : 340,
-              borderRadius: Platform.OS === "ios" ? 50 : 10,
+              minHeight:  150,
+              width: 340,
+              borderRadius:  10,
             }}
           >
             <View
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     minWidth: 100,
     maxWidth: 150,
-    borderRadius: Platform.OS == "ios" ? 20 : 50,
+    borderRadius: 20,
     backgroundColor: "white",
   },
   checkbox: {

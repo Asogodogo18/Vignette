@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   TextInput,
-  Platform,
+  
   StyleSheet,
   ScrollView,
   StatusBar,
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    marginTop: Platform.OS === "ios" ? 0 : -12,
+    marginTop: 12,
     paddingLeft: 10,
     color: "white",
     padding: 10,

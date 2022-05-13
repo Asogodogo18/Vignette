@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   Dimensions,
   KeyboardAvoidingView,
-  Platform,
+  
 } from "react-native";
 import React, { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -47,41 +47,19 @@ const Modify = ({ handlePress, item }) => {
   const handleBuy = () => {
     setEditable(false);
 
-    updateVignette({
+    const data = {
       type,
       marque,
       noChassi,
       puissance: item.id_puissance,
       id: item.id_engin,
-    })
-      .then((res) => {
-        console.log("debut du requete", res);
-        if (res.data === "true") {
-          Toast.show({
-            type: "success",
-            text1: "Vos modifications ont ete enregistrer!",
-          });
+    }
 
-          handlePress(null);
-        } else {
-          Toast.show({
-            type: "error",
-            text1: "Une erreur est survenue, \nVeuillez ressayer!",
-          });
-        }
-      })
-      .catch((e) => {
-        console.log("error", e);
-        Toast.show({
-          type: "error",
-          text1: "Une erreur est survenue, Veuillez ressayer!",
-          text2: e.toString(),
-        });
-      });
+   
   };
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      
     >
       <ScrollView contentContainerStyle={styles.container}>
         <ImageBackground

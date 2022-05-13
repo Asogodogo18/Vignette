@@ -3,14 +3,13 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["src/components/*"],
-      "@router": ["src/router/*"],
-      "@assets/*": ["assets/*"],
-      "@data/*": ["src/data/*"],
-      "@global/*": ["src/global/*"],
-      "@services": ["src/services/*"],
-      "@utils/*": ["src/utils/*"],
-      "@screen/*": ["src/screen/*"]
-      
+      "@router": ["src/router/"],
+      "@assets/*": ["assets/"],
+      "@data/*": ["src/data/"],
+      "@global/*": ["src/global/"],
+      "@services": ["src/services/"],
+      "@utils/*": ["src/utils/"],
+      "@screen/*": ["src/screen/"]
     }
   }
 }

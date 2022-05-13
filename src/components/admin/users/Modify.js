@@ -12,7 +12,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ActivityIndicator,
-  Platform,
+  
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
@@ -67,7 +67,7 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
   };
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      
     >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     minWidth: 100,
     maxWidth: 150,
-    borderRadius: Platform.OS == "ios" ? 20 : 50,
+    borderRadius: 20,
     backgroundColor: "white",
   },
 });

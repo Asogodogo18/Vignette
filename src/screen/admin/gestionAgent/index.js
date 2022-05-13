@@ -10,7 +10,7 @@ import {
   SafeAreaView,
   Keyboard,
   ActivityIndicator,
-  Platform,
+  
   Animated,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -242,7 +242,7 @@ const Index = ({ navigation }) => {
                       <Text
                         style={{
                           color: "black",
-                          fontWeight: Platform.OS === "ios" ? "500" : "800",
+                          fontWeight:  "800",
                           fontSize: 15,
                           letterSpacing: 1,
                         }}
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 2,
     zIndex: 999,
-    borderRadius: Platform.OS == "ios" ? 20 : 50,
+    borderRadius: 20,
   },
   chipItem: {
     justifyContent: "center",
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     minWidth: 90,
     maxWidth: 150,
-    borderRadius: Platform.OS == "ios" ? 20 : 50,
+    borderRadius: 20,
     backgroundColor: "white",
     zIndex: 900,
     flex: 1,

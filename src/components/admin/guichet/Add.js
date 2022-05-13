@@ -10,7 +10,6 @@ import {
   TextInput,
   ActivityIndicator,
   KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -49,7 +48,7 @@ const Add = ({ setCurrentLoader, currentLoader }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "position"}
+     
     >
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

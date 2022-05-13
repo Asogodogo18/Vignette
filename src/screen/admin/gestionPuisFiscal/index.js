@@ -7,7 +7,7 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
-  Platform,
+  
   UIManager,
   Keyboard,
   ActivityIndicator,
@@ -32,13 +32,6 @@ import Puissance from "./Puissance";
 
 const { width, height } = Dimensions.get("screen");
 
-if (
-  Platform.OS === "android" &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
-
 const Index = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [puissanceList, setpuissanceList] = useState([]);
@@ -60,17 +53,7 @@ const Index = ({ navigation }) => {
     // };
   }, []);
 
-  const layoutAnimConfig = {
-    duration: 300,
-    update: {
-      type: LayoutAnimation.Types.easeInEaseOut,
-    },
-    delete: {
-      duration: 100,
-      type: LayoutAnimation.Types.easeInEaseOut,
-      property: LayoutAnimation.Properties.opacity,
-    },
-  };
+ 
 
   const handleDelete = (id) => {
     deletePuissance(id)
@@ -86,7 +69,6 @@ const Index = ({ navigation }) => {
           });
           setpuissanceList(arr);
           // after removing the item, we start animation
-          LayoutAnimation.configureNext(layoutAnimConfig);
         } else {
           Toast.show({
             type: "error",
