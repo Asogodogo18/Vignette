@@ -12,7 +12,10 @@ export async function authUser(data) {
 
 //all vignettes
 export function useVignettes() {
-  return apiClient.get("vignettes/");
+  return useQuery("vignettes", async () => {
+    const { data } = await apiClient.get("vignettes/");
+    return data;
+  });
 }
 
 //buy vignette
@@ -46,15 +49,20 @@ export const buyVignetteAgentMutation = (info) => {
 };
 
 //vignette by user"
-const useVignette = async (id) => {
-  return apiClient.post("/vignettes/detail", { id_user: id });
+
+export function useVignette(Id) {
+  return useQuery(["vignette", Id], () => getVignetteById(Id), {
+    enabled: !!Id,
+  });
+}
+
+const getVignetteById = async (id) => {
+  const formData = new FormData();
+  formData.append("id_user", id);
+  const { data } = await apiClient.post("/vignettes/detail", formData);
+  return data;
 };
 
-// export function useVignette(Id) {
-//   return useQuery(["vignette", Id], () => getVignetteById(Id), {
-//     enabled: !!Id,
-//   });
-// }
 
 //update vignette
 export function updateVignette(data) {
@@ -94,7 +102,10 @@ export function useRoles() {
 
 //all guichet
 export function useGuichets() {
-  return apiClient.get("/guichets");
+  return useQuery("guichets", async () => {
+    const { data } = await apiClient.get("/guichets");
+    return data;
+  });
 }
 
 //add guichet
@@ -116,7 +127,10 @@ export const deleteGuichet = (id) => {
 
 // all puissances
 export function usePuissances() {
-  return apiClient.get("/puissances/");
+  return useQuery("puissances", async () => {
+    const { data } = await apiClient.get("/puissances/");
+    return data;
+  });
 }
 
 //add Puissance
@@ -139,7 +153,10 @@ export const deletePuissance = (id) => {
 
 //all users
 export function useUsers() {
-  return apiClient.get("/users/");
+  return useQuery("users", async () => {
+    const { data } = await apiClient.get("/users/");
+    return data;
+  });
 }
 
 export const addUser = (sentForm) => {

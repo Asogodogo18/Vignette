@@ -7,14 +7,15 @@ export const VignetteContext = createContext();
 
 const VignetteContextProvider = ({children}) => {
     const [vignettes, dispatch] = useReducer(VignetteReducer, [], () => {
-        useVignettes()
-        .then((res) => {
-          return [...res.data];
-        })
-        .catch((e) => {
-          console.log(e);
-          return [];
-        });
+        return []
+        // useVignettes()
+        // .then((res) => {
+        //   return [...res.data];
+        // })
+        // .catch((e) => {
+        //   console.log(e);
+        //   return [];
+        // });
     });
 
     const fetchVignettes = () => {
@@ -41,9 +42,6 @@ const VignetteContextProvider = ({children}) => {
         vignetteList: vignettes
     }
 
-    // useEffect(() => {
-    //     lscache.set(PREFIX + "-cart", cart);
-    // }, [cart]);
 
     return (
         <VignetteContext.Provider value={contextValues}>

@@ -23,7 +23,6 @@ import Guichet from "../../../components/shared/Guichet";
 import { useGuichets, deleteGuichet } from "../../../services/query";
 import Modify from "../../../components/admin/guichet/Modify";
 import Affectation from "../../../components/admin/guichet/Affectation";
-import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
