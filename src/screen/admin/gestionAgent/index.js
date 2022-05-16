@@ -271,7 +271,7 @@ const Index = ({ navigation }) => {
             <View>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{}}
+                contentContainerStyle={{ paddingBottom: 20 }}
                 data={
                   filter === "Tout"
                     ? userData

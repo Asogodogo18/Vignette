@@ -61,6 +61,7 @@ const Vignette = ({ item, handlePress }) => {
             fontWeight: "200",
             color: "white",
             textTransform: "capitalize",
+            textAlign: "center",
           }}
         >
           {item.prenom}
@@ -74,12 +75,13 @@ const Vignette = ({ item, handlePress }) => {
             }}
           >
             {item.nom}
+            {"    "}
           </Text>
         </Text>
         <View
           style={{
             flexDirection: "row",
-            marginTop: 10,
+            marginTop: 15,
             justifyContent: "center",
           }}
         >
@@ -104,6 +106,7 @@ const Vignette = ({ item, handlePress }) => {
               }}
             >
               {item.marque}
+              {"    "}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
@@ -113,13 +116,14 @@ const Vignette = ({ item, handlePress }) => {
                 fontWeight: "200",
                 color: "white",
                 textTransform: "capitalize",
+                marginLeft: 40,
               }}
             >
               utilisation
             </Text>
             <Text
               style={{
-                marginLeft: 15,
+                marginLeft: 50,
                 fontSize: 15,
                 color: "white",
                 textTransform: "uppercase",
@@ -127,6 +131,7 @@ const Vignette = ({ item, handlePress }) => {
               }}
             >
               {item.utilisation}
+              {"    "}
             </Text>
           </View>
         </View>
@@ -158,6 +163,7 @@ const Vignette = ({ item, handlePress }) => {
               }}
             >
               {item.type}
+              {"    "}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
@@ -167,13 +173,14 @@ const Vignette = ({ item, handlePress }) => {
                 fontWeight: "200",
                 color: "white",
                 textTransform: "capitalize",
+                marginLeft: 40,
               }}
             >
               Montant
             </Text>
             <Text
               style={{
-                marginLeft: 15,
+                marginLeft: 50,
                 fontSize: 15,
                 color: "white",
                 textTransform: "uppercase",
@@ -181,12 +188,13 @@ const Vignette = ({ item, handlePress }) => {
               }}
             >
               {item.montant}
+              {"    "}
             </Text>
           </View>
         </View>
         <Text
           style={{
-            marginTop: 5,
+            marginTop: 20,
             textAlign: "center",
             fontSize: 15,
             color: "white",
@@ -200,10 +208,12 @@ const Vignette = ({ item, handlePress }) => {
               fontWeight: "200",
               color: "white",
               textTransform: "capitalize",
+              marginTop: 20,
             }}
           >
-            No Chassis
-          </Text>{" "}
+            No Chassis :
+          </Text>
+          {"  "}
           {item.num_chassis}
         </Text>
 
@@ -296,11 +306,12 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     padding: 15,
     elevation: 10,
-    width: 350,
+    minWidth: 350,
+    maxWidth: 450,
     borderRadius: 5,
     overflow: "hidden",
-    minHeight: 130,
-    maxHeight: 230,
+    minHeight: 120,
+    maxHeight: 200,
     flex: 1,
   },
   btnBlur: {
@@ -309,7 +320,7 @@ const styles = StyleSheet.create({
     width: 55,
     backgroundColor: "#99D98c",
     borderRadius: 40,
-    // marginTop: 20,
+    marginTop: -20,
     justifyContent: "center",
     alignItems: "center",
     margin: 15,

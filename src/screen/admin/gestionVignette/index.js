@@ -31,35 +31,34 @@ const Index = ({ navigation }) => {
   const { status, data, error, isFetching, isFetched } = useVignettes();
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const handleDelete = (id) => {
     deleteVignette(id)
-    .then((res) => {
-      console.log(res);
-      if (res.data === "true") {
-        queryClient.invalidateQueries('vignettes'),
-        Toast.show({
-          type: "success",
-          text1: "Supprime avec success!",
-        });
-      } else {
+      .then((res) => {
+        console.log(res);
+        if (res.data === "true") {
+          queryClient.invalidateQueries("vignettes"),
+            Toast.show({
+              type: "success",
+              text1: "Supprime avec success!",
+            });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
+      })
+      .catch((e) => {
         Toast.show({
           type: "error",
-          text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: e.toString(),
         });
-      }
-    })
-    .catch((e) => {
-      Toast.show({
-        type: "error",
-        text1: "Une erreur est survenue, Veuillez ressayer!",
-        text2: e.toString(),
       });
-    });
-    
   };
-  
+
   const handlePress = (loader, item = null) => {
     setCurrentLoader(loader);
     setOperatingItem(item);
@@ -68,75 +67,75 @@ const Index = ({ navigation }) => {
   if (!currentLoader) {
     return (
       <SafeAreaView>
-        <ScrollView>
-          <Animatable.View
-            animation="fadeIn"
-            delay={500}
-            duration={300}
-            stickyHeaderHiddenOnScroll={true}
-            nestedScrollEnabled
-            stickyHeaderIndices={[0]}
-            contentContainerStyle={styles.contain}
+        <Animatable.View
+          animation="fadeIn"
+          delay={500}
+          duration={300}
+          stickyHeaderHiddenOnScroll={true}
+          nestedScrollEnabled
+          stickyHeaderIndices={[0]}
+          contentContainerStyle={styles.contain}
+        >
+          <View
+            style={{
+              height: 80,
+              backgroundColor: "#1a1818",
+              flexDirection: "row",
+              elevation: 5,
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
           >
-            <View
-              style={{
-                height: 80,
-                backgroundColor: "#1a1818",
-                flexDirection: "row",
-                elevation: 5,
-                alignItems: "center",
-                justifyContent: "space-around",
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
-                <Ionicons name="ios-arrow-undo" size={30} color="white" />
-              </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Accueil")}>
+              <Ionicons name="ios-arrow-undo" size={30} color="white" />
+            </TouchableOpacity>
 
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "700",
-                  color: "white",
-                  textAlign: "center",
-                  marginLeft: 10,
-                }}
-              >
-                Vignette
-              </Text>
-              <Image
-                source={require("../../../../assets/icon/vignette.png")}
-                style={{ height: 40, width: 40 }}
-                resizeMode="cover"
-              />
-            </View>
             <Text
               style={{
                 fontSize: 20,
                 fontWeight: "700",
-                marginHorizontal: 10,
-                padding: 10,
+                color: "white",
+                textAlign: "center",
+                marginLeft: 10,
               }}
             >
-              Action Rapide
+              Vignette
             </Text>
-            <View
-              style={{
-                padding: 2,
-                margin: 2,
+            <Image
+              source={require("../../../../assets/icon/vignette.png")}
+              style={{ height: 40, width: 40 }}
+              resizeMode="cover"
+            />
+          </View>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "700",
+              marginHorizontal: 10,
+              padding: 10,
+            }}
+          >
+            Action Rapide
+          </Text>
+          <View
+            style={{
+              padding: 2,
+              margin: 2,
 
-                marginHorizontal: 220,
+              marginHorizontal: 220,
 
-                borderRadius: 10,
-              }}
+              borderRadius: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => handlePress("Ajouter")}
+              style={styles.touch}
             >
-              <TouchableOpacity
-                onPress={() => handlePress("Ajouter")}
-                style={styles.touch}
-              >
-                <AntDesign name="addfolder" size={24} color="white" />
-                <Text style={styles.touchTxt}>Acheter</Text>
-              </TouchableOpacity>
-            </View>
+              <AntDesign name="addfolder" size={24} color="white" />
+              <Text style={styles.touchTxt}>Acheter</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView>
             <View style={{ margin: 5, padding: 5 }}>
               {isFetching ? (
                 <View
@@ -167,8 +166,8 @@ const Index = ({ navigation }) => {
                 />
               )}
             </View>
-          </Animatable.View>
-        </ScrollView>
+          </ScrollView>
+        </Animatable.View>
       </SafeAreaView>
     );
   }

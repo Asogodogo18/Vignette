@@ -79,7 +79,7 @@ function Modify({ setCurrentLoader }) {
           <Ionicons name="ios-arrow-undo" size={24} color="white" />
         </TouchableOpacity>
         <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-          Espace Superviseur
+          Modifiactions
         </Text>
         <TouchableOpacity onPress={() => setCurrentLoader(null)}>
           <Entypo name="cross" size={30} color="white" />

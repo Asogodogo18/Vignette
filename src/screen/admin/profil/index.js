@@ -212,11 +212,12 @@ const styles = StyleSheet.create({
   },
   touch: {
     height: 50,
-    width: 150,
+    minWidth: 90,
     maxWidth: 230,
     // backgroundColor: "#99D98c",
     backgroundColor: "#1a1818",
     justifyContent: "space-around",
+    alignContent: "center",
     alignItems: "center",
     borderRadius: 10,
     shadowColor: "#000",

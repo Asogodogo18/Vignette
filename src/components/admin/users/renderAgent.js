@@ -12,7 +12,6 @@ import {
   TextInput,
   Keyboard,
   ActivityIndicator,
-  
 } from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
@@ -99,7 +98,7 @@ const RenderAgent = ({
               <Text
                 style={{
                   fontSize: 15,
-                  fontWeight: "200",
+                  fontWeight: "300",
                   color: "black",
                   textTransform: "capitalize",
                 }}
@@ -122,7 +121,7 @@ const RenderAgent = ({
               <Text
                 style={{
                   fontSize: 15,
-                  fontWeight: "200",
+                  fontWeight: "300",
                   color: "black",
                   textTransform: "capitalize",
                 }}
@@ -153,7 +152,7 @@ const RenderAgent = ({
               <Text
                 style={{
                   fontSize: 15,
-                  fontWeight: "200",
+                  fontWeight: "300",
                   color: "black",
                   textTransform: "capitalize",
                 }}
@@ -176,7 +175,7 @@ const RenderAgent = ({
               <Text
                 style={{
                   fontSize: 15,
-                  fontWeight: "200",
+                  fontWeight: "300",
                   color: "black",
                   textTransform: "capitalize",
                 }}
@@ -209,9 +208,9 @@ const RenderAgent = ({
               alignItems: "center",
 
               maxHeight: 250,
-              minHeight:  150,
+              minHeight: 150,
               width: 340,
-              borderRadius:  10,
+              borderRadius: 10,
             }}
           >
             <View
