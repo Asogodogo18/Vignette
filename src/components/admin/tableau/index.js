@@ -15,8 +15,10 @@ const Index = () => {
         style={{
           flexDirection: "row",
           marginVertical: -10,
-          alignSelf: "center",
+          // alignSelf: "center",
           padding: 5,
+          // alignItems: "center",
+          // justifyContent: "center",
         }}
       >
         <View style={styles.touch}>
@@ -52,7 +54,10 @@ const Index = () => {
         animation="fadeIn"
         duration={300}
         delay={500}
-        style={{ flexDirection: "row" }}
+        style={{
+          flexDirection: "row",
+          marginLeft: 5,
+        }}
       >
         <View style={styles.touch}>
           <View style={styles.containerTxt}>
@@ -135,11 +140,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
+    alignSelf: "center",
   },
   title: {
     fontSize: 15,
-    fontWeight: "200",
-    color: "black",
+    fontWeight: "400",
+    color: "gray",
     textAlign: "center",
     letterSpacing: 0.5,
   },

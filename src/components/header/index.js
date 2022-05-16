@@ -5,7 +5,6 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  
 } from "react-native";
 import React from "react";
 import { Avatar } from "react-native-paper";
@@ -23,7 +22,7 @@ const Header = ({ navigation }) => {
       style={{
         position: "absolute",
         zIndex: 5,
-        top: 10 ,
+        top: 0,
         left: 0,
         right: 0,
         width: width,
@@ -58,7 +57,7 @@ const Header = ({ navigation }) => {
             style={{
               height: 50,
               width: 50,
-              borderRadius: 20,
+              borderRadius: 30,
               backgroundColor: "white",
               justifyContent: "center",
               alignItems: "center",

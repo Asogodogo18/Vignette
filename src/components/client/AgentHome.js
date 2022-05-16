@@ -59,9 +59,7 @@ const AgentHome = ({ navigation }) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         flexGrow: 1,
-        paddingVertical: 0,
-        marginBottom: 140,
-        height: height - 50,
+        paddingVertical: 35,
       }}
     >
       <View style={{}}>

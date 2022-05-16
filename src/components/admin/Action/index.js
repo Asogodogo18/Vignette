@@ -24,6 +24,7 @@ const index = ({ navigation }) => {
               style={{
                 fontSize: 18,
                 fontWeight: "700",
+                color: "gray",
               }}
             >
               VIGNETTE
@@ -49,6 +50,7 @@ const index = ({ navigation }) => {
               style={{
                 fontSize: 18,
                 fontWeight: "700",
+                color: "gray",
               }}
             >
               GUICHET
@@ -71,7 +73,14 @@ const index = ({ navigation }) => {
                 resizeMode="contain"
               />
             </View>
-            <Text style={{ width: 100, fontWeight: "bold", fontSize: 17 }}>
+            <Text
+              style={{
+                width: 100,
+                fontWeight: "bold",
+                fontSize: 17,
+                color: "gray",
+              }}
+            >
               PUISSANCE FISCALE
             </Text>
           </View>
@@ -93,6 +102,7 @@ const index = ({ navigation }) => {
               style={{
                 fontSize: 18,
                 fontWeight: "700",
+                color: "gray",
               }}
             >
               AGENT
