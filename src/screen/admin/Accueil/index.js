@@ -8,7 +8,6 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  
 } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -28,7 +27,7 @@ const Index = ({ navigation }) => {
         style={{
           position: "absolute",
           zIndex: 5,
-          top: 10,
+          top: 0,
           left: 0,
           right: 0,
           width: width,
@@ -48,7 +47,7 @@ const Index = ({ navigation }) => {
             style={{
               height: 50,
               width: 50,
-              borderRadius: 40,
+              borderRadius: 45,
               backgroundColor: "black",
               justifyContent: "center",
               alignItems: "center",
@@ -63,7 +62,7 @@ const Index = ({ navigation }) => {
               style={{
                 height: 50,
                 width: 50,
-                borderRadius:20,
+                borderRadius: 40,
                 backgroundColor: "white",
                 justifyContent: "center",
                 alignItems: "center",
@@ -90,7 +89,7 @@ const Index = ({ navigation }) => {
             textAlign: "center",
             margin: 5,
             padding: 5,
-            color: "black",
+            color: "gray",
             textTransform: "uppercase",
             letterSpacing: 1,
           }}
@@ -108,7 +107,7 @@ const Index = ({ navigation }) => {
             marginHorizontal: 20,
             margin: 5,
             padding: 5,
-            color: "black",
+            color: "gray",
           }}
         >
           Action Rapide

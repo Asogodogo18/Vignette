@@ -26,7 +26,7 @@ import Affectation from "../../../components/admin/guichet/Affectation";
 import { QueryClient, useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
-const Index = ({ navigation }) => {
+const Index = ({ navigation, item }) => {
   const { status, data, error, isFetching } = useGuichets();
   const queryClient = useQueryClient();
   const [currentLoader, setCurrentLoader] = useState(null);
@@ -46,11 +46,11 @@ const Index = ({ navigation }) => {
     deleteGuichet(id)
       .then((res) => {
         if (res.data == "true") {
-          queryClient.invalidateQueries('guichets'),
-          Toast.show({
-            type: "success",
-            text1: "Supprime avec succes!",
-          });
+          queryClient.invalidateQueries("guichets"),
+            Toast.show({
+              type: "success",
+              text1: "Supprime avec succes!",
+            });
         } else {
           Toast.show({
             type: "error",
@@ -185,7 +185,11 @@ const Index = ({ navigation }) => {
   }
   if (currentLoader == "Ajouter") {
     return (
-      <Add currentLoader={currentLoader} setCurrentLoader={setCurrentLoader} />
+      <Add
+        currentLoader={currentLoader}
+        setCurrentLoader={setCurrentLoader}
+        item={item}
+      />
     );
   }
   if (currentLoader == "Modify") {

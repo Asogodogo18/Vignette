@@ -10,7 +10,6 @@ import {
   SafeAreaView,
   Keyboard,
   ActivityIndicator,
-  
   Animated,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -72,7 +71,7 @@ const Index = ({ navigation }) => {
     isFetching: isFetchingUsers,
   } = useUsers();
   const [currentLoader, setCurrentLoader] = useState(null);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [IsActive, setIsActive] = useState(0);
   const [isDelete, setIsDelete] = useState(false);
 
@@ -95,11 +94,11 @@ const Index = ({ navigation }) => {
       .then((res) => {
         console.log(res);
         if (res.data == "true") {
-          queryClient.invalidateQueries('users'),
-          Toast.show({
-            type: "success",
-            text1: "Supprime avec succes!",
-          });
+          queryClient.invalidateQueries("users"),
+            Toast.show({
+              type: "success",
+              text1: "Supprime avec succes!",
+            });
         } else {
           Toast.show({
             type: "error",
@@ -204,6 +203,16 @@ const Index = ({ navigation }) => {
               <Text style={styles.touchTxt}>Supprimer</Text>
             </TouchableOpacity>
           </View>
+          <View style={{ margin: 5, padding: 5 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "700",
+              }}
+            >
+              Categorie
+            </Text>
+          </View>
           <View style={styles.chip}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {Data &&
@@ -235,7 +244,7 @@ const Index = ({ navigation }) => {
                       <Text
                         style={{
                           color: "black",
-                          fontWeight:  "800",
+                          fontWeight: "800",
                           fontSize: 15,
                           letterSpacing: 1,
                         }}
@@ -285,7 +294,7 @@ const Index = ({ navigation }) => {
             </View>
           )}
         </Animatable.View>
-        {filter && filter === "Tout" && (
+        {filter && filter === undefined && (
           <View
             style={{
               flex: 1,

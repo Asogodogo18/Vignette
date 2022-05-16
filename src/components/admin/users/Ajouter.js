@@ -12,10 +12,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ActivityIndicator,
-  
 } from "react-native";
 import Toast from "react-native-toast-message";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
@@ -26,7 +25,7 @@ import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
 const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { data, isLoading, error } = useRoles();
   const [name, setName] = useState("");
   const [prenom, setPrenom] = useState("");
@@ -40,7 +39,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
       .then((res) => {
         console.log(res);
         if (res.data == "true") {
-          queryClient.invalidateQueries('users')
+          queryClient.invalidateQueries("users");
           Toast.show({
             type: "success",
             text1: "Ajoute avec success!",
@@ -63,9 +62,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
       });
   };
   return (
-    <KeyboardAvoidingView
-      
-    >
+    <KeyboardAvoidingView behavior="position">
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -90,11 +87,6 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View style={{ padding: 5, margin: 10 }}>
-            <Text style={{ textAlign: "center", fontSize: 18 }}>
-              Veuillez Ajouter un Agent
-            </Text>
-          </View>
           <View style={styles.container}>
             <ImageBackground
               source={require("../../../../assets/icon/bg-buy.png")}
@@ -103,9 +95,14 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                height: height - 190,
+                //height: height - 190,
               }}
             >
+              <View style={{ padding: 5, margin: 10 }}>
+                <Text style={{ textAlign: "center", fontSize: 18 }}>
+                  Veuillez Ajouter un Agent
+                </Text>
+              </View>
               <BlurView intensity={50} style={styles.inputBox}>
                 <TextInput
                   style={styles.input}
@@ -148,9 +145,9 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
 
                 <View
                   style={{
-                    borderWidth: 1,
-                    height:100 ,
-                    width: 200,
+                    borderWidth: 0.5,
+                    height: 50,
+                    width: 270,
                     borderRadius: 15,
                   }}
                 >
@@ -158,12 +155,14 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
                     selectedValue={role}
                     onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
                     style={styles.select}
-                    itemStyle={{
-                      height: 40,
-                      marginTop: -10,
-                      width: 190,
-                      alignSelf: "center",
-                    }}
+                    itemStyle={
+                      {
+                        // height: 40,
+                        // // marginTop: -10,
+                        // width: 190,
+                        // alignSelf: "center",
+                      }
+                    }
                     mode="dialog"
                   >
                     <Picker.Item label="choisir un rôle" value="" />
@@ -315,16 +314,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "center",
     alignItems: "center",
+    height: height - 100,
   },
   input: {
-    height: 40,
+    height: 45,
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 0.5,
     padding: 10,
     borderRadius: 8,
     fontWeight: "bold",
 
-    width: 200,
+    width: 270,
   },
   buttonGroup: {
     flexDirection: "row",
@@ -345,12 +345,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   select: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-    fontWeight: "bold",
+    // height: 40,
+    // margin: 12,
+    borderWidth: 0.5,
+    // padding: 10,
+    // borderRadius: 8,
+    // fontWeight: "bold",
   },
 
   chip: {
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     minWidth: 100,
     maxWidth: 150,
-    borderRadius: 20, 
+    borderRadius: 20,
     backgroundColor: "white",
   },
 });

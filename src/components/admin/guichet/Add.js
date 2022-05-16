@@ -10,6 +10,7 @@ import {
   TextInput,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -20,8 +21,8 @@ import { BlurView } from "expo-blur";
 import { useQueryClient } from "react-query";
 const { width, height } = Dimensions.get("screen");
 
-const Add = ({ setCurrentLoader, currentLoader }) => {
-  const queryClient = useQueryClient()
+const Add = ({ setCurrentLoader, currentLoader, item }) => {
+  const queryClient = useQueryClient();
   const [numero, setNumero] = useState("");
   const handleAdd = () => {
     addGuichet(numero)
@@ -31,7 +32,7 @@ const Add = ({ setCurrentLoader, currentLoader }) => {
             type: "success",
             text1: "Guichet cree avec success!",
           });
-          queryClient.invalidateQueries('guichets')
+          queryClient.invalidateQueries("guichets");
           setCurrentLoader(null);
         } else {
           Toast.show({
@@ -50,9 +51,7 @@ const Add = ({ setCurrentLoader, currentLoader }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-     
-    >
+    <KeyboardAvoidingView>
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -185,7 +184,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     height: 90,
-    width: width - 15,
+    width: width - 19,
     elevation: 5,
     flexDirection: "row",
     backgroundColor: "white",

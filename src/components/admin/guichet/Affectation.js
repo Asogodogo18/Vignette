@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   FlatList,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
@@ -59,63 +60,63 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
   }, []);
 
   const handleUnaffect = () => {
-      agentToUnaffect.forEach((el) => {
-        unaffectAgent({ id: item.id_guichet, user_id: el })
-          .then((res) => {
-            if (res.data == "true") {
-              Toast.show({
-                type: "success",
-                text1: "Affectation d'agent resilie avec success!",
-              });
-              setCurrentLoader(null);
-            } else {
-              Toast.show({
-                type: "error",
-                text1: "Une erreur est survenue, \nVeuillez ressayer!",
-              });
-            }
-          })
-          .catch((e) => {
+    agentToUnaffect.forEach((el) => {
+      unaffectAgent({ id: item.id_guichet, user_id: el })
+        .then((res) => {
+          if (res.data == "true") {
+            Toast.show({
+              type: "success",
+              text1: "Affectation d'agent resilie avec success!",
+            });
+            setCurrentLoader(null);
+          } else {
             Toast.show({
               type: "error",
-              text1: "Une erreur est survenue, Veuillez ressayer!",
-              text2: e.toString(),
+              text1: "Une erreur est survenue, \nVeuillez ressayer!",
             });
+          }
+        })
+        .catch((e) => {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, Veuillez ressayer!",
+            text2: e.toString(),
           });
-      });
+        });
+    });
   };
   const handleAffect = () => {
-      agentToAffect.forEach((el) => {
-        affectAgent({ id: item.id_guichet, user_id: el })
-          .then((res) => {
-            if (res.data == "true") {
-              Toast.show({
-                type: "success",
-                text1: "Agent affecte avec success!",
-              });
-              setCurrentLoader(null);
-            } else {
-              Toast.show({
-                type: "error",
-                text1: "Une erreur est survenue, \nVeuillez ressayer!",
-              });
-            }
-          })
-          .catch((e) => {
+    agentToAffect.forEach((el) => {
+      affectAgent({ id: item.id_guichet, user_id: el })
+        .then((res) => {
+          if (res.data == "true") {
+            Toast.show({
+              type: "success",
+              text1: "Agent affecte avec success!",
+            });
+            setCurrentLoader(null);
+          } else {
             Toast.show({
               type: "error",
-              text1: "Une erreur est survenue, Veuillez ressayer!",
-              text2: e.toString(),
+              text1: "Une erreur est survenue, \nVeuillez ressayer!",
             });
+          }
+        })
+        .catch((e) => {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, Veuillez ressayer!",
+            text2: e.toString(),
           });
-      });
-    };
+        });
+    });
+  };
   const handlePress = () => {
     if (agentToAffect.length > 0) {
       handleAffect();
     }
     if (agentToUnaffect.length > 0) {
-    handleUnaffect();
+      handleUnaffect();
     }
   };
   return (
@@ -143,7 +144,62 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
               <Entypo name="cross" size={30} color="white" />
             </TouchableOpacity>
           </View>
+          <View style={styles.Card}>
+            <View
+              style={{
+                height: 70,
+                width: 70,
+                backgroundColor: "#99D98c",
+                borderRadius: 80,
+                // marginTop: 20,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={require("../../../../assets/icon/guichet.png")}
+                style={{
+                  height: 40,
+                  width: 40,
+                }}
+                resizeMode="contain"
+              />
+            </View>
 
+            <View style={styles.vignette}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                  justifyContent: "center",
+                }}
+              >
+                <View style={{ flex: 5 }}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontWeight: "200",
+                      color: "black",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    Numero du guichet
+                  </Text>
+                  <Text
+                    style={{
+                      marginLeft: 15,
+                      fontSize: 18,
+                      color: "black",
+                      textTransform: "uppercase",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {item.num_guichet}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
           <View style={{ padding: 5, margin: 10, marginVertical: 20 }}>
             <Text style={{ textAlign: "center", fontSize: 18 }}>
               Veuillez Affecter un Agent au Guichet
@@ -268,7 +324,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   touchTxt: {
-    color: "black",
+    color: "white",
     fontSize: 15,
     fontWeight: "bold",
   },

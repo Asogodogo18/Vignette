@@ -7,7 +7,6 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
-  
   UIManager,
   Keyboard,
   ActivityIndicator,
@@ -23,7 +22,6 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
-import GetRandomColor from "../../../utils/getColor";
 
 import AddPuissance from "../../../components/admin/puissance/Add";
 import { deletePuissance, usePuissances } from "../../../services/query";
@@ -44,8 +42,6 @@ const Index = ({ navigation }) => {
       setpuissanceList([]);
     };
   }, [isLoading]);
-
- 
 
   const handleDelete = (id) => {
     deletePuissance(id)
