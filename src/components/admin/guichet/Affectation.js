@@ -42,9 +42,9 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
       .then((res) => {
         console.log(res);
         if (res.data != "False") {
-          // res.data.map((item) => {
-          //   setaffectedAgent([...affectedAgent, item.id_user]);
-          // });
+          res.data.map((item) => {
+            setaffectedAgent([...affectedAgent, item.id_user]);
+          });
         }
       })
       .catch((e) => {
@@ -56,13 +56,16 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
         });
       });
 
-    return () => {};
-  }, []);
+    return () => {
+      setaffectedAgent([]);
+    };
+  }, [agentToAffect,agentToUnaffect]);
 
   const handleUnaffect = () => {
     agentToUnaffect.forEach((el) => {
       unaffectAgent({ id: item.id_guichet, user_id: el })
         .then((res) => {
+          console.log("reponse desaffectation:", res);
           if (res.data == "true") {
             Toast.show({
               type: "success",
@@ -89,6 +92,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
     agentToAffect.forEach((el) => {
       affectAgent({ id: item.id_guichet, user_id: el })
         .then((res) => {
+          console.log("reponse affectation:", res);
           if (res.data == "true") {
             Toast.show({
               type: "success",
@@ -96,10 +100,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
             });
             setCurrentLoader(null);
           } else {
-            Toast.show({
-              type: "error",
-              text1: "Une erreur est survenue, \nVeuillez ressayer!",
-            });
+            throw res.data;
           }
         })
         .catch((e) => {
