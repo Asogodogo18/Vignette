@@ -18,45 +18,62 @@ const Agent = ({
   setagentToUnaffect,
   affectedAgent,
 }) => {
-  const [isChecked, setChecked] = useState({ check: false, init: false });
-  const [loading, setLoading] = useState(false)
+  const [isChecked, setChecked] = useState({
+    check: affectedAgent.includes(item.id_user) ? true : false,
+    init: affectedAgent.includes(item.id_user) ? true : false,
+  });
+  const [loading, setLoading] = useState(false);
 
-  console.log("agent:",item.id_user)
+  console.log("agent:", item.id_user);
+
   useEffect(() => {
-    setLoading(true)
-    if (affectedAgent.includes(item.id_user)) {
-      setChecked({ check: true, init: true });
+    setLoading(true);
+    if (isChecked.check && !isChecked.init) {
+      setagentToAffect([...agentToAffect, item.id_user]);
+      console.log("afected :", agentToAffect);
+    } else if (!isChecked.check && !isChecked.init) {
+      setagentToAffect(agentToAffect.filter((el) => el !== item.id_user));
+      console.log("afected on:", agentToAffect);
+    } else if (!isChecked.check && isChecked.init) {
+      setagentToUnaffect([...agentToUnaffect, item.id_user]);
+      console.log("Unaffected :", agentToUnaffect);
+    } else if (!isChecked.check && isChecked.init) {
+      setagentToUnaffect(agentToUnaffect.filter((el) => el !== item.id_user));
+      // if (agentToUnaffect.includes(item.id_user)) {
+      // }
+      console.log("Unaffected on:", agentToUnaffect);
     }
-    setLoading(false)
+    setLoading(false);
 
-    return () => {};
-  }, [affectedAgent]);
+    return () => {
+      setagentToAffect([]);
+      setagentToUnaffect([]);
+    };
+  }, [isChecked]);
+
+  // useEffect(() => {
+  //   setLoading(true)
+  //   if (affectedAgent.includes(item.id_user)) {
+  //     setChecked({ check: true, init: true });
+  //   }
+  //   setLoading(false)
+
+  //   return () => {
+  //     setChecked({})
+  //     setLoading(false)
+  //   };
+  // }, []);
 
   const onChecked = () => {
     setChecked({ ...isChecked, check: !isChecked.check });
-
-    if (isChecked.check && !isChecked.init) {
-      setagentToAffect([...agentToAffect, item.id_user]);
-    } else if (!isChecked.check && !isChecked.init) {
-      setagentToAffect(agentToAffect.filter((item) => item !== item.id_user));
-    } else if (!isChecked.check && isChecked.init) {
-      setagentToUnaffect([...agentToUnaffect, item.id_user]);
-    } else if (!isChecked.check && isChecked.init) {
-      if (agentToUnaffect.includes(item.id_user)) {
-        setagentToUnaffect(
-          agentToUnaffect.filter((item) => item !== item.id_user)
-        );
-      }
-    }
   };
 
-  if (loading){
-    return(
-      <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+  if (loading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <ActivityIndicator size="large" />
-
       </View>
-    )
+    );
   }
   return (
     <View
