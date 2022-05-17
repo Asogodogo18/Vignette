@@ -27,7 +27,6 @@ function Modify({ setCurrentLoader }) {
   const [login, setLogin] = useState(user.login || "");
   const [adresse, setAdresse] = useState(user.adresse ? user.adresse : "");
   const [isChanged, setIsChanged] = useState(false);
-  const toast = useRef();
 
   const handleSave = () => {
     updateUser({
@@ -79,7 +78,7 @@ function Modify({ setCurrentLoader }) {
           <Ionicons name="ios-arrow-undo" size={24} color="white" />
         </TouchableOpacity>
         <Text style={{ fontSize: 18, fontWeight: "700", color: "white" }}>
-          Modifiactions
+          Modifications
         </Text>
         <TouchableOpacity onPress={() => setCurrentLoader(null)}>
           <Entypo name="cross" size={30} color="white" />
@@ -94,52 +93,42 @@ function Modify({ setCurrentLoader }) {
           </View>
 
           <View style={{ padding: 10 }}>
-            <Text style={styles.label}>
-              Nom
-              <TextInput
-                onChange={() => (isChanged ? null : setIsChanged(true))}
-                style={styles.txt}
-                value={name}
-                onChangeText={setName}
-              />
-            </Text>
-            <Text style={styles.label}>
-              Prenom
-              <TextInput
-                onChange={() => (isChanged ? null : setIsChanged(true))}
-                style={styles.txt}
-                value={surname}
-                onChangeText={setSurname}
-              />
-            </Text>
-            <Text style={styles.label}>
-              Telephone
-              <TextInput
-                onChange={() => (isChanged ? null : setIsChanged(true))}
-                style={styles.txt}
-                value={telephone}
-                keyboardType="numeric"
-                onChangeText={setTelephone}
-              />
-            </Text>
-            <Text style={styles.label}>
-              Login
-              <TextInput
-                onChange={() => (isChanged ? null : setIsChanged(true))}
-                style={styles.txt}
-                value={login}
-                onChangeText={setLogin}
-              />
-            </Text>
-            <Text style={styles.label}>
-              adresse
-              <TextInput
-                onChange={() => (isChanged ? null : setIsChanged(true))}
-                style={styles.txt}
-                value={adresse}
-                onChangeText={setAdresse}
-              />
-            </Text>
+            <Text style={styles.label}>Nom</Text>
+            <TextInput
+              onChange={() => (isChanged ? null : setIsChanged(true))}
+              style={styles.txt}
+              value={name}
+              onChangeText={setName}
+            />
+            <Text style={styles.label}>Prenom</Text>
+            <TextInput
+              onChange={() => (isChanged ? null : setIsChanged(true))}
+              style={styles.txt}
+              value={surname}
+              onChangeText={setSurname}
+            />
+            <Text style={styles.label}>Telephone</Text>
+            <TextInput
+              onChange={() => (isChanged ? null : setIsChanged(true))}
+              style={styles.txt}
+              value={telephone}
+              keyboardType="numeric"
+              onChangeText={setTelephone}
+            />
+            <Text style={styles.label}>Login</Text>
+            <TextInput
+              onChange={() => (isChanged ? null : setIsChanged(true))}
+              style={styles.txt}
+              value={login}
+              onChangeText={setLogin}
+            />
+            <Text style={styles.label}>Adresse</Text>
+            <TextInput
+              onChange={() => (isChanged ? null : setIsChanged(true))}
+              style={styles.txt}
+              value={adresse}
+              onChangeText={setAdresse}
+            />
           </View>
           <View
             style={{
@@ -170,6 +159,7 @@ function Modify({ setCurrentLoader }) {
 const styles = StyleSheet.create({
   contain: {
     flex: 1,
+    paddingTop: 10,
     // justifyContent: "center",
     // alignItems: "center",
   },
@@ -198,13 +188,16 @@ const styles = StyleSheet.create({
   },
   txt: {
     color: "gray",
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
     maxWidth: 250,
     minWidth: 50,
     marginLeft: 20,
+    marginBottom: 8,
     height: 40,
     padding: 10,
+    borderWidth: 1,
+    borderColor: "black",
   },
 
   Card: {
@@ -234,7 +227,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 18,
     fontWeight: "bold",
-    marginVertical: 5,
+    marginBottom: 5,
+    width,
     // justifyContent:"space-between",
     // alignItems:"flex-end"
   },

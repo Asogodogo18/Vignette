@@ -14,7 +14,7 @@ const Index = () => {
         delay={500}
         style={{
           flexDirection: "row",
-          marginVertical: -10,
+          marginVertical: 10,
           // alignSelf: "center",
           padding: 5,
           // alignItems: "center",

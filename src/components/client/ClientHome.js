@@ -1,4 +1,4 @@
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Text, Dimensions } from "react-native";
 import React, { useState } from "react";
 
 import QuickSelect from "../shared/QuickSelect";
@@ -7,6 +7,7 @@ import VignetteList from "../shared/VignetteList";
 import { View } from "react-native-animatable";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuthState } from "../../global";
+const { width, height } = Dimensions.get("screen");
 const ClientHome = ({ navigation }) => {
   const [openListing, setOpenListing] = useState(false);
   const { user } = useAuthState();
@@ -17,7 +18,13 @@ const ClientHome = ({ navigation }) => {
         animation="fadeInRight"
         duration={300}
         delay={100}
-        style={{ flex: 1, paddingVertical: 20, paddingHorizontal: 8 }}
+        style={{
+          flex: 1,
+          paddingVertical: 20,
+          paddingHorizontal: 8,
+          backgroundColor: "blue",
+          height: height,
+        }}
       >
         <Ionicons
           onPress={() => setOpenListing(false)}
@@ -48,6 +55,7 @@ const ClientHome = ({ navigation }) => {
         flexGrow: 1,
         paddingVertical: 20,
         paddingBottom: 40,
+        height,
       }}
     >
       {user.role === "Client" && <VignetteList />}

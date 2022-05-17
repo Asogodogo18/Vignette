@@ -19,7 +19,7 @@ import * as Animatable from "react-native-animatable";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-const baseUrl = "http://192.168.1.44/vignette";
+const baseUrl = "http://192.168.1.44/vignettes/detail";
 const AnimatedTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const width = Dimensions.get("window").width;

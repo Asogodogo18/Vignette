@@ -124,7 +124,7 @@ const Index = ({ navigation }) => {
           position: "absolute",
           bottom: 0,
           backgroundColor: "white",
-          height: 40,
+          height: 15,
           width: width,
           justifyContent: "center",
           alignItems: "center",
@@ -137,7 +137,7 @@ const Index = ({ navigation }) => {
       >
         <Text
           style={{
-            fontSize: 18,
+            fontSize: 10,
             fontWeight: "bold",
             color: "gray",
             textTransform: "uppercase",

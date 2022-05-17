@@ -25,12 +25,14 @@ import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons";
 import Fees from "../../../components/shared/Fees";
 import { useVignettes } from "../../../services/query";
 import { useQueryClient } from "react-query";
+
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
   const { status, data, error, isFetching, isFetched } = useVignettes();
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const queryClient = useQueryClient();
 
   const handleDelete = (id) => {
@@ -160,6 +162,9 @@ const Index = ({ navigation }) => {
                       item={item}
                       handleDelete={handleDelete}
                       handlePress={handlePress}
+                      // modalVisible={modalVisible}
+                      // setModalVisible={setModalVisible}
+                      navigation={navigation}
                     />
                   )}
                   keyExtractor={(item) => item.id_engin}
@@ -204,6 +209,15 @@ const Index = ({ navigation }) => {
   if (currentLoader == "Modify") {
     return <Modify handlePress={handlePress} item={operatingItem} />;
   }
+  // if (currentLoader == "Payment") {
+  //   return (
+  //     <Payment
+  //       modalVisible={modalVisible}
+  //       setModalVisible={setModalVisible}
+  //       navigation={navigation}
+  //     />
+  //   );
+  // }
 };
 
 export default Index;

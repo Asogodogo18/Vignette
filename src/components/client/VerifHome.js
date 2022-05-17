@@ -1,13 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Tableau from "../../components/admin/tableau"
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import Tableau from "../../components/admin/tableau";
 
 const VerifHome = () => {
   return (
-    <Tableau />
-  )
-}
+    <View style={{ flex: 1, paddingTop: 80, backgroundColor: "red" }}>
+      <Tableau />
+    </View>
+  );
+};
 
-export default VerifHome
+export default VerifHome;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

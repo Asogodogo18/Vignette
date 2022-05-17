@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  
   SafeAreaView,
   ScrollView,
 } from "react-native";
@@ -185,8 +184,8 @@ const Splach = ({ navigation }) => {
         style={{
           position: "absolute",
           bottom: 0,
-          backgroundColor: "#1a1818",
-          height: 40,
+          backgroundColor: "white",
+          height: 15,
           width: width,
           justifyContent: "center",
           alignItems: "center",
@@ -195,18 +194,16 @@ const Splach = ({ navigation }) => {
           borderTopLeftRadius: 70,
           borderTopRightRadius: 70,
           elevation: 5,
-          // marginBottom: Platform.OS === "ios" ? 5 : 0,
         }}
       >
         <Text
           style={{
-            fontSize: 18,
+            fontSize: 10,
             fontWeight: "bold",
             color: "gray",
             textTransform: "uppercase",
             textShadowColor: "black",
             textAlign: "center",
-            letterSpacing: 1,
           }}
         >
           Créer par CIRTIC

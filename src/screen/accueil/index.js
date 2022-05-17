@@ -28,24 +28,21 @@ const Index = ({ navigation }) => {
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
   const [visible, setVisible] = React.useState(false);
-
+  const condition =
+    user.role === "Verificateur" ||
+    user.role === "Maire" ||
+    user.role === "Maire adjoint";
+  const conditionClient = user.role === "Client" || user === undefined;
   return (
-    <SafeAreaView forceIncet={{ top: "always" }} style={styles.contain}>
+    <SafeAreaView style={styles.contain}>
       <Header navigation={navigation} />
-      <ScrollView
-        stickyHeaderHiddenOnScroll
-        stickyHeaderIndices={[1]}
-        contentContainerStyle={{ flexGrow: 1 }}
-      >
-        <StatusBar hidden />
-        {user.role === "Agent" && <AgentHome navigation={navigation} />}
-        {user.role === "Police" && <OfficerHome navigation={navigation} />}
-        {user.role === "Verificateur" ||
-          user.role === "Maire" ||
-          (user.role === "Maire adjoint" && <VerifHome />)}
-        {user.role === "Client" ||
-          (user === undefined && <ClientHome navigation={navigation} />)}
-      </ScrollView>
+
+      <StatusBar hidden />
+      {user.role === "Agent" && <AgentHome navigation={navigation} />}
+      {user.role === "Police" && <OfficerHome navigation={navigation} />}
+      {condition && <VerifHome />}
+      {conditionClient && <ClientHome navigation={navigation} />}
+
       <Footer />
     </SafeAreaView>
   );
@@ -61,7 +58,7 @@ const Footer = () => {
         position: "absolute",
         bottom: 0,
         backgroundColor: "white",
-        height: 40,
+        height: 15,
         width: width,
         justifyContent: "center",
         alignItems: "center",
@@ -70,16 +67,16 @@ const Footer = () => {
         borderTopLeftRadius: 70,
         borderTopRightRadius: 70,
         elevation: 5,
-        // marginBottom: Platform.OS === "ios" ? 5 : 0,
       }}
     >
       <Text
         style={{
-          fontSize: 15,
+          fontSize: 10,
           fontWeight: "bold",
           color: "gray",
           textTransform: "uppercase",
           textShadowColor: "black",
+          textAlign: "center",
         }}
       >
         Créer par CIRTIC
@@ -90,7 +87,7 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
   contain: {
-    flexGrow: 1,
+    flex: 1,
   },
   containerStyle: {
     backgroundColor: "white",

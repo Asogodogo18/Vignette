@@ -6,7 +6,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { BlurView } from "expo-blur";
 import Toast from "react-native-toast-message";
@@ -14,7 +18,13 @@ import Toast from "react-native-toast-message";
 import { deleteVignette } from "../../../services/query";
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 
-const Vignette = ({ item, handlePress }) => {
+const Vignette = ({
+  item,
+  handlePress,
+  modalVisible,
+  setModalVisible,
+  navigation,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleDelete = (id) => {
@@ -62,6 +72,8 @@ const Vignette = ({ item, handlePress }) => {
             color: "white",
             textTransform: "capitalize",
             textAlign: "center",
+
+            zIndex: 100,
           }}
         >
           {item.prenom}
@@ -200,6 +212,7 @@ const Vignette = ({ item, handlePress }) => {
             color: "white",
             textTransform: "uppercase",
             fontWeight: "bold",
+            zIndex: 100,
           }}
         >
           <Text
@@ -209,6 +222,7 @@ const Vignette = ({ item, handlePress }) => {
               color: "white",
               textTransform: "capitalize",
               marginTop: 20,
+              zIndex: 100,
             }}
           >
             No Chassis :
@@ -279,6 +293,14 @@ const Vignette = ({ item, handlePress }) => {
                   style={styles.btnBlur}
                 >
                   <FontAwesome name="edit" size={30} color="white" />
+                </TouchableOpacity>
+              ) : null}
+              {!item.statut ? (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Payment", { item })}
+                  style={styles.btnBlur}
+                >
+                  <MaterialIcons name="payment" size={30} color="white" />
                 </TouchableOpacity>
               ) : null}
 
