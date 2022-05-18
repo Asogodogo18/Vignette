@@ -19,7 +19,7 @@ import * as Animatable from "react-native-animatable";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-const baseUrl = "http://192.168.1.44/vignettes/detail";
+const baseUrl = "http://192.168.1.44/vignette/vignettes/detail";
 const AnimatedTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const width = Dimensions.get("window").width;
@@ -74,6 +74,7 @@ const Index = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
   const renderItem = ({ item }) => {
+    console.log("les item ", item.statut);
     return (
       <AnimatedImg
         resizeMode="cover"
@@ -226,6 +227,35 @@ const Index = ({ navigation }) => {
         >
           {item.num_chassis}
         </Text>
+        {item.statut || !item.statut ? (
+          <BlurView
+            intensity={125}
+            tint="dark"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              justifyContent: "center",
+              alignItems: "center",
+              maxHeight: 350,
+              minHeight: 203,
+              minWidth: 320,
+              maxWidth: 450,
+              flex: 1,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 25,
+                color: "white",
+                textAlign: "center",
+                textTransform: "uppercase",
+              }}
+            >
+              Vignette nom payée
+            </Text>
+          </BlurView>
+        ) : null}
       </AnimatedImg>
     );
   };
