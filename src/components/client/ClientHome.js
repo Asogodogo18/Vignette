@@ -22,8 +22,9 @@ const ClientHome = ({ navigation }) => {
           flex: 1,
           paddingVertical: 20,
           paddingHorizontal: 8,
-          backgroundColor: "blue",
-          height: height,
+          // backgroundColor: "blue",
+          // height: height,
+          marginTop: 60,
         }}
       >
         <Ionicons
@@ -54,8 +55,9 @@ const ClientHome = ({ navigation }) => {
       contentContainerStyle={{
         flexGrow: 1,
         paddingVertical: 20,
-        paddingBottom: 40,
-        height,
+        paddingBottom: 65,
+        // height,
+        marginTop: 57,
       }}
     >
       {user.role === "Client" && <VignetteList />}

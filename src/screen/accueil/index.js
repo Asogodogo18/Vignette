@@ -26,8 +26,8 @@ const { height, width } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
   const { user } = useAuthState();
-  const dispatch = useAuthDispatch();
-  const [visible, setVisible] = React.useState(false);
+  // const dispatch = useAuthDispatch();
+  // const [visible, setVisible] = React.useState(false);
   const condition =
     user.role === "Verificateur" ||
     user.role === "Maire" ||
