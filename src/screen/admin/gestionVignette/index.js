@@ -13,8 +13,10 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
+
 import { VignetteContext } from "../../../global/vignetteContext";
+import Animated from "react-native-reanimated";
 
 import Buy from "../../client/Buy";
 import Modify from "../../../components/admin/vignette/Modify";
@@ -27,6 +29,9 @@ import { useVignettes } from "../../../services/query";
 import { useQueryClient } from "react-query";
 
 const { width, height } = Dimensions.get("screen");
+const H_MAX_HEIGHT = 150;
+const H_MIN_HEIGHT = 100;
+const H_SCROLL_DISTANCE = H_MAX_HEIGHT - H_MIN_HEIGHT;
 
 const Index = ({ navigation }) => {
   const { status, data, error, isFetching, isFetched } = useVignettes();
@@ -109,6 +114,7 @@ const Index = ({ navigation }) => {
               resizeMode="cover"
             />
           </View>
+
           <Text
             style={{
               fontSize: 20,
@@ -137,6 +143,7 @@ const Index = ({ navigation }) => {
               <Text style={styles.touchTxt}>Acheter</Text>
             </TouchableOpacity>
           </View>
+
           <ScrollView>
             <View style={{ margin: 5, padding: 5 }}>
               {isFetching ? (
@@ -209,15 +216,6 @@ const Index = ({ navigation }) => {
   if (currentLoader == "Modify") {
     return <Modify handlePress={handlePress} item={operatingItem} />;
   }
-  // if (currentLoader == "Payment") {
-  //   return (
-  //     <Payment
-  //       modalVisible={modalVisible}
-  //       setModalVisible={setModalVisible}
-  //       navigation={navigation}
-  //     />
-  //   );
-  // }
 };
 
 export default Index;

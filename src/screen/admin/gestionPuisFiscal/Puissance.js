@@ -7,7 +7,6 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
-  
   UIManager,
   Keyboard,
   ActivityIndicator,
@@ -29,6 +28,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
   return (
     <TouchableOpacity
       onPress={() => setIsVisible(!isVisible)}
+      activeOpacity={0.8}
       style={[
         styles.card,
         { backgroundColor: GetRandomColor(`${item.puissance}`) },
@@ -118,7 +118,7 @@ const Puissance = ({ item, handlePress, handleDelete }) => {
             flexDirection: "row",
             justifyContent: "space-evenly",
             marginHorizontal: 0,
-            marginRight:  25,
+            marginRight: 25,
           }}
         >
           <Text

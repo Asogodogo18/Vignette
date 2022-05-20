@@ -55,9 +55,13 @@ export const buyVignetteAgentMutation = (info) => {
 };
 
 //vignette by user"
-const getVignetteById = async (id) => {
-  const { data } = await apiClient.post("/vignettes/detail", { id_user: id });
-  return data;
+export const getVignetteByChassis = async (query) => {
+  return await apiClient.post("/vignettes/search", {
+    num_chassis: query,
+  });
+};
+export const getVignetteById = async (id) => {
+  return await apiClient.post("/vignettes/detail", { id_user: id });
 };
 
 export function useVignette(Id) {

@@ -61,6 +61,7 @@ const Guichet = ({
       <TouchableOpacity
         onPress={() => setIsVisible(!isVisible)}
         style={styles.Card}
+        activeOpacity={0.8}
       >
         <View
           style={{
@@ -128,6 +129,7 @@ const Guichet = ({
               alignItems: "center",
               height: 90,
               width: width - 19,
+              borderRadius: 10,
             }}
           >
             <View
@@ -228,11 +230,12 @@ const styles = StyleSheet.create({
     padding: 5,
     height: 90,
     width: width - 19,
-    elevation: 5,
+    elevation: 2,
     flexDirection: "row",
     backgroundColor: "white",
     alignSelf: "center",
     alignItems: "center",
+    borderRadius: 10,
   },
   btnBlur: {
     // flex: 2,

@@ -293,28 +293,28 @@ const Index = ({ navigation }) => {
               />
             </View>
           )}
-        </Animatable.View>
-        {filter && filter === undefined && (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              backgroundColor: "red",
-            }}
-          >
-            <Text
+          {filter && filter.length === 0 && (
+            <View
               style={{
-                fontSize: 36,
-                fontWeight: "700",
-                textAlign: "center",
-                textTransform: "capitalize",
+                flex: 1,
+                justifyContent: "center",
+                backgroundColor: "red",
               }}
             >
-              {" "}
-              Aucun résultat pour cette utilisateur
-            </Text>
-          </View>
-        )}
+              <Text
+                style={{
+                  fontSize: 36,
+                  fontWeight: "700",
+                  textAlign: "center",
+                  textTransform: "capitalize",
+                }}
+              >
+                {" "}
+                Aucun résultat pour cette utilisateur
+              </Text>
+            </View>
+          )}
+        </Animatable.View>
       </SafeAreaView>
     );
   }

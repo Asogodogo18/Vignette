@@ -32,7 +32,8 @@ const Splach = ({ navigation }) => {
             alignItems: "center",
             padding: 0,
             flexGrow: 1,
-            paddingBottom: 50,
+            paddingBottom: 195,
+            marginTop: -10,
           }}
         >
           <View

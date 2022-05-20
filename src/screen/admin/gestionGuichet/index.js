@@ -156,9 +156,13 @@ const Index = ({ navigation, item }) => {
 
         {isFetching && (
           <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            style={{
+              flex: 1,
+              alignContent: "center",
+              justifyContent: "center",
+            }}
           >
-            <ActivityIndicator size="large" />
+            <ActivityIndicator size="large" animating />
           </View>
         )}
         {data && data != "False" && (

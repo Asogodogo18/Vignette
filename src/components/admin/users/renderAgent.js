@@ -52,6 +52,7 @@ const RenderAgent = ({
       ) : null}
       <TouchableOpacity
         onPress={() => setIsVisible(!isVisible)}
+        activeOpacity={0.8}
         style={[
           styles.Card,
           { backgroundColor: GetRandomColor(`${item.nom}`) },
@@ -207,9 +208,9 @@ const RenderAgent = ({
               justifyContent: "center",
               alignItems: "center",
 
-              maxHeight: 250,
-              minHeight: 150,
-              width: 340,
+              maxHeight: 450,
+              minHeight: 140,
+              width: width - 18,
               borderRadius: 10,
             }}
           >
