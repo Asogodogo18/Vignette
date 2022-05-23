@@ -60,6 +60,7 @@ const Index = ({ navigation }) => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
+    return () => {};
   }, []);
 
   const handleBarCodeScanned = ({ type, data, bounds: { origin } = {} }) => {

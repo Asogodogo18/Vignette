@@ -9,6 +9,7 @@ import Accueil from "../../screen/admin/Accueil";
 import Profil from "../../screen/admin/profil";
 import Buy from "../../screen/client/Buy";
 import Payment from "../../screen/admin/Payment";
+
 const Stack = createNativeStackNavigator();
 
 const Index = () => {

@@ -106,6 +106,7 @@ const Index = ({ navigation, route }) => {
     //   .then((response) => response.json())
     //   .then((json) => console.log(json))
     //   .catch((e) => console.log(e));
+
     if (data.username.length == 0 || data.password.length == 0) {
       Toast.show({
         type: "error",

@@ -10,11 +10,11 @@ import { useAuthState } from "../../global";
 
 const Index = () => {
   const { user, isSignedIn } = useAuthState();
-  console.log(user)
+  console.log(user);
   return (
     <RootStack.Navigator initialRouteName="Authstack">
       {isSignedIn ? (
-        user?.role === "Superviseur"||user?.role === "Compta public"  ? (
+        user?.role === "Superviseur" || user?.role === "Compta public" ? (
           <RootStack.Screen
             name="Adminstack"
             component={Adminstack}

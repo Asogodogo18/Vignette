@@ -63,7 +63,7 @@ const AgentHome = ({ navigation }) => {
       }}
     >
       <View style={{}}>
-        <SearchBar />
+        <SearchBar navigation={navigation} />
         {/* <VignetteList /> */}
         <QuickSelect navigation={navigation} setOpenListing={setOpenListing} />
 

@@ -30,12 +30,16 @@ const Index = ({ navigation, route }) => {
   console.log("payment");
   const { item } = route.params;
   const [isXaalisi, setIsXaalisi] = useState(false);
+  const [isOrange, setIsOrange] = useState(false);
   const [isBank, setIsBank] = useState(false);
   const [fulName, setFulName] = useState(false);
   const [date, setDate] = useState(false);
   const [numero, setNumero] = useState(false);
+  const [numeroOrg, setNumeroOrg] = useState(false);
   const [cv, setCv] = useState(false);
+
   const [scrollRef, setScrollRef] = useState(null);
+
   return (
     <SafeAreaView style={styles.contain}>
       <View
@@ -248,7 +252,7 @@ const Index = ({ navigation, route }) => {
         <View style={styles.section}>
           <Text style={styles.txt}>Mode de Payment</Text>
         </View>
-        {!isBank ? (
+        {!isBank && !isOrange && !isOrange ? (
           <AnimatedPressable
             animation={isBank ? "fadeOutLeft" : null}
             duration={300}
@@ -293,7 +297,6 @@ const Index = ({ navigation, route }) => {
             </View>
           </AnimatedPressable>
         ) : null}
-
         {isXaalisi && isXaalisi ? (
           <Animatable.View
             style={{ backgroundColor: "blue", height: 200, width }}
@@ -302,7 +305,72 @@ const Index = ({ navigation, route }) => {
             delay={300}
           ></Animatable.View>
         ) : null}
-        {!isXaalisi ? (
+
+        {!isBank && !isXaalisi ? (
+          <AnimatedPressable
+            animation={isBank ? "fadeOutLeft" : null}
+            duration={300}
+            delay={300}
+            style={{
+              flexDirection: "row",
+              marginLeft: 10,
+              alignItems: "center",
+              // justifyContent: "flex-start",
+            }}
+            onPress={() => setIsOrange(!isOrange)}
+          >
+            <Checkbox
+              style={[styles.checkbox, { flex: 0 }]}
+              value={isOrange}
+              onValueChange={setIsOrange}
+            />
+            <View style={{ flex: 6 }}>
+              <Text style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}>
+                OrangeMoney
+              </Text>
+              <Text style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}>
+                Payé par votre compte OrangeMoney
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 4,
+                alignItems: "center",
+                justifyContent: "space-around",
+                marginVertical: 10,
+                margin: 5,
+                padding: 5,
+              }}
+            >
+              <Image
+                source={require("../../../../assets/icon/orange.png")}
+                style={{ height: 80, width: 80 }}
+                resizeMode="contain"
+              />
+            </View>
+          </AnimatedPressable>
+        ) : null}
+        {isOrange && isOrange ? (
+          <Animatable.View
+            style={{ height: 200, width }}
+            animation="fadeInUp"
+            duration={300}
+            delay={300}
+          >
+            <View style={{ alignSelf: "center" }}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setNumeroOrg}
+                value={numeroOrg}
+                placeholder="Numero de Votre compte OrangeMoney"
+                keyboardType="number-pad"
+              />
+            </View>
+          </Animatable.View>
+        ) : null}
+
+        {!isXaalisi && !isOrange ? (
           <AnimatedPressable
             animation={isXaalisi ? "fadeOutLeft" : null}
             duration={300}
@@ -320,7 +388,7 @@ const Index = ({ navigation, route }) => {
                 setTimeout(() => {
                   console.log("fired");
                   scrollRef.scrollToEnd({ animated: true });
-                }, 1);
+                }, 10);
               }
             }}
           >
@@ -395,7 +463,7 @@ const Index = ({ navigation, route }) => {
           </Animatable.View>
         ) : null}
 
-        {isXaalisi || isBank ? (
+        {isXaalisi || isBank || isOrange ? (
           <TouchableOpacity style={styles.boutton}>
             <AntDesign name="checkcircle" size={30} color="#99D98c" />
             <Text style={styles.txtValider}>Valider</Text>

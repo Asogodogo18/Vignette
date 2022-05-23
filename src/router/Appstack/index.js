@@ -7,6 +7,7 @@ import Scan from "../../screen/scan";
 import Buy from "../../screen/client/Buy";
 import Manage from "../../screen/client/Manage";
 import Profil from "../../screen/admin/profil";
+import AdminStack from "../AdminStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ const Index = () => {
         component={Manage}
       />
       <Stack.Screen name="Profil" component={Profil} />
+      <Stack.Screen name="AdminStack" component={AdminStack} />
     </Stack.Navigator>
   );
 };
