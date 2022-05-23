@@ -222,6 +222,7 @@ const SearchBar = ({ navigation }) => {
         {!loadingText && <Text>Aucun resultat trouve </Text>}
         {searchResult && (
           <FlatList
+            nestedScrollEnabled
             data={searchResult}
             renderItem={({ item }) => (
               <RenderResul item={item} navigation={navigation} />

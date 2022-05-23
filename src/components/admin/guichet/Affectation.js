@@ -59,7 +59,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
     return () => {
       setaffectedAgent([]);
     };
-  }, [agentToAffect,agentToUnaffect]);
+  }, [agentToAffect, agentToUnaffect]);
 
   const handleUnaffect = () => {
     agentToUnaffect.forEach((el) => {
@@ -238,6 +238,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
             </View>
           ) : (
             <FlatList
+              nestedScrollEnabled
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 alignItems: "center",

@@ -270,6 +270,7 @@ const Index = ({ navigation }) => {
           ) : (
             <View>
               <FlatList
+                nestedScrollEnabled
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 20 }}
                 data={

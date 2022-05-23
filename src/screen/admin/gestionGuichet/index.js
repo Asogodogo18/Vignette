@@ -167,6 +167,7 @@ const Index = ({ navigation, item }) => {
         )}
         {data && data != "False" && (
           <FlatList
+            nestedScrollEnabled
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ marginVertical: 5, paddingHorizontal: 5 }}
             data={data}

@@ -7,7 +7,12 @@ import Vignette from "./Vignette";
 
 const VignetteList = () => {
   const { user } = useAuthState();
-  const { status, data, error, isFetching } = useVignette(user.id_user);
+  const {
+    status,
+    data: vignettes,
+    error,
+    isFetching,
+  } = useVignette(user.id_user);
   return (
     <View>
       <Text
@@ -30,10 +35,11 @@ const VignetteList = () => {
         </View>
       ) : (
         <FlatList
+          nestedScrollEnabled
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={data}
+          data={vignettes.data}
           renderItem={Vignette}
           keyExtractor={(item) => item.id_engin}
         />

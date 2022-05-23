@@ -13,14 +13,17 @@ const Stack = createNativeStackNavigator();
 export default function Index() {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
 
-  React.useEffect(async () => {
-    const appData = await AsyncStorage.getItem("isAppFirstLaunched");
-    if (appData == null) {
-      setIsAppFirstLaunched(false);
-      AsyncStorage.setItem("isAppFirstLaunched", "false");
-    } else {
-      setIsAppFirstLaunched(true);
+  React.useEffect(() => {
+    async function loadState() {
+      const appData = await AsyncStorage.getItem("isAppFirstLaunched");
+      if (appData == null) {
+        setIsAppFirstLaunched(false);
+        AsyncStorage.setItem("isAppFirstLaunched", "false");
+      } else {
+        setIsAppFirstLaunched(true);
+      }
     }
+    loadState();
 
     // AsyncStorage.removeItem('isAppFirstLaunched');
   }, []);

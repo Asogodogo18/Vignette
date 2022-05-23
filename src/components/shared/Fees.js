@@ -44,6 +44,7 @@ const Fees = ({ navigation }) => {
       )}
       {data && (
         <FlatList
+          nestedScrollEnabled
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
@@ -74,6 +75,7 @@ const Fees = ({ navigation }) => {
       )}
       {data && (
         <FlatList
+          nestedScrollEnabled
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}

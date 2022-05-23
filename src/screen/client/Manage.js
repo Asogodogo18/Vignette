@@ -13,9 +13,13 @@ import Vignette from "../../components/shared/Vignette";
 const Manage = ({ navigation }) => {
   // const { status, data, error, isFetching, isFetched} = useVignettes();
   const { user } = useAuthState();
-  const { status, data, error, isFetching, isFetched } = useVignette(
-    user ? user.id_user : null
-  );
+  const {
+    status,
+    data: vignettes,
+    error,
+    isFetching,
+    isFetched,
+  } = useVignette(user ? user.id_user : null);
   return (
     <View>
       <Text
@@ -30,20 +34,21 @@ const Manage = ({ navigation }) => {
         {" "}
         Mes Vignettes
       </Text>
-      {isFetching ? (
+      {isFetching && (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
           <ActivityIndicator size="large" />
         </View>
-      ) : (
+      )}
+      {isFetched && (
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             alignItems: "center",
             paddingBottom: 50,
           }}
-          data={data}
+          data={vignettes.data}
           renderItem={Vignette}
           keyExtractor={(item) => item.id_engin}
         />

@@ -212,6 +212,7 @@ const Index = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <FlatList
+        nestedScrollEnabled
         ref={ref}
         onMomentumScrollEnd={updateCurrentSlideIndex}
         // contentContainerStyle={{ height: height * 0.75 }}

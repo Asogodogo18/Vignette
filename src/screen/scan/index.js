@@ -300,6 +300,7 @@ const Index = ({ navigation }) => {
       {scannedData && (
         <BlurView tint="dark" intensity={10} style={styles.barcodeBox}>
           <FlatList
+            nestedScrollEnabled
             contentContainerStyle={{
               backgroundColor: "transparent",
               paddingTop: height / 3,

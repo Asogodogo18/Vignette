@@ -25,7 +25,8 @@ const Vignette = ({ item, modify = false }) => {
           textTransform: "capitalize",
         }}
       >
-        {item.prenom}
+        {" "}
+        {item.prenom}{" "}
         <Text
           style={{
             marginLeft: 10,
@@ -35,7 +36,8 @@ const Vignette = ({ item, modify = false }) => {
             fontWeight: "600",
           }}
         >
-          {item.nom}
+          {" "}
+          {item.nom}{" "}
         </Text>
       </Text>
       <View

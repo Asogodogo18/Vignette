@@ -19,6 +19,7 @@ const Guichet = () => {
   };
   return (
     <FlatList
+      nestedScrollEnabled
       data={GuichetData["Guichet"]}
       renderItem={renderGuichet}
       keyExtractor={(item) => item.id}

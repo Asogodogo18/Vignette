@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import React, { useState, useContext, useRef } from "react";
 
-import { VignetteContext } from "../../../global/vignetteContext";
 import Animated from "react-native-reanimated";
 
 import Buy from "../../client/Buy";
@@ -158,6 +157,7 @@ const Index = ({ navigation }) => {
                 </View>
               ) : (
                 <FlatList
+                  nestedScrollEnabled
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{
                     alignItems: "center",
