@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon/logobko.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.cirtic.vignette"
     },
     "web": {
       "favicon": "./assets/favicon.png"

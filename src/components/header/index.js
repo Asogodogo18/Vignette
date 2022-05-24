@@ -33,7 +33,7 @@ const Header = ({ navigation }) => {
           animation="fadeIn"
           duration={300}
           delay={500}
-          source={require("../../../assets/icon/logobko.png")}
+          source={require("../../../assets/icon/logobko1.png")}
           style={styles.img}
         />
         <Text style={styles.txtHeader}>Vignette Mali</Text>

@@ -11,33 +11,33 @@ const code = `
   completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
 }
 `;
-console.log("#############   Reading File   ###############");
+//console.log("#############   Reading File   ###############");
 fs.readFile(file, "utf8", function (error, data) {
   if (error) {
-    console.log("#############  error reading file  ###############");
-    console.error(error);
+    //console.log("#############  error reading file  ###############");
+    //console.error(error);
     return;
   }
   if (data.indexOf(code) < 0 && !isRemove) {
-    console.log("#############  Patch is not done.  ###############");
-    console.log("#############  Patching file  ###############");
+    //console.log("#############  Patch is not done.  ###############");
+    //console.log("#############  Patching file  ###############");
     var parts = data.split(delemeter);
     var newCodeBlock = parts[0] + delemeter + "\n" + code + "\n" + parts[1];
     fs.writeFile(file, newCodeBlock, function () {
-      console.log("#############  Successfully patched file  ###############");
-      console.log("#############  re build the ios project  ###############");
+      //console.log("#############  Successfully patched file  ###############");
+      //console.log("#############  re build the ios project  ###############");
     });
   } else {
     if (isRemove) {
       var updatedCode = data.replace(code, "");
       fs.writeFile(file, updatedCode, function () {
-        console.log(
+        //console.log(
           "#############  Successfully removed patch  ###############"
         );
-        console.log("#############  re build the ios project  ###############");
+        //console.log("#############  re build the ios project  ###############");
       });
     } else {
-      console.log(
+      //console.log(
         "#############  File already patched. No need again  ###############"
       );
     }

@@ -21,7 +21,7 @@ const Splach = ({ navigation }) => {
       <View>
         <View style={styles.header}>
           <Image
-            source={require("../../../../assets/icon/logobko.png")}
+            source={require("../../../../assets/icon/logobko1.png")}
             style={{ height: 150, width: 150, marginTop: 5 }}
             resizeMode="center"
           />
@@ -150,7 +150,7 @@ const Splach = ({ navigation }) => {
             <View style={styles.touch}>
               <Image
                 style={styles.img}
-                source={require("../../../../assets/icon/maire.png")}
+                source={require("../../../../assets/icon/maire_ad.png")}
               />
               <TouchableOpacity
                 onPress={() =>

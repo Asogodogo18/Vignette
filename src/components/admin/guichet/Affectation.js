@@ -19,6 +19,17 @@ import {
   unaffectAgent,
 } from "../../../services/query";
 import Toast from "react-native-toast-message";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 
 import Agent from "../../shared/Agent";
 import { Ionicons, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -35,12 +46,12 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
   const [agentToAffect, setagentToAffect] = useState([]);
   const [agentToUnaffect, setagentToUnaffect] = useState([]);
   const [affectedAgent, setaffectedAgent] = useState([]);
-  console.log("affected:", affectedAgent);
+  //console.log("affected:", affectedAgent);
 
   useEffect(() => {
     getAgentbyGuichet(item.id_guichet)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.data != "False") {
           res.data.map((item) => {
             setaffectedAgent([...affectedAgent, item.id_user]);
@@ -48,7 +59,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
         }
       })
       .catch((e) => {
-        console.log("error affectation:", e);
+        //console.log("error affectation:", e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",
@@ -65,7 +76,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
     agentToUnaffect.forEach((el) => {
       unaffectAgent({ id: item.id_guichet, user_id: el })
         .then((res) => {
-          console.log("reponse desaffectation:", res);
+          //console.log("reponse desaffectation:", res);
           if (res.data == "true") {
             Toast.show({
               type: "success",
@@ -92,7 +103,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
     agentToAffect.forEach((el) => {
       affectAgent({ id: item.id_guichet, user_id: el })
         .then((res) => {
-          console.log("reponse affectation:", res);
+          //console.log("reponse affectation:", res);
           if (res.data == "true") {
             Toast.show({
               type: "success",
@@ -234,7 +245,7 @@ const Affectation = ({ item, setCurrentLoader, currentLoader }) => {
                 justifyContent: "center",
               }}
             >
-              <ActivityIndicator size="large" />
+              <SkypeIndicator color="#99D98c" size={40} />
             </View>
           ) : (
             <FlatList

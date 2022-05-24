@@ -7,6 +7,17 @@ import {
 } from "react-native";
 import Tarif from "./Tarif";
 import { usePuissances } from "../../services/query";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 
 const Fees = ({ navigation }) => {
   const { status, data, error, isFetching } = usePuissances();
@@ -37,9 +48,14 @@ const Fees = ({ navigation }) => {
       </Text>
       {isFetching && (
         <View
-          style={{ flex: 1, alignContent: "center", justifyContent: "center" }}
+          style={{
+            flex: 1,
+            alignContent: "center",
+            justifyContent: "center",
+            marginTop: 50,
+          }}
         >
-          <ActivityIndicator size="large" animating />
+          <SkypeIndicator color="#99D98c" size={40} />
         </View>
       )}
       {data && (
@@ -68,9 +84,14 @@ const Fees = ({ navigation }) => {
       </Text>
       {isFetching && (
         <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          style={{
+            flex: 1,
+            alignContent: "center",
+            justifyContent: "center",
+            marginTop: 50,
+          }}
         >
-          <ActivityIndicator size="large" />
+          <SkypeIndicator color="#99D98c" size={40} />
         </View>
       )}
       {data && (

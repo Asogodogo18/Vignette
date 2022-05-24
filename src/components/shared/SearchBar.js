@@ -38,19 +38,19 @@ const SearchBar = ({ navigation }) => {
     setIsSearching(true);
     setLoadingText(false);
     if (query.isId) {
-      console.log("id requete");
+      //console.log("id requete");
 
       getVignetteById(query.valeur)
         .then((res) => {
           if (res.data && res.data != "False") {
-            console.log("requete bien passe", res);
+            //console.log("requete bien passe", res);
             setSearchResult(res.data);
           } else {
-            console.log("requete no passe", res);
+            //console.log("requete no passe", res);
           }
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
         })
         .finally(() => {
           setloading(false);
@@ -61,14 +61,14 @@ const SearchBar = ({ navigation }) => {
       getVignetteByChassis(query.valeur)
         .then((res) => {
           if (res.data && res.data != "False") {
-            console.log("requete bien passe", res);
+            //console.log("requete bien passe", res);
             setSearchResult(res.data);
           } else {
-            console.log("requete no passe", res);
+            //console.log("requete no passe", res);
           }
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
         })
         .finally(() => {
           setloading(false);
@@ -83,8 +83,8 @@ const SearchBar = ({ navigation }) => {
       setIsSearching(false);
       setIsFocused(false);
       setSearchResult([]);
-      console.log("back pressed");
-      console.log(isSearching);
+      //console.log("back pressed");
+      //console.log(isSearching);
       // if (isFocused && isSearching)
 
       // Alert.alert("Hold on!", "Are you sure you want to go back?", [

@@ -44,7 +44,7 @@ const Modify = ({ item, setCurrentLoader, currentLoader }) => {
       login,
     })
       .then((res) => {
-        console.log("change password:", res);
+        //console.log("change password:", res);
         if (res.data == "true") {
           queryClient.invalidateQueries("users");
           Toast.show({

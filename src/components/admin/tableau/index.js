@@ -2,10 +2,21 @@ import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import React from "react";
 import * as Animatable from "react-native-animatable";
 import { useStatistiques } from "../../../services/query";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 
 const Index = () => {
   const { data, error, isFetching } = useStatistiques();
-  console.log("statitistq", data);
+  //console.log("statitistq", data);
   return (
     <View>
       <Animatable.View
@@ -28,7 +39,7 @@ const Index = () => {
           <View style={styles.fond}>
             <Text style={styles.containerTitle}>
               {isFetching ? (
-                <ActivityIndicator size="small" color="white" animating />
+                <SkypeIndicator color="white" size={40} />
               ) : (
                 data.Total_vignette_en_circulation
               )}
@@ -42,7 +53,7 @@ const Index = () => {
           <View style={styles.fond}>
             <Text style={styles.containerTitle}>
               {isFetching ? (
-                <ActivityIndicator size="small" color="white" animating />
+                <SkypeIndicator color="white" size={40} />
               ) : (
                 data.TOTAL_VIGNETTE_AUJOURDHUI
               )}
@@ -66,7 +77,7 @@ const Index = () => {
           <View style={styles.fond}>
             <Text style={styles.containerTitle}>
               {isFetching ? (
-                <ActivityIndicator size="small" color="white" animating />
+                <SkypeIndicator color="white" size={40} />
               ) : (
                 data.CHIFFRE_AFFAIRE_AUJOURDHUI
               )}
@@ -80,7 +91,7 @@ const Index = () => {
           <View style={styles.fond}>
             <Text style={styles.containerTitle}>
               {isFetching ? (
-                <ActivityIndicator size="small" color="white" animating />
+                <SkypeIndicator color="white" size={40} />
               ) : (
                 data.TOTAL_VIGNETTE_PAYÉE_AUJOURDHUI
               )}

@@ -10,6 +10,17 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 import React, { useState } from "react";
 import Toast from "react-native-toast-message";
 import { Picker } from "@react-native-picker/picker";
@@ -22,13 +33,12 @@ import { updateVignette } from "../../../services/query";
 import * as Animatable from "react-native-animatable";
 import { useQueryClient } from "react-query";
 
-
 const { width, height } = Dimensions.get("screen");
 
 const Modify = ({ handlePress, item }) => {
   const { user, isSignedIn } = useAuthState();
   const condition = isSignedIn && user.role === "Client";
-  console.log("vignette:", item);
+  //console.log("vignette:", item);
   const queryClient = useQueryClient();
 
   const [name, setName] = useState(condition ? user.nom : item.nom);
@@ -54,16 +64,15 @@ const Modify = ({ handlePress, item }) => {
     };
     updateVignette(data)
       .then((res) => {
-        console.log("debut du requete", res);
+        //console.log("debut du requete", res);
         if (res.data === "true") {
           Toast.show({
             type: "success",
             text1: "Vos modifications ont ete enregistrer!",
           });
-          queryClient.invalidateQueries('vignettes'),
-          handlePress(null);
+          queryClient.invalidateQueries("vignettes"), handlePress(null);
         } else {
-          setEditable(true)
+          setEditable(true);
           Toast.show({
             type: "error",
             text1: "Une erreur est survenue, \nVeuillez ressayer!",
@@ -71,15 +80,15 @@ const Modify = ({ handlePress, item }) => {
         }
       })
       .catch((e) => {
-        console.log("error", e);
-        
-        setEditable(true)
+        //console.log("error", e);
+
+        setEditable(true);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",
           text2: e.toString(),
         });
-      })
+      });
   };
 
   return (
@@ -159,7 +168,7 @@ const Modify = ({ handlePress, item }) => {
                 style={[styles.button, { backgroundColor: "green" }]}
               >
                 {!editable ? (
-                  <ActivityIndicator size="large" />
+                  <SkypeIndicator color="#99D98c" size={40} />
                 ) : (
                   <Text style={styles.btnLabel}>Modifier</Text>
                 )}

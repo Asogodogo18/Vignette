@@ -34,7 +34,7 @@ function ChangePassword({ setCurrentLoader }) {
       id_user: user.id_user,
     })
       .then((res) => {
-        console.log("change password:", res);
+        //console.log("change password:", res);
         if (res.data == "true") {
           Toast.show({
             type: "success",

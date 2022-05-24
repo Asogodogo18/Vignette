@@ -13,6 +13,17 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 import React, { useState, useContext, useRef } from "react";
 
 import Animated from "react-native-reanimated";
@@ -42,7 +53,7 @@ const Index = ({ navigation }) => {
   const handleDelete = (id) => {
     deleteVignette(id)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.data === "true") {
           queryClient.invalidateQueries("vignettes"),
             Toast.show({
@@ -77,9 +88,6 @@ const Index = ({ navigation }) => {
           animation="fadeIn"
           delay={500}
           duration={300}
-          stickyHeaderHiddenOnScroll={true}
-          nestedScrollEnabled
-          stickyHeaderIndices={[0]}
           contentContainerStyle={styles.contain}
         >
           <View
@@ -138,12 +146,12 @@ const Index = ({ navigation }) => {
               onPress={() => handlePress("Ajouter")}
               style={styles.touch}
             >
-              <AntDesign name="addfolder" size={24} color="white" />
+              <AntDesign name="shoppingcart" size={24} color="white" />
               <Text style={styles.touchTxt}>Acheter</Text>
             </TouchableOpacity>
           </View>
 
-          <ScrollView>
+          <ScrollView nestedScrollEnabled>
             <View style={{ margin: 5, padding: 5 }}>
               {isFetching ? (
                 <View
@@ -151,9 +159,10 @@ const Index = ({ navigation }) => {
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
+                    marginTop: 170,
                   }}
                 >
-                  <ActivityIndicator size="large" />
+                  <SkypeIndicator color="#99D98c" size={40} />
                 </View>
               ) : (
                 <FlatList

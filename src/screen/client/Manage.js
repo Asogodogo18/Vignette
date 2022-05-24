@@ -5,6 +5,17 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 import React from "react";
 import { useVignette } from "../../services/query";
 import { useAuthState } from "../../global";
@@ -38,7 +49,7 @@ const Manage = ({ navigation }) => {
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-          <ActivityIndicator size="large" />
+          <SkypeIndicator color="#99D98c" size={40} />
         </View>
       )}
       {isFetched && (

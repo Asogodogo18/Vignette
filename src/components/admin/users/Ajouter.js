@@ -37,7 +37,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
   const handleAdd = () => {
     addUser({ name, prenom, phone, role, adresse, login, password })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.data == "true") {
           queryClient.invalidateQueries("users");
           Toast.show({
@@ -53,7 +53,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
         }
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",

@@ -9,7 +9,7 @@ const Guichet = () => {
   const [isChecked, setChecked] = useState(false);
   const [isDelete, setIsDelete] = useState(null);
   const renderGuichet = ({ item }) => {
-    console.log("item :", item);
+    //console.log("item :", item);
     <RenderGuichet
       item={item}
       // Visible={isVisible}

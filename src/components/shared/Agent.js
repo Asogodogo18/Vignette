@@ -9,6 +9,17 @@ import {
 import React, { useState, useEffect } from "react";
 import Checkbox from "expo-checkbox";
 const { width, height } = Dimensions.get("screen");
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 
 const Agent = ({
   item,
@@ -24,24 +35,24 @@ const Agent = ({
   });
   const [loading, setLoading] = useState(false);
 
-  console.log("agent:", item.id_user);
+  //console.log("agent:", item.id_user);
 
   useEffect(() => {
     setLoading(true);
     if (isChecked.check && !isChecked.init) {
       setagentToAffect([...agentToAffect, item.id_user]);
-      console.log("afected :", agentToAffect);
+      //console.log("afected :", agentToAffect);
     } else if (!isChecked.check && !isChecked.init) {
       setagentToAffect(agentToAffect.filter((el) => el !== item.id_user));
-      console.log("afected on:", agentToAffect);
+      //console.log("afected on:", agentToAffect);
     } else if (!isChecked.check && isChecked.init) {
       setagentToUnaffect([...agentToUnaffect, item.id_user]);
-      console.log("Unaffected :", agentToUnaffect);
+      //console.log("Unaffected :", agentToUnaffect);
     } else if (!isChecked.check && isChecked.init) {
       setagentToUnaffect(agentToUnaffect.filter((el) => el !== item.id_user));
       // if (agentToUnaffect.includes(item.id_user)) {
       // }
-      console.log("Unaffected on:", agentToUnaffect);
+      //console.log("Unaffected on:", agentToUnaffect);
     }
     setLoading(false);
 
@@ -71,7 +82,7 @@ const Agent = ({
   if (loading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator size="large" />
+        <SkypeIndicator color="#99D98c" size={40} />
       </View>
     );
   }

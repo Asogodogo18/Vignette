@@ -13,6 +13,17 @@ import {
   Animated,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 import Toast from "react-native-toast-message";
 
 import * as Animatable from "react-native-animatable";
@@ -89,10 +100,10 @@ const Index = ({ navigation }) => {
     }
   };
   const handleDelete = (id) => {
-    console.log("id", id);
+    //console.log("id", id);
     deleteUser(id)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.data == "true") {
           queryClient.invalidateQueries("users"),
             Toast.show({
@@ -107,7 +118,7 @@ const Index = ({ navigation }) => {
         }
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",
@@ -261,11 +272,12 @@ const Index = ({ navigation }) => {
             <View
               style={{
                 flex: 1,
-                alignItems: "center",
+                alignContent: "center",
                 justifyContent: "center",
+                marginVertical: 150,
               }}
             >
-              <ActivityIndicator size="small" animating />
+              <SkypeIndicator color="#99D98c" size={40} />
             </View>
           ) : (
             <View>
@@ -292,27 +304,21 @@ const Index = ({ navigation }) => {
                   `${item.id_user}-${item.nom}-${index}`
                 }
               />
-            </View>
-          )}
-          {filter && filter.length === 0 && (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                backgroundColor: "red",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 36,
-                  fontWeight: "700",
-                  textAlign: "center",
-                  textTransform: "capitalize",
-                }}
-              >
-                {" "}
-                Aucun résultat pour cette utilisateur
-              </Text>
+              {filter.length === 0 && (
+                <Text
+                  style={{
+                    fontSize: 36,
+                    fontWeight: "700",
+                    textAlign: "center",
+                    textTransform: "capitalize",
+                    marginTop: 120,
+                    color: "black",
+                  }}
+                >
+                  {" "}
+                  Aucun résultat pour cette utilisateur
+                </Text>
+              )}
             </View>
           )}
         </Animatable.View>

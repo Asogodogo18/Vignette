@@ -120,6 +120,18 @@ const Index = ({ navigation }) => {
                 <Text style={styles.text}>Changer de Mot de Passe</Text>
               </TouchableOpacity>
             </View>
+            <View
+              style={{
+                margin: 10,
+                padding: 5,
+                flexDirection: "row",
+                justifyContent: "space-around",
+                marginBottom: 15,
+              }}
+            >
+              <Text style={styles.txt}>Identifiant :</Text>
+              <Text style={styles.txt}>{user.id_user}</Text>
+            </View>
             <View style={styles.Card}>
               <View
                 style={{

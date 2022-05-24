@@ -12,6 +12,17 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 import { BlurView } from "expo-blur";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BarcodeMask from "react-native-barcode-mask";
@@ -39,13 +50,13 @@ const Index = ({ navigation }) => {
   const [scanned, setScanned] = useState(false);
 
   async function VerifyData(data) {
-    console.log(data);
+    //console.log(data);
     try {
       setIsLoading(true);
       axios
         .post(baseUrl, { id_user: data })
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setScannedData(res.data);
           setScanned(true);
         })
@@ -75,7 +86,7 @@ const Index = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
   const renderItem = ({ item }) => {
-    console.log("les item ", item.statut);
+    //console.log("les item ", item.statut);
     return (
       <AnimatedImg
         resizeMode="cover"
@@ -293,7 +304,7 @@ const Index = ({ navigation }) => {
             >
               En cours de vérification..
             </Text>
-            <ActivityIndicator size="large" color="#00ff00" />
+            <SkypeIndicator color="#99D98c" size={40} />
           </View>
         </BlurView>
       )}

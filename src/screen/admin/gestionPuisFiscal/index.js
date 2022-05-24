@@ -12,6 +12,17 @@ import {
   ActivityIndicator,
   LayoutAnimation,
 } from "react-native";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 import React, { useState, useEffect } from "react";
 import { BlurView } from "expo-blur";
 import * as Animatable from "react-native-animatable";
@@ -46,7 +57,7 @@ const Index = ({ navigation }) => {
   const handleDelete = (id) => {
     deletePuissance(id)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.data === "true") {
           let arr = data.filter(function (item) {
             return item.id_puissance !== id;
@@ -154,7 +165,7 @@ const Index = ({ navigation }) => {
                 justifyContent: "center",
               }}
             >
-              <ActivityIndicator size="large" />
+              <SkypeIndicator color="#99D98c" size={40} />
             </View>
           ) : (
             <FlatList

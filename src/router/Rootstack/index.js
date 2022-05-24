@@ -10,7 +10,7 @@ import { useAuthState } from "../../global";
 
 const Index = () => {
   const { user, isSignedIn } = useAuthState();
-  console.log(user);
+  //console.log(user);
   return (
     <RootStack.Navigator initialRouteName="Authstack">
       {isSignedIn ? (

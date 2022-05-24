@@ -12,6 +12,17 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from "react-native-indicators";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
@@ -104,8 +115,8 @@ const Index = ({ navigation, route }) => {
     //   // },
     // })
     //   .then((response) => response.json())
-    //   .then((json) => console.log(json))
-    //   .catch((e) => console.log(e));
+    //   .then((json) => //console.log(json))
+    //   .catch((e) => //console.log(e));
 
     if (data.username.length == 0 || data.password.length == 0) {
       Toast.show({
@@ -119,7 +130,7 @@ const Index = ({ navigation, route }) => {
       let response = await loginUser(dispatch, data); //loginUser action makes the request and handles all the neccessary state changes
       if (!response) return;
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -213,7 +224,7 @@ const Index = ({ navigation, route }) => {
             <View>
               <View style={{ marginTop: 10, alignItems: "center" }}>
                 {loading ? (
-                  <ActivityIndicator size="large" />
+                  <SkypeIndicator color="#99D98c" size={40} />
                 ) : (
                   <LinearGradient
                     colors={["#1a1818", "#FFFF"]}

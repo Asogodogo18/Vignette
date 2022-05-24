@@ -21,7 +21,7 @@ export function useVignettes() {
 //buy vignette
 export function buyVignetteMutation(data) {
   const { name, surname, phone, marque, type, noChassi, id, puissance } = data;
-  console.log("info:", data);
+  //console.log("info:", data);
   const sent = {
     id_agent: id,
     nom: name,
@@ -32,14 +32,14 @@ export function buyVignetteMutation(data) {
     numChassis: noChassi,
     id_puissance: puissance,
   };
-  console.log("sent:", sent);
+  //console.log("sent:", sent);
   return apiClient.post("vignettes/add", JSON.stringify(sent));
 }
 
 //buy vignette
 export const buyVignetteAgentMutation = (info) => {
   const { name, surname, phone, marque, type, noChassi, id } = info;
-  console.log("info:", info);
+  //console.log("info:", info);
   const sent = {
     id_agent: id,
     nom: name,
@@ -50,7 +50,7 @@ export const buyVignetteAgentMutation = (info) => {
     numChassis: noChassi,
     puissance,
   };
-  console.log("sent:", sent);
+  //console.log("sent:", sent);
   return apiClient.post("vignettes/add", JSON.stringify(sent));
 };
 
@@ -73,7 +73,7 @@ export function useVignette(Id) {
 //update vignette
 export function updateVignette(data) {
   let { marque, type, noChassi, id, puissance } = data;
-  console.log("donne envoyer :", data);
+  //console.log("donne envoyer :", data);
   const sent = {
     marque,
     type,
@@ -91,7 +91,7 @@ export const deleteVignette = (id) => {
 //update password
 export const updatePassword = (data) => {
   const { id_user, actuel, newpass, confirmpass } = data;
-  console.log(data);
+  //console.log(data);
   const sent = {
     id_user,
     actuel,
@@ -180,7 +180,7 @@ export const addUser = (sentForm) => {
     pass: password,
     role,
   };
-  console.log("adding user:", sent);
+  //console.log("adding user:", sent);
   return apiClient.post("/users/add", JSON.stringify(sent));
 };
 
@@ -212,24 +212,24 @@ export const getAgentbyGuichet = (id) => {
 //affectation guichet agent
 export const affectAgent = (sentForm) => {
   const { id, user_id } = sentForm;
-  console.log("affectation data:", sentForm);
+  //console.log("affectation data:", sentForm);
   const sent = {
     id_guichet: id,
     id_user: user_id,
   };
-  console.log("affectation data to be sent:", sent);
+  //console.log("affectation data to be sent:", sent);
   return apiClient.post("/affectations/add", JSON.stringify(sent));
 };
 
 //delete affectation
 export const unaffectAgent = (sentForm) => {
   const { id, user_id } = sentForm;
-  console.log("desaffectation data:", sentForm);
+  //console.log("desaffectation data:", sentForm);
   const sent = {
     guichet_id: id,
     user_id,
   };
-  console.log("desaffectation data to be sent:", sent);
+  //console.log("desaffectation data to be sent:", sent);
   return apiClient.post("/affectations/delete", JSON.stringify(sent));
 };
 

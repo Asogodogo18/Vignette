@@ -27,7 +27,7 @@ const AnimatedPressable = Animatable.createAnimatableComponent(Pressable);
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation, route }) => {
-  console.log("payment");
+  //console.log("payment");
   const { item } = route.params;
   const [isXaalisi, setIsXaalisi] = useState(false);
   const [isOrange, setIsOrange] = useState(false);
@@ -386,7 +386,7 @@ const Index = ({ navigation, route }) => {
 
               if (!isBank) {
                 setTimeout(() => {
-                  console.log("fired");
+                  //console.log("fired");
                   scrollRef.scrollToEnd({ animated: true });
                 }, 10);
               }
