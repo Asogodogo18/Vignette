@@ -219,7 +219,7 @@ const SearchBar = ({ navigation }) => {
             <ActivityIndicator size="large" />
           </View>
         )}
-        {!loadingText && <Text>Aucun resultat trouve </Text>}
+        {loadingText && <Text>Aucun resultat trouve </Text>}
         {searchResult && (
           <FlatList
             nestedScrollEnabled

@@ -8,6 +8,7 @@ import Buy from "../../screen/client/Buy";
 import Manage from "../../screen/client/Manage";
 import Profil from "../../screen/admin/profil";
 import AdminStack from "../AdminStack";
+import Transfer from "../../screen/client/Transfer";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,11 @@ const Index = () => {
         options={{ headerShown: true, headerTitleAlign: "center" }}
         name="Achat de Vignette"
         component={Buy}
+      />
+      <Stack.Screen
+        options={{ headerShown: true, headerTitleAlign: "center" }}
+        name="Transfer"
+        component={Transfer}
       />
       <Stack.Screen
         options={{ headerShown: true, headerTitleAlign: "center" }}

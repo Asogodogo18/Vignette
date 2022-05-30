@@ -34,8 +34,21 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
   const [adresse, setAdresse] = useState("");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [arrondi, setarrondi] = useState("");
+  const [matricule, setmatricule] = useState("");
+
   const handleAdd = () => {
-    addUser({ name, prenom, phone, role, adresse, login, password })
+    addUser({
+      name,
+      prenom,
+      phone,
+      role,
+      adresse,
+      login,
+      password,
+      arrondi,
+      matricule,
+    })
       .then((res) => {
         //console.log(res);
         if (res.data == "true") {
@@ -62,7 +75,7 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
       });
   };
   return (
-    <KeyboardAvoidingView behavior="position">
+    <KeyboardAvoidingView>
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -98,7 +111,9 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
                 //height: height - 190,
               }}
             >
-              <View style={{ padding: 5, margin: 10 }}>
+              <View
+                style={{ padding: 5, margin: 5, marginBottom: role ? 20 : 0 }}
+              >
                 <Text style={{ textAlign: "center", fontSize: 18 }}>
                   Veuillez Ajouter un Agent
                 </Text>
@@ -178,6 +193,22 @@ const Ajouter = ({ setCurrentLoader, currentLoader, navigation }) => {
                       })}
                   </Picker>
                 </View>
+                {role == "4" && (
+                  <View>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={setmatricule}
+                      value={matricule}
+                      placeholder="Numero Matricule"
+                    />
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={setarrondi}
+                      value={arrondi}
+                      placeholder="Numero d'arrondissement"
+                    />
+                  </View>
+                )}
 
                 <View style={styles.buttonGroup}>
                   <TouchableOpacity
@@ -314,7 +345,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "center",
     alignItems: "center",
-    height: height - 100,
+    height: height - 50,
   },
   input: {
     height: 45,

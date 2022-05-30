@@ -171,12 +171,12 @@ const Index = ({ navigation, item }) => {
               flex: 1,
               // alignContent: "center",
               // justifyContent: "center",
-              Top: 0,
-              bottom: 100,
-              left: 0,
-              right: 0,
-              position: "absolute",
-              zIndex: 100,
+              // Top: 0,
+              // bottom: 100,
+              // left: 0,
+              // right: 0,
+              // position: "absolute",
+              marginTop: 150,
             }}
           >
             <SkypeIndicator color="#99D98c" size={40} />

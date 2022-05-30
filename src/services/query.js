@@ -169,7 +169,17 @@ export function useUsers() {
 }
 
 export const addUser = (sentForm) => {
-  const { name, prenom, adresse, phone, login, password, role } = sentForm;
+  const {
+    name,
+    prenom,
+    adresse,
+    phone,
+    login,
+    password,
+    role,
+    arrondi: arrondissement,
+    matricule,
+  } = sentForm;
 
   const sent = {
     nom: name,
@@ -179,6 +189,8 @@ export const addUser = (sentForm) => {
     login,
     pass: password,
     role,
+    arrondissement,
+    matricule,
   };
   //console.log("adding user:", sent);
   return apiClient.post("/users/add", JSON.stringify(sent));

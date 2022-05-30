@@ -8,6 +8,7 @@ import {
   ImageBackground,
   ActivityIndicator,
   Dimensions,
+  Image,
 } from "react-native";
 import {
   BallIndicator,
@@ -25,10 +26,11 @@ import { useAuthState } from "../../global";
 import Tarif from "../../components/shared/Tarif";
 import { Picker } from "@react-native-picker/picker";
 import { BlurView } from "expo-blur";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { useQueryClient } from "react-query";
 import { buyVignetteMutation } from "../../services/query";
+import * as ImagePicker from "expo-image-picker";
 import * as Animatable from "react-native-animatable";
 
 const { width, height } = Dimensions.get("screen");
@@ -38,7 +40,7 @@ const Buy = ({ navigation, route }) => {
   const { user, isSignedIn } = useAuthState();
   const condition = isSignedIn && user.role === "Client";
   const { puissance } = route.params;
-
+  const [image, setImage] = useState([]);
   const [name, setName] = useState(condition ? user.nom : "");
   const [surname, setSurname] = useState(condition ? user.prenom : "");
   const [phone, setPhone] = useState(condition ? user.telephone : "");
@@ -88,6 +90,20 @@ const Buy = ({ navigation, route }) => {
           text2: e.toString(),
         });
       });
+  };
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [10, 13],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage([result.uri]);
+      console.log(image);
+    }
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -170,6 +186,25 @@ const Buy = ({ navigation, route }) => {
             placeholder="Numero de Chassis "
           />
 
+          <TouchableOpacity style={styles.quickselect} onPress={pickImage}>
+            <MaterialIcons name="add-photo-alternate" size={40} color="black" />
+            <Text style={styles.label}>
+              Veuillez ajouter la photo de votre Carte d'identite
+            </Text>
+          </TouchableOpacity>
+          {image.map((image, index) => {
+            return (
+              <View style={styles.photo}>
+                <Image
+                  source={{ uri: image }}
+                  style={styles.image}
+                  resizeMode="cover"
+                  key={index}
+                />
+              </View>
+            );
+          })}
+
           <View style={styles.buttonGroup}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
@@ -234,5 +269,41 @@ const styles = StyleSheet.create({
     color: "white",
     textTransform: "uppercase",
     fontSize: 14,
+  },
+  quickselect: {
+    // flex: 1,
+    margin: 10,
+    padding: 10,
+    backgroundColor: "beige",
+    elevation: 5,
+    borderRadius: 5,
+    height: 90,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 200,
+  },
+  label: {
+    fontSize: 14,
+    marginTop: 5,
+    textAlign: "center",
+  },
+  photo: {
+    width: 180,
+    height: 190,
+
+    marginTop: 10,
+    elevation: 20,
+    borderRadius: 10,
+    //overflow: "hidden",
+    //alignContent: "center",
+
+    // marginLeft: 5,
+    margin: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    height: "100%",
+    width: "100%",
   },
 });

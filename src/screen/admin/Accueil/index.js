@@ -87,7 +87,7 @@ const Index = ({ navigation }) => {
             fontSize: 20,
             fontWeight: "800",
             textAlign: "center",
-            margin: 5,
+            // margin: 5,
             padding: 5,
             color: "gray",
             textTransform: "uppercase",

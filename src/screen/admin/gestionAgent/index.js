@@ -90,6 +90,7 @@ const Index = ({ navigation }) => {
 
   const [operationItem, setOperationItem] = useState(null);
   const [filter, setFilter] = useState("Tout");
+  console.log("filtre", filter.toString());
 
   const handleMultipleDelete = () => {
     setIsDelete(!isDelete);
@@ -304,7 +305,8 @@ const Index = ({ navigation }) => {
                   `${item.id_user}-${item.nom}-${index}`
                 }
               />
-              {filter.length === 0 && (
+
+              {filter.toString() === " " && (
                 <Text
                   style={{
                     fontSize: 36,

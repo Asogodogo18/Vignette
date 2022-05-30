@@ -27,7 +27,7 @@ import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, AntDesign, Ionicons } from "@expo/vector-icons";
 
 import { loginUser, useAuthState, useAuthDispatch } from "../../../global";
 
@@ -37,6 +37,7 @@ import { Feather, FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation, route }) => {
   const { role } = route.params;
+
   const Navigation = useNavigation();
   const dispatch = useAuthDispatch(); //get the dispatch method from the useDispatch custom hook
   const { loading, errorMessage } = useAuthState(); //read the values of loading and errorMessage from context
@@ -136,9 +137,42 @@ const Index = ({ navigation, route }) => {
 
   return (
     <SafeAreaView forceInset={{ top: "always" }}>
+      <StatusBar barStyle="light-content" backgroundColor="black" />
       <ScrollView contentContainerStyle={styles.container}>
-        <StatusBar barStyle="llight-content" backgroundColor="black" />
-        <View style={styles.header}>
+        <View
+          style={{
+            marginTop: 5,
+            flexDirection: "row",
+            backgroundColor: "#1a1818",
+            alignItems: "center",
+            height: 75,
+            borderBottomLeftRadius: 25,
+            borderBottomRightRadius: 25,
+            // justifyContent: "space-between",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{ marginTop: 15, marginLeft: 20 }}
+          >
+            <Ionicons name="arrow-back" size={40} color="white" />
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "700",
+              color: "white",
+              letterSpacing: 2,
+              marginLeft: 60,
+              marginTop: 10,
+              textAlign: "center",
+              width: 120,
+            }}
+          >
+            {role}
+          </Text>
+        </View>
+        <View style={{ flex: 1 }}>
           <Image
             source={require("../../../../assets/logo.png")}
             style={styles.headerImg}
@@ -294,18 +328,23 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   header: {
-    flex: 2,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 50,
+    flex: 1,
+    height: 80,
+    width: width,
+    // backgroundColor: "red",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    zIndex: 100,
+    elevation: 2,
   },
   headerImg: {
     height: 120,
     width: "100%",
     // position: "absolute",
     // bottom: 20,
-    marginTop: 50,
+    marginTop: 20,
+    margin: 10,
+    alignSelf: "center",
   },
   footer: {
     backgroundColor: "#1a1818",

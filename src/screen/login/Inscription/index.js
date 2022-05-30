@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   Dimensions,
   TextInput,
-  
   StyleSheet,
   ScrollView,
   StatusBar,
   Image,
+  Pressable,
 } from "react-native";
+import Checkbox from "expo-checkbox";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
@@ -24,11 +25,14 @@ import {
 
 const { height, width } = Dimensions.get("screen");
 const Index = ({ navigation }) => {
+  const [isPolice, setIsPolice] = useState(false);
+  const [isPolitique, setIsPolitique] = useState(false);
   const Navigation = useNavigation();
   const [data, setData] = React.useState({
     username: "",
     password: "",
     confirm_password: "",
+    numeroCarte: "",
     check_textInputChange: false,
     secureTextEntry: true,
     confirm_secureTextEntry: true,
@@ -129,6 +133,60 @@ const Index = ({ navigation }) => {
               </Animatable.View>
             ) : null}
           </View>
+          <View style={styles.action}>
+            <FontAwesome5 name="address-card" size={20} color="gray" />
+            <TextInput
+              placeholder="Numero de carte d'identite"
+              placeholderTextColor="gray"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputChange(val)}
+            />
+          </View>
+          {/* <Pressable
+            style={{
+              margin: 10,
+              padding: 5,
+              flexDirection: "row",
+              // justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <Checkbox
+              style={{ width: 25, height: 25 }}
+              value={isPolice}
+              onValueChange={setIsPolice}
+              color={isPolice ? "gray" : undefined}
+            />
+            <Text
+              style={{
+                color: "gray",
+                marginLeft: 15,
+                fontSize: 15,
+                fontWeight: "400",
+              }}
+            >
+              Etes-Vous policier
+            </Text>
+          </Pressable>
+          {isPolice && (
+            <View style={{ height: 150, alignContent: "center" }}>
+              <TextInput
+                placeholder="votre numero Matricule"
+                placeholderTextColor="gray"
+                style={styles.input}
+                autoCapitalize="none"
+                onChangeText={(val) => textInputChange(val)}
+              />
+              <TextInput
+                placeholder="votre Arrondissement"
+                placeholderTextColor="gray"
+                style={styles.input}
+                autoCapitalize="none"
+                onChangeText={(val) => textInputChange(val)}
+              />
+            </View>
+          )} */}
           <Text style={styles.text_footer}>Telephone</Text>
           <View style={styles.action}>
             <Feather name="smartphone" size={20} color="gray" />
@@ -151,7 +209,7 @@ const Index = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                marginTop: 35,
+                marginTop: 5,
               },
             ]}
           >
@@ -180,7 +238,7 @@ const Index = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                marginTop: 35,
+                marginTop: 5,
               },
             ]}
           >
@@ -205,27 +263,15 @@ const Index = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.textPrivate}>
-            <Text style={{ color: "white" }}>
-              En vous inscrivant, vous acceptez notre
-            </Text>
-            <Text
-              style={[
-                styles.color_textPrivate,
-                { fontWeight: "bold", color: "white" },
-              ]}
-            >
-              {" "}
-              Conditions d'utilisation
-            </Text>
-            <Text style={{ color: "white" }}> et</Text>
-            <Text
-              style={[
-                styles.color_textPrivate,
-                { fontWeight: "bold", color: "white" },
-              ]}
-            >
-              {" "}
-              Politique de confidentialité
+            <Checkbox
+              style={{ width: 25, height: 25 }}
+              value={isPolitique}
+              onValueChange={setIsPolitique}
+              color={isPolitique ? "gray" : undefined}
+            />
+            <Text style={{ color: "white", fontSize: 15, fontWeight: "600" }}>
+              En vous inscrivant, vous acceptez notre Conditions d'utilisation
+              et Politique de confidentialité
             </Text>
           </View>
 
@@ -339,6 +385,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
+    alignItems: "center",
   },
   actionError: {
     flexDirection: "row",
@@ -349,10 +396,21 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    marginTop: 12,
+    marginTop: 5,
     paddingLeft: 10,
     color: "white",
     padding: 10,
+  },
+  input: {
+    alignSelf: "center",
+    margin: 10,
+    marginTop: 15,
+    color: "white",
+    borderWidth: 0.5,
+    borderColor: "gray",
+    padding: 10,
+    width: width - 90,
+    borderRadius: 15,
   },
   errorMsg: {
     color: "#FF0000",
@@ -394,5 +452,11 @@ const styles = StyleSheet.create({
     //marginLeft: 30,
     left: 30,
     textAlign: "center",
+  },
+  textPrivate: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 15,
+    alignItems: "center",
   },
 });
