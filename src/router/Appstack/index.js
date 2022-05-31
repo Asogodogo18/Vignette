@@ -9,6 +9,8 @@ import Manage from "../../screen/client/Manage";
 import Profil from "../../screen/admin/profil";
 import AdminStack from "../AdminStack";
 import Transfer from "../../screen/client/Transfer";
+import DetailTransfert from "../../screen/client/detailTransfert";
+import InitTransfert from "../../screen/client/initTransfert";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,16 @@ const Index = () => {
         options={{ headerShown: true, headerTitleAlign: "center" }}
         name="Transfer"
         component={Transfer}
+      />
+      <Stack.Screen
+        options={{ headerShown: true, headerTitleAlign: "center" }}
+        name="Detail"
+        component={DetailTransfert}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, headerTitleAlign: "center" }}
+        name="Initialisaton"
+        component={InitTransfert}
       />
       <Stack.Screen
         options={{ headerShown: true, headerTitleAlign: "center" }}

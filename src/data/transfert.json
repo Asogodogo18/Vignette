@@ -1,0 +1,50 @@
+{
+  "transfert": [
+    {
+      "id": 1,
+
+      "statut": "false",
+      "etat": "INIT",
+
+      "nom": "koite",
+      "prenom": "mouna",
+      "numero": "655554544445AN",
+      "telephone": "98192458",
+      "image": "../../assets/logo.png"
+    },
+    {
+      "id": 2,
+
+      "statut": "false",
+      "etat": "INIT",
+
+      "nom": "koitee",
+      "prenom": "mounaa",
+      "numero": "6555545o44445AN",
+      "telephone": "72192458",
+      "image": "../../assets/logo.png"
+    },
+
+    {
+      "id": 3,
+      "statut": "false",
+      "etat": "INIT",
+      "nom": "koitre",
+      "prenom": "Amouna",
+      "numero": "655554544445AN",
+      "telephone": "72188458",
+      "image": "../../assets/logo.png"
+    },
+    {
+      "id": 4,
+      "statut": "false",
+      "etat": "INIT",
+      "nom": "koitjre",
+      "prenom": "Amounna",
+      "numero": "655554544445AN",
+      "telephone": "72188458",
+      "image": "../../assets/logo.png"
+    }
+
+  ]
+}

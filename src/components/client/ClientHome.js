@@ -13,6 +13,7 @@ import VignetteList from "../shared/VignetteList";
 import { View } from "react-native-animatable";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAuthState } from "../../global";
+
 const { width, height } = Dimensions.get("screen");
 const ClientHome = ({ navigation }) => {
   const [openListing, setOpenListing] = useState(false);
@@ -68,19 +69,7 @@ const ClientHome = ({ navigation }) => {
     >
       {user.role === "Client" && <VignetteList />}
       <QuickSelect navigation={navigation} setOpenListing={setOpenListing} />
-      <View style={{}}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Transfer")}
-          style={styles.quickselect}
-        >
-          <MaterialCommunityIcons
-            name="transit-transfer"
-            size={30}
-            color="black"
-          />
-          <Text style={styles.label}>Effectuer une Transfer</Text>
-        </TouchableOpacity>
-      </View>
+
       <Fees navigation={navigation} />
     </ScrollView>
   );
