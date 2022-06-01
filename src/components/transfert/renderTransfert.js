@@ -12,7 +12,6 @@ import * as Animatable from "react-native-animatable";
 const { height, width } = Dimensions.get("screen");
 
 const renderTransfert = ({ item, navigation }) => {
-  const { detail } = item;
   return (
     <View style={styles.contain}>
       <TouchableOpacity
@@ -143,7 +142,7 @@ const renderTransfert = ({ item, navigation }) => {
               justifyContent: "center",
             }}
           >
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, marginLeft: 20, marginTop: 10 }}>
               <Text
                 style={{
                   fontSize: 15,

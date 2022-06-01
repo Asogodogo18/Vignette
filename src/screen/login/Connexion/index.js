@@ -11,18 +11,9 @@ import {
   ActivityIndicator,
   SafeAreaView,
   StatusBar,
+  KeyboardAvoidingView,
 } from "react-native";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
@@ -138,40 +129,45 @@ const Index = ({ navigation, route }) => {
   return (
     <SafeAreaView forceInset={{ top: "always" }}>
       <StatusBar barStyle="light-content" backgroundColor="black" />
-      <ScrollView contentContainerStyle={styles.container}>
-        <View
+      <View
+        style={{
+          marginTop: 5,
+          flexDirection: "row",
+          backgroundColor: "#1a1818",
+          alignItems: "center",
+          height: 75,
+          borderBottomLeftRadius: 25,
+          borderBottomRightRadius: 25,
+          justifyContent: "space-around",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ marginTop: 15, marginLeft: 20 }}
+        >
+          <Ionicons name="arrow-back" size={40} color="white" />
+        </TouchableOpacity>
+        <Text
           style={{
-            marginTop: 5,
-            flexDirection: "row",
-            backgroundColor: "#1a1818",
-            alignItems: "center",
-            height: 75,
-            borderBottomLeftRadius: 25,
-            borderBottomRightRadius: 25,
-            // justifyContent: "space-between",
+            fontSize: 18,
+            fontWeight: "700",
+            color: "white",
+            letterSpacing: 2,
+            // marginLeft: 60,
+            marginTop: 10,
+            textAlign: "center",
+            width: 120,
           }}
         >
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{ marginTop: 15, marginLeft: 20 }}
-          >
-            <Ionicons name="arrow-back" size={40} color="white" />
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "700",
-              color: "white",
-              letterSpacing: 2,
-              marginLeft: 60,
-              marginTop: 10,
-              textAlign: "center",
-              width: 120,
-            }}
-          >
-            {role}
-          </Text>
-        </View>
+          {role}
+        </Text>
+        <Image
+          source={require("../../../../assets/icon/logobko1.png")}
+          style={{ height: 40, width: 40, marginTop: 10 }}
+          resizeMode="cover"
+        />
+      </View>
+      <ScrollView contentContainerStyle={styles.container}>
         <View style={{ flex: 1 }}>
           <Image
             source={require("../../../../assets/logo.png")}
@@ -185,7 +181,7 @@ const Index = ({ navigation, route }) => {
           delay={500}
           style={styles.footer}
         >
-          <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 15 }}>
+          <View style={{ padding: 10 }}>
             <Text style={styles.text_footer}>Nom d'utilisateur ou E-mail</Text>
             <View style={styles.action}>
               <FontAwesome name="user-o" color="gray" size={20} />
@@ -313,7 +309,7 @@ const Index = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
             </View>
-          </ScrollView>
+          </View>
         </Animatable.View>
       </ScrollView>
     </SafeAreaView>
@@ -328,7 +324,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   header: {
-    flex: 1,
+    // flex: 1,
     height: 80,
     width: width,
     // backgroundColor: "red",
@@ -350,14 +346,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a1818",
     paddingHorizontal: 20,
     paddingVertical: 30,
-    elevation: 10,
+    elevation: 5,
     padding: 5,
     width: width - 15,
     alignSelf: "center",
-    // marginTop: -150,
-    marginVertical: 10,
+    marginTop: 5,
+    marginVertical: 0,
     borderRadius: 50,
     opacity: 0.5,
+    // marginBottom: 80,
   },
   text_header: {
     color: "black",

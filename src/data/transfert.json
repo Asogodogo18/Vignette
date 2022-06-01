@@ -1,5 +1,4 @@
-{
-  "transfert": [
+ [
     {
       "id": 1,
 
@@ -45,6 +44,4 @@
       "telephone": "72188458",
       "image": "../../assets/logo.png"
     }
-
   ]
-}

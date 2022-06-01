@@ -33,7 +33,7 @@ const Index = () => {
         component={Transfer}
       />
       <Stack.Screen
-        options={{ headerShown: true, headerTitleAlign: "center" }}
+        options={{ headerShown: false, headerTitleAlign: "center" }}
         name="Detail"
         component={DetailTransfert}
       />

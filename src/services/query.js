@@ -252,3 +252,19 @@ export function useStatistiques() {
     return data;
   });
 }
+
+export const transfertVignette = (sentForm) => {
+  const { id_engin, nouveau, ancien, image } = sentForm;
+  let data = new FormData();
+  data.append("nouveau", nouveau);
+  data.append("ancien", ancien);
+  data.append("id_engin", id_engin);
+  data.append("file[]", image);
+  return fetch("http://192.168.1.44/vignette/transfert", {
+    method: "post",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: data,
+  });
+};

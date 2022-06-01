@@ -21,7 +21,7 @@ import VignetteList from "../../components/shared/VignetteList";
 import Animated from "react-native-reanimated";
 import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { useVignette } from "../../services/query";
+import { transfertVignette, useVignette } from "../../services/query";
 import { useAuthState } from "../../global";
 const { height, width } = Dimensions.get("screen");
 
@@ -38,7 +38,7 @@ const VignetteSelection = ({ setSelectedVignette }) => {
   const RenderVignette = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => setSelectedVignette(item)}
+        onPress={() => setSelectedVignette({ item, ancien: user.id_user })}
         style={{
           height: 80,
           // borderBottomColor: "tomato",
@@ -111,6 +111,19 @@ const VignetteSelection = ({ setSelectedVignette }) => {
 const InitTransfert = ({ navigation }) => {
   const [selectedVignette, setSelectedVignette] = useState(null);
   const [image, setImage] = useState([]);
+  const [numero, setNumero] = useState("");
+  const [isTranfering, setIsTranfering] = useState(false);
+
+  const handleTransfert = () => {
+    transfertVignette({
+      image,
+      id_engin: selectedVignette.item.id_engin,
+      nouveau: numero,
+      ancien: selectedVignette.ancien,
+    })
+      .then((res) => console.log("transfert: ", res))
+      .catch((err) => console.log(err));
+  };
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -121,16 +134,22 @@ const InitTransfert = ({ navigation }) => {
     });
 
     if (!result.cancelled) {
-      setImage([result.uri]);
+      setImage([...image, result.uri]);
       console.log(image);
     }
   };
-
+  const onRemove = (index) => {
+    setImage([
+      ...image.slice(0, index),
+      ...image.slice(index + 1, image.length),
+    ]);
+  };
   if (selectedVignette) {
     return (
       <ImageBackground
         resizeMode="cover"
         source={require("../../../assets/bg_transfert1.png")}
+        style={{ height: height }}
       >
         <View
           style={{
@@ -164,35 +183,81 @@ const InitTransfert = ({ navigation }) => {
             resizeMode="cover"
           />
         </View>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "700",
-            color: "black",
-            marginLeft: 10,
-            padding: 5,
-          }}
-        >
-          Veuillez Entrer les informations suivantes
-        </Text>
-        <TouchableOpacity style={styles.quickselect} onPress={pickImage}>
-          <MaterialIcons name="add-photo-alternate" size={40} color="black" />
-          <Text style={styles.label}>
-            Veuillez ajouter la photo de votre Carte d'identite
+        <ScrollView>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "700",
+              color: "black",
+              marginLeft: 10,
+              padding: 5,
+            }}
+          >
+            Veuillez Entrer les informations suivantes
           </Text>
-        </TouchableOpacity>
-        {image.map((image, index) => {
-          return (
-            <View style={styles.photo}>
-              <Image
-                source={{ uri: image }}
-                style={styles.image}
-                resizeMode="cover"
-                key={index}
-              />
-            </View>
-          );
-        })}
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setNumero(text)}
+            value={numero}
+            placeholder="N° du Carte d'identite"
+          />
+          <ScrollView
+            horizontal
+            contentContainerStyle={{ flexDirection: "row", flexGrow: 1 }}
+          >
+            {image.map((image, index) => {
+              return (
+                <View style={styles.photo}>
+                  <TouchableOpacity
+                    onPress={() => onRemove(index)}
+                    style={{
+                      position: "absolute",
+                      top: 5,
+                      elevation: 5,
+                      right: 5,
+                      bottom: 0,
+                      zIndex: 100,
+                      backgroundColor: "white",
+                      height: 30,
+                      width: 30,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 20,
+                    }}
+                  >
+                    <Entypo name="circle-with-cross" size={27} color="red" />
+                  </TouchableOpacity>
+                  <Image
+                    source={{ uri: image }}
+                    style={styles.image}
+                    resizeMode="cover"
+                    key={index}
+                  />
+                </View>
+              );
+            })}
+          </ScrollView>
+          <TouchableOpacity style={styles.quickselect} onPress={pickImage}>
+            <MaterialIcons name="add-photo-alternate" size={40} color="black" />
+            <Text style={styles.label}>
+              Veuillez ajouter la photo de votre Carte d'identite
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              onPress={() => setSelectedVignette(null)}
+              style={[styles.button, { backgroundColor: "black" }]}
+            >
+              <Text style={styles.btnLabel}>Annuler</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleTransfert}
+              style={[styles.button, { backgroundColor: "green" }]}
+            >
+              <Text style={styles.btnLabel}>Ajouter</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </ImageBackground>
     );
   }
@@ -260,10 +325,10 @@ const styles = StyleSheet.create({
   },
   photo: {
     width: 180,
-    height: 190,
+    height: 180,
 
     marginTop: 10,
-    elevation: 20,
+    elevation: 0,
     borderRadius: 10,
     //overflow: "hidden",
     //alignContent: "center",
@@ -287,10 +352,42 @@ const styles = StyleSheet.create({
     height: 90,
     justifyContent: "center",
     alignItems: "center",
+    width: 280,
+    alignSelf: "center",
+    marginTop: 50,
   },
   label: {
     fontSize: 14,
     marginTop: 5,
     textAlign: "center",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    fontWeight: "bold",
+    alignSelf: "center",
+    width: 280,
+  },
+  button: {
+    margin: 10,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    width: width - 210,
+  },
+  btnLabel: {
+    color: "white",
+    textTransform: "uppercase",
+    fontSize: 14,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    height: 60,
+    marginTop: 60,
+    alignSelf: "center",
   },
 });
