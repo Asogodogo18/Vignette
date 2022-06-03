@@ -9,6 +9,8 @@ import Accueil from "../../screen/admin/Accueil";
 import Profil from "../../screen/admin/profil";
 import Buy from "../../screen/client/Buy";
 import Payment from "../../screen/admin/Payment";
+import Transfert from "../../screen/admin/transfert";
+import DetailTransfert from "../../screen/client/detailTransfert";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,12 @@ const Index = () => {
       <Stack.Screen name="Vignette" component={Vignette} />
       <Stack.Screen name="Profil" component={Profil} />
       <Stack.Screen name="Payment" component={Payment} />
+      <Stack.Screen name="Transfert" component={Transfert} />
+      <Stack.Screen
+        options={{ headerShown: false, headerTitleAlign: "center" }}
+        name="Detail"
+        component={DetailTransfert}
+      />
     </Stack.Navigator>
   );
 };

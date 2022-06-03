@@ -14,8 +14,11 @@ import useTransfert from "../../global/transfertContext";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import Data from "../../data/transfert";
 import RenderTransfert from "../../components/transfert/renderTransfert";
+import { useAuthState } from "../../global";
 const { width, height } = Dimensions.get("screen");
 const Transfer = ({ navigation }) => {
+  const { user } = useAuthState();
+  const condition = user.role === "Superviseur" || user.role == "Compta public";
   const {
     statut,
     etat,
@@ -43,7 +46,7 @@ const Transfer = ({ navigation }) => {
 
             <View style={{ padding: 10, margin: 5 }}>
               <Text>
-                Lorsque vous effectuer une Vente vous devriez intitie un
+                Lorsque vous effectuer une Vente vous devriez inititie un
                 Transfert
               </Text>
             </View>
@@ -67,17 +70,19 @@ const Transfer = ({ navigation }) => {
 
       {Data.length == 0 ? null : (
         <View style={{ flex: 1 }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Initialisaton")}
-            style={styles.btn}
-          >
-            <MaterialCommunityIcons
-              name="transit-transfer"
-              size={27}
-              color="white"
-            />
-            <Text style={styles.txt}>Initié une Transfert</Text>
-          </TouchableOpacity>
+          {!condition && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Initialisaton")}
+              style={styles.btn}
+            >
+              <MaterialCommunityIcons
+                name="transit-transfer"
+                size={27}
+                color="white"
+              />
+              <Text style={styles.txt}>Initié une Transfert</Text>
+            </TouchableOpacity>
+          )}
           <FlatList
             data={Data}
             renderItem={({ item }) => (

@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { SkypeIndicator } from "react-native-indicators";
 import * as ImagePicker from "expo-image-picker";
+import Toast from "react-native-toast-message";
 import { Picker } from "@react-native-picker/picker";
 import React, { useState, useContext, useRef } from "react";
 import VignetteList from "../../components/shared/VignetteList";
@@ -144,6 +145,7 @@ const InitTransfert = ({ navigation }) => {
       ...image.slice(index + 1, image.length),
     ]);
   };
+
   if (selectedVignette) {
     return (
       <ImageBackground
@@ -162,7 +164,11 @@ const InitTransfert = ({ navigation }) => {
             marginBottom: 15,
           }}
         >
-          <TouchableOpacity onPress={() => setSelectedVignette(null)}>
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedVignette(null), navigation.goBack();
+            }}
+          >
             <Ionicons name="ios-arrow-undo" size={30} color="white" />
           </TouchableOpacity>
 
@@ -240,7 +246,8 @@ const InitTransfert = ({ navigation }) => {
           <TouchableOpacity style={styles.quickselect} onPress={pickImage}>
             <MaterialIcons name="add-photo-alternate" size={40} color="black" />
             <Text style={styles.label}>
-              Veuillez ajouter la photo de votre Carte d'identite
+              Veuillez ajouter la photo de votre facture d'achat et votre papier
+              de vente
             </Text>
           </TouchableOpacity>
           <View style={styles.buttonGroup}>
@@ -348,11 +355,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "beige",
     elevation: 5,
-    borderRadius: 5,
+    borderRadius: 10,
     height: 90,
     justifyContent: "center",
     alignItems: "center",
-    width: 280,
+    width: 295,
     alignSelf: "center",
     marginTop: 50,
   },
@@ -362,14 +369,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    height: 40,
+    height: 50,
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 0.8,
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 15,
     fontWeight: "bold",
     alignSelf: "center",
-    width: 280,
+    width: 295,
+    backgroundColor: "white",
+    elevation: 5,
   },
   button: {
     margin: 10,

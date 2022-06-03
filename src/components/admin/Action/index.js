@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
+import { Badge } from "react-native-paper";
 
 const index = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.contain}>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity
           activeOpacity={0.8}
@@ -110,6 +111,36 @@ const index = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() =>
+          navigation.navigate("Adminstack", { screen: "Transfert" })
+        }
+      >
+        <View style={styles.touchTansfert}>
+          <Badge size={28} style={{ position: "absolute", right: 15, top: 12 }}>
+            9+
+          </Badge>
+          <View style={styles.coverIcon}>
+            <Image
+              source={require("../../../../assets/icon/transfert.png")}
+              style={{ height: 43, width: 43 }}
+              resizeMode="contain"
+            />
+          </View>
+
+          <Text
+            style={{
+              width: 200,
+              fontWeight: "bold",
+              fontSize: 17,
+              color: "gray",
+            }}
+          >
+            Validation du Transfert
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -117,6 +148,9 @@ const index = ({ navigation }) => {
 export default index;
 
 const styles = StyleSheet.create({
+  contain: {
+    flex: 1,
+  },
   touchAction: {
     flexDirection: "row",
     alignItems: "center",
@@ -134,8 +168,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   coverIcon: {
-    height: 60,
-    width: 60,
+    height: 65,
+    width: 65,
     backgroundColor: "#99D98c",
     borderRadius: 40,
     justifyContent: "center",
@@ -146,5 +180,22 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     padding: 15,
+  },
+  touchTansfert: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    backgroundColor: "white",
+    height: 95,
+    maxWidth: 340,
+    minWidth: 250,
+    margin: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+    borderRadius: 15,
+    marginLeft: 10,
   },
 });

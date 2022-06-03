@@ -157,7 +157,7 @@ export default Index;
 const styles = StyleSheet.create({
   contain: {
     flexGrow: 1,
-    paddingBottom: 40,
+    paddingBottom: 20,
     // backgroundColor: "#34A0A4",
     // backgroundColor: "#1a1818",
   },
