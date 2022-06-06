@@ -5,6 +5,36 @@ import { Badge } from "react-native-paper";
 const index = ({ navigation }) => {
   return (
     <View style={styles.contain}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() =>
+          navigation.navigate("Adminstack", { screen: "Transfert" })
+        }
+      >
+        <View style={styles.touchTansfert}>
+          <Badge size={28} style={{ position: "absolute", right: 15, top: 12 }}>
+            9+
+          </Badge>
+          <View style={styles.coverIcon}>
+            <Image
+              source={require("../../../../assets/icon/transfert.png")}
+              style={{ height: 43, width: 43 }}
+              resizeMode="contain"
+            />
+          </View>
+
+          <Text
+            style={{
+              width: 200,
+              fontWeight: "bold",
+              fontSize: 17,
+              color: "gray",
+            }}
+          >
+            Validation du Transfert
+          </Text>
+        </View>
+      </TouchableOpacity>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity
           activeOpacity={0.8}
@@ -111,36 +141,6 @@ const index = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() =>
-          navigation.navigate("Adminstack", { screen: "Transfert" })
-        }
-      >
-        <View style={styles.touchTansfert}>
-          <Badge size={28} style={{ position: "absolute", right: 15, top: 12 }}>
-            9+
-          </Badge>
-          <View style={styles.coverIcon}>
-            <Image
-              source={require("../../../../assets/icon/transfert.png")}
-              style={{ height: 43, width: 43 }}
-              resizeMode="contain"
-            />
-          </View>
-
-          <Text
-            style={{
-              width: 200,
-              fontWeight: "bold",
-              fontSize: 17,
-              color: "gray",
-            }}
-          >
-            Validation du Transfert
-          </Text>
-        </View>
-      </TouchableOpacity>
     </View>
   );
 };

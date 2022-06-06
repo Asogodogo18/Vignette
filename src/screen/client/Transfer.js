@@ -27,7 +27,7 @@ const Transfer = ({ navigation }) => {
     confirmTranfert,
     rejectTranfert,
   } = useTransfert();
-  console.log("data : ", Data);
+  // console.log("data : ", Data);
   return (
     <View style={styles.contain}>
       {Data.length == 0 && (

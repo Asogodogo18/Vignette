@@ -8,6 +8,7 @@ import Inscription from "../../screen/login/Inscription";
 import PassOublier from "../../screen/login/PassOublier";
 import Splash from "../../screen/login/Splach";
 import Ecran from "../../screen/login/Splach/splach";
+import EcranAccueil from "../../screen/ecranDaccueil";
 const Stack = createNativeStackNavigator();
 
 export default function Index() {
@@ -30,7 +31,7 @@ export default function Index() {
   return (
     isAppFirstLaunched != null && (
       <Stack.Navigator
-        initialRouteName="Ecran"
+        initialRouteName="Splash"
         screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
       >
         {isAppFirstLaunched && (
@@ -40,6 +41,7 @@ export default function Index() {
         <Stack.Screen name="Connexion" component={Connexion} />
         <Stack.Screen name="Inscription" component={Inscription} />
         <Stack.Screen name="PassOublier" component={PassOublier} />
+        <Stack.Screen name="EcranAccueil" component={EcranAccueil} />
       </Stack.Navigator>
     )
   );

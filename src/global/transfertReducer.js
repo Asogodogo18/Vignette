@@ -13,8 +13,8 @@ const transfertReducer = (state, action) => {
 
   switch (type) {
     case "INIT_TRANSFERT":
-      console.log("INIT_TRANSFERT", payload);
-      console.log("State", state);
+      // console.log("INIT_TRANSFERT", payload);
+      // console.log("State", state);
 
       return {
         ...state,
@@ -22,16 +22,16 @@ const transfertReducer = (state, action) => {
         detail: payload,
       };
     case "WAITING_TRANSFERT_APPROVAL":
-      console.log("INIT_TRANSFERT", payload);
-      console.log("State", state);
+      // console.log("INIT_TRANSFERT", payload);
+      // console.log("State", state);
 
       return {
         ...state,
         etat: "En attente d'approbation.",
       };
     case "TRANSFERT_SUCCESS":
-      console.log("TRANSFERT_SUCCESS", payload);
-      console.log("State", state);
+      // console.log("TRANSFERT_SUCCESS", payload);
+      // console.log("State", state);
 
       return {
         ...state,
@@ -40,8 +40,8 @@ const transfertReducer = (state, action) => {
         detail: payload,
       };
     case "TRANSFERT_FAIL":
-      console.log("TRANSFERT_FAIL", payload);
-      console.log("State", state);
+      // console.log("TRANSFERT_FAIL", payload);
+      // console.log("State", state);
 
       return {
         ...state,

@@ -124,6 +124,7 @@ const Index = ({ navigation, route }) => {
     } catch (error) {
       //console.log(error);
     }
+    console.log("connection", data);
   };
 
   return (
@@ -345,12 +346,12 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: "#1a1818",
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingVertical: 15,
     elevation: 5,
     padding: 5,
     width: width - 15,
     alignSelf: "center",
-    marginTop: 5,
+    marginTop: 20,
     marginVertical: 0,
     borderRadius: 50,
     opacity: 0.5,

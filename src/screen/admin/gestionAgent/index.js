@@ -90,7 +90,7 @@ const Index = ({ navigation }) => {
 
   const [operationItem, setOperationItem] = useState(null);
   const [filter, setFilter] = useState("Tout");
-  console.log("filtre", filter.toString());
+  // console.log("filtre", filter.toString());
 
   const handleMultipleDelete = () => {
     setIsDelete(!isDelete);

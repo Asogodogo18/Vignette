@@ -14,7 +14,7 @@ export async function loginUser(dispatch, loginPayload) {
     dispatch({ type: "REQUEST_LOGIN" });
     let response = await authUser(loginPayload);
     let data = await response.data;
-    //console.log("la reponse : ", response);
+    // console.log("la reponse : ", response);
     if (data === "False") {
       Toast.show({
         type: "error",

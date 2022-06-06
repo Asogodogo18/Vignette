@@ -11,6 +11,7 @@ import AdminStack from "../AdminStack";
 import Transfer from "../../screen/client/Transfer";
 import DetailTransfert from "../../screen/client/detailTransfert";
 import InitTransfert from "../../screen/client/initTransfert";
+import AchatVignette from "../../screen/achatVignette";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,7 @@ const Index = () => {
       />
       <Stack.Screen name="Profil" component={Profil} />
       <Stack.Screen name="AdminStack" component={AdminStack} />
+      <Stack.Screen name="AchatVignette" component={AchatVignette} />
     </Stack.Navigator>
   );
 };

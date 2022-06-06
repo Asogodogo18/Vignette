@@ -15,7 +15,7 @@ export const TransfertProvider = ({ children }) => {
   };
 
   const confirmTranfert = (payload) => {
-    console.log("remove:", payload);
+    // console.log("remove:", payload);
 
     dispatch({
       type: "TRANSFERT_SUCCESS",
@@ -23,7 +23,7 @@ export const TransfertProvider = ({ children }) => {
     });
   };
   const rejectTranfert = (payload) => {
-    console.log("remove:", payload);
+    // console.log("remove:", payload);
 
     dispatch({
       type: "TRANSFERT_FAIL",
