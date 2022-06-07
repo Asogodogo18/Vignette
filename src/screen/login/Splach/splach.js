@@ -36,6 +36,27 @@ const Splach = ({ navigation }) => {
             marginTop: -10,
           }}
         >
+          <View style={styles.touch1}>
+            <Image
+              style={{
+                width: "60%",
+                height: "60%",
+                resizeMode: "contain",
+                overflow: "hidden",
+                alignSelf: "center",
+                // marginTop: 15,
+              }}
+              source={require("../../../../assets/icon/anonyme.png")}
+            />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Appstack", { screen: "ClientHome" })
+              }
+              style={styles.containerTxt}
+            >
+              <Text style={styles.title}>Anonyme</Text>
+            </TouchableOpacity>
+          </View>
           <View
             style={{
               flexDirection: "row",
@@ -235,6 +256,20 @@ const styles = StyleSheet.create({
     elevation: 5,
     margin: 5,
     marginTop: 0,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  touch1: {
+    width: 195,
+    height: 150,
+    backgroundColor: "white",
+    borderRadius: 10,
+    elevation: 5,
+    margin: 5,
+    marginTop: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,

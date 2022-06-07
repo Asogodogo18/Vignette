@@ -11,6 +11,7 @@ import Buy from "../../screen/client/Buy";
 import Payment from "../../screen/admin/Payment";
 import Transfert from "../../screen/admin/transfert";
 import DetailTransfert from "../../screen/client/detailTransfert";
+import Client from "../../screen/Anonyme";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,11 @@ const Index = () => {
         options={{ headerShown: false, headerTitleAlign: "center" }}
         name="Detail"
         component={DetailTransfert}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, headerTitleAlign: "center" }}
+        name="Anonyme"
+        component={Anonyme}
       />
     </Stack.Navigator>
   );

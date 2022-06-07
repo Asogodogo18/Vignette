@@ -187,8 +187,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     backgroundColor: "white",
     height: 95,
-    maxWidth: 340,
-    minWidth: 250,
+    maxWidth: 400,
+    minWidth: 300,
     margin: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -196,6 +196,5 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     borderRadius: 15,
-    marginLeft: 10,
   },
 });

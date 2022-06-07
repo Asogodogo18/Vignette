@@ -529,7 +529,7 @@ const DetailTransfert = ({ route, navigation }) => {
           onPress={() => {}}
           style={[styles.button, { backgroundColor: "green" }]}
         >
-          <Text style={styles.btnLabel}>Ajouter</Text>
+          <Text style={styles.btnLabel}>Valider</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
