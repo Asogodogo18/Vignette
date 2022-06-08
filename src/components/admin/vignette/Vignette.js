@@ -276,7 +276,6 @@ const Vignette = ({
               alignItems: "center",
               borderRadius: 5,
               width: 350,
-
               minHeight: 250,
               maxHeight: 380,
             }}

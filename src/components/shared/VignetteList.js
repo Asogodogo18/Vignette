@@ -1,16 +1,6 @@
 import { Text, View, FlatList, ActivityIndicator } from "react-native";
 import { useVignette } from "../../services/query";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import { useAuthState } from "../../global";
 
 import Vignette from "./Vignette";
@@ -23,6 +13,7 @@ const VignetteList = () => {
     error,
     isFetching,
   } = useVignette(user.id_user);
+  // console.log("vignettes: ", vignettes.data);
   return (
     <View>
       <Text

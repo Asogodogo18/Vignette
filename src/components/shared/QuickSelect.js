@@ -6,8 +6,11 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { Badge } from "react-native-paper";
+import { useAuthState } from "../../global";
 
 const QuickSelect = ({ navigation, setOpenListing }) => {
+  const { user } = useAuthState();
+
   return (
     <View>
       <Text
@@ -23,25 +26,31 @@ const QuickSelect = ({ navigation, setOpenListing }) => {
         Actions Rapides
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Transfer")}
-          style={styles.quickselect}
-        >
-          <Badge size={24}>3</Badge>
-          <MaterialCommunityIcons
-            name="transit-transfer"
-            size={30}
-            color="black"
-          />
-          <Text style={styles.label}>Effectuer une Transfer</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.push("Gestion des Vignettes")}
-          style={styles.quickselect}
-        >
-          <AntDesign name="eyeo" size={24} color="black" />
-          <Text style={styles.label}>Voir Toutes Mes Vignettes</Text>
-        </TouchableOpacity>
+        {user.role != "Anonyme" && (
+          <>
+            {user.role !== "Agent" && (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Transfer")}
+                style={styles.quickselect}
+              >
+                <Badge size={24}>3</Badge>
+                <MaterialCommunityIcons
+                  name="transit-transfer"
+                  size={30}
+                  color="black"
+                />
+                <Text style={styles.label}>Effectuer une Transfer</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              onPress={() => navigation.push("Gestion des Vignettes")}
+              style={styles.quickselect}
+            >
+              <AntDesign name="eyeo" size={24} color="black" />
+              <Text style={styles.label}>Voir Toutes Mes Vignettes</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
       <TouchableOpacity
         onPress={() => setOpenListing(true)}

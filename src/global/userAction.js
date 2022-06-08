@@ -10,6 +10,16 @@ const ROOT_URL = "http://192.168.1.44/";
 
 export async function loginUser(dispatch, loginPayload) {
   const { role } = loginPayload;
+
+  if (role === "Anonyme") {
+    const user = {
+      nom: "anonyme",
+      prenom: "anonyme",
+      role: "Anonyme",
+    };
+    dispatch({ type: "LOGIN_SUCCESS", payload: user });
+    return;
+  }
   try {
     dispatch({ type: "REQUEST_LOGIN" });
     let response = await authUser(loginPayload);

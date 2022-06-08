@@ -32,7 +32,7 @@ export function buyVignetteMutation(data) {
     numChassis: noChassi,
     id_puissance: puissance,
   };
-  //console.log("sent:", sent);
+  console.log("sent:", sent);
   return apiClient.post("vignettes/add", JSON.stringify(sent));
 }
 

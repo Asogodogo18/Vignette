@@ -3,9 +3,8 @@ import Toast from "react-native-toast-message";
 // let user = getDataObject("currentUser")
 // let isSignedIn = new Boolean(getDataObject("currentUser")) ? true : false;
 
-
 export const initialState = {
-  user:{},
+  user: "",
   isSignedIn: false,
   loading: false,
   errorMessage: null,
@@ -36,7 +35,7 @@ export const AuthReducer = (initialState, action) => {
         isSignedIn: false,
       };
 
-    case "LOGIN_ERROR":     
+    case "LOGIN_ERROR":
       return {
         ...initialState,
         loading: false,

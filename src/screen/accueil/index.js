@@ -32,7 +32,8 @@ const Index = ({ navigation }) => {
     user.role === "Verificateur" ||
     user.role === "Maire" ||
     user.role === "Maire adjoint";
-  const conditionClient = user.role === "Client" || user === undefined;
+  const conditionClient = user.role === "Client" || user.role === "Anonyme";
+
   return (
     <SafeAreaView style={styles.contain}>
       <Header navigation={navigation} />

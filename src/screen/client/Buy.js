@@ -10,17 +10,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import React, { useState } from "react";
 import { useAuthState } from "../../global";
 import Tarif from "../../components/shared/Tarif";
@@ -29,7 +19,10 @@ import { BlurView } from "expo-blur";
 import { MaterialIcons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { useQueryClient } from "react-query";
-import { buyVignetteMutation } from "../../services/query";
+import {
+  buyVignetteMutation,
+  getVignetteByChassis,
+} from "../../services/query";
 import * as ImagePicker from "expo-image-picker";
 import * as Animatable from "react-native-animatable";
 
@@ -50,6 +43,7 @@ const Buy = ({ navigation, route }) => {
   const [editable, setEditable] = useState(true);
   const [postResult, setPostResult] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [queriedID, setQueriedID] = useState(null);
   const [isError, setIsError] = useState(false);
 
   const handleBuy = () => {
@@ -66,13 +60,30 @@ const Buy = ({ navigation, route }) => {
     };
     buyVignetteMutation(data)
       .then((res) => {
-        //console.log("debut du requete", res);
+        console.log("debut du requete", res);
         if (res.data === "true") {
           Toast.show({
             type: "success",
-            text1: "Vos modifications ont ete enregistrer!",
+            text1: "Votre vignette a ete enregistrer!",
           });
-          queryClient.invalidateQueries("vignettes"), navigation.goBack();
+          queryClient.invalidateQueries("vignettes");
+          if (user.role === "Agent") {
+            getVignetteByChassis(noChassi)
+              .then((res) => {
+                console.log("vignetteId: ", res);
+                if (res.data.length > 0 && res.data != "False") {
+                  const { id_engin } = res.data[0];
+                  navigation.navigate("Adminstack", {
+                    screen: "Payment",
+                    params: { id_engin },
+                  });
+                }
+                //
+              })
+              .catch((e) => {
+                console.log("erro :", e);
+              });
+          } else navigation.goBack();
         } else {
           setEditable(true);
           Toast.show({
@@ -82,7 +93,7 @@ const Buy = ({ navigation, route }) => {
         }
       })
       .catch((e) => {
-        //console.log("error", e);
+        console.log("error", e);
         setEditable(true);
         Toast.show({
           type: "error",
@@ -91,6 +102,7 @@ const Buy = ({ navigation, route }) => {
         });
       });
   };
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -113,7 +125,7 @@ const Buy = ({ navigation, route }) => {
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
         <Tarif item={puissance} navigation={navigation} />
-        <BlurView intensity={20} style={styles.inputBox}>
+        <BlurView intensity={90} style={styles.inputBox}>
           <TextInput
             style={styles.input}
             onChangeText={setName}

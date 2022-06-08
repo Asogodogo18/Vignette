@@ -170,7 +170,7 @@ const Vignette = ({ item, modify = false }) => {
         </Text>{" "}
         {item.num_chassis}
       </Text>
-      {!modify && !item.statut ? (
+      {/* {!modify && !item.statut ? (
         <BlurView
           intensity={70}
           tint="dark"
@@ -187,6 +187,14 @@ const Vignette = ({ item, modify = false }) => {
             flex: 1,
           }}
         >
+          {!item.statut ? (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Payment", { item })}
+              style={styles.btnBlur}
+            >
+              <MaterialIcons name="payment" size={30} color="white" />
+            </TouchableOpacity>
+          ) : null}
           <Text
             style={{
               fontSize: 25,
@@ -198,7 +206,7 @@ const Vignette = ({ item, modify = false }) => {
             En cours de Traitement
           </Text>
         </BlurView>
-      ) : null}
+      ) : null} */}
     </AnimatedImg>
   );
 };

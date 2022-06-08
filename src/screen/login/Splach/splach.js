@@ -14,7 +14,10 @@ import React from "react";
 const { width, height } = Dimensions.get("screen");
 
 import * as Animatable from "react-native-animatable";
+import { loginUser, useAuthDispatch } from "../../../global";
 const Splach = ({ navigation }) => {
+  const dispatch = useAuthDispatch();
+
   return (
     <SafeAreaView style={styles.contain}>
       <StatusBar />
@@ -49,9 +52,7 @@ const Splach = ({ navigation }) => {
               source={require("../../../../assets/icon/anonyme.png")}
             />
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Appstack", { screen: "ClientHome" })
-              }
+              onPress={() => loginUser(dispatch, { role: "Anonyme" })}
               style={styles.containerTxt}
             >
               <Text style={styles.title}>Anonyme</Text>

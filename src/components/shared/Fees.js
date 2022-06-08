@@ -7,17 +7,7 @@ import {
 } from "react-native";
 import Tarif from "./Tarif";
 import { usePuissances } from "../../services/query";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 
 const Fees = ({ navigation }) => {
   const { status, data, error, isFetching } = usePuissances();
