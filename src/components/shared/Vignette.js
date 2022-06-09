@@ -16,20 +16,22 @@ const Vignette = ({ item, modify = false }) => {
       duration={1000}
       delay={parseInt(item.id) * 500}
     >
-      <Text
-        style={{
-          marginLeft: 15,
-          fontSize: 20,
-          fontWeight: "200",
-          color: "white",
-          textTransform: "capitalize",
-        }}
-      >
-        {" "}
-        {item.prenom}{" "}
+      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
         <Text
           style={{
-            marginLeft: 10,
+            // marginLeft: 15,
+            fontSize: 20,
+            fontWeight: "200",
+            color: "white",
+            textTransform: "capitalize",
+          }}
+        >
+          {" "}
+          {item.prenom}{" "}
+        </Text>
+        <Text
+          style={{
+            // marginLeft: 10,
             fontSize: 20,
             color: "white",
             textTransform: "uppercase",
@@ -39,7 +41,8 @@ const Vignette = ({ item, modify = false }) => {
           {" "}
           {item.nom}{" "}
         </Text>
-      </Text>
+      </View>
+
       <View
         style={{
           flexDirection: "row",

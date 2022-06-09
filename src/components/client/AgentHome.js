@@ -9,7 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import VignetteList from "../shared/VignetteList";
 const { height, width } = Dimensions.get("screen");
-const AgentHome = ({ navigation }) => {
+const AgentHome = ({ navigation, item }) => {
   const [openListing, setOpenListing] = useState(false);
 
   if (openListing) {

@@ -22,10 +22,12 @@ import { useAuthState } from "../../../global";
 import { logout, useAuthDispatch } from "../../../global";
 import Modify from "../../../components/profile/Modify";
 import ChangePassword from "../../../components/profile/ChangePassword";
+import Anonyme from "../../../components/profile/Anonyme";
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation }) => {
   const { user } = useAuthState();
+  console.log("profile: ", user);
   const dispatch = useAuthDispatch();
   const [currentLoader, setCurrentLoader] = useState(null);
 
@@ -35,15 +37,12 @@ const Index = ({ navigation }) => {
   if (!currentLoader) {
     return (
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView ContentContainerStyle={styles.contain}>
           <Animatable.View
             animation="fadeIn"
             delay={500}
             duration={300}
-            stickyHeaderHiddenOnScroll={true}
-            nestedScrollEnabled
-            stickyHeaderIndices={[0]}
-            contentContainerStyle={styles.contain}
+            style={styles.contain}
           >
             <View
               style={{
@@ -78,129 +77,134 @@ const Index = ({ navigation }) => {
                 alignItems: "center",
                 backgroundColor: "#1a1818",
                 borderBottomRightRadius: 70,
-                height: 200,
+                height: 130,
               }}
             >
               <Image
                 source={require("../../../../assets/icon/profil.png")}
-                style={{ height: 170, width: 170 }}
+                style={{ height: 100, width: 170 }}
                 resizeMode="contain"
               />
             </View>
+            {user.role !== "Anonyme" ? (
+              <>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignSelf: "center",
+                    marginVertical: 0,
+                    width: width,
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={[styles.touch, { flex: 1 }]}
+                    onPress={() => handlePress("Modify")}
+                  >
+                    <MaterialCommunityIcons
+                      name="file-document-edit-outline"
+                      size={24}
+                      color="white"
+                    />
+                    <Text style={styles.text}>Modifier</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.touch, { flex: 2 }]}
+                    onPress={() => handlePress("Change")}
+                  >
+                    <MaterialCommunityIcons
+                      name="file-document-edit-outline"
+                      size={24}
+                      color="white"
+                    />
+                    <Text style={styles.text}>Changer de Mot de Passe</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    margin: 10,
+                    padding: 5,
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    marginBottom: 15,
+                  }}
+                >
+                  <Text style={styles.txt}>Identifiant :</Text>
+                  <Text style={styles.txt}>{user.id_user}</Text>
+                </View>
+                <View style={styles.Card}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginBottom: 15,
+                    }}
+                  >
+                    <Text style={styles.txt}>Nom :</Text>
+                    <Text style={styles.txt}>{user.nom}</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginBottom: 15,
+                    }}
+                  >
+                    <Text style={styles.txt}>Prénom :</Text>
+                    <Text style={styles.txt}>{user.prenom}</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginBottom: 15,
+                    }}
+                  >
+                    <FontAwesome name="phone-square" size={30} color="gray" />
+                    <Text style={styles.txt}>{user.telephone}</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginBottom: 15,
+                    }}
+                  >
+                    <Ionicons name="mail" size={30} color="gray" />
 
-            <View
-              style={{
-                flexDirection: "row",
-                alignSelf: "center",
-                marginVertical: 0,
-                width: width,
-                justifyContent: "space-around",
-              }}
-            >
-              <TouchableOpacity
-                style={[styles.touch, { flex: 1 }]}
-                onPress={() => handlePress("Modify")}
-              >
-                <MaterialCommunityIcons
-                  name="file-document-edit-outline"
-                  size={24}
-                  color="white"
-                />
-                <Text style={styles.text}>Modifier</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.touch, { flex: 2 }]}
-                onPress={() => handlePress("Change")}
-              >
-                <MaterialCommunityIcons
-                  name="file-document-edit-outline"
-                  size={24}
-                  color="white"
-                />
-                <Text style={styles.text}>Changer de Mot de Passe</Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                margin: 10,
-                padding: 5,
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginBottom: 15,
-              }}
-            >
-              <Text style={styles.txt}>Identifiant :</Text>
-              <Text style={styles.txt}>{user.id_user}</Text>
-            </View>
-            <View style={styles.Card}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 15,
-                }}
-              >
-                <Text style={styles.txt}>Nom :</Text>
-                <Text style={styles.txt}>{user.nom}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 15,
-                }}
-              >
-                <Text style={styles.txt}>Prénom :</Text>
-                <Text style={styles.txt}>{user.prenom}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 15,
-                }}
-              >
-                <FontAwesome name="phone-square" size={30} color="gray" />
-                <Text style={styles.txt}>{user.telephone}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 15,
-                }}
-              >
-                <Ionicons name="mail" size={30} color="gray" />
+                    <Text style={styles.txt}>{user.login}</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginBottom: 15,
+                    }}
+                  >
+                    <Ionicons name="md-location-sharp" size={30} color="gray" />
 
-                <Text style={styles.txt}>{user.login}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 15,
-                }}
-              >
-                <Ionicons name="md-location-sharp" size={30} color="gray" />
+                    <Text style={styles.txt}>{user.adresse}</Text>
+                  </View>
+                </View>
 
-                <Text style={styles.txt}>{user.adresse}</Text>
-              </View>
-            </View>
-
-            <View
-              style={{
-                alignSelf: "center",
-                marginVertical: 0,
-              }}
-            >
-              <TouchableOpacity
-                style={styles.touch}
-                onPress={() => logout(dispatch)}
-              >
-                <FontAwesome name="sign-out" size={24} color="white" />
-                <Text style={styles.text}>Déconnexion</Text>
-              </TouchableOpacity>
-            </View>
+                <View
+                  style={{
+                    alignSelf: "center",
+                    marginVertical: 0,
+                  }}
+                >
+                  <TouchableOpacity
+                    style={styles.touch}
+                    onPress={() => logout(dispatch)}
+                  >
+                    <FontAwesome name="sign-out" size={24} color="white" />
+                    <Text style={styles.text}>Déconnexion</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : (
+              <Anonyme />
+            )}
           </Animatable.View>
         </ScrollView>
       </SafeAreaView>
@@ -218,7 +222,8 @@ export default Index;
 
 const styles = StyleSheet.create({
   contain: {
-    flex: 1,
+    flexGrow: 1,
+    backgroundColor: "#FFF",
     // justifyContent: "center",
     // alignItems: "center",
   },

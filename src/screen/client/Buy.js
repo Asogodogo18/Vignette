@@ -33,7 +33,8 @@ const Buy = ({ navigation, route }) => {
   const { user, isSignedIn } = useAuthState();
   const condition = isSignedIn && user.role === "Client";
   const { puissance } = route.params;
-  const [image, setImage] = useState([]);
+  const [idpic, setIdpic] = useState([]);
+  const [certPick, setCertPick] = useState([]);
   const [name, setName] = useState(condition ? user.nom : "");
   const [surname, setSurname] = useState(condition ? user.prenom : "");
   const [phone, setPhone] = useState(condition ? user.telephone : "");
@@ -72,16 +73,16 @@ const Buy = ({ navigation, route }) => {
               .then((res) => {
                 console.log("vignetteId: ", res);
                 if (res.data.length > 0 && res.data != "False") {
-                  const { id_engin } = res.data[0];
-                  navigation.navigate("Adminstack", {
-                    screen: "Payment",
-                    params: { id_engin },
+                  const vignette = res.data[0];
+                  navigation.navigate("Payment", {
+                    item: vignette,
+                    id_user: user.id_user,
                   });
                 }
                 //
               })
               .catch((e) => {
-                console.log("erro :", e);
+                console.log("error :", e);
               });
           } else navigation.goBack();
         } else {
@@ -103,7 +104,7 @@ const Buy = ({ navigation, route }) => {
       });
   };
 
-  const pickImage = async () => {
+  const pickImage = async (index) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -113,8 +114,16 @@ const Buy = ({ navigation, route }) => {
     });
 
     if (!result.cancelled) {
-      setImage([result.uri]);
-      console.log(image);
+      switch (index) {
+        case 1:
+          setIdpic([result.uri]);
+          console.log(idpic);
+          break;
+        case 2:
+          setCertPick([result.uri]);
+          console.log(certPick);
+          break;
+      }
     }
   };
   return (
@@ -122,10 +131,15 @@ const Buy = ({ navigation, route }) => {
       <ImageBackground
         source={require("../../../assets/icon/bg-buy.png")}
         resizeMode="cover"
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        style={{
+          marginTop: 10,
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Tarif item={puissance} navigation={navigation} />
-        <BlurView intensity={90} style={styles.inputBox}>
+        <BlurView tint="light" intensity={100} style={styles.inputBox}>
           <TextInput
             style={styles.input}
             onChangeText={setName}
@@ -151,8 +165,8 @@ const Buy = ({ navigation, route }) => {
           <View
             style={{
               borderWidth: 1,
-              borderRadius: 15,
-              width: 210,
+              borderRadius: 8,
+              width: 250,
               height: 40,
               margin: 10,
             }}
@@ -172,14 +186,16 @@ const Buy = ({ navigation, route }) => {
           <View
             style={{
               borderWidth: 1,
-              borderRadius: 15,
-              width: 210,
+              borderRadius: 8,
+              width: 250,
               height: 40,
               margin: 10,
             }}
           >
             <Picker
-              style={{ marginTop: -10 }}
+              style={{
+                marginTop: -10,
+              }}
               selectedValue={type}
               mode="dropdown"
               onValueChange={(itemValue, itemIndex) => setType(itemValue)}
@@ -197,46 +213,100 @@ const Buy = ({ navigation, route }) => {
             value={noChassi}
             placeholder="Numero de Chassis "
           />
-
-          <TouchableOpacity style={styles.quickselect} onPress={pickImage}>
-            <MaterialIcons name="add-photo-alternate" size={40} color="black" />
-            <Text style={styles.label}>
-              Veuillez ajouter la photo de votre Carte d'identite
-            </Text>
-          </TouchableOpacity>
-          {image.map((image, index) => {
-            return (
-              <View style={styles.photo}>
-                <Image
-                  source={{ uri: image }}
-                  style={styles.image}
-                  resizeMode="cover"
-                  key={index}
-                />
-              </View>
-            );
-          })}
-
-          <View style={styles.buttonGroup}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={[styles.button, { backgroundColor: "black" }]}
-            >
-              <Text style={styles.btnLabel}>Annuler</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              disabled={isVisible}
-              onPress={handleBuy}
-              style={[styles.button, { backgroundColor: "green" }]}
-            >
-              {!editable ? (
-                <SkypeIndicator color="#99D98c" size={40} />
-              ) : (
-                <Text style={styles.btnLabel}>Acheter</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={styles.label}> Pièce d'identité</Text>
+              {idpic.length === 0 && (
+                <TouchableOpacity
+                  style={styles.quickselect}
+                  onPress={() => pickImage(1)}
+                >
+                  <MaterialIcons
+                    name="add-photo-alternate"
+                    size={40}
+                    color="black"
+                  />
+                  <Text style={styles.label}>
+                    Veuillez ajouter la photo de votre Pièce d'identité
+                  </Text>
+                </TouchableOpacity>
               )}
-            </TouchableOpacity>
+              {idpic.map((image, index) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => pickImage(1)}
+                    style={styles.photo}
+                    key={`id-{index}`}
+                  >
+                    <Image
+                      source={{ uri: image }}
+                      style={styles.image}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.label}> Facture d'Achat</Text>
+              {certPick.length === 0 && (
+                <TouchableOpacity
+                  style={styles.quickselect}
+                  onPress={() => pickImage(2)}
+                >
+                  <MaterialIcons
+                    name="add-photo-alternate"
+                    size={40}
+                    color="black"
+                  />
+                  <Text style={styles.label}>
+                    Veuillez ajouter la photo du document d'achat de l'engin
+                  </Text>
+                </TouchableOpacity>
+              )}
+              {certPick.map((image, index) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => pickImage(2)}
+                    style={styles.photo}
+                    key={`id-{index}`}
+                  >
+                    <Image
+                      source={{ uri: image }}
+                      style={styles.image}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
           </View>
         </BlurView>
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={[styles.button, { backgroundColor: "black" }]}
+          >
+            <Text style={styles.btnLabel}>Annuler</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={isVisible}
+            onPress={handleBuy}
+            style={[styles.button, { backgroundColor: "green" }]}
+          >
+            {!editable ? (
+              <SkypeIndicator color="#99D98c" size={40} />
+            ) : (
+              <Text style={styles.btnLabel}>Acheter</Text>
+            )}
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </ScrollView>
   );
@@ -249,20 +319,24 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   inputBox: {
-    paddingVertical: 40,
+    marginTop: 10,
+    paddingVertical: 20,
     paddingHorizontal: 10,
     justifyContent: "center",
     alignItems: "center",
+    margin: 8,
+    borderRadius: 8,
   },
   input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    paddingLeft: 20,
     borderRadius: 8,
     fontWeight: "bold",
 
-    width: 200,
+    width: 250,
   },
   buttonGroup: {
     flexDirection: "row",
@@ -289,10 +363,9 @@ const styles = StyleSheet.create({
     backgroundColor: "beige",
     elevation: 5,
     borderRadius: 5,
-    height: 90,
+    minHeight: 90,
     justifyContent: "center",
     alignItems: "center",
-    width: 200,
   },
   label: {
     fontSize: 14,
@@ -300,19 +373,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   photo: {
-    width: 180,
-    height: 190,
-
+    width: 110,
+    height: 120,
     marginTop: 10,
     elevation: 20,
     borderRadius: 10,
+    alignSelf: "center",
     //overflow: "hidden",
     //alignContent: "center",
-
-    // marginLeft: 5,
-    margin: 5,
-    justifyContent: "center",
-    alignItems: "center",
   },
   image: {
     height: "100%",

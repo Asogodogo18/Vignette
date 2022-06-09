@@ -110,7 +110,7 @@ const Splach = ({ navigation }) => {
                 }
                 style={styles.containerTxt}
               >
-                <Text style={styles.title}>Police</Text>
+                <Text style={styles.title}>Agent de controls</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.touch}>

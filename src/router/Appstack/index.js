@@ -8,9 +8,11 @@ import Buy from "../../screen/client/Buy";
 import Manage from "../../screen/client/Manage";
 import Profil from "../../screen/admin/profil";
 import AdminStack from "../AdminStack";
-import Transfer from "../../screen/client/Transfer";
+import Transfer from "../../screen/admin/transfert";
 import DetailTransfert from "../../screen/client/detailTransfert";
 import InitTransfert from "../../screen/client/initTransfert";
+import Payment from "../../screen/Payment";
+import Inscription from "../../screen/login/Inscription";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +30,7 @@ const Index = () => {
         component={Buy}
       />
       <Stack.Screen
-        options={{ headerShown: true, headerTitleAlign: "center" }}
+        options={{ headerShown: false, headerTitleAlign: "center" }}
         name="Transfer"
         component={Transfer}
       />
@@ -48,7 +50,9 @@ const Index = () => {
         component={Manage}
       />
       <Stack.Screen name="Profil" component={Profil} />
+      <Stack.Screen name="Payment" component={Payment} />
       <Stack.Screen name="AdminStack" component={AdminStack} />
+      <Stack.Screen name="Inscription" component={Inscription} />
     </Stack.Navigator>
   );
 };

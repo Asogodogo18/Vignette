@@ -21,14 +21,17 @@ import {
   AntDesign,
   Ionicons,
 } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const AnimatedPressable = Animatable.createAnimatableComponent(Pressable);
+import Vignette from "../../components/shared/Vignette";
+import { makePaymentAgent } from "../../services/query";
 
 const { width, height } = Dimensions.get("screen");
 
 const Index = ({ navigation, route }) => {
   //console.log("payment");
-  const { item } = route.params;
+  const { item, id_user } = route.params;
   const [isXaalisi, setIsXaalisi] = useState(false);
   const [isOrange, setIsOrange] = useState(false);
   const [isBank, setIsBank] = useState(false);
@@ -37,8 +40,31 @@ const Index = ({ navigation, route }) => {
   const [numero, setNumero] = useState(false);
   const [numeroOrg, setNumeroOrg] = useState(false);
   const [cv, setCv] = useState(false);
+  const [isCash, setIsCash] = useState(false);
 
   const [scrollRef, setScrollRef] = useState(null);
+
+  const handlePayment = () => {
+    if (isCash) {
+      makePaymentAgent({ id_user, id_engin: item.id_engin })
+        .then((res) => {
+          if (res.data === "true") {
+            Toast.show({
+              type: "success",
+              text1: "Paiement effectué avec success!",
+            });
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "une erreur est produits alors du paiement!",
+              text2: "Veuillez réessayer encore",
+            });
+          }
+          console.log("payment: ", res);
+        })
+        .catch((e) => console.log(e));
+    }
+  };
 
   return (
     <SafeAreaView style={styles.contain}>
@@ -64,7 +90,7 @@ const Index = ({ navigation, route }) => {
             animation="fadeIn"
             duration={300}
             delay={500}
-            source={require("../../../../assets/icon/logobko.png")}
+            source={require("../../../assets/icon/logobko1.png")}
             style={styles.img}
           />
         </View>
@@ -74,185 +100,59 @@ const Index = ({ navigation, route }) => {
         scrollToOverflowEnabled="true"
         style={{ flexGrow: 1 }}
       >
-        <AnimatedImg
-          resizeMode="cover"
-          source={require("../../../../assets/bg.png")}
-          animation="fadeInRight"
-          style={styles.vignette}
-          duration={1000}
-          delay={parseInt(item.id) * 500}
-        >
-          <Text
-            style={{
-              marginLeft: 15,
-              fontSize: 25,
-              fontWeight: "400",
-              color: "white",
-              textTransform: "capitalize",
-              textAlign: "center",
+        <View style={{ alignSelf: "center", marginTop: 80 }}>
+          <Vignette item={item} />
+        </View>
 
-              zIndex: 100,
-            }}
-          >
-            {item.prenom}
-            {"    "}
-            <Text
-              style={{
-                fontSize: 25,
-                color: "white",
-                textTransform: "uppercase",
-                fontWeight: "600",
-              }}
-            >
-              {item.nom}
-              {"    "}
-            </Text>
-          </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 15,
-              justifyContent: "center",
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "white",
-                  textTransform: "capitalize",
-                }}
-              >
-                Marque
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 15,
-                  fontSize: 15,
-                  color: "white",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.marque}
-                {"    "}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "white",
-                  textTransform: "capitalize",
-                  marginLeft: 40,
-                }}
-              >
-                utilisation
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 50,
-                  fontSize: 15,
-                  color: "white",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.utilisation}
-                {"    "}
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 10,
-              justifyContent: "center",
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "white",
-                  textTransform: "capitalize",
-                }}
-              >
-                Type
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 15,
-                  fontSize: 15,
-                  color: "white",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.type}
-                {"    "}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "200",
-                  color: "white",
-                  textTransform: "capitalize",
-                  marginLeft: 40,
-                }}
-              >
-                Montant
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 50,
-                  fontSize: 15,
-                  color: "white",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.montant}
-                {"    "}
-              </Text>
-            </View>
-          </View>
-          <Text
-            style={{
-              marginTop: 20,
-              textAlign: "center",
-              fontSize: 15,
-              color: "white",
-              textTransform: "uppercase",
-              fontWeight: "bold",
-              zIndex: 100,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "200",
-                color: "white",
-                textTransform: "capitalize",
-                marginTop: 20,
-                zIndex: 100,
-              }}
-            >
-              No Chassis :
-            </Text>
-            {"  "}
-            {item.num_chassis}
-          </Text>
-        </AnimatedImg>
         <View style={styles.section}>
           <Text style={styles.txt}>Mode de Payment</Text>
         </View>
-        {!isBank && !isOrange && !isOrange ? (
+        {!isBank && !isXaalisi && !isOrange ? (
+          <AnimatedPressable
+            animation={isBank ? "fadeOutLeft" : null}
+            duration={300}
+            delay={300}
+            style={{
+              flexDirection: "row",
+              marginLeft: 10,
+              alignItems: "center",
+              // justifyContent: "flex-start",
+            }}
+            onPress={() => setIsCash(!isCash)}
+          >
+            <Checkbox
+              style={[styles.checkbox, { flex: 0 }]}
+              value={isCash}
+              onValueChange={setIsCash}
+            />
+            <View style={{ flex: 6 }}>
+              <Text style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}>
+                Espèce
+              </Text>
+              <Text style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}>
+                Payé directement dans un guichet ou chez un agent.
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 4,
+                alignItems: "center",
+                justifyContent: "space-around",
+                marginVertical: 10,
+                margin: 5,
+                padding: 5,
+              }}
+            >
+              <Image
+                source={require("../../../assets/icon/cfa.png")}
+                style={{ height: 60, width: 60 }}
+                resizeMode="contain"
+              />
+            </View>
+          </AnimatedPressable>
+        ) : null}
+        {!isBank && !isOrange && !isCash ? (
           <AnimatedPressable
             animation={isBank ? "fadeOutLeft" : null}
             duration={300}
@@ -290,14 +190,14 @@ const Index = ({ navigation, route }) => {
               }}
             >
               <Image
-                source={require("../../../../assets/icon/xaalisi.png")}
+                source={require("../../../assets/icon/xaalisi.png")}
                 style={{ height: 80, width: 80 }}
                 resizeMode="contain"
               />
             </View>
           </AnimatedPressable>
         ) : null}
-        {isXaalisi && isXaalisi ? (
+        {isXaalisi ? (
           <Animatable.View
             style={{ backgroundColor: "blue", height: 200, width }}
             animation="fadeInUp"
@@ -306,7 +206,7 @@ const Index = ({ navigation, route }) => {
           ></Animatable.View>
         ) : null}
 
-        {!isBank && !isXaalisi ? (
+        {!isBank && !isXaalisi && !isCash ? (
           <AnimatedPressable
             animation={isBank ? "fadeOutLeft" : null}
             duration={300}
@@ -344,14 +244,15 @@ const Index = ({ navigation, route }) => {
               }}
             >
               <Image
-                source={require("../../../../assets/icon/orange.png")}
-                style={{ height: 80, width: 80 }}
+                source={require("../../../assets/icon/orange.png")}
+                style={{ height: 60, width: 60 }}
                 resizeMode="contain"
               />
             </View>
           </AnimatedPressable>
         ) : null}
-        {isOrange && isOrange ? (
+
+        {isOrange ? (
           <Animatable.View
             style={{ height: 200, width }}
             animation="fadeInUp"
@@ -370,7 +271,7 @@ const Index = ({ navigation, route }) => {
           </Animatable.View>
         ) : null}
 
-        {!isXaalisi && !isOrange ? (
+        {!isXaalisi && !isOrange && !isCash ? (
           <AnimatedPressable
             animation={isXaalisi ? "fadeOutLeft" : null}
             duration={300}
@@ -417,14 +318,15 @@ const Index = ({ navigation, route }) => {
               }}
             >
               <Image
-                source={require("../../../../assets/icon/carte.png")}
-                style={{ height: 80, width: 80 }}
+                source={require("../../../assets/icon/carte.png")}
+                style={{ height: 60, width: 60 }}
                 resizeMode="contain"
               />
             </View>
           </AnimatedPressable>
         ) : null}
-        {isBank && isBank ? (
+
+        {isBank ? (
           <Animatable.View
             style={{ width }}
             animation="fadeInUp"
@@ -463,8 +365,8 @@ const Index = ({ navigation, route }) => {
           </Animatable.View>
         ) : null}
 
-        {isXaalisi || isBank || isOrange ? (
-          <TouchableOpacity style={styles.boutton}>
+        {isXaalisi || isBank || isOrange || isCash ? (
+          <TouchableOpacity onPress={handlePayment} style={styles.boutton}>
             <AntDesign name="checkcircle" size={30} color="#99D98c" />
             <Text style={styles.txtValider}>Valider</Text>
           </TouchableOpacity>

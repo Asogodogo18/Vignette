@@ -268,3 +268,7 @@ export const transfertVignette = (sentForm) => {
     body: data,
   });
 };
+
+export const makePaymentAgent = (data) => {
+  return apiClient.post("/paiements", JSON.stringify(data));
+};

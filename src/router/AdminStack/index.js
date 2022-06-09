@@ -8,7 +8,7 @@ import Vignette from "../../screen/admin/gestionVignette";
 import Accueil from "../../screen/admin/Accueil";
 import Profil from "../../screen/admin/profil";
 import Buy from "../../screen/client/Buy";
-import Payment from "../../screen/admin/Payment";
+import Payment from "../../screen/Payment";
 import Transfert from "../../screen/admin/transfert";
 import DetailTransfert from "../../screen/client/detailTransfert";
 

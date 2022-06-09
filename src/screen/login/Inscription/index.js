@@ -25,14 +25,14 @@ import {
 
 const { height, width } = Dimensions.get("screen");
 const Index = ({ navigation }) => {
-  const [isPolice, setIsPolice] = useState(false);
   const [isPolitique, setIsPolitique] = useState(false);
   const Navigation = useNavigation();
   const [data, setData] = React.useState({
     username: "",
     password: "",
     confirm_password: "",
-    numeroCarte: "",
+    nom: "",
+    prenom: "",
     check_textInputChange: false,
     secureTextEntry: true,
     confirm_secureTextEntry: true,
@@ -97,11 +97,11 @@ const Index = ({ navigation }) => {
         style={styles.footer}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <Text style={styles.text_footer}>Username</Text>
+          <Text style={styles.text_footer}>Nom d'utilisateur</Text>
           <View style={styles.action}>
             <FontAwesome name="user-o" color="gray" size={20} />
             <TextInput
-              placeholder="Votre Username"
+              placeholder="Votre Nom d'utilisateur"
               placeholderTextColor="gray"
               style={styles.textInput}
               autoCapitalize="none"
@@ -113,7 +113,23 @@ const Index = ({ navigation }) => {
               </Animatable.View>
             ) : null}
           </View>
-          <Text style={styles.text_footer}>E-mail</Text>
+          <Text style={styles.text_footer}>Nom</Text>
+          <View style={styles.action}>
+            <FontAwesome name="user-o" color="gray" size={20} />
+            <TextInput
+              placeholder="Votre Nom"
+              placeholderTextColor="gray"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputChange(val)}
+            />
+            {data.check_textInputChange ? (
+              <Animatable.View animation="bounceIn">
+                <Feather name="check-circle" color="green" size={20} />
+              </Animatable.View>
+            ) : null}
+          </View>
+          <Text style={styles.text_footer}>Prenom</Text>
           <View style={styles.action}>
             <MaterialCommunityIcons
               name="email-outline"
@@ -121,7 +137,7 @@ const Index = ({ navigation }) => {
               size={20}
             />
             <TextInput
-              placeholder="votre e-mail"
+              placeholder="votre Prenom"
               placeholderTextColor="gray"
               style={styles.textInput}
               autoCapitalize="none"
@@ -133,60 +149,7 @@ const Index = ({ navigation }) => {
               </Animatable.View>
             ) : null}
           </View>
-          <View style={styles.action}>
-            <FontAwesome5 name="address-card" size={20} color="gray" />
-            <TextInput
-              placeholder="Numero de carte d'identite"
-              placeholderTextColor="gray"
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) => textInputChange(val)}
-            />
-          </View>
-          {/* <Pressable
-            style={{
-              margin: 10,
-              padding: 5,
-              flexDirection: "row",
-              // justifyContent: "space-evenly",
-              alignItems: "center",
-            }}
-          >
-            <Checkbox
-              style={{ width: 25, height: 25 }}
-              value={isPolice}
-              onValueChange={setIsPolice}
-              color={isPolice ? "gray" : undefined}
-            />
-            <Text
-              style={{
-                color: "gray",
-                marginLeft: 15,
-                fontSize: 15,
-                fontWeight: "400",
-              }}
-            >
-              Etes-Vous policier
-            </Text>
-          </Pressable>
-          {isPolice && (
-            <View style={{ height: 150, alignContent: "center" }}>
-              <TextInput
-                placeholder="votre numero Matricule"
-                placeholderTextColor="gray"
-                style={styles.input}
-                autoCapitalize="none"
-                onChangeText={(val) => textInputChange(val)}
-              />
-              <TextInput
-                placeholder="votre Arrondissement"
-                placeholderTextColor="gray"
-                style={styles.input}
-                autoCapitalize="none"
-                onChangeText={(val) => textInputChange(val)}
-              />
-            </View>
-          )} */}
+
           <Text style={styles.text_footer}>Telephone</Text>
           <View style={styles.action}>
             <Feather name="smartphone" size={20} color="gray" />
@@ -381,10 +344,12 @@ const styles = StyleSheet.create({
   action: {
     flexDirection: "row",
     marginTop: 10,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
   },
   actionError: {
     flexDirection: "row",
@@ -395,22 +360,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    marginTop: 5,
+
     paddingLeft: 10,
     color: "white",
     padding: 10,
   },
-  input: {
-    alignSelf: "center",
-    margin: 10,
-    marginTop: 15,
-    color: "white",
-    borderWidth: 0.5,
-    borderColor: "gray",
-    padding: 10,
-    width: width - 90,
-    borderRadius: 15,
-  },
+
   errorMsg: {
     color: "#FF0000",
     fontSize: 14,
