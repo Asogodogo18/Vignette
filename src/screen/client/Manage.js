@@ -5,17 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import React from "react";
 import { useVignette } from "../../services/query";
 import { useAuthState } from "../../global";
@@ -69,5 +59,3 @@ const Manage = ({ navigation }) => {
 };
 
 export default Manage;
-
-const styles = StyleSheet.create({});

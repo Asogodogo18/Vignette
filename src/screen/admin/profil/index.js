@@ -6,10 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
-  ImageBackground,
   SafeAreaView,
-  TextInput,
-  Keyboard,
 } from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
@@ -38,12 +35,7 @@ const Index = ({ navigation }) => {
     return (
       <SafeAreaView>
         <ScrollView ContentContainerStyle={styles.contain}>
-          <Animatable.View
-            animation="fadeIn"
-            delay={500}
-            duration={300}
-            style={styles.contain}
-          >
+          <Animatable.View animation="fadeIn" delay={500} duration={300}>
             <View
               style={{
                 height: 80,

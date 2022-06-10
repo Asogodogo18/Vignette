@@ -83,13 +83,8 @@ const Index = ({ navigation }) => {
 
   if (!currentLoader) {
     return (
-      <SafeAreaView>
-        <Animatable.View
-          animation="fadeIn"
-          delay={500}
-          duration={300}
-          contentContainerStyle={styles.contain}
-        >
+      <SafeAreaView contentContainerStyle={styles.contain}>
+        <Animatable.View animation="fadeIn" delay={500} duration={300}>
           <View
             style={{
               height: 80,
@@ -178,8 +173,6 @@ const Index = ({ navigation }) => {
                       item={item}
                       handleDelete={handleDelete}
                       handlePress={handlePress}
-                      // modalVisible={modalVisible}
-                      // setModalVisible={setModalVisible}
                       navigation={navigation}
                     />
                   )}

@@ -14,12 +14,15 @@ import React, { useRef, useState, useEffect } from "react";
 
 import * as Animatable from "react-native-animatable";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
+
 import { getVignetteByChassis, getVignetteById } from "../../services/query";
+import { useAuthState } from "../../global";
 const { height, width } = Dimensions.get("screen");
 let validationId = /[0-9]/gi;
 const validationNoChassi = /^[a-z0-9]+$/i;
 
 const SearchBar = ({ navigation }) => {
+  const { user } = useAuthState();
   const [query, setquery] = useState({
     valeur: "",
     isId: false,
@@ -36,7 +39,6 @@ const SearchBar = ({ navigation }) => {
   const handleSearch = () => {
     setloading(true);
     setIsSearching(true);
-    setLoadingText(false);
     if (query.isId) {
       //console.log("id requete");
 
@@ -55,7 +57,6 @@ const SearchBar = ({ navigation }) => {
         .finally(() => {
           setloading(false);
           setquery({ ...query, isId: false, isNochassi: false });
-          setLoadingText(true);
         });
     } else if (query.isNochassi) {
       getVignetteByChassis(query.valeur)
@@ -63,17 +64,19 @@ const SearchBar = ({ navigation }) => {
           if (res.data && res.data != "False") {
             //console.log("requete bien passe", res);
             setSearchResult(res.data);
+            setloading(false);
           } else {
             //console.log("requete no passe", res);
+            setloading(false);
           }
         })
         .catch((e) => {
           //console.log(e);
+          setloading(false);
         })
         .finally(() => {
           setloading(false);
           setquery({ ...query, isId: false, isNochassi: false });
-          setLoadingText(true);
         });
     }
   };
@@ -83,6 +86,8 @@ const SearchBar = ({ navigation }) => {
       setIsSearching(false);
       setIsFocused(false);
       setSearchResult([]);
+      setloading(false);
+
       //console.log("back pressed");
       //console.log(isSearching);
       // if (isFocused && isSearching)
@@ -95,7 +100,7 @@ const SearchBar = ({ navigation }) => {
       //   },
       //   { text: "YES", onPress: () => BackHandler.exitApp() },
       // ]);
-      // return () => {};
+      return () => {};
     };
 
     const backHandler = BackHandler.addEventListener(
@@ -138,7 +143,7 @@ const SearchBar = ({ navigation }) => {
       onPress={() =>
         navigation.navigate("AdminStack", {
           screen: "Payment",
-          params: { item },
+          params: { item, id_user: user.id_user },
         })
       }
     >
@@ -164,7 +169,7 @@ const SearchBar = ({ navigation }) => {
                 textTransform: "capitalize",
               }}
             >
-              N° Chassi
+              N° Chassis
             </Text>
             <Text
               style={{
@@ -208,17 +213,17 @@ const SearchBar = ({ navigation }) => {
           onChangeText={(val) => handlerVerif(val)}
           style={styles.input}
           onSubmitEditing={handleSearch}
-          onB
         />
       </View>
-      <View>
-        {loading && (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        {loading ? (
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             <ActivityIndicator size="large" />
           </View>
-        )}
+        ) : null}
+
         {/* {loadingText && <Text>Aucun resultat trouve </Text>} */}
         {searchResult && (
           <FlatList

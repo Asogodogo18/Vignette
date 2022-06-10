@@ -62,7 +62,7 @@ const Transfer = ({ navigation }) => {
                 size={27}
                 color="white"
               />
-              <Text style={styles.txt}>Initié une Transfert</Text>
+              <Text style={styles.txt}>Initié un Transfert</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -80,7 +80,7 @@ const Transfer = ({ navigation }) => {
                 size={27}
                 color="white"
               />
-              <Text style={styles.txt}>Initié une Transfert</Text>
+              <Text style={styles.txt}>Initié un Transfert</Text>
             </TouchableOpacity>
           )}
           <FlatList

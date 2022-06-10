@@ -7,7 +7,6 @@ import {
   Image,
 } from "react-native";
 import React from "react";
-import Data from "../../../data/validation";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import Transfer from "../client/Transfer";
 
@@ -40,7 +39,7 @@ const Index = ({ navigation }) => {
           Transfert
         </Text>
         <Image
-          source={require("../../../../assets/icon/transfert.png")}
+          source={require("../../../assets/icon/transfert.png")}
           style={{ height: 40, width: 40 }}
           resizeMode="cover"
         />

@@ -8,11 +8,13 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { logout, useAuthDispatch } from "../../global";
 
 const { width, height } = Dimensions.get("screen");
 
 const Anonyme = () => {
   const navigation = useNavigation();
+  const dispatch = useAuthDispatch();
   return (
     <View
       style={{
@@ -23,7 +25,7 @@ const Anonyme = () => {
       }}
     >
       <Image
-        style={{ height: height / 2.8, width }}
+        style={{ height: height / 2.9, width }}
         resizeMode="contain"
         source={require("../../../assets/bg-profile.png")}
       />
@@ -35,13 +37,16 @@ const Anonyme = () => {
       >
         <Text style={styles.btnText}>S'incrire</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => logout(dispatch)} style={styles.btn}>
+        <Text style={styles.btnText}>se Connecter</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   bodyText: {
-    marginTop: 15,
+    marginTop: 5,
     fontSize: 18,
     fontWeight: "500",
     textAlign: "center",
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "#7AD3BD",
     elevation: 5,
-    marginBottom: 50,
+    marginBottom: 0,
     borderTopLeftRadius: 8,
   },
   btnText: {

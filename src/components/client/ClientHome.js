@@ -1,17 +1,11 @@
-import {
-  ScrollView,
-  Text,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, Text, Dimensions } from "react-native";
 import React, { useState } from "react";
 
 import QuickSelect from "../shared/QuickSelect";
 import Fees from "../shared/Fees";
 import VignetteList from "../shared/VignetteList";
 import { View } from "react-native-animatable";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useAuthState } from "../../global";
 
 const { width, height } = Dimensions.get("screen");
@@ -29,8 +23,6 @@ const ClientHome = ({ navigation }) => {
           flex: 1,
           paddingVertical: 20,
           paddingHorizontal: 8,
-          // backgroundColor: "blue",
-          // height: height,
           marginTop: 60,
         }}
       >
@@ -74,24 +66,5 @@ const ClientHome = ({ navigation }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  quickselect: {
-    flex: 1,
-    margin: 10,
-    padding: 10,
-    backgroundColor: "beige",
-    elevation: 5,
-    borderRadius: 15,
-    height: 90,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  label: {
-    fontSize: 14,
-    marginTop: 5,
-    textAlign: "center",
-  },
-});
 
 export default ClientHome;

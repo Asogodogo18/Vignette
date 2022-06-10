@@ -13,17 +13,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import React, { useState, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
 import Toast from "react-native-toast-message";
@@ -169,13 +159,7 @@ const Index = ({ navigation, item }) => {
           <View
             style={{
               flex: 1,
-              // alignContent: "center",
-              // justifyContent: "center",
-              // Top: 0,
-              // bottom: 100,
-              // left: 0,
-              // right: 0,
-              // position: "absolute",
+
               marginTop: 150,
             }}
           >

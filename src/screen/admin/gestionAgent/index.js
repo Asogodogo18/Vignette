@@ -13,17 +13,7 @@ import {
   Animated,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import Toast from "react-native-toast-message";
 
 import * as Animatable from "react-native-animatable";
@@ -134,16 +124,8 @@ const Index = ({ navigation }) => {
 
   if (!currentLoader) {
     return (
-      <SafeAreaView>
-        <Animatable.View
-          animation="fadeIn"
-          delay={500}
-          duration={300}
-          stickyHeaderHiddenOnScroll={true}
-          nestedScrollEnabled
-          stickyHeaderIndices={[0]}
-          contentContainerStyle={styles.contain}
-        >
+      <SafeAreaView contentContainerStyle={styles.contain}>
+        <Animatable.View animation="fadeIn" delay={500} duration={300}>
           <View
             style={{
               height: 80,

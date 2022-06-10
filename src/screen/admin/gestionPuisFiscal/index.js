@@ -12,26 +12,11 @@ import {
   ActivityIndicator,
   LayoutAnimation,
 } from "react-native";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import React, { useState, useEffect } from "react";
-import { BlurView } from "expo-blur";
+
 import * as Animatable from "react-native-animatable";
-import {
-  FontAwesome,
-  Ionicons,
-  AntDesign,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 
 import AddPuissance from "../../../components/admin/puissance/Add";

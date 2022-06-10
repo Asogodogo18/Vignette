@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React from "react";
 import * as Animatable from "react-native-animatable";
-import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useAuthState } from "../../global";
 const { height, width } = Dimensions.get("screen");
 const DetailTransfert = ({ route, navigation }) => {

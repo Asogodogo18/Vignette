@@ -68,7 +68,7 @@ const Buy = ({ navigation, route }) => {
             text1: "Votre vignette a ete enregistrer!",
           });
           queryClient.invalidateQueries("vignettes");
-          if (user.role === "Agent") {
+          if (user.role === "Agent" || "Superviseur") {
             getVignetteByChassis(noChassi)
               .then((res) => {
                 console.log("vignetteId: ", res);

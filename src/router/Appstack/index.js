@@ -8,7 +8,7 @@ import Buy from "../../screen/client/Buy";
 import Manage from "../../screen/client/Manage";
 import Profil from "../../screen/admin/profil";
 import AdminStack from "../AdminStack";
-import Transfer from "../../screen/admin/transfert";
+import Transfer from "../../screen/transfert";
 import DetailTransfert from "../../screen/client/detailTransfert";
 import InitTransfert from "../../screen/client/initTransfert";
 import Payment from "../../screen/Payment";

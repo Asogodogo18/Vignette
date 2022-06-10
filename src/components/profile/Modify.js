@@ -5,8 +5,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Image,
-  ImageBackground,
   SafeAreaView,
   TextInput,
 } from "react-native";
@@ -14,7 +12,7 @@ import React, { useState, useRef } from "react";
 import * as Animatable from "react-native-animatable";
 import Toast from "react-native-toast-message";
 import { Ionicons, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
-import ToastSuccess from "../shared/Toast";
+
 import { useAuthState } from "../../global";
 import { updateUser } from "../../services/query";
 const { width, height } = Dimensions.get("screen");

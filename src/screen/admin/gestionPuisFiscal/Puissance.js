@@ -7,20 +7,10 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
-  UIManager,
-  Keyboard,
-  ActivityIndicator,
-  LayoutAnimation,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { BlurView } from "expo-blur";
-import * as Animatable from "react-native-animatable";
-import {
-  FontAwesome,
-  Ionicons,
-  AntDesign,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import GetRandomColor from "../../../utils/getColor";
 const { width, height } = Dimensions.get("screen");
 const Puissance = ({ item, handlePress, handleDelete }) => {

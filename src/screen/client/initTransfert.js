@@ -42,8 +42,6 @@ const VignetteSelection = ({ setSelectedVignette }) => {
         onPress={() => setSelectedVignette({ item, ancien: user.id_user })}
         style={{
           height: 80,
-          // borderBottomColor: "tomato",
-          // borderBottomWidth: 1,
           width: "97%",
           padding: 10,
           margin: 10,
@@ -77,16 +75,6 @@ const VignetteSelection = ({ setSelectedVignette }) => {
         >
           {item.marque}
         </Text>
-        {/* <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "500",
-            letterSpacing: 1.2,
-            flex: 2,
-          }}
-        >
-          {item.type}
-        </Text> */}
       </TouchableOpacity>
     );
   };

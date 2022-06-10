@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
+import { useAuthState } from "../../../global";
 import {
   FontAwesome,
   MaterialCommunityIcons,
@@ -15,17 +16,13 @@ import * as Animatable from "react-native-animatable";
 import { BlurView } from "expo-blur";
 import Toast from "react-native-toast-message";
 
-import { deleteVignette } from "../../../services/query";
+import { deleteVignette, getVignetteByChassis } from "../../../services/query";
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 
-const Vignette = ({
-  item,
-  handlePress,
-  modalVisible,
-  setModalVisible,
-  navigation,
-}) => {
+const Vignette = ({ item, handlePress, navigation }) => {
+  const { user } = useAuthState();
   const [isVisible, setIsVisible] = useState(false);
+  // console.log("item :", item);
 
   const handleDelete = (id) => {
     deleteVignette(id)
@@ -49,6 +46,13 @@ const Vignette = ({
           text2: e.toString(),
         });
       });
+  };
+
+  const redirectToBuyScreen = () => {
+    navigation.navigate("Payment", {
+      item,
+      id_user: user.id_user,
+    });
   };
 
   return (
@@ -296,7 +300,7 @@ const Vignette = ({
               ) : null}
               {!item.statut ? (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("Payment", { item })}
+                  onPress={redirectToBuyScreen}
                   style={styles.btnBlur}
                 >
                   <MaterialIcons name="payment" size={30} color="white" />

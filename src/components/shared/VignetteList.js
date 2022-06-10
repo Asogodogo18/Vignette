@@ -1,4 +1,4 @@
-import { Text, View, FlatList, ActivityIndicator } from "react-native";
+import { Text, View, FlatList } from "react-native";
 import { useVignette } from "../../services/query";
 import { SkypeIndicator } from "react-native-indicators";
 import { useAuthState } from "../../global";
