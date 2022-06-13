@@ -10,6 +10,7 @@ import { useAuthState } from "../../global";
 
 const QuickSelect = ({ navigation, setOpenListing }) => {
   const { user } = useAuthState();
+  const conditionPerte = user.role == "Agent" || user.role == "Anonyme";
 
   return (
     <View>
@@ -39,7 +40,7 @@ const QuickSelect = ({ navigation, setOpenListing }) => {
                   size={30}
                   color="black"
                 />
-                <Text style={styles.label}>Effectuer une Transfer</Text>
+                <Text style={styles.label}>Effectuer un Transfert</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
@@ -51,6 +52,23 @@ const QuickSelect = ({ navigation, setOpenListing }) => {
             </TouchableOpacity>
           </>
         )}
+      </View>
+      <View style={{ flexDirection: "row" }}>
+        {!conditionPerte ? (
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.push("Perte")}
+              style={styles.quickselect}
+            >
+              <MaterialCommunityIcons
+                name="fridge-industrial-off"
+                size={24}
+                color="black"
+              />
+              <Text style={styles.label}>Declarer Vol ou Perte</Text>
+            </TouchableOpacity>
+          </>
+        ) : null}
       </View>
       <TouchableOpacity
         onPress={() => setOpenListing(true)}

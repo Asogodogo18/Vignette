@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://192.168.1.44/vignette/",
+  baseURL: "http://197.155.143.74:1112/vignette/",
   // headers: {
   //   "Content-Type": "multipart/form-data",
   // },

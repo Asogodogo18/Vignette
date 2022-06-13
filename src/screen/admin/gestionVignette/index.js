@@ -165,7 +165,7 @@ const Index = ({ navigation }) => {
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{
                     alignItems: "center",
-                    paddingBottom: 50,
+                    paddingBottom: 85,
                   }}
                   data={data}
                   renderItem={({ item }) => (

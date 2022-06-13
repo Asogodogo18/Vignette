@@ -64,9 +64,19 @@ export const getVignetteById = async (id) => {
   return await apiClient.post("/vignettes/detail", { id_user: id });
 };
 
+export const getVignetteByIdagent = async (id) => {
+  return await apiClient.post("/vignettes/detail", { id_agent: id });
+};
+
+export function useVignetteAgent(Id) {
+  return useQuery("vignetteAgent", () => getVignetteByIdagent(Id), {
+    enabled: true,
+  });
+}
+
 export function useVignette(Id) {
-  return useQuery(["vignette", Id], () => getVignetteById(Id), {
-    enabled: !!Id,
+  return useQuery("vignette", () => getVignetteById(Id), {
+    enabled: true,
   });
 }
 
@@ -195,6 +205,21 @@ export const addUser = (sentForm) => {
   //console.log("adding user:", sent);
   return apiClient.post("/users/add", JSON.stringify(sent));
 };
+export const signUp = (sentForm) => {
+  const { nom, prenom, adress, telephone, username, password, role } = sentForm;
+
+  const sent = {
+    nom,
+    prenom,
+    adresse: adress,
+    tel: telephone,
+    login: username,
+    pass: password,
+    role,
+  };
+  //console.log("adding user:", sent);
+  return apiClient.post("/users/add", JSON.stringify(sent));
+};
 
 //update user
 export const updateUser = (sentForm) => {
@@ -209,6 +234,18 @@ export const updateUser = (sentForm) => {
     role,
   };
   return apiClient.post("/users/update", JSON.stringify(sent));
+};
+
+//delete affectation
+export const checkUser = (sentForm) => {
+  const { login, tel } = sentForm;
+  //console.log("desaffectation data:", sentForm);
+  const sent = {
+    tel,
+    login,
+  };
+  //console.log("desaffectation data to be sent:", sent);
+  return apiClient.post("/users/exist", JSON.stringify(sent));
 };
 
 //delete user

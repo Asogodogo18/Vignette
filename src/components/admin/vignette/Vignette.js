@@ -22,7 +22,7 @@ const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const Vignette = ({ item, handlePress, navigation }) => {
   const { user } = useAuthState();
   const [isVisible, setIsVisible] = useState(false);
-  // console.log("item :", item);
+  console.log("item :", item);
 
   const handleDelete = (id) => {
     deleteVignette(id)

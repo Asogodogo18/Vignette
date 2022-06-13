@@ -4,10 +4,11 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import { SkypeIndicator } from "react-native-indicators";
 import React from "react";
-import { useVignette } from "../../services/query";
+import { useVignette, useVignetteAgent } from "../../services/query";
 import { useAuthState } from "../../global";
 import Vignette from "../../components/shared/Vignette";
 
@@ -20,9 +21,13 @@ const Manage = ({ navigation }) => {
     error,
     isFetching,
     isFetched,
-  } = useVignette(user ? user.id_user : null);
+  } = user.role == "Agent"
+    ? useVignetteAgent(user ? user.id_user : null)
+    : useVignette(user ? user.id_user : null);
+
+  console.log("vignettes : ", vignettes?.data);
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Text
         style={{
           marginLeft: 15,
@@ -42,17 +47,38 @@ const Manage = ({ navigation }) => {
           <SkypeIndicator color="#99D98c" size={40} />
         </View>
       )}
-      {isFetched && (
+      {isFetched && vignettes?.data != "False" && (
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             alignItems: "center",
             paddingBottom: 50,
           }}
-          data={vignettes.data}
+          data={vignettes?.data}
           renderItem={Vignette}
           keyExtractor={(item) => item.id_engin}
         />
+      )}
+      {vignettes?.data === "False" && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 20,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: "bold",
+              letterSpacing: 1.3,
+              textAlign: "center",
+            }}
+          >
+            Aucune vignette enregistrée
+          </Text>
+        </View>
       )}
     </View>
   );

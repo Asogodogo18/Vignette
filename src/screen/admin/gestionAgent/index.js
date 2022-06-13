@@ -41,7 +41,7 @@ const Data = [
   },
   {
     id: "3",
-    name: "Policier",
+    name: "Police",
   },
   {
     id: "4",
@@ -251,6 +251,23 @@ const Index = ({ navigation }) => {
             </ScrollView>
           </View>
 
+          {filter != "Tout" &&
+          userData.filter((user) => user.role === filter).length === 0 ? (
+            <Text
+              style={{
+                fontSize: 36,
+                fontWeight: "700",
+                textAlign: "center",
+                textTransform: "capitalize",
+                marginTop: 10,
+                color: "black",
+              }}
+            >
+              {" "}
+              Aucun résultat
+            </Text>
+          ) : null}
+
           {isFetchingUsers ? (
             <View
               style={{
@@ -263,11 +280,17 @@ const Index = ({ navigation }) => {
               <SkypeIndicator color="#99D98c" size={40} />
             </View>
           ) : (
-            <View>
+            <View
+              style={{
+                height: height * 0.55,
+              }}
+            >
               <FlatList
                 nestedScrollEnabled
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: 20 }}
+                contentContainerStyle={{
+                  paddingBottom: 4,
+                }}
                 data={
                   filter === "Tout"
                     ? userData
@@ -287,22 +310,6 @@ const Index = ({ navigation }) => {
                   `${item.id_user}-${item.nom}-${index}`
                 }
               />
-
-              {filter.toString() === " " && (
-                <Text
-                  style={{
-                    fontSize: 36,
-                    fontWeight: "700",
-                    textAlign: "center",
-                    textTransform: "capitalize",
-                    marginTop: 120,
-                    color: "black",
-                  }}
-                >
-                  {" "}
-                  Aucun résultat pour cette utilisateur
-                </Text>
-              )}
             </View>
           )}
         </Animatable.View>

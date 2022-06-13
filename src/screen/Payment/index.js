@@ -53,6 +53,10 @@ const Index = ({ navigation, route }) => {
               type: "success",
               text1: "Paiement effectué avec success!",
             });
+            navigation.navigate("Accueil");
+            setTimeout(() => {
+              navigation.navigate("Accueil");
+            }, 1500);
           } else {
             Toast.show({
               type: "error",

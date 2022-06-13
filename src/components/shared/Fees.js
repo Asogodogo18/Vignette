@@ -9,7 +9,7 @@ import Tarif from "./Tarif";
 import { usePuissances } from "../../services/query";
 import { SkypeIndicator } from "react-native-indicators";
 
-const Fees = ({ navigation }) => {
+const Fees = ({ navigation, setOpenListing = null }) => {
   const { status, data, error, isFetching } = usePuissances();
 
   return (
@@ -56,7 +56,11 @@ const Fees = ({ navigation }) => {
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
           data={data.filter((item) => item.utilisation === "Personnel")}
           renderItem={({ item }) => (
-            <Tarif navigation={navigation} item={item} />
+            <Tarif
+              setOpenListing={setOpenListing}
+              navigation={navigation}
+              item={item}
+            />
           )}
           keyExtractor={(item) => item.id_puissance}
         />
@@ -92,7 +96,11 @@ const Fees = ({ navigation }) => {
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
           data={data.filter((item) => item.utilisation === "Transport")}
           renderItem={({ item }) => (
-            <Tarif navigation={navigation} item={item} />
+            <Tarif
+              setOpenListing={setOpenListing}
+              navigation={navigation}
+              item={item}
+            />
           )}
           keyExtractor={(item) => item.id_puissance}
         />

@@ -2,12 +2,13 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 
-const Tarif = ({ item, navigation }) => {
+const Tarif = ({ item, navigation, setOpenListing = null }) => {
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Achat de Vignette", { puissance: item })
-      }
+      onPress={() => {
+        setOpenListing(false);
+        navigation.navigate("Achat de Vignette", { puissance: item });
+      }}
       style={styles.container}
     >
       <View style={styles.iconBox}>

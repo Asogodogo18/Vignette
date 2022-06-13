@@ -9,20 +9,49 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
+  Pressable,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { loginUser, useAuthState, useAuthDispatch } from "../../../global";
+import Toast from "react-native-toast-message";
+import { SkypeIndicator } from "react-native-indicators";
+// import Banner from "../../../components/shared/Banner";
 
 const { width, height } = Dimensions.get("screen");
 
 const Login = ({ navigation, route }) => {
-  const { role } = route.params;
+  // const { role } = route.params;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [count, setCount] = useState(0);
   const [isSecureTextEntry, setisSecureTextEntry] = useState(false);
   const dispatch = useAuthDispatch(); //get the dispatch method from the useDispatch custom hook
   const { loading, errorMessage } = useAuthState();
+
+  useEffect(() => {
+    console.log("count:", count);
+    if (count == 5) {
+      setCount(0);
+      Alert.alert(
+        "DEV TEAM!",
+        "Soya DIALLO \n Cheick Abba SOGODOGO \n Hamadoun SANKARE ",
+        [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel",
+          },
+          { text: "YES", onPress: () => {} },
+          setCount(0),
+        ]
+      );
+      setCount(0);
+    }
+
+    return () => {};
+  }, [count]);
 
   const loginHandle = async () => {
     if (username.length == 0 || password.length == 0) {
@@ -31,17 +60,17 @@ const Login = ({ navigation, route }) => {
         text1: "Veuillez renseigner les champs obligatoires",
       });
       return;
-    }
-
-    try {
-      let response = await loginUser(dispatch, {
-        username,
-        password,
-        role,
-      }); //loginUser action makes the request and handles all the neccessary state changes
-      if (!response) return;
-    } catch (error) {
-      //console.log(error);
+    } else {
+      try {
+        let response = await loginUser(dispatch, {
+          username,
+          password,
+          role: "Agent",
+        }); //loginUser action makes the request and handles all the neccessary state changes
+        if (!response) return;
+      } catch (error) {
+        //console.log(error);
+      }
     }
   };
 
@@ -92,9 +121,13 @@ const Login = ({ navigation, route }) => {
                 )}
               </TouchableOpacity> */}
             </TextInput>
-            <TouchableOpacity onPress={loginHandle} style={styles.loginBtn}>
-              <Text style={styles.loginTxt}>se connecter</Text>
-            </TouchableOpacity>
+            {loading ? (
+              <SkypeIndicator color="#99D98c" size={40} />
+            ) : (
+              <TouchableOpacity onPress={loginHandle} style={styles.loginBtn}>
+                <Text style={styles.loginTxt}>se connecter</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <View
             style={{
@@ -122,12 +155,15 @@ const Login = ({ navigation, route }) => {
           </View>
 
           <View style={styles.footer}>
-            <Image
-              resizeMode="cover"
-              style={{ width: 150, height: 150 }}
-              source={require("../../../../assets/cirtic-logo.png")}
-            />
+            <Pressable onPress={() => setCount(count + 1)}>
+              <Image
+                resizeMode="cover"
+                style={{ width: 150, height: 150 }}
+                source={require("../../../../assets/cirtic-logo.png")}
+              />
+            </Pressable>
           </View>
+          {/* <Banner count={count} /> */}
         </ImageBackground>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -151,9 +187,10 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   headerImg: {
-    height: 110,
+    minHeight: 110,
+    maxHeight: 210,
     width: "100%",
-    marginTop: 30,
+    marginTop: 25,
     margin: 5,
     alignSelf: "center",
   },

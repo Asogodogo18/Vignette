@@ -1,5 +1,5 @@
 import { Text, View, FlatList } from "react-native";
-import { useVignette } from "../../services/query";
+import { useVignette, useVignetteAgent } from "../../services/query";
 import { SkypeIndicator } from "react-native-indicators";
 import { useAuthState } from "../../global";
 
@@ -12,10 +12,12 @@ const VignetteList = () => {
     data: vignettes,
     error,
     isFetching,
-  } = useVignette(user.id_user);
+  } = user.role == "Agent"
+    ? useVignetteAgent(user ? user.id_user : null)
+    : useVignette(user ? user.id_user : null);
   // console.log("vignettes: ", vignettes.data);
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Text
         style={{
           marginLeft: 15,
@@ -45,10 +47,31 @@ const VignetteList = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={vignettes.data}
+          data={vignettes?.data !== "False" ? vignettes?.data : null}
           renderItem={Vignette}
           keyExtractor={(item) => item.id_engin}
         />
+      )}
+      {vignettes?.data === "False" && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 20,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: "bold",
+              letterSpacing: 1.3,
+              textAlign: "center",
+            }}
+          >
+            Aucune vignette enregistrée
+          </Text>
+        </View>
       )}
     </View>
   );

@@ -183,8 +183,7 @@ const SearchBar = ({ navigation }) => {
               {item.num_chassis}
             </Text>
           </View>
-          {item.statut == "vignette non pay" &&
-          item.statut == "vignette valide" ? (
+          {item.statut && item.statut == "vignette valide" ? (
             <AntDesign name="checkcircle" size={30} color="green" />
           ) : (
             <AntDesign name="checkcircle" size={30} color="red" />

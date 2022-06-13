@@ -12,7 +12,8 @@ import Transfer from "../../screen/transfert";
 import DetailTransfert from "../../screen/client/detailTransfert";
 import InitTransfert from "../../screen/client/initTransfert";
 import Payment from "../../screen/Payment";
-import Inscription from "../../screen/login/Inscription";
+import Inscription from "../../screen/login/Inscription/SignUp";
+import Perte from "../../screen/client/Perte";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,11 @@ const Index = () => {
         options={{ headerShown: false, headerTitleAlign: "center" }}
         name="Detail"
         component={DetailTransfert}
+      />
+      <Stack.Screen
+        options={{ headerShown: true, headerTitleAlign: "center" }}
+        name="Perte"
+        component={Perte}
       />
       <Stack.Screen
         options={{ headerShown: false, headerTitleAlign: "center" }}

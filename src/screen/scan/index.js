@@ -30,7 +30,7 @@ import * as Animatable from "react-native-animatable";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-const baseUrl = "http://192.168.1.44/vignette/vignettes/detail";
+const baseUrl = "http://197.155.143.74:1112/vignette/vignettes/detail";
 const AnimatedTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const width = Dimensions.get("window").width;
@@ -56,7 +56,7 @@ const Index = ({ navigation }) => {
       axios
         .post(baseUrl, { id_user: data })
         .then((res) => {
-          //console.log(res.data);
+          console.log("scanned: ", res.data);
           setScannedData(res.data);
           setScanned(true);
         })
@@ -86,7 +86,7 @@ const Index = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
   const renderItem = ({ item }) => {
-    //console.log("les item ", item.statut);
+    // console.log("les item: ", item);
     return (
       <AnimatedImg
         resizeMode="cover"
@@ -104,6 +104,7 @@ const Index = ({ navigation }) => {
             fontWeight: "200",
             color: "white",
             textTransform: "capitalize",
+            zIndex: 100,
           }}
         >
           {item.prenom}
@@ -114,6 +115,7 @@ const Index = ({ navigation }) => {
               color: "white",
               textTransform: "uppercase",
               fontWeight: "600",
+              zIndex: 100,
             }}
           >
             {item.nom}
@@ -235,11 +237,12 @@ const Index = ({ navigation }) => {
             color: "white",
             textTransform: "uppercase",
             fontWeight: "bold",
+            zIndex: 100,
           }}
         >
           {item.num_chassis}
         </Text>
-        {item.statut || !item.statut ? (
+        {item.statut && item.statut !== "vignette valide" ? (
           <BlurView
             intensity={125}
             tint="dark"
@@ -259,12 +262,12 @@ const Index = ({ navigation }) => {
             <Text
               style={{
                 fontSize: 25,
-                color: "white",
+                color: "tomato",
                 textAlign: "center",
                 textTransform: "uppercase",
               }}
             >
-              Vignette nom payée
+              Vignette non payée
             </Text>
           </BlurView>
         ) : null}

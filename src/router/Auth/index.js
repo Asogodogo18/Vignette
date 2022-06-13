@@ -4,8 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Connexion from "../../screen/login/Connexion";
-import Login from "../../screen/login/Connexion/Login";
 import Inscription from "../../screen/login/Inscription";
+import Login from "../../screen/login/Connexion/Login";
+import SignUp from "../../screen/login/Inscription/SignUp";
 import PassOublier from "../../screen/login/PassOublier";
 import Splash from "../../screen/login/Splach";
 import Ecran from "../../screen/login/Splach/splach";
@@ -31,7 +32,7 @@ export default function Index() {
   return (
     isAppFirstLaunched != null && (
       <Stack.Navigator
-        initialRouteName="Ecran"
+        initialRouteName="Connexion"
         screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
       >
         {isAppFirstLaunched && (
@@ -39,7 +40,7 @@ export default function Index() {
         )}
         <Stack.Screen name="Ecran" component={Ecran} />
         <Stack.Screen name="Connexion" component={Login} />
-        <Stack.Screen name="Inscription" component={Inscription} />
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="PassOublier" component={PassOublier} />
       </Stack.Navigator>
     )

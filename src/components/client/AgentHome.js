@@ -48,7 +48,7 @@ const AgentHome = ({ navigation, item }) => {
               marginTop: 20,
             }}
           >
-            <Fees navigation={navigation} />
+            <Fees setOpenListing={setOpenListing} navigation={navigation} />
           </View>
         </View>
       </ScrollView>

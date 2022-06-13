@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 
 import * as Animatable from "react-native-animatable";
@@ -6,6 +12,7 @@ import { BlurView } from "expo-blur";
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 
 const Vignette = ({ item, modify = false }) => {
+  console.log("vignette: ", item);
   return (
     <AnimatedImg
       resizeMode="cover"
@@ -173,7 +180,7 @@ const Vignette = ({ item, modify = false }) => {
         </Text>{" "}
         {item.num_chassis}
       </Text>
-      {/* {!modify && !item.statut ? (
+      {!modify && !item.statut === "vignette valide" ? (
         <BlurView
           intensity={70}
           tint="dark"
@@ -190,7 +197,7 @@ const Vignette = ({ item, modify = false }) => {
             flex: 1,
           }}
         >
-          {!item.statut ? (
+          {!item.statut === "vignette valide" ? (
             <TouchableOpacity
               onPress={() => navigation.navigate("Payment", { item })}
               style={styles.btnBlur}
@@ -209,7 +216,7 @@ const Vignette = ({ item, modify = false }) => {
             En cours de Traitement
           </Text>
         </BlurView>
-      ) : null} */}
+      ) : null}
     </AnimatedImg>
   );
 };
