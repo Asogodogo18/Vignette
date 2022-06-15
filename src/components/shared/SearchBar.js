@@ -14,14 +14,14 @@ import React, { useRef, useState, useEffect } from "react";
 
 import * as Animatable from "react-native-animatable";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
-
+import Vignette from "./Vignette";
 import { getVignetteByChassis, getVignetteById } from "../../services/query";
 import { useAuthState } from "../../global";
 const { height, width } = Dimensions.get("screen");
 let validationId = /[0-9]/gi;
 const validationNoChassi = /^[a-z0-9]+$/i;
 
-const SearchBar = ({ navigation }) => {
+const SearchBar = ({ navigation, searchReturn = null }) => {
   const { user } = useAuthState();
   const [query, setquery] = useState({
     valeur: "",
@@ -88,18 +88,6 @@ const SearchBar = ({ navigation }) => {
       setSearchResult([]);
       setloading(false);
 
-      //console.log("back pressed");
-      //console.log(isSearching);
-      // if (isFocused && isSearching)
-
-      // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-      //   {
-      //     text: "Cancel",
-      //     onPress: () => null,
-      //     style: "cancel",
-      //   },
-      //   { text: "YES", onPress: () => BackHandler.exitApp() },
-      // ]);
       return () => {};
     };
 
@@ -229,6 +217,7 @@ const SearchBar = ({ navigation }) => {
             nestedScrollEnabled
             data={searchResult}
             renderItem={({ item }) => (
+              // <Vignette item={item} />
               <RenderResul item={item} navigation={navigation} />
             )}
             keyExtractor={(item) => item.id_engin}

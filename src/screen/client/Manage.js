@@ -1,20 +1,27 @@
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
+import React, { useEffect, useState } from "react";
+import { SearchBar } from "@rneui/themed";
 import { SkypeIndicator } from "react-native-indicators";
-import React from "react";
 import { useVignette, useVignetteAgent } from "../../services/query";
 import { useAuthState } from "../../global";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import Vignette from "../../components/shared/Vignette";
+const { width, height } = Dimensions.get("screen");
 
 const Manage = ({ navigation }) => {
   // const { status, data, error, isFetching, isFetched} = useVignettes();
   const { user } = useAuthState();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
   const {
     status,
     data: vignettes,
@@ -24,10 +31,73 @@ const Manage = ({ navigation }) => {
   } = user.role == "Agent"
     ? useVignetteAgent(user ? user.id_user : null)
     : useVignette(user ? user.id_user : null);
+  // console.log("result", searchResult);
 
-  console.log("vignettes : ", vignettes?.data);
+  const handleSearch = () => {
+    const result = vignettes.data.filter(
+      (vignette) => vignette.num_chassis == searchQuery
+    );
+    setSearchResult(result);
+    console.log("le result : ", result);
+  };
+
+  const resultEmpty = () => {
+    setSearchResult([]);
+    setSearchQuery("");
+  };
+
+  // console.log("vignettes : ", vignettes?.data);
   return (
     <View style={{ flex: 1 }}>
+      <View style={{ marginTop: 0, margin: 5 }}>
+        <Text style={{ fontSize: 18, textAlign: "center", fontWeight: "700" }}>
+          Recherche Rapide
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <TextInput
+            placeholder="Votre numero Chassis"
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+            style={{
+              backgroundColor: "white",
+              borderWidth: 0,
+              borderColor: "white",
+              height: 50,
+              width: width - 60,
+              alignSelf: "center",
+              padding: 10,
+              elevation: 5,
+              borderRadius: 8,
+            }}
+          />
+          <TouchableOpacity
+            onPress={searchResult.length == 0 ? handleSearch : resultEmpty}
+            style={{
+              backgroundColor: "white",
+              borderWidth: 0,
+              borderColor: "white",
+              height: 50,
+              width: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              elevation: 5,
+              borderRadius: 8,
+            }}
+          >
+            {searchResult.length != 0 ? (
+              <Ionicons name="close-outline" size={24} color="black" />
+            ) : (
+              <Ionicons name="search-outline" size={24} color="black" />
+            )}
+          </TouchableOpacity>
+        </View>
+      </View>
       <Text
         style={{
           marginLeft: 15,
@@ -40,6 +110,29 @@ const Manage = ({ navigation }) => {
         {" "}
         Mes Vignettes
       </Text>
+      {/* {searchQuery ? (
+        <FlatList
+          ListHeaderComponent={() => (
+            <View>
+              <Text>Resultat du Recherche</Text>
+            </View>
+          )}
+          ListFooterComponent={() => (
+            <View>
+              <Text>fin</Text>
+            </View>
+          )}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: "center",
+            paddingBottom: 50,
+          }}
+          data={searchResult}
+          renderItem={Vignette}
+          keyExtractor={(item) => item.id_engin}
+        />
+      ) : null} */}
+
       {isFetching && (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -54,7 +147,7 @@ const Manage = ({ navigation }) => {
             alignItems: "center",
             paddingBottom: 50,
           }}
-          data={vignettes?.data}
+          data={searchQuery ? searchResult : vignettes?.data}
           renderItem={Vignette}
           keyExtractor={(item) => item.id_engin}
         />

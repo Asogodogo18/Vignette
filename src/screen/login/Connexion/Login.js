@@ -20,9 +20,10 @@ import { SkypeIndicator } from "react-native-indicators";
 // import Banner from "../../../components/shared/Banner";
 
 const { width, height } = Dimensions.get("screen");
+const isTablet = width > 360;
 
 const Login = ({ navigation, route }) => {
-  // const { role } = route.params;
+  const { role } = route.params;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [count, setCount] = useState(0);
@@ -65,7 +66,7 @@ const Login = ({ navigation, route }) => {
         let response = await loginUser(dispatch, {
           username,
           password,
-          role: "Agent",
+          role,
         }); //loginUser action makes the request and handles all the neccessary state changes
         if (!response) return;
       } catch (error) {
@@ -187,8 +188,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   headerImg: {
-    minHeight: 110,
-    maxHeight: 210,
+    height: isTablet ? 200 : 110,
+
     width: "100%",
     marginTop: 25,
     margin: 5,

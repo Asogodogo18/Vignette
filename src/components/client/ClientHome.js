@@ -1,6 +1,6 @@
 import { ScrollView, Text, Dimensions } from "react-native";
 import React, { useState } from "react";
-
+import Search from "../../components/shared/SearchBar";
 import QuickSelect from "../shared/QuickSelect";
 import Fees from "../shared/Fees";
 import VignetteList from "../shared/VignetteList";
@@ -43,27 +43,29 @@ const ClientHome = ({ navigation }) => {
         >
           Veuillez Choisir Une option:
         </Text>
-        <Fees navigation={navigation} />
+        <Fees setOpenListing={setOpenListing} navigation={navigation} />
       </View>
     );
   }
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{
-        flexGrow: 1,
-        paddingVertical: 20,
-        paddingBottom: 65,
-        // height,
-        marginTop: 57,
-      }}
-    >
-      {user.role === "Client" && <VignetteList />}
-      <QuickSelect navigation={navigation} setOpenListing={setOpenListing} />
+    <>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingVertical: 20,
+          paddingBottom: 65,
+          // height,
+          marginTop: 57,
+        }}
+      >
+        {user.role === "Client" && <VignetteList />}
+        <QuickSelect navigation={navigation} setOpenListing={setOpenListing} />
 
-      <Fees navigation={navigation} />
-    </ScrollView>
+        <Fees navigation={navigation} setOpenListing={setOpenListing} />
+      </ScrollView>
+    </>
   );
 };
 

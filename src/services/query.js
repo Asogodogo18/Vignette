@@ -5,7 +5,7 @@ import axios from "axios";
 export async function authUser(data) {
   let { username, password, role } = data;
   return axios.post(
-    "http://192.168.1.44/vignette/api",
+    "http://197.155.143.74:1112/vignette/api",
     JSON.stringify({ login: username, pass: password })
   );
 }
@@ -32,7 +32,7 @@ export function buyVignetteMutation(data) {
     numChassis: noChassi,
     id_puissance: puissance,
   };
-  console.log("sent:", sent);
+  // console.log("sent:", sent);
   return apiClient.post("vignettes/add", JSON.stringify(sent));
 }
 
@@ -297,7 +297,7 @@ export const transfertVignette = (sentForm) => {
   data.append("ancien", ancien);
   data.append("id_engin", id_engin);
   data.append("file[]", image);
-  return fetch("http://192.168.1.44/vignette/transfert", {
+  return fetch("http://197.155.143.74:1112/vignette/transfert", {
     method: "post",
     headers: {
       "Content-Type": "multipart/form-data",

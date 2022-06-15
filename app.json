@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Vignette-Mali",
-    "slug": "Vignette",
+    "name": "ikavignette",
+    "slug": "ikavignette",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon/logobko.png",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/icon/logobko.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.cirtic.vignette"
+      "package": "com.cirtic.ikavignette"
     },
     "web": {
       "favicon": "./assets/favicon.png"
