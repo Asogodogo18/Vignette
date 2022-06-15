@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 
+import SearchBar from "../shared/SearchBar";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 const { height, width } = Dimensions.get("screen");
@@ -20,6 +21,8 @@ const OfficerHome = ({ navigation }) => {
       delay={500}
       style={styles.container}
     >
+      <SearchBar />
+
       <TouchableOpacity
         style={styles.touch}
         onPress={() => navigation.navigate("Scan")}
@@ -35,7 +38,7 @@ export default OfficerHome;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     width,
     height,

@@ -36,6 +36,15 @@ const SearchBar = ({ navigation, searchReturn = null }) => {
 
   const containerRef = useRef();
 
+  const searchRedirect = (item = null) => {
+    if (user.role == "Agent") {
+      navigation.navigate("AdminStack", {
+        screen: "Payment",
+        params: { item, id_user: user.id_user },
+      });
+    }
+  };
+
   const handleSearch = () => {
     setloading(true);
     setIsSearching(true);
@@ -126,15 +135,7 @@ const SearchBar = ({ navigation, searchReturn = null }) => {
   };
 
   const RenderResul = ({ item, navigation }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() =>
-        navigation.navigate("AdminStack", {
-          screen: "Payment",
-          params: { item, id_user: user.id_user },
-        })
-      }
-    >
+    <TouchableOpacity style={styles.card} onPress={() => searchRedirect(item)}>
       <Animatable.View
         duration={300}
         delay={300}

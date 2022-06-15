@@ -108,273 +108,297 @@ const Index = ({ navigation, route }) => {
           <Vignette item={item} />
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.txt}>Mode de Payment</Text>
-        </View>
-        {!isBank && !isXaalisi && !isOrange ? (
-          <AnimatedPressable
-            animation={isBank ? "fadeOutLeft" : null}
-            duration={300}
-            delay={300}
-            style={{
-              flexDirection: "row",
-              marginLeft: 10,
-              alignItems: "center",
-              // justifyContent: "flex-start",
-            }}
-            onPress={() => setIsCash(!isCash)}
-          >
-            <Checkbox
-              style={[styles.checkbox, { flex: 0 }]}
-              value={isCash}
-              onValueChange={setIsCash}
-            />
-            <View style={{ flex: 6 }}>
-              <Text style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}>
-                Espèce
-              </Text>
-              <Text style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}>
-                Payé directement dans un guichet ou chez un agent.
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                flex: 4,
-                alignItems: "center",
-                justifyContent: "space-around",
-                marginVertical: 10,
-                margin: 5,
-                padding: 5,
-              }}
-            >
-              <Image
-                source={require("../../../assets/icon/cfa.png")}
-                style={{ height: 60, width: 60 }}
-                resizeMode="contain"
-              />
-            </View>
-          </AnimatedPressable>
-        ) : null}
-        {!isBank && !isOrange && !isCash ? (
-          <AnimatedPressable
-            animation={isBank ? "fadeOutLeft" : null}
-            duration={300}
-            delay={300}
-            style={{
-              flexDirection: "row",
-              marginLeft: 10,
-              alignItems: "center",
-              // justifyContent: "flex-start",
-            }}
-            onPress={() => setIsXaalisi(!isXaalisi)}
-          >
-            <Checkbox
-              style={[styles.checkbox, { flex: 0 }]}
-              value={isXaalisi}
-              onValueChange={setIsXaalisi}
-            />
-            <View style={{ flex: 6 }}>
-              <Text style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}>
-                Xaliisi
-              </Text>
-              <Text style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}>
-                Payé par votre compte Xaalisi de Cirtic
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                flex: 4,
-                alignItems: "center",
-                justifyContent: "space-around",
-                marginVertical: 10,
-                margin: 5,
-                padding: 5,
-              }}
-            >
-              <Image
-                source={require("../../../assets/icon/xaalisi.png")}
-                style={{ height: 80, width: 80 }}
-                resizeMode="contain"
-              />
-            </View>
-          </AnimatedPressable>
-        ) : null}
-        {isXaalisi ? (
-          <Animatable.View
-            style={{ backgroundColor: "blue", height: 200, width }}
-            animation="fadeInUp"
-            duration={300}
-            delay={300}
-          ></Animatable.View>
-        ) : null}
+        {item.statut == "vignette non payée" ? (
+          <View style={styles.section}>
+            <Text style={styles.txt}>Mode de Payment</Text>
+            {!isBank && !isXaalisi && !isOrange ? (
+              <AnimatedPressable
+                animation={isBank ? "fadeOutLeft" : null}
+                duration={300}
+                delay={300}
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10,
+                  alignItems: "center",
+                  // justifyContent: "flex-start",
+                }}
+                onPress={() => setIsCash(!isCash)}
+              >
+                <Checkbox
+                  style={[styles.checkbox, { flex: 0 }]}
+                  value={isCash}
+                  onValueChange={setIsCash}
+                />
+                <View style={{ flex: 6 }}>
+                  <Text
+                    style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}
+                  >
+                    Espèce
+                  </Text>
+                  <Text
+                    style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}
+                  >
+                    Payé directement dans un guichet ou chez un agent.
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flex: 4,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    marginVertical: 10,
+                    margin: 5,
+                    padding: 5,
+                  }}
+                >
+                  <Image
+                    source={require("../../../assets/icon/cfa.png")}
+                    style={{ height: 60, width: 60 }}
+                    resizeMode="contain"
+                  />
+                </View>
+              </AnimatedPressable>
+            ) : null}
+            {!isBank && !isOrange && !isCash ? (
+              <AnimatedPressable
+                animation={isBank ? "fadeOutLeft" : null}
+                duration={300}
+                delay={300}
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10,
+                  alignItems: "center",
+                  // justifyContent: "flex-start",
+                }}
+                onPress={() => setIsXaalisi(!isXaalisi)}
+              >
+                <Checkbox
+                  style={[styles.checkbox, { flex: 0 }]}
+                  value={isXaalisi}
+                  onValueChange={setIsXaalisi}
+                />
+                <View style={{ flex: 6 }}>
+                  <Text
+                    style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}
+                  >
+                    Xaliisi
+                  </Text>
+                  <Text
+                    style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}
+                  >
+                    Payé par votre compte Xaalisi de Cirtic
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flex: 4,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    marginVertical: 10,
+                    margin: 5,
+                    padding: 5,
+                  }}
+                >
+                  <Image
+                    source={require("../../../assets/icon/xaalisi.png")}
+                    style={{ height: 80, width: 80 }}
+                    resizeMode="contain"
+                  />
+                </View>
+              </AnimatedPressable>
+            ) : null}
+            {isXaalisi ? (
+              <Animatable.View
+                style={{ backgroundColor: "blue", height: 200, width }}
+                animation="fadeInUp"
+                duration={300}
+                delay={300}
+              ></Animatable.View>
+            ) : null}
 
-        {!isBank && !isXaalisi && !isCash ? (
-          <AnimatedPressable
-            animation={isBank ? "fadeOutLeft" : null}
-            duration={300}
-            delay={300}
-            style={{
-              flexDirection: "row",
-              marginLeft: 10,
-              alignItems: "center",
-              // justifyContent: "flex-start",
-            }}
-            onPress={() => setIsOrange(!isOrange)}
+            {!isBank && !isXaalisi && !isCash ? (
+              <AnimatedPressable
+                animation={isBank ? "fadeOutLeft" : null}
+                duration={300}
+                delay={300}
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10,
+                  alignItems: "center",
+                  // justifyContent: "flex-start",
+                }}
+                onPress={() => setIsOrange(!isOrange)}
+              >
+                <Checkbox
+                  style={[styles.checkbox, { flex: 0 }]}
+                  value={isOrange}
+                  onValueChange={setIsOrange}
+                />
+                <View style={{ flex: 6 }}>
+                  <Text
+                    style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}
+                  >
+                    OrangeMoney
+                  </Text>
+                  <Text
+                    style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}
+                  >
+                    Payé par votre compte OrangeMoney
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flex: 4,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    marginVertical: 10,
+                    margin: 5,
+                    padding: 5,
+                  }}
+                >
+                  <Image
+                    source={require("../../../assets/icon/orange.png")}
+                    style={{ height: 60, width: 60 }}
+                    resizeMode="contain"
+                  />
+                </View>
+              </AnimatedPressable>
+            ) : null}
+
+            {isOrange ? (
+              <Animatable.View
+                style={{ height: 200, width }}
+                animation="fadeInUp"
+                duration={300}
+                delay={300}
+              >
+                <View style={{ alignSelf: "center" }}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setNumeroOrg}
+                    value={numeroOrg}
+                    placeholder="Numero de Votre compte OrangeMoney"
+                    keyboardType="number-pad"
+                  />
+                </View>
+              </Animatable.View>
+            ) : null}
+
+            {!isXaalisi && !isOrange && !isCash ? (
+              <AnimatedPressable
+                animation={isXaalisi ? "fadeOutLeft" : null}
+                duration={300}
+                delay={300}
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10,
+                  alignItems: "center",
+                  // justifyContent: "flex-start",
+                }}
+                onPress={() => {
+                  setIsBank(!isBank);
+
+                  if (!isBank) {
+                    setTimeout(() => {
+                      //console.log("fired");
+                      scrollRef.scrollToEnd({ animated: true });
+                    }, 10);
+                  }
+                }}
+              >
+                <Checkbox
+                  style={[styles.checkbox, { flex: 0 }]}
+                  value={isBank}
+                  onValueChange={setIsBank}
+                />
+                <View style={{ flex: 6 }}>
+                  <Text
+                    style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}
+                  >
+                    Carte Bancaire
+                  </Text>
+                  <Text
+                    style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}
+                  >
+                    Payé par votre compte Compte Bancaire
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flex: 4,
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    marginVertical: 10,
+                    margin: 5,
+                    padding: 5,
+                  }}
+                >
+                  <Image
+                    source={require("../../../assets/icon/carte.png")}
+                    style={{ height: 60, width: 60 }}
+                    resizeMode="contain"
+                  />
+                </View>
+              </AnimatedPressable>
+            ) : null}
+
+            {isBank ? (
+              <Animatable.View
+                style={{ width }}
+                animation="fadeInUp"
+                duration={300}
+                delay={300}
+              >
+                <View style={{ alignSelf: "center" }}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setFulName}
+                    value={fulName}
+                    placeholder="Nom Complete"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setNumero}
+                    value={numero}
+                    placeholder="Numero de Votre Carte"
+                    keyboardType="number-pad"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setDate}
+                    value={date}
+                    placeholder="Date D'expiration"
+                    keyboardType="decimal-pad"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setCv}
+                    value={cv}
+                    placeholder="C.V.V de votre Carte"
+                    secureTextEntry
+                  />
+                </View>
+              </Animatable.View>
+            ) : null}
+
+            {isXaalisi || isBank || isOrange || isCash ? (
+              <TouchableOpacity onPress={handlePayment} style={styles.boutton}>
+                <AntDesign name="checkcircle" size={30} color="#99D98c" />
+                <Text style={styles.txtValider}>Valider</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <Checkbox
-              style={[styles.checkbox, { flex: 0 }]}
-              value={isOrange}
-              onValueChange={setIsOrange}
-            />
-            <View style={{ flex: 6 }}>
-              <Text style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}>
-                OrangeMoney
-              </Text>
-              <Text style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}>
-                Payé par votre compte OrangeMoney
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                flex: 4,
-                alignItems: "center",
-                justifyContent: "space-around",
-                marginVertical: 10,
-                margin: 5,
-                padding: 5,
-              }}
-            >
-              <Image
-                source={require("../../../assets/icon/orange.png")}
-                style={{ height: 60, width: 60 }}
-                resizeMode="contain"
-              />
-            </View>
-          </AnimatedPressable>
-        ) : null}
-
-        {isOrange ? (
-          <Animatable.View
-            style={{ height: 200, width }}
-            animation="fadeInUp"
-            duration={300}
-            delay={300}
-          >
-            <View style={{ alignSelf: "center" }}>
-              <TextInput
-                style={styles.input}
-                onChangeText={setNumeroOrg}
-                value={numeroOrg}
-                placeholder="Numero de Votre compte OrangeMoney"
-                keyboardType="number-pad"
-              />
-            </View>
-          </Animatable.View>
-        ) : null}
-
-        {!isXaalisi && !isOrange && !isCash ? (
-          <AnimatedPressable
-            animation={isXaalisi ? "fadeOutLeft" : null}
-            duration={300}
-            delay={300}
-            style={{
-              flexDirection: "row",
-              marginLeft: 10,
-              alignItems: "center",
-              // justifyContent: "flex-start",
-            }}
-            onPress={() => {
-              setIsBank(!isBank);
-
-              if (!isBank) {
-                setTimeout(() => {
-                  //console.log("fired");
-                  scrollRef.scrollToEnd({ animated: true });
-                }, 10);
-              }
-            }}
-          >
-            <Checkbox
-              style={[styles.checkbox, { flex: 0 }]}
-              value={isBank}
-              onValueChange={setIsBank}
-            />
-            <View style={{ flex: 6 }}>
-              <Text style={{ marginLeft: 10, fontSize: 18, fontWeight: "600" }}>
-                Carte Bancaire
-              </Text>
-              <Text style={{ marginLeft: 15, fontSize: 14, fontWeight: "400" }}>
-                Payé par votre compte Compte Bancaire
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                flex: 4,
-                alignItems: "center",
-                justifyContent: "space-around",
-                marginVertical: 10,
-                margin: 5,
-                padding: 5,
-              }}
-            >
-              <Image
-                source={require("../../../assets/icon/carte.png")}
-                style={{ height: 60, width: 60 }}
-                resizeMode="contain"
-              />
-            </View>
-          </AnimatedPressable>
-        ) : null}
-
-        {isBank ? (
-          <Animatable.View
-            style={{ width }}
-            animation="fadeInUp"
-            duration={300}
-            delay={300}
-          >
-            <View style={{ alignSelf: "center" }}>
-              <TextInput
-                style={styles.input}
-                onChangeText={setFulName}
-                value={fulName}
-                placeholder="Nom Complete"
-              />
-              <TextInput
-                style={styles.input}
-                onChangeText={setNumero}
-                value={numero}
-                placeholder="Numero de Votre Carte"
-                keyboardType="number-pad"
-              />
-              <TextInput
-                style={styles.input}
-                onChangeText={setDate}
-                value={date}
-                placeholder="Date D'expiration"
-                keyboardType="decimal-pad"
-              />
-              <TextInput
-                style={styles.input}
-                onChangeText={setCv}
-                value={cv}
-                placeholder="C.V.V de votre Carte"
-                secureTextEntry
-              />
-            </View>
-          </Animatable.View>
-        ) : null}
-
-        {isXaalisi || isBank || isOrange || isCash ? (
-          <TouchableOpacity onPress={handlePayment} style={styles.boutton}>
-            <AntDesign name="checkcircle" size={30} color="#99D98c" />
-            <Text style={styles.txtValider}>Valider</Text>
-          </TouchableOpacity>
-        ) : null}
+            <Text>Paiement déjà éffectué!</Text>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
