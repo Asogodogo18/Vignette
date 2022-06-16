@@ -21,7 +21,9 @@ const OfficerHome = ({ navigation }) => {
       delay={500}
       style={styles.container}
     >
-      <SearchBar />
+      <View style={{ marginTop: 35 }}>
+        <SearchBar />
+      </View>
 
       <TouchableOpacity
         style={styles.touch}
@@ -52,6 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: "row",
     paddingHorizontal: 25,
+    marginTop: 50,
   },
 
   touch1: {

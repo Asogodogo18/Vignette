@@ -86,7 +86,7 @@ const Index = ({ navigation }) => {
                     alignSelf: "center",
                     marginVertical: 0,
                     width: width,
-                    justifyContent: "space-around",
+                    justifyContent: "space-between",
                   }}
                 >
                   <TouchableOpacity
@@ -109,7 +109,7 @@ const Index = ({ navigation }) => {
                       size={24}
                       color="white"
                     />
-                    <Text style={styles.text}>Changer de Mot de Passe</Text>
+                    <Text style={styles.text}>Changer Mot de Passe</Text>
                   </TouchableOpacity>
                 </View>
                 <View
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   touch: {
     height: 50,
-    minWidth: 90,
+    minWidth: 0,
     maxWidth: 230,
     // backgroundColor: "#99D98c",
     backgroundColor: "#1a1818",

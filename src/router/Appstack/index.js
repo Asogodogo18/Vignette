@@ -57,7 +57,7 @@ const Index = () => {
       />
       <Stack.Screen name="Profil" component={Profil} />
       <Stack.Screen name="Payment" component={Payment} />
-      <Stack.Screen name="AdminStack" component={AdminStack} />
+      {/* <Stack.Screen name="AdminStack" component={AdminStack} /> */}
       <Stack.Screen name="Inscription" component={Inscription} />
     </Stack.Navigator>
   );

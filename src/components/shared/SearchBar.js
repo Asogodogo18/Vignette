@@ -9,13 +9,15 @@ import {
   ActivityIndicator,
   Alert,
   BackHandler,
+  ImageBackground,
 } from "react-native";
 import React, { useRef, useState, useEffect } from "react";
 
 import * as Animatable from "react-native-animatable";
-import { FontAwesome5, AntDesign } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import Vignette from "./Vignette";
 import { getVignetteByChassis, getVignetteById } from "../../services/query";
+const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 import { useAuthState } from "../../global";
 const { height, width } = Dimensions.get("screen");
 let validationId = /[0-9]/gi;
@@ -38,7 +40,7 @@ const SearchBar = ({ navigation, searchReturn = null }) => {
 
   const searchRedirect = (item = null) => {
     if (user.role == "Agent") {
-      navigation.navigate("AdminStack", {
+      navigation.navigate("Appstack", {
         screen: "Payment",
         params: { item, id_user: user.id_user },
       });
@@ -136,7 +138,181 @@ const SearchBar = ({ navigation, searchReturn = null }) => {
 
   const RenderResul = ({ item, navigation }) => (
     <TouchableOpacity style={styles.card} onPress={() => searchRedirect(item)}>
-      <Animatable.View
+      <AnimatedImg
+        resizeMode="cover"
+        source={require("../../../assets/bg.png")}
+        animation="fadeInRight"
+        style={styles.vignette}
+        // onPress={() => setVignette(item)}
+        duration={1000}
+        delay={parseInt(item.id) * 500}
+      >
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <Text
+            style={{
+              // marginLeft: 15,
+              fontSize: 20,
+              fontWeight: "200",
+              color: "white",
+              textTransform: "capitalize",
+            }}
+          >
+            {" "}
+            {item.prenom}{" "}
+          </Text>
+          <Text
+            style={{
+              // marginLeft: 10,
+              fontSize: 20,
+              color: "white",
+              textTransform: "uppercase",
+              fontWeight: "600",
+            }}
+          >
+            {" "}
+            {item.nom}{" "}
+          </Text>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 10,
+            justifyContent: "center",
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              Marque
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 15,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.marque}
+            </Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              utilisation
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 15,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.utilisation}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 10,
+            justifyContent: "center",
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              Type
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 15,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.type}
+            </Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "200",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+            >
+              Montant
+            </Text>
+            <Text
+              style={{
+                marginLeft: 15,
+                fontSize: 15,
+                color: "white",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              {item.montant} FCFA
+            </Text>
+          </View>
+        </View>
+        <Text
+          style={{
+            marginTop: 5,
+            textAlign: "center",
+            fontSize: 15,
+            color: "white",
+            textTransform: "uppercase",
+            fontWeight: "bold",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "200",
+              color: "white",
+              textTransform: "capitalize",
+            }}
+          >
+            No Chassis
+          </Text>{" "}
+          {item.num_chassis}
+        </Text>
+        <View style={{ position: "absolute", top: 10, right: 5 }}>
+          {item.statut && item.statut == "vignette valide" ? (
+            <AntDesign name="checkcircle" size={30} color="green" />
+          ) : (
+            <Ionicons name="md-close-circle-sharp" size={35} color="red" />
+          )}
+        </View>
+      </AnimatedImg>
+      {/* <Animatable.View
         duration={300}
         delay={300}
         animation="bounceInLeft"
@@ -178,7 +354,7 @@ const SearchBar = ({ navigation, searchReturn = null }) => {
             <AntDesign name="checkcircle" size={30} color="red" />
           )}
         </View>
-      </Animatable.View>
+      </Animatable.View> */}
     </TouchableOpacity>
   );
 
@@ -251,25 +427,38 @@ const styles = StyleSheet.create({
     width: width - 15,
     flexDirection: "row",
   },
-  card: {
-    flex: 1,
-    margin: 5,
-    padding: 5,
-    flexDirection: "row",
-    maxHeight: 100,
-    minHeight: 50,
-    width: width - 30,
-    alignSelf: "center",
-    borderWidth: 0.5,
+  // card: {
+  //   flex: 1,
+  //   margin: 5,
+  //   padding: 5,
+  //   flexDirection: "row",
+  //   maxHeight: 100,
+  //   minHeight: 50,
+  //   width: width - 30,
+  //   alignSelf: "center",
+  //   borderWidth: 0.5,
 
-    borderRadius: 10,
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginVertical: 5,
-  },
+  //   borderRadius: 10,
+  //   justifyContent: "space-around",
+  //   alignItems: "center",
+  //   marginVertical: 5,
+  // },
+  // vignette: {
+  //   marginVertical: 5,
+  //   padding: 5,
+  //   flex: 8,
+  // },
   vignette: {
+    // height: 180,
+    backgroundColor: "white",
+    marginHorizontal: 8,
     marginVertical: 5,
-    padding: 5,
-    flex: 8,
+    padding: 15,
+    elevation: 10,
+    width: 300,
+    borderRadius: 5,
+    overflow: "hidden",
+    minHeight: 180,
+    maxHeight: 380,
   },
 });

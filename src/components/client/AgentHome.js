@@ -67,7 +67,7 @@ const AgentHome = ({ navigation, item }) => {
         <VignetteList />
         <QuickSelect navigation={navigation} setOpenListing={setOpenListing} />
 
-        <Fees navigation={navigation} />
+        <Fees navigation={navigation} setOpenListing={setOpenListing} />
       </View>
     </ScrollView>
   );

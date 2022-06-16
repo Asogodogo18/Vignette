@@ -53,7 +53,7 @@ const Index = ({ navigation, route }) => {
               type: "success",
               text1: "Paiement effectué avec success!",
             });
-            navigation.navigate("Accueil");
+            // navigation.navigate("Accueil");
             setTimeout(() => {
               navigation.navigate("Accueil");
             }, 1500);
@@ -108,7 +108,7 @@ const Index = ({ navigation, route }) => {
           <Vignette item={item} />
         </View>
 
-        {item.statut == "vignette non payée" ? (
+        {item?.statut == "vignette non payée" ? (
           <View style={styles.section}>
             <Text style={styles.txt}>Mode de Payment</Text>
             {!isBank && !isXaalisi && !isOrange ? (
@@ -394,9 +394,23 @@ const Index = ({ navigation, route }) => {
           </View>
         ) : (
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 50,
+            }}
           >
-            <Text>Paiement déjà éffectué!</Text>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "900",
+                color: "gray",
+                letterSpacing: 1.5,
+              }}
+            >
+              Paiement déjà éffectué!
+            </Text>
           </View>
         )}
       </ScrollView>

@@ -50,16 +50,9 @@ const Perte = ({ navigation }) => {
     }, 1500);
   };
   return (
-    <ScrollView
-      ContentContainerStyle={{
-        flexGrow: 1,
-        backgroundColor: "white",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <ScrollView ContentContainerStyle={styles.contain}>
       <Image
-        style={{ width, maxHeight: 350, marginBottom: 20 }}
+        style={{ width, height: 300, marginBottom: 20 }}
         resizeMode="contain"
         source={require("../../../assets/lost.png")}
       />
@@ -74,6 +67,8 @@ const Perte = ({ navigation }) => {
           borderWidth: 1,
           borderRadius: 8,
           padding: 15,
+          backgroundColor: "white",
+          elevation: 5,
         }}
         value={numChassis}
         onChangeText={setNumChassis}
@@ -137,6 +132,12 @@ const Perte = ({ navigation }) => {
 export default Perte;
 
 const styles = StyleSheet.create({
+  contain: {
+    flexGrow: 1,
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   photo: {
     width: 180,
     height: 180,

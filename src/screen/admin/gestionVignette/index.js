@@ -49,6 +49,7 @@ const Index = ({ navigation }) => {
   const [currentLoader, setCurrentLoader] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const queryClient = useQueryClient();
+  const [openListing, setOpenListing] = useState(false);
 
   const handleDelete = (id) => {
     deleteVignette(id)
@@ -211,7 +212,7 @@ const Index = ({ navigation }) => {
         >
           Veuillez Choisir Une option:
         </Text>
-        <Fees navigation={navigation} />
+        <Fees navigation={navigation} setOpenListing={setOpenListing} />
       </View>
     );
   }
