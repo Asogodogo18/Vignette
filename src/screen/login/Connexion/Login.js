@@ -38,6 +38,7 @@ const Login = ({ navigation, route }) => {
       Alert.alert(
         "DEV TEAM!",
         "Soya DIALLO \n Cheick Abba SOGODOGO \n Hamadoun SANKARE ",
+
         [
           {
             text: "Cancel",
@@ -109,26 +110,15 @@ const Login = ({ navigation, route }) => {
               placeholder="Mot de Passe"
               keyboardType="default"
               secureTextEntry
-            >
-              {/* <TouchableOpacity
-                onPress={() => {
-                  setisSecureTextEntry(!isSecureTextEntry);
-                }}
-              >
-                {isSecureTextEntry ? (
-                  <Feather name="eye-off" color="grey" size={20} />
-                ) : (
-                  <Feather name="eye" color="grey" size={20} />
-                )}
-              </TouchableOpacity> */}
-            </TextInput>
-            {loading ? (
-              <SkypeIndicator color="#99D98c" size={40} />
-            ) : (
-              <TouchableOpacity onPress={loginHandle} style={styles.loginBtn}>
+            />
+
+            <TouchableOpacity onPress={loginHandle} style={styles.loginBtn}>
+              {loading ? (
+                <SkypeIndicator color="#fff" size={40} />
+              ) : (
                 <Text style={styles.loginTxt}>se connecter</Text>
-              </TouchableOpacity>
-            )}
+              )}
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -156,12 +146,15 @@ const Login = ({ navigation, route }) => {
           </View>
 
           <View style={styles.footer}>
-            <Pressable onPress={() => setCount(count + 1)}>
-              <Image
+            <Pressable
+              style={{ height: 40, width: 50 }}
+              onPress={() => setCount(count + 1)}
+            >
+              {/* <Image
                 resizeMode="cover"
                 style={{ width: 150, height: 150 }}
                 source={require("../../../../assets/cirtic-logo.png")}
-              />
+              /> */}
             </Pressable>
           </View>
           {/* <Banner count={count} /> */}

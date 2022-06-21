@@ -41,7 +41,7 @@ const Index = ({ navigation }) => {
             source={require("../../../../assets/icon/logobko1.png")}
             style={styles.img}
           />
-          <Text style={styles.txtHeader}>Vignette Mali</Text>
+          <Text style={styles.txtHeader}>Ikavignette</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("Profil")}
             style={{

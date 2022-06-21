@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: "row",
     paddingHorizontal: 25,
-    marginTop: 50,
+    marginTop: 150,
   },
 
   touch1: {

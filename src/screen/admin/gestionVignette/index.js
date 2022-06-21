@@ -47,7 +47,6 @@ const Index = ({ navigation }) => {
   const { status, data, error, isFetching, isFetched } = useVignettes();
   const [operatingItem, setOperatingItem] = useState(null);
   const [currentLoader, setCurrentLoader] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
   const queryClient = useQueryClient();
   const [openListing, setOpenListing] = useState(false);
 
@@ -132,10 +131,7 @@ const Index = ({ navigation }) => {
             style={{
               padding: 2,
               margin: 2,
-
-              marginHorizontal: 220,
-
-              borderRadius: 10,
+              alignItems: "flex-end",
             }}
           >
             <TouchableOpacity
@@ -166,7 +162,9 @@ const Index = ({ navigation }) => {
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{
                     alignItems: "center",
-                    paddingBottom: 85,
+                    // paddingBottom: 180,
+                    // height: height,
+                    paddingBottom: height + 50,
                   }}
                   data={data}
                   renderItem={({ item }) => (

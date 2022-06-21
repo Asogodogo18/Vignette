@@ -1,315 +1,204 @@
-import React from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  
   StyleSheet,
-  StatusBar,
-  Alert,
-  Dimensions,
-  ScrollView,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  SafeAreaView,
   ImageBackground,
   Image,
+  Dimensions,
+  TouchableOpacity,
   TextInput,
+  Pressable,
+  Alert,
 } from "react-native";
-import * as Animatable from "react-native-animatable";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import { loginUser, useAuthState, useAuthDispatch } from "../../../global";
+import Toast from "react-native-toast-message";
+import { SkypeIndicator } from "react-native-indicators";
+// import Banner from "../../../components/shared/Banner";
 
 const { width, height } = Dimensions.get("screen");
+const isTablet = width > 360;
 
-import { Feather, FontAwesome } from "@expo/vector-icons";
+const Login = ({ navigation, route }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [count, setCount] = useState(0);
+  const [isSecureTextEntry, setisSecureTextEntry] = useState(false);
+  const dispatch = useAuthDispatch(); //get the dispatch method from the useDispatch custom hook
+  const { loading, errorMessage } = useAuthState();
 
-const Index = ({ navigation }) => {
-  const Navigation = useNavigation();
-  const [data, setData] = React.useState({
-    username: "",
-    password: "",
-    check_textInputChange: false,
-    secureTextEntry: true,
-    isValidUser: true,
-    isValidPassword: true,
-  });
-
-  // const { colors } = useTheme();
-
-  // const { signIn } = React.useContext(AuthContext);
-
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: true,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: false,
-        isValidUser: false,
-      });
-    }
-  };
-
-  const handlePasswordChange = (val) => {
-    if (val.trim().length >= 8) {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: true,
-      });
-    } else {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: false,
-      });
-    }
-  };
-
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
-
-  const handleValidUser = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidUser: false,
-      });
-    }
-  };
-
-  const loginHandle = (userName, password) => {
-    const foundUser = Users.filter((item) => {
-      return userName == item.username && password == item.password;
-    });
-
-    if (data.username.length == 0 || data.password.length == 0) {
+  useEffect(() => {
+    console.log("count:", count);
+    if (count == 5) {
+      setCount(0);
       Alert.alert(
-        "Wrong Input!",
-        "Username or password field cannot be empty.",
-        [{ text: "Okay" }]
+        "DEV TEAM!",
+        "Soya DIALLO \n Cheick Abba SOGODOGO \n Hamadoun SANKARE ",
+        [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel",
+          },
+          { text: "YES", onPress: () => {} },
+          setCount(0),
+        ]
       );
-      return;
+      setCount(0);
     }
 
-    if (foundUser.length == 0) {
-      Alert.alert("Invalid User!", "Username or password is incorrect.", [
-        { text: "Okay" },
-      ]);
+    return () => {};
+  }, [count]);
+
+  const passHandle = async () => {
+    if (username.length == 0 || password.length == 0) {
+      Toast.show({
+        type: "error",
+        text1: "Veuillez renseigner les champs obligatoires",
+      });
       return;
     }
-    signIn(foundUser);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={require("../../../../assets/logo.png")}
-          style={styles.headerImg}
-        />
-        {/* <Text style={styles.text_header}>Connexion</Text> */}
-      </View>
-
-      <Animatable.View
-        animation="fadeInUpBig"
-        duration={300}
-        delay={500}
-        style={styles.footer}
-      >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <Text style={styles.text_footer}>Nom d'utilisateur ou E-mail</Text>
-          <View style={styles.action}>
-            <FontAwesome name="user-o" color="gray" size={20} />
-            <TextInput
-              placeholder="Votre Nom d'utilisateur ou E-mail"
-              placeholderTextColor="#666666"
-              style={[
-                styles.textInput,
-                {
-                  color: "black",
-                },
-              ]}
-              autoCapitalize="none"
+    <KeyboardAvoidingView contentContainerStyle={styles.container}>
+      <SafeAreaView forceInset={{ top: "always" }} style={styles.container}>
+        <ImageBackground
+          style={styles.imgContainer}
+          source={require("../../../../assets/bg-login-3.png")}
+        >
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => navigation.goBack()}
+          >
+            <AntDesign name="left" size={28} color="black" />
+          </TouchableOpacity>
+          <View style={{ flex: 1 }}>
+            <Image
+              source={require("../../../../assets/logo.png")}
+              style={styles.headerImg}
             />
           </View>
+          <View style={styles.content}>
+            <TextInput
+              style={styles.input}
+              onChangeText={setUsername}
+              value={username}
+              placeholder="Identifiant"
+              keyboardType="email-address"
+            />
 
-          <View>
-            <View style={{ marginTop: 50, alignItems: "center" }}>
-              <LinearGradient
-                colors={["#1a1818", "#FFFF"]}
-                start={{ x: 0.1, y: 2.0 }}
-                end={{ x: 2.0, y: 0.1 }}
-                style={{
-                  height: 48,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: 200,
-                  elevation: 5,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.replace("Accueil");
-                  }}
-                  style={styles.touch1}
-                >
-                  <View style={{ flexDirection: "row" }}>
-                    <FontAwesome5
-                      name="sign-in-alt"
-                      size={24}
-                      color="white"
-                      style={{ marginLeft: 0, marginTop: 10 }}
-                    />
-                    <Text style={styles.text}>Envoyer</Text>
-                  </View>
-                </TouchableOpacity>
-              </LinearGradient>
-            </View>
-
-            <View style={{ marginTop: 15 }}>
-              <Text style={{ textAlign: "center", color: "white" }}>
-                Vous n'avez pas de compte ?
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  Navigation.navigate("Inscription");
-                }}
-              >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    color: "white",
-                  }}
-                >
-                  Créer Un compte dès maintenant
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={passHandle} style={styles.loginBtn}>
+              {loading ? (
+                <SkypeIndicator color="#fff" size={40} />
+              ) : (
+                <Text style={styles.loginTxt}>Recupere</Text>
+              )}
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </Animatable.View>
-    </View>
+          <View
+            style={{
+              position: "absolute",
+              bottom: height / 3.5,
+              left: 0,
+              right: 0,
+              paddingHorizontal: 8,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 0,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => loginUser(dispatch, { role: "Anonyme" })}
+            >
+              <Text>Continuer sans compte</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.footer}>
+            <Pressable onPress={() => setCount(count + 1)}>
+              <Image
+                resizeMode="cover"
+                style={{ width: 150, height: 150 }}
+                source={require("../../../../assets/cirtic-logo.png")}
+              />
+            </Pressable>
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
-export default Index;
+export default Login;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  header: {
-    flex: 2,
+  container: { flex: 1 },
+  imgContainer: { width, height },
+  backBtn: {
+    marginTop: 40,
+    height: 50,
+    width: width / 6,
+    backgroundColor: "lightblue",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 50,
+    elevation: 5,
+    borderRadius: 8,
+    marginLeft: 5,
   },
   headerImg: {
-    height: 100,
+    height: isTablet ? 200 : 110,
+
     width: "100%",
+    marginTop: 25,
+    margin: 5,
+    alignSelf: "center",
+  },
+  content: {
+    flex: 2,
+    // marginVertical: 10,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    // paddingVertical: 20,
+    alignItems: "center",
+
+    // backgroundColor: "white",
   },
   footer: {
-    flex: 2,
-    backgroundColor: "#1a1818",
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    elevation: 10,
-    padding: 5,
-    width: width - 15,
-    alignSelf: "center",
-    marginTop: -150,
-    marginVertical: 20,
-    borderRadius: 50,
-    opacity: 0.2,
-  },
-  text_header: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 30,
-  },
-  text_footer: {
-    color: "white",
-    fontSize: 18,
-    marginTop: 50,
-  },
-  action: {
-    flexDirection: "row",
-    marginTop: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f2f2f2",
-    paddingBottom: 5,
-  },
-  actionError: {
-    flexDirection: "row",
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#FF0000",
-    paddingBottom: 5,
-  },
-  textInput: {
     flex: 1,
-    marginTop: 12,
-    paddingLeft: 10,
-    color: "white",
+    alignItems: "center",
+  },
+  input: {
+    height: 48,
     padding: 10,
+    width: width / 1.15,
+    marginVertical: 10,
+    paddingHorizontal: 20,
+    fontSize: 15,
+    backgroundColor: "white",
+
+    elevation: 1,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "lightblue",
   },
-  errorMsg: {
-    color: "#FF0000",
-    fontSize: 14,
-  },
-  button: {
+  loginBtn: {
+    marginTop: 30,
+    padding: 10,
     alignItems: "center",
-    marginTop: 50,
-  },
-  signIn: {
-    width: "100%",
-    height: 50,
     justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    color: "white",
-    backgroundColor: "red",
-  },
-  textSign: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  touch1: {
-    width: Dimensions.get("screen").width - 150,
-
+    elevation: 5,
     height: 50,
-
-    marginBottom: 10,
-
-    marginTop: 10,
-    marginLeft: 50,
+    width: width / 1.15,
+    backgroundColor: "lightblue",
+    borderRadius: 8,
   },
-  text: {
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "white",
-    paddingTop: 10,
-    //marginLeft: 30,
-    left: 30,
-    textAlign: "center",
+  loginTxt: {
+    fontSize: 18,
+    color: "black",
   },
 });

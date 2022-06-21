@@ -8,7 +8,6 @@ import {
   ScrollView,
   TextInput,
   KeyboardAvoidingView,
-  
 } from "react-native";
 import React, { useState } from "react";
 import { addPuissance } from "../../../services/query";
@@ -26,13 +25,13 @@ const Add = ({ handlePress, setCurrentLoader }) => {
   const [puissance, setPuissance] = useState("");
   const [montant, setMontant] = useState("");
   const [selectedType, setSelectedType] = useState("personnel");
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const handleAdd = () => {
     addPuissance({ puissance, montant, utilisation: selectedType })
       .then((res) => {
         if (res.data == "true") {
-          queryClient.invalidateQueries('puissances')
+          queryClient.invalidateQueries("puissances");
           Toast.show({
             type: "success",
             text1: "Ajoute avec success!",
@@ -55,9 +54,7 @@ const Add = ({ handlePress, setCurrentLoader }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-     
-    >
+    <KeyboardAvoidingView>
       <Animatable.View animation="fadeIn">
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View
@@ -137,7 +134,7 @@ const Add = ({ handlePress, setCurrentLoader }) => {
                     onPress={handleAdd}
                     style={[styles.button, { backgroundColor: "green" }]}
                   >
-                    <Text style={styles.btnLabel}>Acheter</Text>
+                    <Text style={styles.btnLabel}>Ajouter</Text>
                   </TouchableOpacity>
                 </View>
               </BlurView>

@@ -54,7 +54,10 @@ const Fees = ({ navigation, setOpenListing = null }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={data.filter((item) => item.utilisation === "Personnel")}
+          data={
+            data != "False" &&
+            data?.filter((item) => item?.utilisation === "Personnel")
+          }
           renderItem={({ item }) => (
             <Tarif
               setOpenListing={setOpenListing}
@@ -94,7 +97,10 @@ const Fees = ({ navigation, setOpenListing = null }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
-          data={data.filter((item) => item.utilisation === "Transport")}
+          data={
+            data != "False" &&
+            data?.filter((item) => item?.utilisation === "Transport")
+          }
           renderItem={({ item }) => (
             <Tarif
               setOpenListing={setOpenListing}
