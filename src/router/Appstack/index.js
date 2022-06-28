@@ -14,6 +14,7 @@ import InitTransfert from "../../screen/client/initTransfert";
 import Payment from "../../screen/Payment";
 import Inscription from "../../screen/login/Inscription/SignUp";
 import Perte from "../../screen/client/Perte";
+import Modify from "../../screen/client/ModifyVignette";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ const Index = () => {
       />
       <Stack.Screen
         options={{ headerShown: false, headerTitleAlign: "center" }}
+        name="Modify"
+        component={Modify}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, headerTitleAlign: "center" }}
         name="Detail"
         component={DetailTransfert}
       />
@@ -57,7 +63,6 @@ const Index = () => {
       />
       <Stack.Screen name="Profil" component={Profil} />
       <Stack.Screen name="Payment" component={Payment} />
-      {/* <Stack.Screen name="AdminStack" component={AdminStack} /> */}
       <Stack.Screen name="Inscription" component={Inscription} />
     </Stack.Navigator>
   );

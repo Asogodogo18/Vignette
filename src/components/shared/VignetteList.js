@@ -7,12 +7,13 @@ import Vignette from "./Vignette";
 
 const VignetteList = () => {
   const { user } = useAuthState();
+  const isAgent = user.role === "Agent";
   const {
     status,
     data: vignettes,
     error,
-    isFetching,
-  } = user.role == "Agent"
+    isLoading,
+  } = isAgent
     ? useVignetteAgent(user ? user.id_user : null)
     : useVignette(user ? user.id_user : null);
   // console.log("vignettes: ", vignettes.data);
@@ -30,7 +31,7 @@ const VignetteList = () => {
         {" "}
         Mes Vignettes
       </Text>
-      {isFetching ? (
+      {isLoading ? (
         <View
           style={{
             flex: 1,
@@ -48,7 +49,9 @@ const VignetteList = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ marginVertical: 10, paddingHorizontal: 5 }}
           data={vignettes?.data !== "False" ? vignettes?.data : null}
-          renderItem={Vignette}
+          renderItem={({ item }) => (
+            <Vignette item={item} modify={isAgent ? true : false} />
+          )}
           keyExtractor={(item) => item.id_engin}
         />
       )}

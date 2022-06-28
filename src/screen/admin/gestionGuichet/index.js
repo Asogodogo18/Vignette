@@ -170,7 +170,11 @@ const Index = ({ navigation, item }) => {
           <FlatList
             nestedScrollEnabled
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ marginVertical: 5, paddingHorizontal: 5 }}
+            contentContainerStyle={{
+              marginVertical: 5,
+              paddingHorizontal: 5,
+              paddingBottom: height / 3.5,
+            }}
             data={data}
             renderItem={({ item }) => (
               <Guichet

@@ -31,6 +31,7 @@ const Index = () => {
       <Stack.Screen name="Vignette" component={Vignette} />
       <Stack.Screen name="Profil" component={Profil} />
       <Stack.Screen name="Payment" component={Payment} />
+
       <Stack.Screen name="Transfert" component={Transfert} />
       <Stack.Screen
         options={{ headerShown: false, headerTitleAlign: "center" }}

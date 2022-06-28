@@ -292,18 +292,23 @@ export function useStatistiques() {
 
 export const transfertVignette = (sentForm) => {
   const { id_engin, nouveau, ancien, image } = sentForm;
-  let data = new FormData();
+
+  var data = new FormData();
+
+  data.append("id_engin", id_engin);
   data.append("nouveau", nouveau);
   data.append("ancien", ancien);
-  data.append("id_engin", id_engin);
-  data.append("file[]", image);
-  return fetch("http://197.155.143.74:1112/vignette/transfert", {
-    method: "post",
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    body: data,
-  });
+  data.append("file", image);
+
+  return axios
+    .post("http://197.155.143.74:1112/vignette/transferts", data)
+    .then((response) => {
+      console.log("data", response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const makePaymentAgent = (data) => {

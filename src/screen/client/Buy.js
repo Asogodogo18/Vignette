@@ -69,16 +69,26 @@ const Buy = ({ navigation, route }) => {
           });
           queryClient.invalidateQueries("vignettes");
           queryClient.invalidateQueries("vignette");
-          if (user.role === "Agent" || "Superviseur") {
+          if (
+            user.role === "Agent" ||
+            "Superviseur" ||
+            user.role == "Compta public"
+          ) {
             getVignetteByChassis(noChassi)
               .then((res) => {
                 console.log("vignetteId: ", res);
                 if (res.data.length > 0 && res.data != "False") {
                   const vignette = res.data[0];
-                  navigation.navigate("Payment", {
-                    item: vignette,
-                    id_user: user.id_user,
-                  });
+                  if (
+                    user.role == "Agent" ||
+                    user.role == "Superviseur" ||
+                    user.role == "Compta public"
+                  ) {
+                    navigation.navigate("Payment", {
+                      item: vignette,
+                      id_user: user.id_user,
+                    });
+                  }
                 }
                 //
               })
@@ -243,7 +253,7 @@ const Buy = ({ navigation, route }) => {
                   <TouchableOpacity
                     onPress={() => pickImage(1)}
                     style={styles.photo}
-                    key={`id-{index}`}
+                    key={index}
                   >
                     <Image
                       source={{ uri: image }}

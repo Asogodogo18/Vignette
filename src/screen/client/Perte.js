@@ -75,7 +75,7 @@ const Perte = ({ navigation }) => {
       />
       {image.map((image, index) => {
         return (
-          <View style={styles.photo}>
+          <View style={styles.photo} key={index}>
             <TouchableOpacity
               onPress={() => onRemove(index)}
               style={{

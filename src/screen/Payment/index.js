@@ -26,6 +26,7 @@ const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const AnimatedPressable = Animatable.createAnimatableComponent(Pressable);
 import Vignette from "../../components/shared/Vignette";
 import { makePaymentAgent } from "../../services/query";
+import { useAuthState } from "../../global";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -41,9 +42,10 @@ const Index = ({ navigation, route }) => {
   const [numeroOrg, setNumeroOrg] = useState(false);
   const [cv, setCv] = useState(false);
   const [isCash, setIsCash] = useState(false);
-
+  const { user } = useAuthState();
   const [scrollRef, setScrollRef] = useState(null);
-
+  console.log("item : ", item.statut);
+  const condition = user.role == "Client";
   const handlePayment = () => {
     if (isCash) {
       makePaymentAgent({ id_user, id_engin: item.id_engin })
@@ -108,9 +110,10 @@ const Index = ({ navigation, route }) => {
           <Vignette item={item} />
         </View>
 
-        {item?.statut == "vignette non payée" ? (
+        {item?.statut === "vignette non payée" || item?.statut === false ? (
           <View style={styles.section}>
             <Text style={styles.txt}>Mode de Payment</Text>
+
             {!isBank && !isXaalisi && !isOrange ? (
               <AnimatedPressable
                 animation={isBank ? "fadeOutLeft" : null}
@@ -211,7 +214,12 @@ const Index = ({ navigation, route }) => {
             ) : null}
             {isXaalisi ? (
               <Animatable.View
-                style={{ backgroundColor: "blue", height: 200, width }}
+                style={{
+                  backgroundColor: "blue",
+                  height: 200,
+                  width,
+                  alignSelf: "center",
+                }}
                 animation="fadeInUp"
                 duration={300}
                 delay={300}
@@ -270,7 +278,7 @@ const Index = ({ navigation, route }) => {
 
             {isOrange ? (
               <Animatable.View
-                style={{ height: 200, width }}
+                style={{ height: 200, width, alignSelf: "center" }}
                 animation="fadeInUp"
                 duration={300}
                 delay={300}
@@ -348,7 +356,7 @@ const Index = ({ navigation, route }) => {
 
             {isBank ? (
               <Animatable.View
-                style={{ width }}
+                style={{ width, alignSelf: "center" }}
                 animation="fadeInUp"
                 duration={300}
                 delay={300}

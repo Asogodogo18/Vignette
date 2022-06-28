@@ -18,17 +18,18 @@ import Vignette from "../../components/shared/Vignette";
 const { width, height } = Dimensions.get("screen");
 
 const Manage = ({ navigation }) => {
-  // const { status, data, error, isFetching, isFetched} = useVignettes();
+  // const { status, data, error, isLoading, vignettes} = useVignettes();
   const { user } = useAuthState();
+  const isAgent = user.role === "Agent";
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const {
     status,
     data: vignettes,
     error,
-    isFetching,
-    isFetched,
-  } = user.role == "Agent"
+    isLoading,
+  } = isAgent
     ? useVignetteAgent(user ? user.id_user : null)
     : useVignette(user ? user.id_user : null);
   // console.log("result", searchResult);
@@ -110,37 +111,15 @@ const Manage = ({ navigation }) => {
         {" "}
         Mes Vignettes
       </Text>
-      {/* {searchQuery ? (
-        <FlatList
-          ListHeaderComponent={() => (
-            <View>
-              <Text>Resultat du Recherche</Text>
-            </View>
-          )}
-          ListFooterComponent={() => (
-            <View>
-              <Text>fin</Text>
-            </View>
-          )}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            alignItems: "center",
-            paddingBottom: 50,
-          }}
-          data={searchResult}
-          renderItem={Vignette}
-          keyExtractor={(item) => item.id_engin}
-        />
-      ) : null} */}
 
-      {isFetching && (
+      {isLoading && (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
           <SkypeIndicator color="#99D98c" size={40} />
         </View>
       )}
-      {isFetched && vignettes?.data != "False" && (
+      {vignettes && vignettes?.data != "False" && (
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -148,7 +127,9 @@ const Manage = ({ navigation }) => {
             paddingBottom: 50,
           }}
           data={searchQuery ? searchResult : vignettes?.data}
-          renderItem={Vignette}
+          renderItem={({ item }) => (
+            <Vignette item={item} modify={isAgent ? true : false} />
+          )}
           keyExtractor={(item) => item.id_engin}
         />
       )}

@@ -12,22 +12,28 @@ import {
   Keyboard,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { SkypeIndicator } from "react-native-indicators";
 import * as ImagePicker from "expo-image-picker";
+import DocumentPicker from "react-native-document-picker";
 import Toast from "react-native-toast-message";
 import { Picker } from "@react-native-picker/picker";
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import VignetteList from "../../components/shared/VignetteList";
 import Animated from "react-native-reanimated";
 import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { transfertVignette, useVignette } from "../../services/query";
 import { useAuthState } from "../../global";
+import { TransfertProvider } from "../../global/transfertContext";
+import axios from "axios";
 const { height, width } = Dimensions.get("screen");
 
 const VignetteSelection = ({ setSelectedVignette }) => {
   const { user } = useAuthState();
+  const { initTransfert, confirmTranfert, rejectTranfert } =
+    TransfertProvider();
 
   const {
     status,
@@ -102,17 +108,76 @@ const InitTransfert = ({ navigation }) => {
   const [image, setImage] = useState([]);
   const [numero, setNumero] = useState("");
   const [isTranfering, setIsTranfering] = useState(false);
+  const [singleFile, setSingleFile] = useState(null);
+
+  // const uploadImage = async () => {
+  //   // Check if any file is selected or not
+  //   if (singleFile != null) {
+  //     // If file selected then create FormData
+  //     const fileToUpload = singleFile;
+  //     const data = new FormData();
+  //     data.append("name", "Image Upload");
+  //     data.append("file_attachment", fileToUpload);
+  //     // Please change file upload URL
+  //     let res = await fetch("http://197.155.143.74:1112/vignette/transfert", {
+  //       method: "post",
+  //       body: data,
+  //       headers: {
+  //         "Content-Type": "multipart/form-data; ",
+  //       },
+  //     });
+  //     let responseJson = await res.json();
+  //     if (responseJson.status == 1) {
+  //       Alert.alert("Upload Successful");
+  //     }
+  //   } else {
+  //     // If no file selected the show alert
+  //     Alert.alert("Please Select File first");
+  //   }
+  // };
+
+  const selectFile = async () => {
+    // Opening Document Picker to select one file
+    try {
+      const res = await DocumentPicker.pick({
+        // Provide which type of file you want user to pick
+        type: [DocumentPicker.types.images],
+        // There can me more options as well
+        // DocumentPicker.types.allFiles
+        // DocumentPicker.types.images
+        // DocumentPicker.types.plainText
+        // DocumentPicker.types.audio
+        // DocumentPicker.types.pdf
+      });
+      // Printing the log realted to the file
+      console.log("res : " + JSON.stringify(res));
+      // Setting the state to show single file attributes
+      setSingleFile(res);
+    } catch (err) {
+      setSingleFile(null);
+      // Handling any exception (If any)
+      if (DocumentPicker.isCancel(err)) {
+        // If user canceled the document selection
+        Alert.alert("Canceled");
+      } else {
+        // For Unknown Error
+        Alert.alert("Unknown Error: " + JSON.stringify(err));
+        throw err;
+      }
+    }
+  };
 
   const handleTransfert = () => {
     transfertVignette({
-      image,
       id_engin: selectedVignette.item.id_engin,
       nouveau: numero,
       ancien: selectedVignette.ancien,
+      image: image[0],
     })
-      .then((res) => console.log("transfert: ", res))
+      .then((res) => console.log("reponse transfert: ", res))
       .catch((err) => console.log(err));
   };
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -120,13 +185,15 @@ const InitTransfert = ({ navigation }) => {
       allowsEditing: true,
       aspect: [10, 13],
       quality: 1,
+      base64: true,
     });
 
     if (!result.cancelled) {
-      setImage([...image, result.uri]);
+      setImage([...image, { ...result }]);
       console.log(image);
     }
   };
+
   const onRemove = (index) => {
     setImage([
       ...image.slice(0, index),
@@ -193,7 +260,7 @@ const InitTransfert = ({ navigation }) => {
             style={styles.input}
             onChangeText={(text) => setNumero(text)}
             value={numero}
-            placeholder="N° du Carte d'identite"
+            placeholder="N° Telephone de l'acheteur"
           />
           <ScrollView
             horizontal
@@ -201,7 +268,7 @@ const InitTransfert = ({ navigation }) => {
           >
             {image.map((image, index) => {
               return (
-                <View style={styles.photo}>
+                <View style={styles.photo} key={index}>
                   <TouchableOpacity
                     onPress={() => onRemove(index)}
                     style={{
@@ -222,7 +289,7 @@ const InitTransfert = ({ navigation }) => {
                     <Entypo name="circle-with-cross" size={27} color="red" />
                   </TouchableOpacity>
                   <Image
-                    source={{ uri: image }}
+                    source={{ uri: image.uri }}
                     style={styles.image}
                     resizeMode="cover"
                     key={index}

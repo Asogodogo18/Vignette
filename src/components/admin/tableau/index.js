@@ -17,15 +17,17 @@ const Index = () => {
   const { data, error, isFetching } = useStatistiques();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const GuichetStats = data.STATS_GUICHET.map((guichet) => {
-    return (
-      <View style={styles.colapsecontainer} key={guichet.id}>
-        <Text style={styles.textCollapse}>{guichet.guichet}</Text>
-        <Text style={styles.textCollapse}>{guichet.ca}</Text>
-        <Text style={styles.textCollapse}>{guichet.nbr}</Text>
-      </View>
-    );
-  });
+  const GuichetStats =
+    data &&
+    data?.STATS_GUICHET.map((guichet, index) => {
+      return (
+        <View style={styles.colapsecontainer} key={index}>
+          <Text style={styles.textCollapse}>{guichet.guichet}</Text>
+          <Text style={styles.textCollapse}>{guichet.ca}</Text>
+          <Text style={styles.textCollapse}>{guichet.nbr}</Text>
+        </View>
+      );
+    });
 
   // console.log("statitistq", data);
   // console.log("data STATS_GUICHET", data.STATS_GUICHET);
@@ -253,9 +255,10 @@ const styles = StyleSheet.create({
   textCollapseHeader: {
     fontSize: 15,
     fontWeight: "700",
-    letterSpacing: 1.5,
+    letterSpacing: 0.5,
     flex: 1,
     textAlign: "center",
     color: "white",
+    width: 50,
   },
 });

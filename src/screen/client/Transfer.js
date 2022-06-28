@@ -46,7 +46,7 @@ const Transfer = ({ navigation }) => {
 
             <View style={{ padding: 10, margin: 5 }}>
               <Text>
-                Lorsque vous effectuer une Vente vous devriez inititie un
+                Lorsque vous effectuer une Vente vous devriez initier un
                 Transfert
               </Text>
             </View>

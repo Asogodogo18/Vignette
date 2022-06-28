@@ -91,7 +91,7 @@ const Login = ({ navigation, route }) => {
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <Image
-              source={require("../../../../assets/logo.png")}
+              source={require("../../../../assets/logo.jpeg")}
               style={styles.headerImg}
             />
           </View>
@@ -103,14 +103,32 @@ const Login = ({ navigation, route }) => {
               placeholder="Identifiant"
               keyboardType="email-address"
             />
-            <TextInput
-              style={styles.input}
-              onChangeText={setPassword}
-              value={password}
-              placeholder="Mot de Passe"
-              keyboardType="default"
-              secureTextEntry
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
+              <TextInput
+                style={styles.input}
+                onChangeText={setPassword}
+                value={password}
+                placeholder="Mot de Passe"
+                keyboardType="default"
+                secureTextEntry
+                //secureTextEntry={isSecureTextEntry ? true : false}
+              />
+              {/* <TouchableOpacity
+                onPress={() => setisSecureTextEntry(!isSecureTextEntry)}
+              >
+                {isSecureTextEntry ? (
+                  <Feather name="eye-off" color="grey" size={20} />
+                ) : (
+                  <Feather name="eye" color="grey" size={20} />
+                )}
+              </TouchableOpacity> */}
+            </View>
 
             <TouchableOpacity onPress={loginHandle} style={styles.loginBtn}>
               {loading ? (
