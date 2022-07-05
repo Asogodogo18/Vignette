@@ -5,7 +5,7 @@ import { Badge } from "react-native-paper";
 const index = ({ navigation }) => {
   return (
     <View style={styles.contain}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         activeOpacity={0.8}
         onPress={() =>
           navigation.navigate("Adminstack", { screen: "Transfert" })
@@ -34,7 +34,7 @@ const index = ({ navigation }) => {
             Validation du Transfert
           </Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity
           activeOpacity={0.8}

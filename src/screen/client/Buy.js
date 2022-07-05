@@ -61,7 +61,7 @@ const Buy = ({ navigation, route }) => {
     };
     buyVignetteMutation(data)
       .then((res) => {
-        console.log("debut du requete", res);
+        // console.log("debut du requete", res);
         if (res.data === "true") {
           Toast.show({
             type: "success",
@@ -88,6 +88,10 @@ const Buy = ({ navigation, route }) => {
                       item: vignette,
                       id_user: user.id_user,
                     });
+                  } else {
+                    setTimeout(() => {
+                      navigation.goBack();
+                    }, 1500);
                   }
                 }
                 //

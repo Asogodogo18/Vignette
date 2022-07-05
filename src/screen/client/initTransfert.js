@@ -26,14 +26,12 @@ import * as Animatable from "react-native-animatable";
 import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { transfertVignette, useVignette } from "../../services/query";
 import { useAuthState } from "../../global";
-import { TransfertProvider } from "../../global/transfertContext";
+
 import axios from "axios";
 const { height, width } = Dimensions.get("screen");
 
 const VignetteSelection = ({ setSelectedVignette }) => {
   const { user } = useAuthState();
-  const { initTransfert, confirmTranfert, rejectTranfert } =
-    TransfertProvider();
 
   const {
     status,
@@ -106,66 +104,12 @@ const VignetteSelection = ({ setSelectedVignette }) => {
 const InitTransfert = ({ navigation }) => {
   const [selectedVignette, setSelectedVignette] = useState(null);
   const [image, setImage] = useState([]);
+  const [image2, setImage2] = useState([]);
+
   const [numero, setNumero] = useState("");
+
   const [isTranfering, setIsTranfering] = useState(false);
   const [singleFile, setSingleFile] = useState(null);
-
-  // const uploadImage = async () => {
-  //   // Check if any file is selected or not
-  //   if (singleFile != null) {
-  //     // If file selected then create FormData
-  //     const fileToUpload = singleFile;
-  //     const data = new FormData();
-  //     data.append("name", "Image Upload");
-  //     data.append("file_attachment", fileToUpload);
-  //     // Please change file upload URL
-  //     let res = await fetch("http://197.155.143.74:1112/vignette/transfert", {
-  //       method: "post",
-  //       body: data,
-  //       headers: {
-  //         "Content-Type": "multipart/form-data; ",
-  //       },
-  //     });
-  //     let responseJson = await res.json();
-  //     if (responseJson.status == 1) {
-  //       Alert.alert("Upload Successful");
-  //     }
-  //   } else {
-  //     // If no file selected the show alert
-  //     Alert.alert("Please Select File first");
-  //   }
-  // };
-
-  const selectFile = async () => {
-    // Opening Document Picker to select one file
-    try {
-      const res = await DocumentPicker.pick({
-        // Provide which type of file you want user to pick
-        type: [DocumentPicker.types.images],
-        // There can me more options as well
-        // DocumentPicker.types.allFiles
-        // DocumentPicker.types.images
-        // DocumentPicker.types.plainText
-        // DocumentPicker.types.audio
-        // DocumentPicker.types.pdf
-      });
-      // Printing the log realted to the file
-      console.log("res : " + JSON.stringify(res));
-      // Setting the state to show single file attributes
-      setSingleFile(res);
-    } catch (err) {
-      setSingleFile(null);
-      // Handling any exception (If any)
-      if (DocumentPicker.isCancel(err)) {
-        // If user canceled the document selection
-        Alert.alert("Canceled");
-      } else {
-        // For Unknown Error
-        Alert.alert("Unknown Error: " + JSON.stringify(err));
-        throw err;
-      }
-    }
-  };
 
   const handleTransfert = () => {
     transfertVignette({
@@ -173,15 +117,39 @@ const InitTransfert = ({ navigation }) => {
       nouveau: numero,
       ancien: selectedVignette.ancien,
       image: image[0],
+      image2: image2[0],
     })
-      .then((res) => console.log("reponse transfert: ", res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log("reponse transfert: ", res);
+        if (res.status === "200") {
+          Toast.show({
+            type: "success",
+            text1: "Transfert éffectué avec succès!",
+          });
+          setTimeout(() => {
+            navigation.goBack();
+          }, 1500);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, ",
+            text2: "Veuillez ressayer!",
+          });
+        }
+      })
+      .catch((err) =>
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: err.toString(),
+        })
+      );
   };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [10, 13],
       quality: 1,
@@ -190,10 +158,29 @@ const InitTransfert = ({ navigation }) => {
 
     if (!result.cancelled) {
       setImage([...image, { ...result }]);
-      console.log(image);
+    }
+  };
+  const pickImage2 = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [10, 13],
+      quality: 1,
+      base64: true,
+    });
+
+    if (!result.cancelled) {
+      setImage2([...image2, { ...result }]);
     }
   };
 
+  const onRemove2 = (index) => {
+    setImage2([
+      ...image2.slice(0, index),
+      ...image2.slice(index + 1, image2.length),
+    ]);
+  };
   const onRemove = (index) => {
     setImage([
       ...image.slice(0, index),
@@ -206,7 +193,7 @@ const InitTransfert = ({ navigation }) => {
       <ImageBackground
         resizeMode="cover"
         source={require("../../../assets/bg_transfert1.png")}
-        style={{ height: height }}
+        style={{ flex: 1 }}
       >
         <View
           style={{
@@ -244,7 +231,7 @@ const InitTransfert = ({ navigation }) => {
             resizeMode="cover"
           />
         </View>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <Text
             style={{
               fontSize: 20,
@@ -297,14 +284,65 @@ const InitTransfert = ({ navigation }) => {
                 </View>
               );
             })}
+            {image2.map((image, index) => {
+              return (
+                <View style={styles.photo} key={index}>
+                  <TouchableOpacity
+                    onPress={() => onRemove2(index)}
+                    style={{
+                      position: "absolute",
+                      top: 5,
+                      elevation: 5,
+                      right: 5,
+                      bottom: 0,
+                      zIndex: 100,
+                      backgroundColor: "white",
+                      height: 30,
+                      width: 30,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 20,
+                    }}
+                  >
+                    <Entypo name="circle-with-cross" size={27} color="red" />
+                  </TouchableOpacity>
+                  <Image
+                    source={{ uri: image.uri }}
+                    style={styles.image}
+                    resizeMode="cover"
+                    key={index}
+                  />
+                </View>
+              );
+            })}
           </ScrollView>
-          <TouchableOpacity style={styles.quickselect} onPress={pickImage}>
-            <MaterialIcons name="add-photo-alternate" size={40} color="black" />
-            <Text style={styles.label}>
-              Veuillez ajouter la photo de votre facture d'achat et votre papier
-              de vente
-            </Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity style={styles.quickselect} onPress={pickImage}>
+              <MaterialIcons
+                name="add-photo-alternate"
+                size={40}
+                color="black"
+              />
+              <Text style={styles.label}>
+                Veuillez ajouter la photo de votre facture d'achat
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.quickselect} onPress={pickImage2}>
+              <MaterialIcons
+                name="add-photo-alternate"
+                size={40}
+                color="black"
+              />
+              <Text style={styles.label}>
+                Veuillez ajouter la photo de votre déclaration de vente
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.buttonGroup}>
             <TouchableOpacity
               onPress={() => setSelectedVignette(null)}
@@ -411,11 +449,9 @@ const styles = StyleSheet.create({
     backgroundColor: "beige",
     elevation: 5,
     borderRadius: 10,
-    height: 90,
+    // height: 90,
     justifyContent: "center",
     alignItems: "center",
-    width: 295,
-    alignSelf: "center",
     marginTop: 50,
   },
   label: {
@@ -441,7 +477,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
-    width: width - 210,
+    minWidth: width - 400,
+    maxWidth: width,
   },
   btnLabel: {
     color: "white",
@@ -453,5 +490,6 @@ const styles = StyleSheet.create({
     height: 60,
     marginTop: 60,
     alignSelf: "center",
+    paddingHorizontal: 100,
   },
 });

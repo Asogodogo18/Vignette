@@ -291,26 +291,66 @@ export function useStatistiques() {
 }
 
 export const transfertVignette = (sentForm) => {
-  const { id_engin, nouveau, ancien, image } = sentForm;
+  const { id_engin, nouveau, ancien, image, image2 } = sentForm;
 
   var data = new FormData();
 
   data.append("id_engin", id_engin);
   data.append("nouveau", nouveau);
   data.append("ancien", ancien);
-  data.append("file", image);
+  data.append("facture", image);
+  data.append("certificat", image2);
+  // console.log("envoi: ", data);
 
   return axios
     .post("http://197.155.143.74:1112/vignette/transferts", data)
     .then((response) => {
-      console.log("data", response.data);
+      // console.log("envoi: ", response);
+
       return response.data;
     })
     .catch((error) => {
-      console.log(error);
+      return error;
+    });
+};
+export const declarationVol = (sentForm) => {
+  const { id_engin, id_user, image } = sentForm;
+
+  var data = new FormData();
+
+  data.append("id_engin", id_engin);
+  data.append("id_user", id_user);
+  data.append("certificat", image);
+  // console.log("envoi: ", data);
+
+  return axios
+    .post("http://197.155.143.74:1112/vignette/vols", data)
+    .then((response) => {
+      // console.log("envoi: ", response);
+
+      return response.data;
+    })
+    .catch((error) => {
+      return error;
     });
 };
 
 export const makePaymentAgent = (data) => {
   return apiClient.post("/paiements", JSON.stringify(data));
+};
+
+export const useTransferts = (id) => {
+  return useQuery("transferts", async () => {
+    return apiClient.post("/transferts", JSON.stringify({ id_validateur: id }));
+  });
+};
+export const valideTransferts = (data) => {
+  let { id_transfert, id_user, id_engin } = data;
+  //console.log("donne envoyer :", data);
+  const sent = {
+    id_transfert,
+    id_user,
+    id_engin,
+  };
+  return apiClient.post("/transferts", JSON.stringify(sent));
 };

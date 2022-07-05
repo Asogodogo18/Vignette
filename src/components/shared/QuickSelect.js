@@ -7,9 +7,11 @@ import {
 } from "@expo/vector-icons";
 import { Badge } from "react-native-paper";
 import { useAuthState } from "../../global";
+import { useTransferts } from "../../services/query";
 
 const QuickSelect = ({ navigation, setOpenListing }) => {
   const { user } = useAuthState();
+
   const conditionPerte = user.role == "Agent" || user.role == "Anonyme";
 
   return (
@@ -34,7 +36,7 @@ const QuickSelect = ({ navigation, setOpenListing }) => {
                 onPress={() => navigation.navigate("Transfer")}
                 style={styles.quickselect}
               >
-                <Badge size={24}>3</Badge>
+                {/* <Badge size={24}>{transfert && transfert.data.lenght}</Badge> */}
                 <MaterialCommunityIcons
                   name="transit-transfer"
                   size={30}

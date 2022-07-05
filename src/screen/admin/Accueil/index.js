@@ -116,13 +116,13 @@ const Index = ({ navigation }) => {
           <Action navigation={navigation} />
         </View>
       </ScrollView>
-      <Animatable.View
+      {/* <Animatable.View
         animation="fadeIn"
         duration={300}
         delay={500}
         style={{
           position: "absolute",
-          bottom: 0,
+          bottom: -10,
           backgroundColor: "white",
           height: 15,
           width: width,
@@ -147,7 +147,7 @@ const Index = ({ navigation }) => {
         >
           Créer par CIRTIC
         </Text>
-      </Animatable.View>
+      </Animatable.View> */}
     </SafeAreaView>
   );
 };

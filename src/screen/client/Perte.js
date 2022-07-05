@@ -11,13 +11,44 @@ import {
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import Toast from "react-native-toast-message";
+import { declarationVol, getVignetteByChassis } from "../../services/query";
 import { Ionicons, Entypo, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("screen");
+const isTablet = width > 360;
 
 const Perte = ({ navigation }) => {
   const [image, setImage] = useState([]);
   const [numChassis, setNumChassis] = useState("");
+  const [id_User, setId_User] = useState("");
+  const [id_engin, setId_engin] = useState("");
+  const handleSubmit = () => {
+    getVignetteByChassis(numChassis)
+      .then((res) => {
+        console.log("numero chassis :", res.data[0]);
+        setId_User(res.data[0].id_User);
+        setId_engin(res.data[0].id_engin);
+      })
+      .catch((e) => {
+        console.log("error :", e);
+      });
+    declarationVol({
+      id_engin: id_engin,
+      id_user: id_User,
+      certificat: image[0],
+    })
+      .then((res) => {
+        console.log("reponse pert: ", res);
+      })
+      .catch((err) =>
+        Toast.show({
+          type: "error",
+          text1: "Une erreur est survenue, Veuillez ressayer!",
+          text2: err.toString(),
+        })
+      );
+    //
+  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -40,15 +71,6 @@ const Perte = ({ navigation }) => {
     ]);
   };
 
-  const handleSubmit = () => {
-    Toast.show({
-      type: "success",
-      text1: "Votre vignette a ete enregistrer!",
-    });
-    setTimeout(() => {
-      navigation.goBack();
-    }, 1500);
-  };
   return (
     <ScrollView ContentContainerStyle={styles.contain}>
       <Image
@@ -194,7 +216,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
-    width: width - 210,
+    width: isTablet ? width - 400 : 210,
   },
   btnLabel: {
     color: "white",
@@ -203,7 +225,7 @@ const styles = StyleSheet.create({
   },
   buttonGroup: {
     flexDirection: "row",
-    height: 60,
+    // height: 60,
     marginTop: 60,
     alignSelf: "center",
   },

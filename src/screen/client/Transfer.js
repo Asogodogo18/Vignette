@@ -15,10 +15,20 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import Data from "../../data/transfert";
 import RenderTransfert from "../../components/transfert/renderTransfert";
 import { useAuthState } from "../../global";
+import { useTransferts } from "../../services/query";
 const { width, height } = Dimensions.get("screen");
+
 const Transfer = ({ navigation }) => {
   const { user } = useAuthState();
+  const {
+    status,
+    data: transfert,
+    error,
+    isFetching,
+  } = useTransferts(user && user.id_user);
+
   const condition = user.role === "Superviseur" || user.role == "Compta public";
+  // console.log("transferts : ", transfert.data);
   const {
     statut,
     etat,
@@ -30,7 +40,7 @@ const Transfer = ({ navigation }) => {
   // console.log("data : ", Data);
   return (
     <View style={styles.contain}>
-      {Data.length == 0 && (
+      {transfert && transfert?.data === "False" && (
         <ScrollView style={{ flexGrow: 1 }}>
           <View style={{ flex: 1 }}>
             <Image
@@ -45,7 +55,7 @@ const Transfer = ({ navigation }) => {
             </View>
 
             <View style={{ padding: 10, margin: 5 }}>
-              <Text>
+              <Text style={{ textAlign: "center" }}>
                 Lorsque vous effectuer une Vente vous devriez initier un
                 Transfert
               </Text>
@@ -68,7 +78,7 @@ const Transfer = ({ navigation }) => {
         </ScrollView>
       )}
 
-      {Data.length == 0 ? null : (
+      {transfert && transfert?.data === "False" ? null : (
         <View style={{ flex: 1 }}>
           {!condition && (
             <TouchableOpacity
@@ -84,7 +94,7 @@ const Transfer = ({ navigation }) => {
             </TouchableOpacity>
           )}
           <FlatList
-            data={Data}
+            data={transfert?.data}
             renderItem={({ item }) => (
               <RenderTransfert item={item} navigation={navigation} />
             )}

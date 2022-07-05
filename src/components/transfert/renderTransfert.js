@@ -151,7 +151,7 @@ const renderTransfert = ({ item, navigation }) => {
                   textTransform: "capitalize",
                 }}
               >
-                Numero carte d'identite
+                Numero chassis
               </Text>
               <Text
                 style={{
@@ -162,7 +162,7 @@ const renderTransfert = ({ item, navigation }) => {
                   fontWeight: "bold",
                 }}
               >
-                {item.numero}
+                {item.num_chassis}
               </Text>
             </View>
           </View>

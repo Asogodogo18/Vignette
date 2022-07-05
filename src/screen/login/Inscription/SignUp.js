@@ -109,7 +109,7 @@ const SignUp = ({ navigation, route }) => {
               <AntDesign name="left" size={28} color="black" />
             </TouchableOpacity>
             <Image
-              source={require("../../../../assets/logo.png")}
+              source={require("../../../../assets/logobanner.jpeg")}
               style={styles.headerImg}
             />
             <TextInput

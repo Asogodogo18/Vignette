@@ -91,7 +91,7 @@ const Login = ({ navigation, route }) => {
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <Image
-              source={require("../../../../assets/logo.jpeg")}
+              source={require("../../../../assets/logobanner.jpeg")}
               style={styles.headerImg}
             />
           </View>

@@ -144,6 +144,25 @@ const Index = ({ navigation }) => {
           </View>
 
           <ScrollView nestedScrollEnabled>
+            {data == null ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 170,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "900",
+                    letterSpacing: 1.5,
+                  }}
+                >
+                  Acunn Vignette payer pour le moment
+                </Text>
+              </View>
+            ) : null}
             <View style={{ margin: 5, padding: 5 }}>
               {isFetching ? (
                 <View
