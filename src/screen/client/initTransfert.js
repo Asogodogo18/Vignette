@@ -120,7 +120,7 @@ const InitTransfert = ({ navigation }) => {
       image2: image2[0],
     })
       .then((res) => {
-        console.log("reponse transfert: ", res);
+        // console.log("reponse transfert: ", res);
         if (res.status === "200") {
           Toast.show({
             type: "success",

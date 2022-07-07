@@ -42,7 +42,7 @@ const QuickSelect = ({ navigation, setOpenListing }) => {
                   size={30}
                   color="black"
                 />
-                <Text style={styles.label}>Effectuer un Transfert</Text>
+                <Text style={styles.label}>Mutation</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity

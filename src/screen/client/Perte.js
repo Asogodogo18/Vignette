@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
@@ -18,27 +19,57 @@ const { width, height } = Dimensions.get("screen");
 const isTablet = width > 360;
 
 const Perte = ({ navigation }) => {
+  const [isCheckingVignette, setisCheckingVignette] = useState(false);
+  const [isVignetteValid, setIsVignetteValid] = useState(false);
   const [image, setImage] = useState([]);
   const [numChassis, setNumChassis] = useState("");
-  const [id_User, setId_User] = useState("");
+  const [id_user, setId_user] = useState("");
   const [id_engin, setId_engin] = useState("");
-  const handleSubmit = () => {
+
+  const onSubmitChassis = () => {
+    setisCheckingVignette(true);
     getVignetteByChassis(numChassis)
       .then((res) => {
-        console.log("numero chassis :", res.data[0]);
-        setId_User(res.data[0].id_User);
-        setId_engin(res.data[0].id_engin);
+        if (res.data !== "False") {
+          setIsVignetteValid(true);
+          console.log("numero chassis :", res.data[0]);
+          setId_user(res.data[0].id_user);
+          setId_engin(res.data[0].id_engin);
+        } else setIsVignetteValid(false);
       })
       .catch((e) => {
         console.log("error :", e);
+      })
+      .finally(() => setisCheckingVignette(false));
+  };
+  const handleSubmit = () => {
+    if (!isVignetteValid) {
+      Toast.show({
+        type: "error",
+        text1: "Numero de Chassis Non Valide!",
       });
+    }
     declarationVol({
       id_engin: id_engin,
-      id_user: id_User,
-      certificat: image[0],
+      id_user: id_user,
+      // certificat: image[0],
     })
       .then((res) => {
         console.log("reponse pert: ", res);
+        if (res.data === "true") {
+          Toast.show({
+            type: "success",
+            text1: "Declaration effectue avec succes!",
+          });
+          setTimeout(() => {
+            navigation.goBack();
+          }, 1500);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+          });
+        }
       })
       .catch((err) =>
         Toast.show({
@@ -53,15 +84,15 @@ const Perte = ({ navigation }) => {
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [10, 13],
       quality: 1,
     });
 
     if (!result.cancelled) {
-      setImage([...image, result.uri]);
-      console.log(image);
+      setImage([...image, { ...result }]);
+      console.log("image", image);
     }
   };
   const onRemove = (index) => {
@@ -78,23 +109,58 @@ const Perte = ({ navigation }) => {
         resizeMode="contain"
         source={require("../../../assets/lost.png")}
       />
-      <TextInput
-        placeholder="Entrer le Numero de Chassis"
+      <View
         style={{
-          height: 55,
+          flexDirection: "row",
+          alignItems: "center",
           alignSelf: "center",
-          marginTop: 10,
-          width: "90%",
-          borderColor: "lightgreen",
-          borderWidth: 1,
-          borderRadius: 8,
-          padding: 15,
-          backgroundColor: "white",
-          elevation: 5,
         }}
-        value={numChassis}
-        onChangeText={setNumChassis}
-      />
+      >
+        <TextInput
+          placeholder="Entrer le Numero de Chassis"
+          onSubmitEditing={onSubmitChassis}
+          style={{
+            height: 55,
+            alignSelf: "center",
+            width: "80%",
+            borderColor: "lightgreen",
+            borderWidth: 1,
+            borderRadius: 8,
+            padding: 15,
+            backgroundColor: "white",
+            elevation: 5,
+          }}
+          value={numChassis}
+          onChangeText={setNumChassis}
+        />
+        {isCheckingVignette ? (
+          <ActivityIndicator size="large" />
+        ) : isVignetteValid ? (
+          <AntDesign
+            style={[
+              { marginLeft: 10 },
+              numChassis !== "" && isVignetteValid
+                ? styles.showIcon
+                : styles.hideIcon,
+            ]}
+            name="checkcircleo"
+            size={30}
+            color="green"
+          />
+        ) : (
+          <AntDesign
+            style={[
+              { marginLeft: 10 },
+              numChassis !== "" && isVignetteValid
+                ? styles.showIcon
+                : styles.hideIcon,
+            ]}
+            name="closecircleo"
+            size={30}
+            color="red"
+          />
+        )}
+      </View>
       {image.map((image, index) => {
         return (
           <View style={styles.photo} key={index}>
@@ -118,7 +184,7 @@ const Perte = ({ navigation }) => {
               <Entypo name="circle-with-cross" size={27} color="red" />
             </TouchableOpacity>
             <Image
-              source={{ uri: image }}
+              source={{ uri: image.uri }}
               style={styles.image}
               resizeMode="cover"
               key={index}
@@ -216,7 +282,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
-    width: isTablet ? width - 400 : 210,
+    width: isTablet ? width - 400 : 110,
   },
   btnLabel: {
     color: "white",
@@ -228,5 +294,11 @@ const styles = StyleSheet.create({
     // height: 60,
     marginTop: 60,
     alignSelf: "center",
+  },
+  hideIcon: {
+    display: "none",
+  },
+  showIcon: {
+    display: "flex",
   },
 });

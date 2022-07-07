@@ -8,11 +8,11 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuthState } from "../../global";
-import { valideTransferts } from "../../services/query";
+import { valideTransferts, getVignetteByChassis } from "../../services/query";
 import Toast from "react-native-toast-message";
 const { height, width } = Dimensions.get("screen");
 const isTablet = width > 360;
@@ -20,17 +20,18 @@ const DetailTransfert = ({ route, navigation }) => {
   const { user } = useAuthState();
   const condition = user.role === "Superviseur" || user.role == "Compta public";
   const { item } = route.params;
-  // console.log("item :", item);
+  console.log("item :", item);
 
   const handleValide = () => {
+    const { id_transfert, nouveau, id_engin } = item;
     const data = {
-      id_transfert: item.id_transfert,
-      id_user: item.id_user,
-      id_engin: item.id_engin,
+      id_transfert,
+      id_user: nouveau,
+      id_engin,
     };
     valideTransferts(data)
       .then((res) => {
-        // console.log("validation", res);
+        console.log("validation", res);
         if (res.data === "true") {
           Toast.show({
             type: "success",
@@ -47,8 +48,7 @@ const DetailTransfert = ({ route, navigation }) => {
         }
       })
       .catch((e) => {
-        //console.log("error", e);
-
+        console.log("error", e);
         Toast.show({
           type: "error",
           text1: "Une erreur est survenue, Veuillez ressayer!",

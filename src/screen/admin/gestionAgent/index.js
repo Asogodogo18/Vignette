@@ -17,7 +17,7 @@ import { SkypeIndicator } from "react-native-indicators";
 import Toast from "react-native-toast-message";
 
 import * as Animatable from "react-native-animatable";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useUsers, deleteUser } from "../../../services/query";
 import { Chip } from "react-native-paper";
 
@@ -193,8 +193,13 @@ const Index = ({ navigation }) => {
                 { backgroundColor: isDelete ? "red" : "#99D98c" },
               ]}
             >
-              <AntDesign name="delete" size={24} color="white" />
-              <Text style={styles.touchTxt}>Supprimer</Text>
+              <MaterialIcons
+                name="person-add-disabled"
+                size={24}
+                color="white"
+              />
+              {/* <AntDesign name="delete" size={24} color="white" /> */}
+              <Text style={styles.touchTxt}>Desactivation</Text>
             </TouchableOpacity>
           </View>
           <View style={{ margin: 5, padding: 5 }}>
@@ -345,7 +350,7 @@ const styles = StyleSheet.create({
   touch: {
     height: 50,
     minWidth: 120,
-    maxWidth: 150,
+    maxWidth: 170,
     backgroundColor: "#99D98c",
     justifyContent: "space-evenly",
     alignItems: "center",

@@ -89,7 +89,7 @@ const Splach = ({ navigation }) => {
                 }
                 style={styles.containerTxt}
               >
-                <Text style={styles.title}>Client</Text>
+                <Text style={styles.title}>Usage</Text>
               </TouchableOpacity>
             </View>
           </View>

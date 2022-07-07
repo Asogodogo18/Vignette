@@ -320,13 +320,13 @@ export const declarationVol = (sentForm) => {
 
   data.append("id_engin", id_engin);
   data.append("id_user", id_user);
-  data.append("certificat", image);
-  // console.log("envoi: ", data);
+  // data.append("certificat", image);
+  console.log("envoi: ", data);
 
   return axios
     .post("http://197.155.143.74:1112/vignette/vols", data)
     .then((response) => {
-      // console.log("envoi: ", response);
+      console.log("perte reponse: ", response);
 
       return response.data;
     })
@@ -346,7 +346,7 @@ export const useTransferts = (id) => {
 };
 export const valideTransferts = (data) => {
   let { id_transfert, id_user, id_engin } = data;
-  //console.log("donne envoyer :", data);
+
   const sent = {
     id_transfert,
     id_user,
