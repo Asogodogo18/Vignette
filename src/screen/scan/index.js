@@ -11,18 +11,9 @@ import {
   FlatList,
   TouchableOpacity,
   ImageBackground,
+  BackHandler,
 } from "react-native";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
+import { SkypeIndicator } from "react-native-indicators";
 import { BlurView } from "expo-blur";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BarcodeMask from "react-native-barcode-mask";
@@ -31,7 +22,6 @@ import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
 const baseUrl = "http://197.155.143.74:1112/vignette/vignettes/detail";
-const AnimatedTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 const AnimatedImg = Animatable.createAnimatableComponent(ImageBackground);
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -71,7 +61,18 @@ const Index = ({ navigation }) => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
-    return () => {};
+    // return () => {};
+    const backAction = () => {
+      navigation.goBack();
+
+      return () => {};
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
   }, []);
 
   const handleBarCodeScanned = ({ type, data, bounds: { origin } = {} }) => {
@@ -86,7 +87,7 @@ const Index = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
   const renderItem = ({ item }) => {
-    // console.log("les item: ", item);
+    // console.log("les item: ", item.statut_vol);
     return (
       <AnimatedImg
         resizeMode="cover"
@@ -242,6 +243,35 @@ const Index = ({ navigation }) => {
         >
           {item.num_chassis}
         </Text>
+        {item.statut_vol && item.statut_vol !== false ? (
+          <BlurView
+            intensity={125}
+            tint="dark"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              justifyContent: "center",
+              alignItems: "center",
+              maxHeight: 350,
+              minHeight: 200,
+              minWidth: 350,
+              maxWidth: 450,
+              flex: 1,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 25,
+                color: "red",
+                textAlign: "center",
+                textTransform: "uppercase",
+              }}
+            >
+              Vignette declare comme pert
+            </Text>
+          </BlurView>
+        ) : null}
         {item.statut && item.statut !== "vignette valide" ? (
           <BlurView
             intensity={125}
@@ -253,8 +283,8 @@ const Index = ({ navigation }) => {
               justifyContent: "center",
               alignItems: "center",
               maxHeight: 350,
-              minHeight: 203,
-              minWidth: 320,
+              minHeight: 200,
+              minWidth: 350,
               maxWidth: 450,
               flex: 1,
             }}
@@ -265,10 +295,24 @@ const Index = ({ navigation }) => {
                 color: "tomato",
                 textAlign: "center",
                 textTransform: "uppercase",
+                // margin: 10,
+                marginTop: 40,
               }}
             >
               Vignette non payée
             </Text>
+            {item.statut_vol !== false ? (
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: "red",
+                  textAlign: "center",
+                  textTransform: "uppercase",
+                }}
+              >
+                Vignette declare comme pert
+              </Text>
+            ) : null}
           </BlurView>
         ) : null}
       </AnimatedImg>
@@ -278,7 +322,10 @@ const Index = ({ navigation }) => {
   return (
     <View style={styles.contain}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={{ elevation: 5 }}
+          onPress={() => navigation.goBack()}
+        >
           <Ionicons name="arrow-undo-circle-sharp" size={40} color="white" />
         </TouchableOpacity>
         <Text style={styles.txt}>Scan</Text>
@@ -287,7 +334,7 @@ const Index = ({ navigation }) => {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       >
-        <BarcodeMask edgeColor="#62B1F6" showAnimatedLine />
+        <BarcodeMask edgeColor="green" showAnimatedLine />
       </BarCodeScanner>
       {IsLoading && (
         <BlurView intensity={50} style={styles.barcodeBox}>
@@ -391,9 +438,10 @@ const styles = StyleSheet.create({
     marginLeft: 120,
   },
   vignette: {
-    maxHeight: 350,
+    maxHeight: 450,
     minHeight: 200,
-    width: width - 50,
+    minWidth: width - 50,
+    maxWidth: width,
     backgroundColor: "white",
     marginVertical: 20,
     padding: 15,

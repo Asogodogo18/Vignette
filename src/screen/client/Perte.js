@@ -48,15 +48,23 @@ const Perte = ({ navigation }) => {
         type: "error",
         text1: "Numero de Chassis Non Valide!",
       });
+      return;
+    }
+    if (!image) {
+      Toast.show({
+        type: "error",
+        text1: "Veuillez ajouter la déclaration de perte!",
+      });
+      return;
     }
     declarationVol({
       id_engin: id_engin,
       id_user: id_user,
-      // certificat: image[0],
+      certificat: image[0],
     })
       .then((res) => {
-        console.log("reponse pert: ", res);
-        if (res.data === "true") {
+        // console.log("reponse pert: ", res);
+        if (res.status === "200") {
           Toast.show({
             type: "success",
             text1: "Declaration effectue avec succes!",
@@ -88,6 +96,7 @@ const Perte = ({ navigation }) => {
       allowsEditing: true,
       aspect: [10, 13],
       quality: 1,
+      base64: true,
     });
 
     if (!result.cancelled) {

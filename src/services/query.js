@@ -314,13 +314,13 @@ export const transfertVignette = (sentForm) => {
     });
 };
 export const declarationVol = (sentForm) => {
-  const { id_engin, id_user, image } = sentForm;
+  const { id_engin, id_user, certificat } = sentForm;
 
   var data = new FormData();
 
   data.append("id_engin", id_engin);
   data.append("id_user", id_user);
-  // data.append("certificat", image);
+  data.append("certificat", certificat);
   console.log("envoi: ", data);
 
   return axios

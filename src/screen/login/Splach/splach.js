@@ -194,7 +194,7 @@ const Splach = ({ navigation }) => {
                 }
                 style={styles.containerTxt}
               >
-                <Text style={styles.title}>Verificateur</Text>
+                <Text style={styles.title}>Controlleur de gestion</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -287,8 +287,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 8,
     backgroundColor: "#1a1818",
-    width: 150,
-    height: 40,
+    minWidth: 150,
+    maxWidth: 250,
+    minHeight: 40,
+    maxHeight: 100,
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 10,

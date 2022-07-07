@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
+  Modal,
+  TextInput,
 } from "react-native";
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useAuthState } from "../../global";
 import { valideTransferts, getVignetteByChassis } from "../../services/query";
 import Toast from "react-native-toast-message";
@@ -20,7 +22,9 @@ const DetailTransfert = ({ route, navigation }) => {
   const { user } = useAuthState();
   const condition = user.role === "Superviseur" || user.role == "Compta public";
   const { item } = route.params;
-  console.log("item :", item);
+  // console.log("item :", item);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [numChassis2, setNumChassis2] = useState("");
 
   const handleValide = () => {
     const { id_transfert, nouveau, id_engin } = item;
@@ -29,32 +33,39 @@ const DetailTransfert = ({ route, navigation }) => {
       id_user: nouveau,
       id_engin,
     };
-    valideTransferts(data)
-      .then((res) => {
-        console.log("validation", res);
-        if (res.data === "true") {
-          Toast.show({
-            type: "success",
-            text1: "Transfert Valide avec succes!",
-          });
-          setTimeout(() => {
-            navigation.goBack();
-          }, 1500);
-        } else {
+    if (item.num_chassis === numChassis2) {
+      valideTransferts(data)
+        .then((res) => {
+          console.log("validation", res);
+          if (res.data === "true") {
+            Toast.show({
+              type: "success",
+              text1: "Transfert Valide avec succes!",
+            });
+            setTimeout(() => {
+              navigation.goBack();
+            }, 1500);
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Une erreur est survenue, \nVeuillez ressayer!",
+            });
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
           Toast.show({
             type: "error",
-            text1: "Une erreur est survenue, \nVeuillez ressayer!",
+            text1: "Une erreur est survenue, Veuillez ressayer!",
+            text2: e.toString(),
           });
-        }
-      })
-      .catch((e) => {
-        console.log("error", e);
-        Toast.show({
-          type: "error",
-          text1: "Une erreur est survenue, Veuillez ressayer!",
-          text2: e.toString(),
         });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "le numero de chassis ne correspond pas, \nVeuillez ressayer!",
       });
+    }
   };
   return (
     <ImageBackground
@@ -280,12 +291,37 @@ const DetailTransfert = ({ route, navigation }) => {
           <Text style={styles.btnLabel}>Annuler</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleValide}
+          onPress={() => setModalVisible(!modalVisible)}
           style={[styles.button, { backgroundColor: "green" }]}
         >
           <Text style={styles.btnLabel}>Valider</Text>
         </TouchableOpacity>
       </View>
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={styles.buttonClose}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <AntDesign name="close" size={24} color="white" />
+            </TouchableOpacity>
+            <Text style={styles.modalText}>
+              Veuillez confirme a nouveau la Mutation du Vignette en saisisant
+              le numero du chassis
+            </Text>
+            <TextInput
+              placeholder="Numero du chassis"
+              style={styles.input}
+              onChangeText={(text) => setNumChassis2(text)}
+              value={numChassis2}
+            />
+            <TouchableOpacity onPress={handleValide} style={styles.touch}>
+              <Text style={styles.txtTouch}>confirme</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -364,5 +400,80 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "900",
     fontSize: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    // padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: width - 50,
+  },
+
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    fontSize: 15,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  input: {
+    height: 50,
+    margin: 12,
+    borderWidth: 0.8,
+    padding: 10,
+    borderRadius: 15,
+    fontWeight: "bold",
+    alignSelf: "center",
+    width: 295,
+    backgroundColor: "white",
+    elevation: 5,
+  },
+  touch: {
+    height: 50,
+    width: 100,
+    backgroundColor: "green",
+    padding: 10,
+    margin: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    elevation: 5,
+  },
+  txtTouch: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "white",
+  },
+  buttonClose: {
+    position: "relative",
+    right: 0,
+    top: 0,
+    left: 110,
+    margin: 10,
+    height: 40,
+    width: 40,
+    backgroundColor: "green",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    elevation: 5,
   },
 });
