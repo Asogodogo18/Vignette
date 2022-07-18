@@ -261,6 +261,35 @@ const Vignette = ({ item, modify = false }) => {
             </Text>
           </BlurView>
         ) : null}
+        {!item.statut_vol !== true ? (
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              justifyContent: "center",
+              alignItems: "center",
+              // minHeight: 20,
+              // maxHeight: 80,
+              minWidth: 30,
+              maxWidth: 180,
+              // flex: 1,
+              backgroundColor: "red",
+              paddingHorizontal: 5,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 15,
+                color: "white",
+                textAlign: "center",
+                textTransform: "uppercase",
+              }}
+            >
+              Engin perdu
+            </Text>
+          </View>
+        ) : null}
       </AnimatedImg>
     </TouchableOpacity>
   );

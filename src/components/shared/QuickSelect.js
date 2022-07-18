@@ -59,6 +59,17 @@ const QuickSelect = ({ navigation, setOpenListing }) => {
         {!conditionPerte ? (
           <>
             <TouchableOpacity
+              onPress={() => navigation.push("VignetteRetrouve")}
+              style={styles.quickselect}
+            >
+              <MaterialCommunityIcons
+                name="file-find"
+                size={27}
+                color="black"
+              />
+              <Text style={styles.label}>Vignette Retrouve</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               onPress={() => navigation.push("Perte")}
               style={styles.quickselect}
             >

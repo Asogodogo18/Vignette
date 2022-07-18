@@ -354,3 +354,11 @@ export const valideTransferts = (data) => {
   };
   return apiClient.post("/transferts", JSON.stringify(sent));
 };
+
+export const vignetteRetrouve = (data) => {
+  let { id_engin } = data;
+  const sent = {
+    id_engin,
+  };
+  return apiClient.post("/vols/retrouver", JSON.stringify(sent));
+};

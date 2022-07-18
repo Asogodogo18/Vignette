@@ -15,6 +15,7 @@ import Payment from "../../screen/Payment";
 import Inscription from "../../screen/login/Inscription/SignUp";
 import Perte from "../../screen/client/Perte";
 import Modify from "../../screen/client/ModifyVignette";
+import VignetteRetrouve from "../../screen/client/vignetteRetrouve";
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,11 @@ const Index = () => {
         options={{ headerShown: false, headerTitleAlign: "center" }}
         name="Initialisaton"
         component={InitTransfert}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, headerTitleAlign: "center" }}
+        name="VignetteRetrouve"
+        component={VignetteRetrouve}
       />
       <Stack.Screen
         options={{ headerShown: true, headerTitleAlign: "center" }}
